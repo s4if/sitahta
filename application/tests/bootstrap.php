@@ -33,7 +33,11 @@ require_once dirname(__FILE__) . '/../../index.php';
  * This will autoload controllers inside subfolders
  */ 
 spl_autoload_register(function ($class) {
-	foreach (glob(APPPATH.'controllers/**/'.strtolower($class).'.php') as $controller) {
+	foreach (glob(APPPATH.'controllers/**/'.ucfirst(strtolower($class).'.php')) as $controller) {
+		require_once $controller;
+	}
+        //kreasi sendiri
+        foreach (glob(APPPATH.'controllers/'.ucfirst(strtolower($class).'.php')) as $controller) {
 		require_once $controller;
 	}
 });

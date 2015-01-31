@@ -29,9 +29,9 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 			$this->markTestSkipped('Cannot write in subfolder');
 		
 		// create a test controller
-		if (!is_writable($folder.'/stub.php')) {
+		if (!is_writable($folder.'/Stub.php')) {
 			// create stub file
-			$success = file_put_contents($folder.'/stub.php',
+			$success = file_put_contents($folder.'/Stub.php',
 									'<?php class Stub extends CI_Controller { public function index(){} } ?>');
 			if (!$success)
 				$this->markTestSkipped('Cannot create test controller file');
@@ -43,7 +43,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 		$this->CI->index();
 		
 		// remove stub
-		unlink($folder.'/stub.php');
+		unlink($folder.'/Stub.php');
 		rmdir($folder);
 	}
 	
@@ -55,6 +55,20 @@ class ControllerTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertFalse(class_exists('InexistentStub'), 'Inexistent class is not loadable');
 	}
+        
+        //======================================================================
+        //Hasil Kreasi sendiri
+        //======================================================================
+        
+        /*
+         * This test will check output of login/index
+         * Should be asserted as expected
+         */
+        public function testLoginController() {
+            $this->assertTrue(class_exists('Login'), 'Login is loadable');
+            $this->CI = new Login();
+            $this->assertStringMatchesFormat("Login Index", $this->CI->index());
+        }
 }
 
 ?>
