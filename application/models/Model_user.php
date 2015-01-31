@@ -25,44 +25,45 @@
  */
 
 /**
- * Description of MY_Controller
+ * Description of Model_user
  *
  * @author s4if
  */
-class MY_Controller extends CI_Controller {
+class Model_user extends CI_Model{
     
-    function __construct(){
+    public function __construct() {
         parent::__construct();
     }
     
-    protected function header($data = []){
-        return $this->load->view("core/header", $data, TRUE);
-    }
-    
-    protected function footer($data = []){
-        return $this->load->view("core/footer", $data, true);
-    }
-    
-    protected function navbar($data = []){
-        return $this->load->view("core/navbar", $data, true);
-    }
-    
-    protected function sidenav($data = []){
-        return $this->load->view("core/sidenav", $data, true);
-    }
-    
-    protected function loadView($view_file, $data = []){
-        $data['alert'] = $this->load->view("core/alert",'',true);
-        $this->load->view($view_file, $data);
-    }
-    
-    protected function cekLogin(){
-        if($this->session->userdata('logged_in')){
-            return;
+    function login($nip, $password)
+    {
+        $this -> db -> select('nip, nama, password');
+        $this -> db -> from('user');
+        $this -> db -> where('nip = ' . "'" . $nip . "'"); 
+        $this -> db -> where('password = ' . "'" . MD5($password) . "'"); 
+        $this -> db -> limit(1);
+
+        $query = $this -> db -> get();
+
+        if($query -> num_rows() == 1)
+        {
+            return $query->result();
         }
-        else{
-            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap Login Dulu!"]);
-            redirect('login', 'refresh');
+        else
+        {
+            return false;
         }
+
+    }
+            
+    function checkPassword($nip, $passwd){
+        $data = $this->db->query("select password from guru Where nip = '".$nip."'");
+        $stored_passwd =  $data->row()->password;
+        return (md5($passwd) === $stored_passwd)? true : false;
+    }
+            
+    function updatePassword($nip, $passwd){
+        $res = $this->db->update("guru", ['password' => md5($passwd)],['nip' => $nip]);
+        return $res;
     }
 }

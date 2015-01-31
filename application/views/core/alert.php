@@ -1,6 +1,6 @@
 <?php
 
-/*
+/* 
  * The MIT License
  *
  * Copyright 2015 s4if.
@@ -24,45 +24,27 @@
  * THE SOFTWARE.
  */
 
-/**
- * Description of MY_Controller
- *
- * @author s4if
- */
-class MY_Controller extends CI_Controller {
-    
-    function __construct(){
-        parent::__construct();
-    }
-    
-    protected function header($data = []){
-        return $this->load->view("core/header", $data, TRUE);
-    }
-    
-    protected function footer($data = []){
-        return $this->load->view("core/footer", $data, true);
-    }
-    
-    protected function navbar($data = []){
-        return $this->load->view("core/navbar", $data, true);
-    }
-    
-    protected function sidenav($data = []){
-        return $this->load->view("core/sidenav", $data, true);
-    }
-    
-    protected function loadView($view_file, $data = []){
-        $data['alert'] = $this->load->view("core/alert",'',true);
-        $this->load->view($view_file, $data);
-    }
-    
-    protected function cekLogin(){
-        if($this->session->userdata('logged_in')){
-            return;
-        }
-        else{
-            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap Login Dulu!"]);
-            redirect('login', 'refresh');
-        }
-    }
+if(empty($this->session->flashdata('notices')) === false){
+    ?>
+<div class="alert alert-success alert-dismissible">
+<?php
+    echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
+            '<span aria-hidden="true">&times;</span><span class="sr-only">'.
+            'Close</span></button>'.
+            implode('</p><p>', $this->session->flashdata('notices')) . '</p>';	
+    ?>
+</div>
+<?php
+}
+if(empty($this->session->flashdata('errors')) === false){
+    ?>
+<div class="alert alert-warning alert-dismissible">
+<?php
+    echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
+            '<span aria-hidden="true">&times;</span><span class="sr-only">'.
+            'Close</span></button>'.
+            implode('</p><p>', $this->session->flashdata('errors')) . '</p></span></button>';	
+    ?>
+</div>
+<?php
 }

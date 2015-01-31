@@ -27,35 +27,12 @@
 <?=$header?>
 <div class="container" style="margin-top:30px">
     <div class="col-md-4 col-md-offset-4">
-        <?php if(empty($this->session->flashdata('notices')) === false){
-            ?>
-        <div class="alert alert-success alert-dismissible">
-        <?php
-            echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
-                    '<span aria-hidden="true">&times;</span><span class="sr-only">'.
-                    'Close</span></button>'.
-                    implode('</p><p>', $this->session->flashdata('notices')) . '</p>';	
-            ?>
-        </div>
-        <?php
-        }
-        if(empty($this->session->flashdata('errors')) === false){
-            ?>
-        <div class="alert alert-warning alert-dismissible">
-        <?php
-            echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
-                    '<span aria-hidden="true">&times;</span><span class="sr-only">'.
-                    'Close</span></button>'.
-                    implode('</p><p>', $this->session->flashdata('errors')) . '</p></span></button>';	
-            ?>
-        </div>
-        <?php
-        } ?>
+        <?=$alert?>
         <div class="panel panel-primary">
             <div class="panel-heading"><h3 class="panel-title"><strong>Silahkan Login</strong></h3></div>
             <div class="panel-body">
                 <?php echo validation_errors(); ?>
-                <?php echo form_open('verify_login'); ?>
+                <?php echo form_open('login/verify'); ?>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="NIP" name="nip" value="<?php echo isset($data['nip'])? $data['nip']:'';?>" required="true">
                     </div>
@@ -64,7 +41,7 @@
                     </div>
                     <button type="submit" class="btn btn-sm btn-default col-xs-4">Masuk</button>
                     <a href="<?= base_url()."presensi/"?>" class="btn btn-sm btn-warning col-xs-6 col-xs-offset-2">Halaman Presensi</a>
-                </form>
+                <?=form_close()?>
             </div>
         </div>
     </div>
