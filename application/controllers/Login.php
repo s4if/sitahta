@@ -11,14 +11,25 @@
  *
  * @author s4if
  */
-class Login extends CI_Controller {
+
+class Login extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
     
     public function index(){
-        $view = 'Login Index';
-        echo $view;
-        return $view;
-    }
+        if($this->session->userdata('logged_in'))
+        {
+            redirect('admin/home', 'refresh');
+        }
+        else
+        {
+            $this->load->helper('form');
+            $data = [
+                'header' => $this->header(['title' => 'Login SIPERPU']),
+                'footer'=> $this->footer()
+            ];
+            $this->load->view("login/index",$data);
+        }   
+    }   
 }
