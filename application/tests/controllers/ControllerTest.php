@@ -65,9 +65,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase
          * Should be asserted as expected
          */
 //        public function testLoginController() {
-//            
 //            $this->assertTrue(class_exists('Login'), 'Login is loadable');
 //        }
 }
-
-?>

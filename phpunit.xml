@@ -11,9 +11,9 @@
 		<server name="REMOTE_ADDR" value="0.0.0.0" />
 	</php>
 	<filter>
-		<blacklist>
-			<directory suffix=".php">system</directory>
-			<!--directory suffix=".php">application/libraries</directory-->
-		</blacklist>
+                <blacklist>
+                        <directory suffix=".php">system</directory>
+                        <!--directory suffix=".php">application/libraries</directory-->
+                </blacklist>
 	</filter>
 </phpunit>

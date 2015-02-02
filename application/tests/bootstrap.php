@@ -40,12 +40,4 @@ spl_autoload_register(function ($class) {
     foreach (glob(APPPATH.'controllers/'.ucfirst(strtolower($class).'.php')) as $controller) {
         require_once $controller;
     }
-
-    foreach (glob(APPPATH.'libraries/'.ucfirst(strtolower($class).'.php')) as $controller) {
-        require_once $controller;
-    }
-
-    foreach (glob(BASEPATH.'libraries/'.ucfirst(strtolower($class).'.php')) as $controller){
-        require_once $controller;
-    }
 });
