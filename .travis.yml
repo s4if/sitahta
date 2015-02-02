@@ -8,3 +8,7 @@ before_script:
   - mysql -e 'create database sitahta;'
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - composer install
+  
+script:
+- phpunit #default test command
+- phpunit -c phpunit.xml #custom test command to make sure CLI args don't break the test
