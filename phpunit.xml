@@ -13,7 +13,7 @@
 	<filter>
                 <blacklist>
                         <directory suffix=".php">system</directory>
-                        <!--directory suffix=".php">application/libraries</directory-->
+                        <directory suffix=".php">application/libraries</directory>
                 </blacklist>
 	</filter>
 </phpunit>
