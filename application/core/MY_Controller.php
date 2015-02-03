@@ -33,6 +33,12 @@ class MY_Controller extends CI_Controller {
     
     function __construct(){
         parent::__construct();
+        if (is_cli())
+        {
+            $_SESSION = array();
+        }  else {
+            $this->load->library('session');
+        }
     }
     
     protected function header($data = []){
