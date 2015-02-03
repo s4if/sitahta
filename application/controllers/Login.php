@@ -29,69 +29,45 @@ class Login extends MY_Controller {
     }
     
     public function login(){
-        if($this->session->userdata('logged_in'))
+        if($this->blockLoggedOne())
         {
             redirect('admin/home', 'refresh');
         }
         else
         {
-            $this->load->helper('form');
             $data = [
-                'header' => $this->header(['title' => 'Login SIPERPU']),
+                'header' => $this->header(['title' => 'Login SITAHTA']),
                 'footer'=> $this->footer()
             ];
             $this->loadView("login/index",$data);
         }
     }
-
-    public function verify(){
-    //This method will have the credentials validation
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('nip', 'nip', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
-
-        if($this->form_validation->run() == FALSE)
-        {
-            //Field validation failed.  User redirected to login page
-            $data = [
-                'header' => $this->header(['title' => 'Login SIPERPU']),
-                'footer'=> $this->footer()
-            ];
-            $this->loadView("login/index",$data);
-        }
-        else
-        {
-            //Go to private area
-            redirect('admin/home', 'refresh');
-        }
     
-    }
-  
-    function check_database($password)
-    {
-        //Field validation succeeded.  Validate against database
-        $nip = $this->input->post('nip');
-
-        //query the database
-        $result = $this->user->login($nip, $password);
-
-        if($result)
-        {
-            $sess_array = array();
-            foreach($result as $row)
-            {
-                $sess_array = array(
-                  'nip' => $row->nip,
-                  'nama' => $row->nama
-                );
-                $this->session->set_userdata('logged_in', $sess_array);
+    public function verify(){
+        $nip = $this->input->post('nip', TRUE);
+        $password = $this->input->post('password', TRUE);
+        if(!$this->user->checkUserid($nip)){
+            $this->session->set_flashdata("errors",[0 => "Maaf, "
+                . "User dengan id : ".$nip." tidak ada"]);
+            redirect('login/login', 'refresh');
+        }else{
+            if($this->user->checkPassword($nip, $password)){
+                $this->set_data($nip);
+                redirect('admin/home', 'refresh');
+            }else{
+                $this->session->set_flashdata("errors",[0 => "Maaf, Password anda salah"]);
+                redirect('login/login', 'refresh');
             }
-            return TRUE;
         }
-        else
-        {
-            $this->form_validation->set_message('check_database', 'NIP atau Password Salah!');
-            return false;
-        }
+    }
+    
+    private function set_data($nip){
+        $data = $this->user->getData($nip);
+        $this->session->set_userdata('logged_in',$data);
+    }
+    
+    public function logout(){
+        $this->session->sess_destroy();
+        redirect('login/login', 'refresh');
     }
 }

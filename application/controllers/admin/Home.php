@@ -25,34 +25,17 @@
  */
 
 /**
- * Description of Model_user
+ * Description of Home
  *
  * @author s4if
  */
-class Model_user extends CI_Model{
-    
+class Home extends MY_Controller{
     public function __construct() {
         parent::__construct();
     }
     
-    public function checkUserid($nip){
-        $query = $this->db->query("select * from user Where nip = '".$nip."'");
-        return ($query -> num_rows() >= 1)? TRUE : FALSE;
-    }
-    
-    public function checkPassword($nip, $passwd){
-        $data = $this->db->query("select password from user Where nip = '".$nip."'");
-        $stored_passwd =  $data->row()->password;
-        return (md5($passwd) === $stored_passwd)? true : false;
-    }
-    
-    public function getData($nip){
-        $data = $this->db->query("select nip, nama from user Where nip = '".$nip."'");
-        return $stored_passwd =  $data->row();
-    }
-            
-    function updatePassword($nip, $passwd){
-        $res = $this->db->update("user", ['password' => md5($passwd)],['nip' => $nip]);
-        return $res;
+    public function index(){
+        $this->blockUnloggedOne();
+        echo 'Selamat Datang '.$this->session->logged_in->nama.' || <a href='.  base_url() ."login/logout>logout</a>";
     }
 }

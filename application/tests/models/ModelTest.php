@@ -62,5 +62,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
         
         public function testModel_userController() {
             $this->assertTrue(class_exists('Model_user'), 'Login is loadable');
+            $model = new Model_user();
+            $this->assertTrue($model->checkUserid(1));
+            //method checkPassword
+            $this->assertTrue($model->checkPassword(1, 'qwerty'));
+            $this->assertFalse($model->checkPassword(1, 'foo'));
+            //method getData
+            $this->assertObjectHasAttribute('nip', $model->getData('1'));
+            $this->assertObjectHasAttribute('nama', $model->getData('1'));
         }
 }

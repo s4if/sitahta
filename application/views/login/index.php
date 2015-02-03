@@ -31,8 +31,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading"><h3 class="panel-title"><strong>Silahkan Login</strong></h3></div>
             <div class="panel-body">
-                <?php echo validation_errors(); ?>
-                <?php echo form_open('login/verify'); ?>
+                <form action="<?= base_url()."login/verify"?>" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="NIP" name="nip" value="<?php echo isset($data['nip'])? $data['nip']:'';?>" required="true">
                     </div>
@@ -41,7 +40,7 @@
                     </div>
                     <button type="submit" class="btn btn-sm btn-default col-xs-4">Masuk</button>
                     <a href="<?= base_url()."presensi/"?>" class="btn btn-sm btn-warning col-xs-6 col-xs-offset-2">Halaman Presensi</a>
-                <?=form_close()?>
+                </form>
             </div>
         </div>
     </div>
