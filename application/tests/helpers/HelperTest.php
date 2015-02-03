@@ -16,5 +16,3 @@ class EmailHelperTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse(valid_email('test#test.com'));
 	}
 }
-
-?>

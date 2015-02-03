@@ -18,7 +18,8 @@ class Login extends MY_Controller {
         $this->load->model('model_user','user',TRUE);
     }
     
-//    public function index(){
+    public function index(){
+        echo 'ex';
 //        $this->load->library('session');
 //        if($this->session->userdata('logged_in'))
 //        {
@@ -33,7 +34,7 @@ class Login extends MY_Controller {
 //            ];
 //            $this->loadView("login/index",$data);
 //        }   
-//    }
+    }
 //    
 //    public function verify(){
 //    //This method will have the credentials validation

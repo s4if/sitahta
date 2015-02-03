@@ -64,7 +64,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase
          * This test will check output of login/index
          * Should be asserted as expected
          */
-//        public function testLoginController() {
-//            $this->assertTrue(class_exists('Login'), 'Login is loadable');
-//        }
+        public function testLoginController() {
+            $this->assertTrue(class_exists('Login'), 'Login is loadable');
+        }
 }
