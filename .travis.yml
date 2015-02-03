@@ -6,7 +6,7 @@ php:
   
 before_script:
   - mysql -e 'create database sitahta;'  
-  - echo "USE mysql;\nCREATE TABLE IF 'user' ('nip' varchar(15) NOT NULL, 'password' varchar(512) NOT NULL, 'nama' varchar(40) NOT NULL, PRIMARY KEY ('nip'))" | mysql -u root
+  - echo "USE mysql;\nCREATE TABLE 'user' ('nip' varchar(15) NOT NULL, 'password' varchar(512) NOT NULL, 'nama' varchar(40) NOT NULL, PRIMARY KEY ('nip'))" | mysql -u root
   - echo "USE mysql;\nINSERT INTO 'user' ('nip', 'password', 'nama') VALUES ('1', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'admin');" | mysql -u root
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - composer install
