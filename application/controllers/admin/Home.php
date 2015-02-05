@@ -35,6 +35,16 @@ class Home extends MY_Controller{
     }
     
     public function index(){
+        if (is_cli())
+        {
+            echo 'This Is For Avoiding Load Session in CLI. ';
+            return;
+        }  else {
+            $this->realIndex();
+        }
+    }
+    
+    public function realIndex(){
         $this->blockUnloggedOne();
         $data = [
             'header' => $this->header(['title' => 'Home',
