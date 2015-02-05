@@ -3,7 +3,7 @@
 /* 
  * The MIT License
  *
- * Copyright 2014 s4if.
+ * Copyright 2015 s4if.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 ?>
-<html lang="en">
-<head>
+<!DOCTYPE html>
+<?=$header?>
+<div id="wrapper">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <?=$navbar?>
 
-    <title><?=$title?>Template</title>
+    <div id="page-wrapper">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="<?=  base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
+        <div class="container-fluid">
 
-    <!-- Custom CSS -->
-    <link href="<?=  base_url() ?>assets/css/sb-admin.css" rel="stylesheet">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        Blank Page
+                        <small>Subheading</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-dashboard"></i>  <a href="#">Dashboard</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-file"></i> Blank Page
+                        </li>
+                    </ol>
+                    Selamat Datang <?=$nama?> || <a href="<?=base_url()?>login/logout>logout">logout</a>
+                </div>
+            </div>
+            <!-- /.row -->
 
-    <!-- Custom Fonts -->
-    <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-</head>
+        </div>
+        <!-- /.container-fluid -->
 
-<body>
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+    <!-- /#wrapper -->
+<?=$footer?>

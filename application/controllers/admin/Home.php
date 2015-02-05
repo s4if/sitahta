@@ -36,6 +36,14 @@ class Home extends MY_Controller{
     
     public function index(){
         $this->blockUnloggedOne();
-        echo 'Selamat Datang '.$this->session->logged_in->nama.' || <a href='.  base_url() ."login/logout>logout</a>";
+        $data = [
+            'header' => $this->header(['title' => 'Home',
+                'user' => $this->session->logged_in->nama
+                ]),
+            'navbar' => $this->navbar(),
+            'footer' => $this->footer(),
+            'nama' => $this->session->logged_in->nama
+        ];
+        $this->loadView('admin/index', $data);
     }
 }

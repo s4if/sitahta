@@ -36,8 +36,7 @@ class Login extends MY_Controller {
         else
         {
             $data = [
-                'header' => $this->header(['title' => 'Login SITAHTA']),
-                'footer'=> $this->footer()
+                'title' => 'Login SITAHTA'
             ];
             $this->loadView("login/index",$data);
         }
