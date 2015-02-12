@@ -24,11 +24,11 @@ class Login extends MY_Controller {
             echo 'This Is CLI. ';
             return;
         }  else {
-            $this->login();
+            $this->realIndex();
         }
     }
     
-    public function login(){
+    public function realIndex(){
         if($this->blockLoggedOne())
         {
             redirect('admin/home', 'refresh');
@@ -48,25 +48,25 @@ class Login extends MY_Controller {
         if(!$this->user->checkUserid($nip)){
             $this->session->set_flashdata("errors",[0 => "Maaf, "
                 . "User dengan id : ".$nip." tidak ada"]);
-            redirect('login/login', 'refresh');
+            redirect('login', 'refresh');
         }else{
             if($this->user->checkPassword($nip, $password)){
                 $this->set_data($nip);
                 redirect('admin/home', 'refresh');
             }else{
                 $this->session->set_flashdata("errors",[0 => "Maaf, Password anda salah"]);
-                redirect('login/login', 'refresh');
+                redirect('login', 'refresh');
             }
         }
     }
     
     private function set_data($nip){
         $data = $this->user->getData($nip);
-        $this->session->set_userdata('logged_in',$data);
+        $this->session->set_userdata('login_data',$data);
     }
     
     public function logout(){
         $this->session->sess_destroy();
-        redirect('login/login', 'refresh');
+        redirect('login', 'refresh');
     }
 }
