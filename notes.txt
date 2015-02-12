@@ -1,3 +1,9 @@
 [31/1/2015]
 -   i just commented line #566 in /system/core/Common.php if something error, be 
     sure to check that...
+
+[6/2/2015]
+-   Standard for this project :
+        > Interface in Indonesian
+        > Class & function in english (Class using pascal Rule & function use Camel)
+        > Variable is better mixed, using underscore for multi word

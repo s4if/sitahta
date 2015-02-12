@@ -32,6 +32,7 @@
 class Home extends MY_Controller{
     public function __construct() {
         parent::__construct();
+        $this->load->model('model_user','user',TRUE);
     }
     
     public function index(){
@@ -48,12 +49,36 @@ class Home extends MY_Controller{
         $this->blockUnloggedOne();
         $data = [
             'header' => $this->header(['title' => 'Home',
-                'user' => $this->session->logged_in->nama
+                'user' => ucwords($this->session->login_data->nama)
                 ]),
             'navbar' => $this->navbar(),
             'footer' => $this->footer(),
-            'nama' => $this->session->logged_in->nama
+            'nama' => $this->session->login_data->nama
         ];
         $this->loadView('admin/index', $data);
+    }
+    
+    public function password(){
+        $this->blockUnloggedOne();
+        $data = [
+            'header' => $this->header(['title' => 'Ganti Password',
+                'user' => ucwords($this->session->login_data->nama)
+                ]),
+            'navbar' => $this->navbar(),
+            'footer' => $this->footer(),
+            'nama' => $this->session->login_data->nama
+        ];
+        $this->loadView('admin/password', $data);
+    }
+    
+    public function chPassword(){
+        $new_pass = $this->input->post('new_password', true);
+        $confirm_pass = $this->input->post('confirm_password', TRUE);
+        if($new_pass === $confirm_pass){
+            if($this->user->checkPassword($this->session->login_data->nip));
+        }  else {
+            
+        }
+        
     }
 }

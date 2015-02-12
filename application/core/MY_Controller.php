@@ -64,7 +64,7 @@ class MY_Controller extends CI_Controller {
     
     //nilai true jika hanya bisa diakses setelah login
     protected function blockLoggedOne(){
-        if(!$this->session->has_userdata('logged_in')){
+        if(!$this->session->has_userdata('login_data')){
             return;
         }
         else{
@@ -74,12 +74,12 @@ class MY_Controller extends CI_Controller {
     }
     
     protected function blockUnloggedOne(){
-        if($this->session->has_userdata('logged_in')){
+        if($this->session->has_userdata('login_data')){
             return;
         }
         else{
             $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap Login Dulu!"]);
-            redirect('login/login', 'refresh');
+            redirect('login', 'refresh');
         }
     }
 }

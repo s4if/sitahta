@@ -32,23 +32,20 @@
 
     <div id="page-wrapper">
 
-        <div class="container-fluid">
+        <div class="container">
 
             <!-- Page Heading -->
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        Blank Page
-                        <small>Subheading</small>
+                        Beranda
                     </h1>
                     <ol class="breadcrumb">
                         <li>
-                            <i class="fa fa-dashboard"></i>  <a href="#">Dashboard</a>
-                        </li>
-                        <li class="active">
-                            <i class="fa fa-file"></i> Blank Page
+                            <i class="fa fa-dashboard active"></i>  <a href="">Beranda</a>
                         </li>
                     </ol>
+                    <?=$alert?>
                     Selamat Datang <?=$nama?> || <a href="<?=base_url()?>login/logout>logout">logout</a>
                 </div>
             </div>
