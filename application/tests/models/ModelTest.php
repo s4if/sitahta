@@ -70,5 +70,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
             //method getData
             $this->assertObjectHasAttribute('nip', $model->getData('1'));
             $this->assertObjectHasAttribute('nama', $model->getData('1'));
+            $this->assertTrue($model->updatePassword(1, 'qwerty'));
         }
 }
