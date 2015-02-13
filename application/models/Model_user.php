@@ -36,18 +36,18 @@ class Model_user extends CI_Model{
     }
     
     public function checkUserid($nip){
-        $query = $this->db->query("select * from user Where nip = '".$nip."'");
+        $query = $this->db->query("select * from user Where nip = ?", [$nip]);
         return ($query -> num_rows() >= 1)? TRUE : FALSE;
     }
     
     public function checkPassword($nip, $passwd){
-        $data = $this->db->query("select password from user Where nip = '".$nip."'");
+        $data = $this->db->query("select password from user Where nip = ?", [$nip]);
         $stored_passwd =  $data->row()->password;
         return (md5($passwd) === $stored_passwd)? true : false;
     }
     
     public function getData($nip){
-        $data = $this->db->query("select nip, nama from user Where nip = '".$nip."'");
+        $data = $this->db->query("select nip, nama from user Where nip = ?", [$nip]);
         return $stored_passwd =  $data->row();
     }
             
