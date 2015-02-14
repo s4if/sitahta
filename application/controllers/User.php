@@ -1,6 +1,6 @@
 <?php
 
-class Siswa extends My_Controller {
+class User extends My_Controller {
 
 	/**
 	 * Index Page for this controller.

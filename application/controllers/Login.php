@@ -61,7 +61,7 @@ class Login extends MY_Controller {
         if($position === 'admin'){
             redirect('admin/home', 'refresh');
         }else{
-            redirect('siswa/index', 'refresh');
+            redirect('user/index', 'refresh');
         }
     }
     
