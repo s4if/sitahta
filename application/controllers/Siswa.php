@@ -1,7 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Siswa extends My_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,6 +19,6 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcome_message');
+            echo 'Selamat Datang '.$this->session->login_data->nama.'|| <a href="'.base_url().'login/logout">logout</a>';
 	}
 }

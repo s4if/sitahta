@@ -60,16 +60,19 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //Hasil Kreasi sendiri
         //======================================================================
         
-        public function testModel_userController() {
-            $this->assertTrue(class_exists('Model_user'), 'Login is loadable');
-            $model = new Model_user();
-            $this->assertTrue($model->checkUserid(1));
+        public function testModel_loginController() {
+            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
+            $model = new Model_login();
+            $this->assertStringStartsWith($model->checkUserid(1), 'admin');
+            $this->assertStringStartsWith($model->checkUserid(1001), 'user');
+            $this->assertStringStartsWith($model->checkUserid(109), 'null');
             //method checkPassword
-            $this->assertTrue($model->checkPassword(1, 'qwerty'));
-            $this->assertFalse($model->checkPassword(1, 'foo'));
+            $this->assertTrue($model->checkPassword(1, 'qwerty', 'admin'));
+            $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
+            $this->assertFalse($model->checkPassword(1, 'foo', 'user'));
             //method getData
-            $this->assertObjectHasAttribute('nip', $model->getData('1'));
-            $this->assertObjectHasAttribute('nama', $model->getData('1'));
-            $this->assertTrue($model->updatePassword(1, 'qwerty'));
+            $this->assertObjectHasAttribute('nip', $model->getData('1','admin'));
+            $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
+            $this->assertTrue($model->updatePassword(1, 'qwerty', 'admin'));
         }
 }

@@ -10,3 +10,4 @@
 
 [13/2/2015]
 -   Must use query binding for any query!!
+-   Return that differentiate beetween admin and user, uses string (user, admin, none)

@@ -64,21 +64,15 @@ class MY_Controller extends CI_Controller {
     
     //nilai true jika hanya bisa diakses setelah login
     protected function blockLoggedOne(){
-        if(!$this->session->has_userdata('login_data')){
-            return;
-        }
-        else{
-            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap Login Dulu!"]);
+        if($this->session->has_userdata('login_data')){
+            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap logout Dulu!"]);
             redirect('admin/home', 'refresh');
         }
     }
     
     protected function blockUnloggedOne(){
-        if($this->session->has_userdata('login_data')){
-            return;
-        }
-        else{
-            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap Login Dulu!"]);
+        if(!$this->session->has_userdata('login_data')){
+            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap login Dulu!"]);
             redirect('login', 'refresh');
         }
     }

@@ -15,7 +15,7 @@
 class Login extends MY_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('model_user','user',TRUE);
+        $this->load->model('model_login','user',TRUE);
     }
     
     public function index(){
@@ -29,30 +29,27 @@ class Login extends MY_Controller {
     }
     
     public function realIndex(){
-        if($this->blockLoggedOne())
-        {
-            redirect('admin/home', 'refresh');
-        }
-        else
-        {
-            $data = [
-                'title' => 'Login SITAHTA'
-            ];
-            $this->loadView("login/index",$data);
-        }
+        $this->blockLoggedOne();
+        $data = [
+            'title' => 'Login SITAHTA'
+        ];
+        $this->loadView("login/index",$data);
     }
     
     public function verify(){
-        $nip = $this->input->post('nip', TRUE);
+        $id = $this->input->post('nip', TRUE);
         $password = $this->input->post('password', TRUE);
-        if(!$this->user->checkUserid($nip)){
+        $position = $this->user->checkUserid($id);
+        if($position === 'null'){
             $this->session->set_flashdata("errors",[0 => "Maaf, "
-                . "User dengan id : ".$nip." tidak ada"]);
+                . "User dengan nis/nip : ".$id." tidak ada"]);
             redirect('login', 'refresh');
         }else{
-            if($this->user->checkPassword($nip, $password)){
-                $this->set_data($nip);
-                redirect('admin/home', 'refresh');
+            if($this->user->checkPassword($id, $password, $position)){
+             $this->session->set_userdata('position', $position);
+                $this->setData($id, $position);
+                echo $this->session->login_data->nama;
+                $this->redir($position);
             }else{
                 $this->session->set_flashdata("errors",[0 => "Maaf, Password anda salah"]);
                 redirect('login', 'refresh');
@@ -60,9 +57,17 @@ class Login extends MY_Controller {
         }
     }
     
-    private function set_data($nip){
-        $data = $this->user->getData($nip);
-        $this->session->set_userdata('login_data',$data);
+    private function redir($position){
+        if($position === 'admin'){
+            redirect('admin/home', 'refresh');
+        }else{
+            redirect('siswa/index', 'refresh');
+        }
+    }
+    
+    private function setData($id, $position){
+        $data = $this->user->getData($id, $position);
+        $this->session->set_userdata('login_data', $data);
     }
     
     public function logout(){

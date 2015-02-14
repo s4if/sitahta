@@ -29,30 +29,72 @@
  *
  * @author s4if
  */
-class Model_user extends CI_Model{
+class Model_login extends CI_Model{
     
     public function __construct() {
         parent::__construct();
     }
     
-    public function checkUserid($nip){
-        $query = $this->db->query("select * from user Where nip = ?", [$nip]);
-        return ($query -> num_rows() >= 1)? TRUE : FALSE;
+    public function checkUserid($id){
+        $query = $this->db->query("select * from guru Where nip = ?", [$id]);
+        if($query->num_rows() >= 1){
+            //return level admin (guru)
+            return 'admin';
+        }else{
+            $query = $this->db->query("select * from siswa Where nis = ?", [$id]);
+            if($query->num_rows() >= 1){
+                //return level user (siswa)
+                return 'user';
+            }else{
+                //return string 'null' if nothing found
+                return 'null';
+            }
+        }
     }
     
-    public function checkPassword($nip, $passwd){
-        $data = $this->db->query("select password from user Where nip = ?", [$nip]);
+    public function checkPassword($id, $passwd, $position){
+        if($position === 'admin'){
+            $data = $this->db->query("select password from guru Where nip = ?", [$id]);
+        }elseif ($position === 'user') {
+            $data = $this->db->query("select password from siswa Where nis = ?", [$id]);
+        }
         $stored_passwd =  $data->row()->password;
         return (md5($passwd) === $stored_passwd)? true : false;
     }
     
-    public function getData($nip){
-        $data = $this->db->query("select nip, nama from user Where nip = ?", [$nip]);
+    public function getData($id, $position){
+        if($position === 'admin'){
+            return $this->getDataGuru($id);
+        }elseif ($position === 'user') {
+            return $this->getDataSiswa($id);
+        }
+    }
+    
+    private function getDataGuru($id){
+        $data = $this->db->query("select * from guru Where nip = ?", [$id]);
+        return $stored_passwd =  $data->row();
+    }
+    
+    private function getDataSiswa($id){
+        $data = $this->db->query("select * from siswa Where nis = ?", [$id]);
         return $stored_passwd =  $data->row();
     }
             
-    function updatePassword($nip, $passwd){
-        $res = $this->db->update("user", ['password' => md5($passwd)],['nip' => $nip]);
+    public function updatePassword($id, $passwd, $position){
+        if($position === 'admin'){
+            return $this->updatePasswordGuru($id, $passwd);
+        }elseif ($position === 'user') {
+            return $this->updatePasswordSiswa($id, $passwd);
+        }
+    }
+    
+    private function updatePasswordGuru($id, $passwd){
+        $res = $this->db->update("guru", ['password' => md5($passwd)],['nip' => $id]);
+        return $res;
+    } 
+    
+    private function updatePasswordSiswa($id, $passwd){
+        $res = $this->db->update("siswa", ['password' => md5($passwd)],['nis' => $id]);
         return $res;
     }
 }
