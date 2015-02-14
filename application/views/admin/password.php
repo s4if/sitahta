@@ -44,10 +44,10 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li>
-                            <i class="fa fa-dashboard"></i>  <a href="<?=base_url();?>admin/home">Beranda</a>
+                            <a href="<?=base_url();?>admin/home">Beranda</a>
                         </li>
                         <li class="active">
-                            <i class="fa fa-file"></i> Ganti Password
+                            Ganti Password
                         </li>
                     </ol>
                     <div class="container-fluid">

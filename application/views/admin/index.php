@@ -42,11 +42,11 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li>
-                            <i class="fa fa-dashboard active"></i>  <a href="">Beranda</a>
+                            <a href="">Beranda</a>
                         </li>
                     </ol>
                     <?=$alert?>
-                    Selamat Datang <?=$nama?> || <a href="<?=base_url()?>login/logout">logout</a>
+                    Selamat Datang <?=$nama?> Posisi : <?=$position?> || <a href="<?=base_url()?>login/logout">logout</a>
                 </div>
             </div>
             <!-- /.row -->
