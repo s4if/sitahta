@@ -14,7 +14,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
 	 * It skips the test if the environment doesn't grant enough permissions
 	 * to create folder and file.
 	 */
-	public function testLoadControllerFromSubfolder()
+	public function testLoadModelFromSubfolder()
 	{
 		$folder = APPPATH.'models/testsubfolder';
 		
@@ -60,7 +60,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //Hasil Kreasi sendiri
         //======================================================================
         
-        public function testModel_loginController() {
+        public function testModel_login() {
             $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
             $model = new Model_login();
             $this->assertStringStartsWith($model->checkUserid(1), 'admin');
