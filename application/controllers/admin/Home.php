@@ -32,7 +32,7 @@
 class Home extends MY_Controller{
     public function __construct() {
         parent::__construct();
-        $this->load->model('model_user','user',TRUE);
+        //$this->load->model('model_login','user',TRUE);
     }
     
     public function index(){

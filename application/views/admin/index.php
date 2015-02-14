@@ -46,7 +46,7 @@
                         </li>
                     </ol>
                     <?=$alert?>
-                    Selamat Datang <?=$nama?> || <a href="<?=base_url()?>login/logout>logout">logout</a>
+                    Selamat Datang <?=$nama?> || <a href="<?=base_url()?>login/logout">logout</a>
                 </div>
             </div>
             <!-- /.row -->
