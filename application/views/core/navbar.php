@@ -34,22 +34,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="master.html">SB Admin</a>
+        <a class="navbar-brand" href="#">SB Admin</a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?=$user?> <b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> &nbsp; <?=$user?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><i class="fa fa-fw fa-user"></i> Profil</a>
+                    <a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp; Profil</a>
                 </li>
                 <li>
-                    <a href="<?=base_url();?>admin/home/password"><i class="fa fa-fw fa-gear"></i> Kata Sandi</a>
+                    <a href="<?=base_url();?>admin/home/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="<?=base_url()?>login/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                    <a href="<?=base_url()?>login/logout"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out</a>
                 </li>
             </ul>
         </li>
@@ -58,37 +58,29 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li>
-                <a href="master.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <a href="<?=base_url()?>admin/home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
             </li>
+            <?php if($position === 'admin'):?>
             <li>
-                <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-            </li>
-            <li>
-                <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-            </li>
-            <li>
-                <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-            </li>
-            <li>
-                <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-            </li>
-            <li>
-                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-            </li>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="glyphicon glyphicon-chevron-down"></i> &nbsp; Guru <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo" class="collapse">
                     <li>
-                        <a href="#">Dropdown Item</a>
+                        <a href="#">Lihat Guru</a>
                     </li>
                     <li>
-                        <a href="#">Dropdown Item</a>
+                        <a href="#">Tambah Guru</a>
+                    </li>
+                    <li>
+                        <a href="#">Edit Guru</a>
                     </li>
                 </ul>
             </li>
-            <li class="active">
-                <a href="master.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+            <?php else :?>
+            <!-- Nanti diganti dengan yang sesuai!! -->
+            <li>
+                <a href="<?=base_url()?>"><i class="glyphicon glyphicon-dashboard"></i> &nbsp; User</a>
             </li>
+            <?php endif;?>
         </ul>
     </div>
     <!-- /.navbar-collapse -->

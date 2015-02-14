@@ -23,9 +23,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
-if(empty($this->session->flashdata('notices')) === false){
-    ?>
+?>
+<?php if(empty($this->session->flashdata('notices')) === false): ?>
 <div class="alert alert-success alert-dismissible">
 <?php
     echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
@@ -34,10 +33,8 @@ if(empty($this->session->flashdata('notices')) === false){
             implode('</p><p>', $this->session->flashdata('notices')) . '</p>';	
     ?>
 </div>
-<?php
-}
-if(empty($this->session->flashdata('errors')) === false){
-    ?>
+<?php endif; ?>
+<?php if(empty($this->session->flashdata('errors')) === false): ?>
 <div class="alert alert-warning alert-dismissible">
 <?php
     echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
@@ -46,5 +43,4 @@ if(empty($this->session->flashdata('errors')) === false){
             implode('</p><p>', $this->session->flashdata('errors')) . '</p></span></button>';	
     ?>
 </div>
-<?php
-}
+<?php endif; ?>

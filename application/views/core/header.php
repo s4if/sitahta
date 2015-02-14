@@ -34,7 +34,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title><?=$title?>Template</title>
+    <title><?=$title?></title>
 
     <!-- Bootstrap Core CSS -->
     <link href="<?=  base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
