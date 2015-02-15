@@ -33,6 +33,7 @@ class Guru extends MY_Controller {
     
     public function __construct() {
         parent::__construct();
+        $this->load->model('model_guru','guru',TRUE);
     }
     
     public function index(){
@@ -47,11 +48,13 @@ class Guru extends MY_Controller {
     
     public function lihat(){
         $this->blockUnloggedOne();
+        $data_guru = $this->guru->getData();
         $data = [
             'title' => 'Lihat Guru',
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
-            'nama' => $this->session->login_data->nama
+            'nama' => $this->session->login_data->nama,
+            'data_guru' => $data_guru
         ];
         $this->loadView('admin/guru/lihat', $data);
     }
@@ -66,9 +69,15 @@ class Guru extends MY_Controller {
         echo 'edit';
     }
     
-    public function hapus(){
+    public function hapus($nip){
         $this->blockUnloggedOne();
-        echo 'hapus';
+        if($this->guru->deleteData(['nip' => $nip])){
+            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
+            redirect('admin/guru/lihat', 'refresh');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, Guru dengan nip = ".$nip." tidak ditemukan"]);
+            redirect('admin/guru/lihat', 'refresh');
+        }
     }
     
 }

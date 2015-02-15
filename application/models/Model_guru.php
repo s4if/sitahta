@@ -42,20 +42,32 @@ class Model_guru extends CI_Model{
     }
     
     public function insertData($data, $table_name = 'guru'){
-        $this->setData($data);
-        $res = $this->db->insert($table_name);
-        return $res;
+        if(!$this->dataExist($data['nip'])){
+            $this->setData($data);
+            $this->db->insert($table_name);
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public function updateData($data, $table_name = 'guru'){
-        $this->setData($data);
-        $res = $this->db->replace($table_name);
-        return $res;
+        if($this->dataExist($data['nip'])){
+            $this->setData($data);
+            $this->db->update($table_name);
+            return true;
+        }else{
+            return false;
+        }
     }
     
-    public function deleteData($table_name, $where){
-        $res = $this->db->delete($table_name, $where);
-        return $res;
+    public function deleteData($where){
+        if($this->dataExist($where['nip'])){
+            $this->db->delete('guru', $where);
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public function setData($data){

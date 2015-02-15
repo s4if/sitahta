@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <h1 class="page-header">
-    Beranda
+    Lihat Guru
 </h1>
 <ol class="breadcrumb">
     <li>
@@ -33,6 +33,9 @@ THE SOFTWARE.
         Guru
     </li>
 </ol>
+<a class="btn btn-sm btn-success" href="<?php  echo base_url().'admin/guru/tambah/'?>">
+    <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah
+</a>
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
         <thead>
@@ -40,42 +43,46 @@ THE SOFTWARE.
                 <td>NIP</td>
                 <td>Nama</td>
                 <td>P/L</td>
+                <td>Alamat</td>
+                <td>E-mail</td>
+                <td>No. Telp</td>
                 <td>Aksi</td>
             </tr>
         </thead>
-<!--                            <tbody>
-            <?php
-            //foreach ($data_guru as $guru){?>
+        <tbody>
+            <?php foreach ($data_guru as $guru):?>
             <tr>
-            <td><?php //echo $guru['nip'];?></td>
-            <td><?php //echo $guru['nama'];?></td>
-            <td><?php echo $guru['jenis_kelamin'];?></td>
+            <td><?= $guru->nip;?></td>
+            <td><?= $guru->nama;?></td>
+            <td><?= $guru->jenis_kelamin;?></td>
+            <td><?= $guru->alamat;?></td>
+            <td><?= $guru->email;?></td>
+            <td><?= $guru->no_telp;?></td>
             <td>
-            <a class="btn btn-sm btn-success" href="<?php echo base_url().'admin/guru/edit/'.$guru['nip'];?>"><span class="glyphicon glyphicon-pencil"></span></a>
-            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?php echo $guru['nip'];?>">
+            <a class="btn btn-sm btn-info" href="<?php  echo base_url().'admin/guru/edit/'.$guru->nip;?>"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
-            <div class="modal fade" id="myModal<?php echo $guru['nip'];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel'.$guru['nip'].'" aria-hidden="true">
+            <div class="modal fade" id="myModal<?= $guru->nip;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$guru->nip?>" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel<?php echo $guru['nip'];?>">Konfirmasi</h4>
+            <h4 class="modal-title" id="myModalLabel<?= $guru->nip;?>">Konfirmasi</h4>
             </div>
             <div class="modal-body">
-            Apakah Anda Yakin Untuk Menghapus Data Guru dengan NIP = <?php echo $guru['nip'];?>
+            Apakah Anda Yakin Untuk Menghapus Data Guru dengan NIP = <?= $guru->nip;?>
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$guru['nip'];?>">OK</a>
+            <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$guru->nip;?>">OK</a>
             </div>
             </div>
             </div>
             </div>
             </td>
             </tr>
-            <?php
-            //}?>
-        </tbody>-->
+            <?php endforeach;?>
+        </tbody>
     </table>
 </div>

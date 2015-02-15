@@ -59,6 +59,39 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //======================================================================
         //Hasil Kreasi sendiri
         //======================================================================
+
+        public function testModel_guru() {
+            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
+            $model = new Model_guru();
+            //delete data
+            $this->assertTrue($model->deleteData(['nip' => 1]));
+            $this->assertFalse($model->deleteData(['nip' => 1]));
+            //add data
+            $data = [
+                'nip' => 1,
+                'nama' => 'admin',
+                'jenis_kelamin' => 'L',
+                'alamat' => 'foo city',
+                'email' => 'foo@google.com',
+                'no_telp' => '08674839291',
+                'password' => md5('qwerty')
+                ];
+            $this->assertTrue($model->insertData($data));
+            $this->assertFalse($model->insertData($data));
+            //update data
+            $this->assertTrue($model->updateData($data));
+            $data['nip'] = 4321;
+            $this->assertFalse($model->updateData($data));
+            //checkAttributes
+            $this->assertObjectHasAttribute('nip', $model->getData(1));
+            $this->assertObjectHasAttribute('nama', $model->getData(1));
+            $this->assertObjectHasAttribute('jenis_kelamin', $model->getData(1));
+            $this->assertObjectHasAttribute('alamat', $model->getData(1));
+            $this->assertObjectHasAttribute('email', $model->getData(1));
+            $this->assertObjectHasAttribute('password', $model->getData(1));
+            $mod_array = $model->getData();
+            $this->assertObjectHasAttribute('nip', $mod_array[0]);
+        }
         
         public function testModel_login() {
             $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
@@ -74,33 +107,5 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nip', $model->getData('1','admin'));
             $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
             $this->assertTrue($model->updatePassword(1, 'qwerty', 'admin'));
-        }
-        
-        public function testModel_guru() {
-            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
-            $model = new Model_guru();
-            //checkAttributes
-            $this->assertObjectHasAttribute('nip', $model->getData(1));
-            $this->assertObjectHasAttribute('nama', $model->getData(1));
-            $this->assertObjectHasAttribute('jenis_kelamin', $model->getData(1));
-            $this->assertObjectHasAttribute('alamat', $model->getData(1));
-            $this->assertObjectHasAttribute('email', $model->getData(1));
-            $this->assertObjectHasAttribute('password', $model->getData(1));
-            $mod_array = $model->getData();
-            $this->assertObjectHasAttribute('nip', $mod_array[0]);
-            //delete data
-            $this->assertTrue($model->deleteData('guru', ['nip' => 1]));
-            //add data
-            $data = [
-                'nip' => 1,
-                'nama' => 'admin',
-                'jenis_kelamin' => 'L',
-                'alamat' => 'foo city',
-                'email' => 'foo@google.com',
-                'password' => md5('qwerty')
-                ];
-            $this->assertTrue($model->insertData($data));
-            //update data
-            $this->assertTrue($model->updateData($data));
         }
 }

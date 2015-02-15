@@ -48,7 +48,7 @@ class Home extends MY_Controller{
     public function realIndex(){
         $this->blockUnloggedOne();
         $data = [
-            'title' => 'Home',
+            'title' => 'Beranda',
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->nama
