@@ -39,7 +39,26 @@
 <body>
 <div class="container" style="margin-top:30px">
     <div class="col-md-4 col-md-offset-4">
-        <?=$alert?>
+        <?php if(empty($this->session->flashdata('notices')) === false): ?>
+        <div class="alert alert-success alert-dismissible">
+        <?php
+            echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
+                    '<span aria-hidden="true">&times;</span><span class="sr-only">'.
+                    'Close</span></button>'.
+                    implode('</p><p>', $this->session->flashdata('notices')) . '</p>';	
+            ?>
+        </div>
+        <?php endif; ?>
+        <?php if(empty($this->session->flashdata('errors')) === false): ?>
+        <div class="alert alert-warning alert-dismissible">
+        <?php
+            echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
+                    '<span aria-hidden="true">&times;</span><span class="sr-only">'.
+                    'Close</span></button>'.
+                    implode('</p><p>', $this->session->flashdata('errors')) . '</p></span></button>';	
+            ?>
+        </div>
+        <?php endif; ?>
         <div class="panel panel-primary">
             <div class="panel-heading"><h3 class="panel-title"><strong>Silahkan Login</strong></h3></div>
             <div class="panel-body">

@@ -48,11 +48,9 @@ class Guru extends MY_Controller {
     public function lihat(){
         $this->blockUnloggedOne();
         $data = [
-            'header' => $this->header(['title' => 'Lihat Guru',
-                'user' => ucwords($this->session->login_data->nama)
-                ]),
-            'navbar' => $this->navbar(['position' => $this->session->position]),
-            'footer' => $this->footer(),
+            'title' => 'Lihat Guru',
+            'user' => ucwords($this->session->login_data->nama),
+            'position' => $this->session->position,
             'nama' => $this->session->login_data->nama
         ];
         $this->loadView('admin/guru/lihat', $data);

@@ -48,10 +48,9 @@ class Home extends MY_Controller{
     public function realIndex(){
         $this->blockUnloggedOne();
         $data = [
-            'header' => $this->header(['title' => 'Home',
-                'user' => ucwords($this->session->login_data->nama)
-                ]),
-            'navbar' => $this->navbar(['position' => $this->session->position]),
+            'title' => 'Home',
+            'user' => ucwords($this->session->login_data->nama),
+            'position' => $this->session->position,
             'footer' => $this->footer(),
             'nama' => $this->session->login_data->nama
         ];
@@ -61,11 +60,9 @@ class Home extends MY_Controller{
     public function password(){
         $this->blockUnloggedOne();
         $data = [
-            'header' => $this->header(['title' => 'Ganti Password',
-                'user' => ucwords($this->session->login_data->nama)
-                ]),
-            'navbar' => $this->navbar(),
-            'footer' => $this->footer(),
+            'title' => 'Ganti Password',
+            'user' => ucwords($this->session->login_data->nama),
+            'position' => $this->session->position,
             'nama' => $this->session->login_data->nama
         ];
         $this->loadView('admin/password', $data);

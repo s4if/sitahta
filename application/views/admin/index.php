@@ -24,39 +24,12 @@
  * THE SOFTWARE.
  */
 ?>
-<!DOCTYPE html>
-<?=$header?>
-<div id="wrapper">
-
-    <?=$navbar?>
-
-    <div id="page-wrapper">
-
-        <div class="container-fluid">
-
-            <!-- Page Heading -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">
-                        Beranda
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="">Beranda</a>
-                        </li>
-                    </ol>
-                    <?=$alert?>
-                    Selamat Datang <?=$nama?> Posisi : <?=$position?> || <a href="<?=base_url()?>login/logout">logout</a>
-                </div>
-            </div>
-            <!-- /.row -->
-
-        </div>
-        <!-- /.container-fluid -->
-
-    </div>
-    <!-- /#page-wrapper -->
-
-</div>
-    <!-- /#wrapper -->
-<?=$footer?>
+<h1 class="page-header">
+    Beranda
+</h1>
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Beranda</a>
+    </li>
+</ol>
+Selamat Datang <?=$nama?> Posisi : <?=$position?> || <a href="<?=base_url()?>login/logout">logout</a>

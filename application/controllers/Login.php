@@ -33,7 +33,7 @@ class Login extends MY_Controller {
         $data = [
             'title' => 'Login SITAHTA'
         ];
-        $this->loadView("login/index",$data);
+        $this->load->view("login/index",$data);
     }
     
     public function verify(){

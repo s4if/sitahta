@@ -24,6 +24,7 @@
  * THE SOFTWARE.
  */
 ?>
+<div class="col-lg-12">
 <?php if(empty($this->session->flashdata('notices')) === false): ?>
 <div class="alert alert-success alert-dismissible">
 <?php
@@ -35,7 +36,7 @@
 </div>
 <?php endif; ?>
 <?php if(empty($this->session->flashdata('errors')) === false): ?>
-<div class="alert alert-warning alert-dismissible">
+<div class="alert alert-danger alert-dismissible">
 <?php
     echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
             '<span aria-hidden="true">&times;</span><span class="sr-only">'.
@@ -44,3 +45,14 @@
     ?>
 </div>
 <?php endif; ?>
+<?php if(empty($this->session->flashdata('warnings')) === false): ?>
+<div class="alert alert-warning alert-dismissible">
+<?php
+    echo '<button type="button" class="close" data-dismiss="alert"><p>' . 
+            '<span aria-hidden="true">&times;</span><span class="sr-only">'.
+            'Close</span></button>'.
+            implode('</p><p>', $this->session->flashdata('warnings')) . '</p></span></button>';	
+    ?>
+</div>
+<?php endif; ?>
+</div>

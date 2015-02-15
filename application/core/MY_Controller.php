@@ -53,13 +53,17 @@ class MY_Controller extends CI_Controller {
         return $this->load->view("core/navbar", $data, true);
     }
     
-    protected function sidenav($data = []){
-        return $this->load->view("core/sidenav", $data, true);
+    protected function content($view_name, $data = []){
+        return $this->load->view($view_name, $data, true);
     }
     
-    protected function loadView($view_file, $data = []){
+    protected function loadView($view_name, $data = []){
+        $data['header'] = $this->header($data);
+        $data['navbar'] = $this->navbar($data);
         $data['alert'] = $this->load->view("core/alert",'',true);
-        $this->load->view($view_file, $data);
+        $data['content'] = $this->content($view_name, $data);
+        $data['footer'] = $this->footer($data);
+        $this->load->view('core/skeleton', $data);
     }
     
     //nilai true jika hanya bisa diakses setelah login
