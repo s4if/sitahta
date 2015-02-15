@@ -32,7 +32,7 @@
 class Home extends MY_Controller{
     public function __construct() {
         parent::__construct();
-        //$this->load->model('model_login','user',TRUE);
+        $this->load->model('model_login','login',TRUE);
     }
     
     public function index(){
@@ -67,13 +67,25 @@ class Home extends MY_Controller{
         $this->loadView('admin/password', $data);
     }
     
-    public function chPassword(){
+    public function changePassword(){
+        $this->blockUnloggedOne();
         $new_pass = $this->input->post('new_password', true);
         $confirm_pass = $this->input->post('confirm_password', TRUE);
+        $stored_pass = $this->input->post('stored_password', true);
+        $nip = $this->session->login_data->nip;
+        $position = $this->session->position;
         if($new_pass === $confirm_pass){
-            if($this->user->checkPassword($this->session->login_data->nip));
+            if($this->login->checkPassword($nip, $stored_pass, $position)){
+                $this->login->updatePassword($nip,$new_pass, $position);
+                $this->session->set_flashdata("notices",[0 => "Password telah berhasil diganti"]);
+                redirect('admin/home/password', 'refresh');
+            }else{
+                $this->session->set_flashdata("errors",[0 => "Maaf, Password lama salah!"]);
+                redirect('admin/home/password', 'refresh');
+            }
         }  else {
-            //not yet implemented
+            $this->session->set_flashdata("errors",[0 => "Maaf, Password baru dan konfirmasi password tidak sama"]);
+            redirect('admin/home/password', 'refresh');
         }
         
     }
