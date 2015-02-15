@@ -32,7 +32,7 @@
 
     <div id="page-wrapper">
 
-        <div class="container">
+        <div class="container-fluid">
 
             <!-- Page Heading -->
             <div class="row">

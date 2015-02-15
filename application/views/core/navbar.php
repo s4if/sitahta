@@ -65,13 +65,13 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="glyphicon glyphicon-chevron-down"></i> &nbsp; Guru <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="demo" class="collapse">
                     <li>
-                        <a href="#">Lihat Guru</a>
+                        <a href="<?=base_url()?>admin/guru">Lihat Guru</a>
                     </li>
                     <li>
-                        <a href="#">Tambah Guru</a>
+                        <a href="<?=base_url()?>admin/guru/tambah">Tambah Guru</a>
                     </li>
                     <li>
-                        <a href="#">Edit Guru</a>
+                        <a href="<?=base_url()?>admin/guru/edit">Edit Guru</a>
                     </li>
                 </ul>
             </li>
