@@ -41,29 +41,13 @@ class MY_Controller extends CI_Controller {
         }
     }
     
-    protected function header($data = []){
-        return $this->load->view("core/header", $data, TRUE);
-    }
-    
-    protected function footer($data = []){
-        return $this->load->view("core/footer", $data, true);
-    }
-    
-    protected function navbar($data = []){
-        return $this->load->view("core/navbar", $data, true);
-    }
-    
-    protected function content($view_name, $data = []){
-        return $this->load->view($view_name, $data, true);
-    }
-    
     protected function loadView($view_name, $data = []){
-        $data['header'] = $this->header($data);
-        $data['navbar'] = $this->navbar($data);
-        $data['alert'] = $this->load->view("core/alert",'',true);
-        $data['content'] = $this->content($view_name, $data);
-        $data['footer'] = $this->footer($data);
-        $this->load->view('core/skeleton', $data);
+        $fragment['header'] = $this->load->view("core/header", $data, TRUE);
+        $fragment['navbar'] = $this->load->view("core/navbar", $data, true);
+        $fragment['alert'] = $this->load->view("core/alert",'',true);
+        $fragment['content'] = $this->load->view($view_name, $data, true);
+        $fragment['footer'] = $this->load->view("core/footer", $data, true);
+        $this->load->view('core/skeleton', $fragment);
     }
     
     //nilai true jika hanya bisa diakses setelah login

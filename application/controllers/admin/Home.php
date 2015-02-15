@@ -51,7 +51,6 @@ class Home extends MY_Controller{
             'title' => 'Home',
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
-            'footer' => $this->footer(),
             'nama' => $this->session->login_data->nama
         ];
         $this->loadView('admin/index', $data);
