@@ -51,7 +51,7 @@ class Home extends MY_Controller{
             'header' => $this->header(['title' => 'Home',
                 'user' => ucwords($this->session->login_data->nama)
                 ]),
-            'navbar' => $this->navbar(),
+            'navbar' => $this->navbar(['position' => $this->session->position]),
             'footer' => $this->footer(),
             'nama' => $this->session->login_data->nama
         ];
@@ -77,7 +77,7 @@ class Home extends MY_Controller{
         if($new_pass === $confirm_pass){
             if($this->user->checkPassword($this->session->login_data->nip));
         }  else {
-            
+            //not yet implemented
         }
         
     }

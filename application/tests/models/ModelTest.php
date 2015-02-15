@@ -75,4 +75,32 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
             $this->assertTrue($model->updatePassword(1, 'qwerty', 'admin'));
         }
+        
+        public function testModel_guru() {
+            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
+            $model = new Model_guru();
+            //checkAttributes
+            $this->assertObjectHasAttribute('nip', $model->getData(1));
+            $this->assertObjectHasAttribute('nama', $model->getData(1));
+            $this->assertObjectHasAttribute('jenis_kelamin', $model->getData(1));
+            $this->assertObjectHasAttribute('alamat', $model->getData(1));
+            $this->assertObjectHasAttribute('email', $model->getData(1));
+            $this->assertObjectHasAttribute('password', $model->getData(1));
+            $mod_array = $model->getData();
+            $this->assertObjectHasAttribute('nip', $mod_array[0]);
+            //delete data
+            $this->assertTrue($model->deleteData('guru', ['nip' => 1]));
+            //add data
+            $data = [
+                'nip' => 1,
+                'nama' => 'admin',
+                'jenis_kelamin' => 'L',
+                'alamat' => 'foo city',
+                'email' => 'foo@google.com',
+                'password' => md5('qwerty')
+                ];
+            $this->assertTrue($model->insertData($data));
+            //update data
+            $this->assertTrue($model->updateData($data));
+        }
 }

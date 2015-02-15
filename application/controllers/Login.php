@@ -48,7 +48,6 @@ class Login extends MY_Controller {
             if($this->user->checkPassword($id, $password, $position)){
              $this->session->set_userdata('position', $position);
                 $this->setData($id, $position);
-                echo $this->session->login_data->nama;
                 $this->redir($position);
             }else{
                 $this->session->set_flashdata("errors",[0 => "Maaf, Password anda salah"]);
@@ -68,6 +67,7 @@ class Login extends MY_Controller {
     private function setData($id, $position){
         $data = $this->user->getData($id, $position);
         $this->session->set_userdata('login_data', $data);
+        $this->session->set_userdata('position', $position);
     }
     
     public function logout(){
