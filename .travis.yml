@@ -9,11 +9,12 @@ before_script:
   - mysql -e "use sitahta;CREATE TABLE IF NOT EXISTS siswa (nis int(11) NOT NULL, nama varchar(40) DEFAULT NULL, jenis_kelamin varchar(3) DEFAULT NULL, tempat_lahir varchar(20) DEFAULT NULL, tgl_lahir date DEFAULT NULL, kelas varchar(5) DEFAULT NULL, jurusan varchar(5) DEFAULT NULL, no_kelas int(11) DEFAULT NULL, password varchar(255) NOT NULL,  PRIMARY KEY (nis)) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
   - mysql -e 'SET sql_mode=ANSI_QUOTES;use sitahta;INSERT INTO siswa set nis = 1001;'
   - echo "USE sitahta;\nUPDATE siswa SET password=MD5('qwerty'), nama='user' WHERE nis=1001;\n" | mysql -u root
-  - mysql -e "use sitahta;CREATE TABLE IF NOT EXISTS guru ( nip int(11) NOT NULL, nama varchar(40) DEFAULT NULL, jenis_kelamin varchar(3) DEFAULT NULL, alamat varchar(50) DEFAULT NULL, email varchar(40) DEFAULT NULL, no_telp varchar(15) DEFAULT NULL, password varchar(255) NOT NULL, PRIMARY KEY (nip), UNIQUE KEY email_UNIQUE (email)) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
+  - mysql -e "use sitahta;CREATE TABLE IF NOT EXISTS guru ( nip int(11) NOT NULL, nama varchar(40) DEFAULT NULL, jenis_kelamin varchar(3) DEFAULT NULL, alamat varchar(50) DEFAULT NULL, email varchar(40) DEFAULT NULL, no_telp varchar(15) DEFAULT NULL, kewenangan varchar(15) DEFAULT NULL, password varchar(255) NOT NULL, PRIMARY KEY (nip), UNIQUE KEY email_UNIQUE (email)) ENGINE=InnoDB DEFAULT CHARSET=latin1;"
   - mysql -e 'SET sql_mode=ANSI_QUOTES;use sitahta;INSERT INTO guru set nip = 1;'
   - echo "USE sitahta;\nUPDATE guru SET password=MD5('qwerty'), nama='admin' WHERE nip=1;\n" | mysql -u root
   - echo "USE sitahta;\nUPDATE guru SET jenis_kelamin='L', alamat='pabelan1' WHERE nip=1;\n" | mysql -u root
   - echo "USE sitahta;\nUPDATE guru SET email='foo@foo.com', no_telp='085727613624' WHERE nip=1;\n" | mysql -u root
+  - echo "USE sitahta;\nUPDATE guru SET kewenangan='admin' WHERE nip=1;\n" | mysql -u root
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - composer install
   

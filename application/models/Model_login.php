@@ -39,7 +39,7 @@ class Model_login extends CI_Model{
         $query = $this->db->query("select * from guru Where nip = ?", [$id]);
         if($query->num_rows() >= 1){
             //return level admin (guru)
-            return 'admin';
+            return 'guru';
         }else{
             $query = $this->db->query("select * from siswa Where nis = ?", [$id]);
             if($query->num_rows() >= 1){
@@ -53,7 +53,7 @@ class Model_login extends CI_Model{
     }
     
     public function checkPassword($id, $passwd, $position){
-        if($position === 'admin'){
+        if($position === 'guru'){
             $data = $this->db->query("select password from guru Where nip = ?", [$id]);
         }elseif ($position === 'user') {
             $data = $this->db->query("select password from siswa Where nis = ?", [$id]);
@@ -63,7 +63,7 @@ class Model_login extends CI_Model{
     }
     
     public function getData($id, $position){
-        if($position === 'admin'){
+        if($position === 'guru'){
             return $this->getDataGuru($id);
         }elseif ($position === 'user') {
             return $this->getDataSiswa($id);
@@ -81,7 +81,7 @@ class Model_login extends CI_Model{
     }
             
     public function updatePassword($id, $passwd, $position){
-        if($position === 'admin'){
+        if($position === 'guru'){
             return $this->updatePasswordGuru($id, $passwd);
         }elseif ($position === 'user') {
             return $this->updatePasswordSiswa($id, $passwd);

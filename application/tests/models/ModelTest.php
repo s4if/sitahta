@@ -74,7 +74,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
                 'alamat' => 'foo city',
                 'email' => 'foo@google.com',
                 'no_telp' => '08674839291',
-                'password' => md5('qwerty')
+                'password' => md5('qwerty'),
+                'kewenangan' => 'admin'
                 ];
             $this->assertTrue($model->insertData($data));
             $this->assertFalse($model->insertData($data));
@@ -82,6 +83,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($model->updateData($data));
             $data['nip'] = 4321;
             $this->assertFalse($model->updateData($data));
+            
+        }
+        
+        public function testModel_guru2(){
+            $model = new Model_guru();
             //checkAttributes
             $this->assertObjectHasAttribute('nip', $model->getData(1));
             $this->assertObjectHasAttribute('nama', $model->getData(1));
@@ -89,6 +95,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('alamat', $model->getData(1));
             $this->assertObjectHasAttribute('email', $model->getData(1));
             $this->assertObjectHasAttribute('password', $model->getData(1));
+            $this->assertObjectHasAttribute('kewenangan', $model->getData(1));
             $mod_array = $model->getData();
             $this->assertObjectHasAttribute('nip', $mod_array[0]);
         }
@@ -96,16 +103,16 @@ class ModelTest extends PHPUnit_Framework_TestCase
         public function testModel_login() {
             $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
             $model = new Model_login();
-            $this->assertStringStartsWith($model->checkUserid(1), 'admin');
+            $this->assertStringStartsWith($model->checkUserid(1), 'guru');
             $this->assertStringStartsWith($model->checkUserid(1001), 'user');
             $this->assertStringStartsWith($model->checkUserid(109), 'null');
             //method checkPassword
-            $this->assertTrue($model->checkPassword(1, 'qwerty', 'admin'));
+            $this->assertTrue($model->checkPassword(1, 'qwerty', 'guru'));
             $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
             $this->assertFalse($model->checkPassword(1, 'foo', 'user'));
             //method getData
-            $this->assertObjectHasAttribute('nip', $model->getData('1','admin'));
+            $this->assertObjectHasAttribute('nip', $model->getData('1','guru'));
             $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
-            $this->assertTrue($model->updatePassword(1, 'qwerty', 'admin'));
+            $this->assertTrue($model->updatePassword(1, 'qwerty', 'guru'));
         }
 }

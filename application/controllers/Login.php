@@ -57,7 +57,7 @@ class Login extends MY_Controller {
     }
     
     private function redir($position){
-        if($position === 'admin'){
+        if($position === 'guru'){
             redirect('admin/home', 'refresh');
         }else{
             redirect('user/index', 'refresh');
@@ -67,7 +67,11 @@ class Login extends MY_Controller {
     private function setData($id, $position){
         $data = $this->user->getData($id, $position);
         $this->session->set_userdata('login_data', $data);
-        $this->session->set_userdata('position', $position);
+        if($position === 'guru' && $data->kewenangan === 'admin'){
+            $this->session->set_userdata('position', $data->kewenangan);
+        }else{
+            $this->session->set_userdata('position', $position);
+        }
     }
     
     public function logout(){
