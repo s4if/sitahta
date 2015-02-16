@@ -86,7 +86,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             
         }
         
-        public function testModel_guru2(){
+        public function testModel_guru_2(){
             $model = new Model_guru();
             //checkAttributes
             $this->assertObjectHasAttribute('nip', $model->getData(1));
