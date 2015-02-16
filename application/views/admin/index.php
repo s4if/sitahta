@@ -32,4 +32,4 @@
         <a href="#">Beranda</a>
     </li>
 </ol>
-Selamat Datang <?=$nama?>, Posisi : <?=$position?>, kewenangan : <?=$kewenangan?> || <a href="<?=base_url()?>login/logout">logout</a>
+Selamat Datang <?=$nama?>, Posisi : <?=$position?> || <a href="<?=base_url()?>login/logout">logout</a>
