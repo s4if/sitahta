@@ -75,11 +75,11 @@ class ModelTest extends PHPUnit_Framework_TestCase
                 'email' => 'foo@google.com',
                 'no_telp' => '08674839291',
                 'password' => md5('qwerty'),
-                'kewenangan' => 'admin'
                 ];
             $this->assertTrue($model->insertData($data));
             $this->assertFalse($model->insertData($data));
             //update data
+            $data['kewenangan'] = 'admin';
             $this->assertTrue($model->updateData($data));
             $data['nip'] = 4321;
             $this->assertFalse($model->updateData($data));

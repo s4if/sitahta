@@ -78,6 +78,7 @@ class Model_guru extends CI_Model{
         if (!empty($data['email'])) : $this->db->set('email',$data['email']); endif;
         if (!empty($data['no_telp'])) : $this->db->set('no_telp',$data['no_telp']); endif;
         if (!empty($data['password'])) : $this->db->set('password',$data['password']); endif;
+        if (!empty($data['kewenangan'])) : $this->db->set('kewenangan',$data['kewenangan']); endif;
     }
     
     public function dataExist($nip) {
