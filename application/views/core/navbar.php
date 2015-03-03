@@ -62,18 +62,7 @@
             </li>
             <?php if($position === 'admin'):?>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="glyphicon glyphicon-chevron-down"></i> &nbsp; Guru <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="demo" class="collapse">
-                    <li>
-                        <a href="<?=base_url()?>admin/guru">Lihat Guru</a>
-                    </li>
-                    <li>
-                        <a href="<?=base_url()?>admin/guru/tambah">Tambah Guru</a>
-                    </li>
-                    <li>
-                        <a href="<?=base_url()?>admin/guru/edit">Edit Guru</a>
-                    </li>
-                </ul>
+                <a href="<?=base_url()?>admin/guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->

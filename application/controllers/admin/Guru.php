@@ -54,6 +54,7 @@ class Guru extends MY_Controller {
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->nama,
+            'tambah' => $this->load->view("admin/guru/tambah",[],TRUE),
             'data_guru' => $data_guru
         ];
         $this->loadView('admin/guru/lihat', $data);
@@ -61,7 +62,22 @@ class Guru extends MY_Controller {
     
     public function tambah(){
         $this->blockUnloggedOne();
-        echo 'tambah';
+        $data_insert = $this->input->post(null, true);
+        $data_insert['password'] = md5("qwerty");
+        print_r($data_insert);
+        if($this->guru->dataExist($this->input->post('nip', true))){
+            $this->session->set_flashdata("errors",[0 => "Maaf, NIP yang dimasukkan sudah terpakai!"]);
+            redirect('admin/guru');
+        }else{
+            $res = $this->guru->insertData($data_insert, 'guru');
+            if($res >= 1){
+                $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+                redirect('admin/guru');
+            } else {
+                $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+                redirect('admin/guru');
+            }
+        }
     }
     
     public function edit(){
@@ -79,5 +95,25 @@ class Guru extends MY_Controller {
             redirect('admin/guru/lihat', 'refresh');
         }
     }
+    
+//    public function do_add(){
+//        $this->blockUnloggedOne();
+//        $this->cek_login();
+//        $data_insert = $_POST;
+//        $data_insert['password'] = md5("qwerty");
+//        if($this->guru->data_exist($_POST['nip'])){
+//            $this->session->set_flashdata("errors",[0 => "Maaf, NIP yang dimasukkan sudah terpakai!"]);
+//            redirect('admin/guru/tambah');
+//        }else{
+//            $res = $this->guru->insert_data('guru', $data_insert);
+//            if($res >= 1){
+//                $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+//                redirect('admin/guru');
+//            } else {
+//                $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+//                redirect('admin/guru/tambah');
+//            }
+//        }
+//    }
     
 }

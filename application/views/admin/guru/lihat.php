@@ -33,9 +33,7 @@ THE SOFTWARE.
         Guru
     </li>
 </ol>
-<a class="btn btn-sm btn-success" href="<?php  echo base_url().'admin/guru/tambah/'?>">
-    <span class="glyphicon glyphicon-plus"></span>&nbsp;Tambah
-</a>
+<?=$tambah?>
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
         <thead>
@@ -59,6 +57,9 @@ THE SOFTWARE.
             <td><?= $guru->email;?></td>
             <td><?= $guru->no_telp;?></td>
             <td>
+            <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
             <a class="btn btn-sm btn-info" href="<?php  echo base_url().'admin/guru/edit/'.$guru->nip;?>"><span class="glyphicon glyphicon-pencil"></span></a>
             <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-remove"></span>
