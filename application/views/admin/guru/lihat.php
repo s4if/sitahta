@@ -44,6 +44,7 @@ THE SOFTWARE.
                 <td>Alamat</td>
                 <td>E-mail</td>
                 <td>No. Telp</td>
+                <td>Kewenangan</td>
                 <td>Aksi</td>
             </tr>
         </thead>
@@ -56,11 +57,14 @@ THE SOFTWARE.
             <td><?= $guru->alamat;?></td>
             <td><?= $guru->email;?></td>
             <td><?= $guru->no_telp;?></td>
+            <td><?= $guru->kewenangan;?></td>
             <td>
             <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
-            <a class="btn btn-sm btn-info" href="<?php  echo base_url().'admin/guru/edit/'.$guru->nip;?>"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->nip;?>">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
             <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
@@ -87,3 +91,4 @@ THE SOFTWARE.
         </tbody>
     </table>
 </div>
+<?=$edit?>

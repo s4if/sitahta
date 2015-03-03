@@ -55,6 +55,7 @@ class Guru extends MY_Controller {
             'position' => $this->session->position,
             'nama' => $this->session->login_data->nama,
             'tambah' => $this->load->view("admin/guru/tambah",[],TRUE),
+            'edit' => $this->load->view("admin/guru/edit",['data_guru' => $data_guru],TRUE),
             'data_guru' => $data_guru
         ];
         $this->loadView('admin/guru/lihat', $data);
@@ -80,9 +81,18 @@ class Guru extends MY_Controller {
         }
     }
     
-    public function edit(){
+    public function edit($nip){
         $this->blockUnloggedOne();
-        echo 'edit';
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nip'] = $nip;
+        $res = $this->guru->updateData($data_insert, 'guru');
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('admin/guru');
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('admin/guru');
+        }
     }
     
     public function hapus($nip){

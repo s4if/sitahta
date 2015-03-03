@@ -40,14 +40,14 @@
                         <label class="col-sm-3 control-label">NIP :</label>
                         <div class="col-sm-8 error">
                             <input type="text" class="form-control" name="nip" 
-                                   placeholder="Masukkan NIP" value="<?=$guru['nip']?>" required="true">
+                                   placeholder="Masukkan NIP" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?=$guru['nama']?>" required="true">
+                                   placeholder="Masukkan Nama" value="" required="true">
                         </div>
                     </div>
                     <!-- -->
@@ -56,23 +56,13 @@
                         <div class="col-sm-5">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="jenis_kelamin" value="L" 
-                                        <?php if(!empty($guru['jenis_kelamin'])):?>
-                                            <?php if($guru['jenis_kelamin']=='L'):?>
-                                                checked
-                                            <?php endif;?>
-                                        <?php endif;?>>
+                                    <input type="radio" name="jenis_kelamin" value="L">
                                     Laki - Laki
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="jenis_kelamin" value="P"
-                                        <?php if(!empty($guru['jenis_kelamin'])):?>
-                                            <?php if($guru['jenis_kelamin']=='P'):?>
-                                                checked
-                                            <?php endif;?>
-                                        <?php endif;?>>
+                                    <input type="radio" name="jenis_kelamin" value="P">
                                     Perempuan
                                 </label>
                             </div>
@@ -81,41 +71,31 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Alamat :</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control col-sm-10" rows="3" name="alamat"><?=$guru['alamat']?></textarea>
+                            <textarea class="form-control col-sm-10" rows="3" name="alamat"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">E-mail :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="email" 
-                                   placeholder="Masukkan Email" value="<?=$guru['email']?>" required="true">
+                                   placeholder="Masukkan Email" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">No. Telepon :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="no_telp" 
-                                   placeholder="Masukkan Nomor Telepon" value="<?=$guru['no_telp']?>" required="true">
+                                   placeholder="Masukkan Nomor Telepon" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kewenangan :</label>
                         <div class="col-sm-5">
                             <select class="form-control" name="kewenangan">
-                                <option value="admin" 
-                                    <?php if(!empty($guru['kewenangan'])):?>
-                                        <?php if($guru['kewenangan']=='admin'): ?>
-                                                selected="true"
-                                        <?php endif;?>
-                                    <?php endif;?>>
+                                <option value="admin" >
                                     Admin
                                 </option>
-                                <option value="guru" 
-                                    <?php if(!empty($guru['kewenangan'])):?>
-                                        <?php if($guru['kewenangan']=='admin'): ?>
-                                                selected="true"
-                                        <?php endif;?>
-                                    <?php endif;?>>
+                                <option value="guru" >
                                     Guru
                                 </option>
                             </select>

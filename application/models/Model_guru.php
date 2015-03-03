@@ -54,7 +54,7 @@ class Model_guru extends CI_Model{
     public function updateData($data, $table_name = 'guru'){
         if($this->dataExist($data['nip'])){
             $this->setData($data);
-            $this->db->update($table_name);
+            $this->db->replace($table_name);
             return true;
         }else{
             return false;
