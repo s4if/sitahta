@@ -70,6 +70,7 @@ class Model_guru extends CI_Model{
         }
     }
     
+    //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data){
         if (!empty($data['nip'])) : $this->db->set('nip',$data['nip']); endif;
         if (!empty($data['nama'])) : $this->db->set('nama',$data['nama']); endif;
