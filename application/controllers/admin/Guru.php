@@ -105,25 +105,5 @@ class Guru extends MY_Controller {
             redirect('admin/guru/lihat', 'refresh');
         }
     }
-    
-//    public function do_add(){
-//        $this->blockUnloggedOne();
-//        $this->cek_login();
-//        $data_insert = $_POST;
-//        $data_insert['password'] = md5("qwerty");
-//        if($this->guru->data_exist($_POST['nip'])){
-//            $this->session->set_flashdata("errors",[0 => "Maaf, NIP yang dimasukkan sudah terpakai!"]);
-//            redirect('admin/guru/tambah');
-//        }else{
-//            $res = $this->guru->insert_data('guru', $data_insert);
-//            if($res >= 1){
-//                $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
-//                redirect('admin/guru');
-//            } else {
-//                $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
-//                redirect('admin/guru/tambah');
-//            }
-//        }
-//    }
-    
+
 }

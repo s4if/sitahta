@@ -79,4 +79,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase
     public function testGuruController() {
         $this->assertTrue(class_exists('Guru'), 'Guru is loadable');
     }
+    
+    public function testSiswaController() {
+        $this->assertTrue(class_exists('Siswa'), 'Siswa is loadable');
+    }
 }
