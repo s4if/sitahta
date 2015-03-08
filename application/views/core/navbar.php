@@ -64,6 +64,9 @@
             <li>
                 <a href="<?=base_url()?>admin/guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
+            <li>
+                <a href="<?=base_url()?>admin/siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
+            </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
             <li>
