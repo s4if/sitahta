@@ -124,36 +124,42 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertFalse($model->deleteData(['nip' => 1001]));
             //add data
             $data = [
-                'nip' => 1,
-                'nama' => 'admin',
+                'nis' => 1001,
+                'nama' => 'user',
                 'jenis_kelamin' => 'L',
                 'alamat' => 'foo city',
-                'email' => 'foo@google.com',
-                'no_telp' => '08674839291',
-                'password' => md5('qwerty'),
+                'tempat_lahir' => 'magelang',
+                'tgl_lahir' => '2000-12-12',
+                'kelas' => 'XI',
+                'jurusan' => 'IPS',
+                'no_kelas' => '1',
+                'password' => md5('qwerty')
                 ];
             $this->assertTrue($model->insertData($data));
             $this->assertFalse($model->insertData($data));
             //update data
-            $data['kewenangan'] = 'admin';
+            $data['no_kelas'] = '2';
             $this->assertTrue($model->updateData($data));
-            $data['nip'] = 4321;
+            $data['nis'] = 4321;
             $this->assertFalse($model->updateData($data));
             
         }
         
         public function testModel_siswa_2(){
-            $model = new Model_guru();
-//            //checkAttributes
-//            $this->assertObjectHasAttribute('nip', $model->getData(1));
-//            $this->assertObjectHasAttribute('nama', $model->getData(1));
-//            $this->assertObjectHasAttribute('jenis_kelamin', $model->getData(1));
-//            $this->assertObjectHasAttribute('alamat', $model->getData(1));
-//            $this->assertObjectHasAttribute('email', $model->getData(1));
-//            $this->assertObjectHasAttribute('password', $model->getData(1));
-//            $this->assertObjectHasAttribute('kewenangan', $model->getData(1));
-//            $mod_array = $model->getData();
-//            $this->assertObjectHasAttribute('nip', $mod_array[0]);
+            $model = new Model_siswa();
+            //checkAttributes
+            $siswa = $model->getData(1001);
+            $this->assertObjectHasAttribute('nis', $siswa);
+            $this->assertObjectHasAttribute('nama', $siswa);
+            $this->assertObjectHasAttribute('jenis_kelamin', $siswa);
+            $this->assertObjectHasAttribute('tempat_lahir', $siswa);
+            $this->assertObjectHasAttribute('tgl_lahir', $siswa);
+            $this->assertObjectHasAttribute('kelas', $siswa);
+            $this->assertObjectHasAttribute('jurusan', $siswa);
+            $this->assertObjectHasAttribute('no_kelas', $siswa);
+            $this->assertObjectHasAttribute('password', $siswa);
+            $mod_array = $model->getData();
+            $this->assertObjectHasAttribute('nis', $mod_array[0]);
         }
         
 }
