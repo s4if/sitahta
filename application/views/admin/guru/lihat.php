@@ -68,23 +68,6 @@ THE SOFTWARE.
             <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
-            <div class="modal fade" id="myModal<?= $guru->nip;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$guru->nip?>" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel<?= $guru->nip;?>">Konfirmasi</h4>
-            </div>
-            <div class="modal-body">
-            Apakah Anda Yakin Untuk Menghapus Data Guru dengan NIP = <?= $guru->nip;?>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$guru->nip;?>">OK</a>
-            </div>
-            </div>
-            </div>
-            </div>
             </td>
             </tr>
             <?php endforeach;?>
