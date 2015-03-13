@@ -98,7 +98,8 @@ THE SOFTWARE.
             ?>
             <td><?= $ttl;?></td>
             <?php
-            $kelas = $siswa->kelas.$siswa->jurusan.$siswa->no_kelas;
+            $kelas = ($siswa->kelas !== 'X')?$siswa->kelas."-".$siswa->jurusan."-".$siswa->no_kelas:
+                $siswa->kelas."-".$siswa->no_kelas;
             ?>
             <td><?= $kelas;?></td>
             <td>
@@ -111,23 +112,6 @@ THE SOFTWARE.
             <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->nis;?>">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
-            <div class="modal fade" id="myModal<?= $siswa->nis;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$siswa->nis?>" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel<?= $siswa->nis;?>">Konfirmasi</h4>
-            </div>
-            <div class="modal-body">
-            Apakah Anda Yakin Untuk Menghapus Data Siswa dengan NIP = <?= $siswa->nis;?>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-            <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$siswa->nis;?>">OK</a>
-            </div>
-            </div>
-            </div>
-            </div>
             </td>
             </tr>
             <?php endforeach;?>

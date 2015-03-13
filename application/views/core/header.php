@@ -43,7 +43,10 @@
     <link href="<?=  base_url() ?>assets/css/sb-admin.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom DaatePicker -->
+    <link href="<?=  base_url() ?>assets/bootstrap-datetimepicker.min.css" rel="stylesheet">
     
 </head>
 

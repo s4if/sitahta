@@ -29,6 +29,15 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<?=  base_url() ?>assets/js/bootstrap.min.js"></script>
+  
+    <!-- Moment Js -->
+    <script src="<?=  base_url() ?>assets/js/moment.min.js"></script>
+    
+    <!-- Bootstrap DatePicker JavaScript -->
+    <script src="<?=  base_url() ?>assets/js/bootstrap-datetimepicker.min.js"></script>
+    
+    <!-- User Js -->
+    <script src="<?=  base_url() ?>assets/js/user.js"></script>
 
 </body>
 

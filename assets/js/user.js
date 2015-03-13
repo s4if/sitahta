@@ -23,7 +23,7 @@
  */
 
 $(document).ready(function() {
-    $.fn.datepicker.defaults.format = "yyyy/mm/dd";
+    $('.datetimepicker').datetimepicker();
     //$('#data_table').dataTable();
 } );
 

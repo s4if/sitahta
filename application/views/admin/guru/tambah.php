@@ -77,7 +77,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">E-mail :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="email" 
+                            <input type="email" class="form-control" name="email" 
                                    placeholder="Masukkan Email" value="" required="true">
                         </div>
                     </div>
