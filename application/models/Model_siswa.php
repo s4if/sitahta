@@ -62,6 +62,7 @@ class Model_siswa extends CI_Model {
         if (!empty($data['jurusan'])) : $this->db->set('jurusan',$data['jurusan']); endif;
         if (!empty($data['no_kelas'])) : $this->db->set('no_kelas',$data['no_kelas']); endif;
         if (!empty($data['password'])) : $this->db->set('password',$data['password']); endif;
+        if (!empty($data['nama_ortu'])) : $this->db->set('nama_ortu',$data['nama_ortu']); endif;
     }
     
     //$where is an array that has nis properties

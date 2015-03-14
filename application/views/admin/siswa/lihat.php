@@ -43,6 +43,7 @@ THE SOFTWARE.
                 <td>P/L</td>
                 <td>TTL</td>
                 <td>Kelas</td>
+                <td>Nama Orang Tua</td>
                 <td>Aksi</td>
             </tr>
         </thead>
@@ -102,6 +103,7 @@ THE SOFTWARE.
                 $siswa->kelas."-".$siswa->no_kelas;
             ?>
             <td><?= $kelas;?></td>
+            <td><?= $siswa->nama_ortu;?></td>
             <td>
             <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
                 <span class="glyphicon glyphicon-plus"></span>

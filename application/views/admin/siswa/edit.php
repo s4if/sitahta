@@ -171,6 +171,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="nama_ortu" 
+                                   placeholder="Masukkan Nama" value="<?= $siswa->nama_ortu;?>" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-sm btn-primary">OK</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>

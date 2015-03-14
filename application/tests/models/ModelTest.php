@@ -133,7 +133,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
                 'kelas' => 'XI',
                 'jurusan' => 'IPS',
                 'no_kelas' => '1',
-                'password' => md5('qwerty')
+                'password' => md5('qwerty'),
+                'nama_ortu' => 'ortu'
                 ];
             $this->assertTrue($model->insertData($data));
             $this->assertFalse($model->insertData($data));
@@ -158,6 +159,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('jurusan', $siswa);
             $this->assertObjectHasAttribute('no_kelas', $siswa);
             $this->assertObjectHasAttribute('password', $siswa);
+            $this->assertObjectHasAttribute('nama_ortu', $siswa);
             $mod_array = $model->getData();
             $this->assertObjectHasAttribute('nis', $mod_array[0]);
         }
