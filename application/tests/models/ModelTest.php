@@ -164,4 +164,54 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nis', $mod_array[0]);
         }
         
+        public function testModel_nilai() {
+            $this->assertTrue(class_exists('Model_nilai'), 'Login is loadable');
+            $model = new Model_nilai();
+            //add data
+            $data = [
+                'id' => 12345,
+                'nis' => 1001,
+                'tanggal' => '2015-12-12',
+                'juz' => 4,
+                'halaman' => 4,
+                'nilai' => 89,
+                'penguji' => 1
+                ];
+            $this->assertTrue($model->insertData($data));
+            $this->assertFalse($model->insertData($data));
+            //delete data
+            $this->assertTrue($model->deleteData(['id' => 12345]));
+            $this->assertFalse($model->deleteData(['id' => 12345]));
+            $model->insertData($data);
+            //update data
+            $data['nilai'] = 78;
+            $this->assertTrue($model->updateData($data));
+            $data['id'] = 10002;
+            $this->assertFalse($model->updateData($data));
+            
+        }
+        
+        public function testModel_nilai_2(){
+            $model = new Model_nilai();
+            //checkAttributes
+            $id = 12345;
+            $nilai = $model->getDataById($id);
+            $this->assertObjectHasAttribute('id', $nilai);
+            $this->assertObjectHasAttribute('nis', $nilai);
+            $this->assertObjectHasAttribute('tanggal', $nilai);
+            $this->assertObjectHasAttribute('juz', $nilai);
+            $this->assertObjectHasAttribute('halaman', $nilai);
+            $this->assertObjectHasAttribute('nilai', $nilai);
+            $this->assertObjectHasAttribute('penguji', $nilai);
+            $nis = 1001;
+            $nilai_array = $model->getDatabyNis($nis);
+            $this->assertObjectHasAttribute('nis', $nilai_array[0]);
+            $this->assertObjectHasAttribute('id', $nilai_array[0]);
+            $this->assertObjectHasAttribute('nis', $nilai_array[0]);
+            $this->assertObjectHasAttribute('tanggal', $nilai_array[0]);
+            $this->assertObjectHasAttribute('juz', $nilai_array[0]);
+            $this->assertObjectHasAttribute('halaman', $nilai_array[0]);
+            $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
+            $this->assertObjectHasAttribute('penguji', $nilai_array[0]);
+        }
 }

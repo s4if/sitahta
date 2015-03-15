@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2015 at 04:42 PM
+-- Generation Time: Mar 15, 2015 at 11:29 PM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.6
 
@@ -55,6 +55,7 @@ INSERT INTO `guru` (`nip`, `nama`, `jenis_kelamin`, `alamat`, `email`, `no_telp`
 CREATE TABLE IF NOT EXISTS `nilai` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nis` int(11) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
   `juz` int(11) DEFAULT NULL,
   `halaman` int(11) DEFAULT NULL,
   `nilai` int(11) DEFAULT NULL,
@@ -62,7 +63,14 @@ CREATE TABLE IF NOT EXISTS `nilai` (
   PRIMARY KEY (`id`),
   KEY `fk_nilai_1_idx` (`nis`),
   KEY `fk_nilai_2_idx` (`penguji`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12346 ;
+
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`id`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
+(12345, 1001, '2015-12-12', 4, 4, 78, 1);
 
 -- --------------------------------------------------------
 
@@ -71,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `nilai` (
 --
 
 CREATE TABLE IF NOT EXISTS `sertifikasi` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nis` int(11) DEFAULT NULL,
   `nama` varchar(30) DEFAULT NULL,
   `tempat_ujian` varchar(30) DEFAULT NULL,
@@ -82,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `sertifikasi` (
   `keterangan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_sertifikasi_1_idx` (`nis`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
