@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2015 at 11:29 PM
+-- Generation Time: Mar 16, 2015 at 08:56 PM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.6
 
@@ -49,28 +49,40 @@ INSERT INTO `guru` (`nip`, `nama`, `jenis_kelamin`, `alamat`, `email`, `no_telp`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hafalan_awal`
+--
+
+CREATE TABLE IF NOT EXISTS `hafalan_awal` (
+  `nis` int(11) NOT NULL,
+  `juz` int(11) NOT NULL,
+  PRIMARY KEY (`nis`,`juz`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `nilai`
 --
 
 CREATE TABLE IF NOT EXISTS `nilai` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nis` int(11) DEFAULT NULL,
+  `no_uh` int(11) NOT NULL,
+  `nis` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
   `juz` int(11) DEFAULT NULL,
   `halaman` int(11) DEFAULT NULL,
   `nilai` int(11) DEFAULT NULL,
   `penguji` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`no_uh`,`nis`),
   KEY `fk_nilai_1_idx` (`nis`),
   KEY `fk_nilai_2_idx` (`penguji`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12346 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nilai`
 --
 
-INSERT INTO `nilai` (`id`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
-(12345, 1001, '2015-12-12', 4, 4, 78, 1);
+INSERT INTO `nilai` (`no_uh`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
+(1, 1001, '2015-12-12', 4, 4, 78, 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `sertifikasi` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nis` int(11) DEFAULT NULL,
   `nama` varchar(30) DEFAULT NULL,
-  `tempat_ujian` varchar(30) DEFAULT NULL,
+  `tempat_ujian` varchar(100) DEFAULT NULL,
   `tgl_ujian` date DEFAULT NULL,
   `juz` int(11) DEFAULT NULL,
   `nilai` int(11) DEFAULT NULL,
@@ -90,7 +102,14 @@ CREATE TABLE IF NOT EXISTS `sertifikasi` (
   `keterangan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_sertifikasi_1_idx` (`nis`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12346 ;
+
+--
+-- Dumping data for table `sertifikasi`
+--
+
+INSERT INTO `sertifikasi` (`id`, `nis`, `nama`, `tempat_ujian`, `tgl_ujian`, `juz`, `nilai`, `predikat`, `keterangan`) VALUES
+(12345, 1001, 'user', 'SMA IT Ihsanul Fikri Magelang', '2014-12-12', 4, 89, 'Jayyid Jiddan', 'terferifikasi');
 
 -- --------------------------------------------------------
 
@@ -126,11 +145,17 @@ INSERT INTO `siswa` (`nis`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`
 --
 
 --
+-- Constraints for table `hafalan_awal`
+--
+ALTER TABLE `hafalan_awal`
+  ADD CONSTRAINT `fk_hafalan_awal_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `nilai`
 --
 ALTER TABLE `nilai`
-  ADD CONSTRAINT `fk_nilai_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_nilai_2` FOREIGN KEY (`penguji`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_nilai_2` FOREIGN KEY (`penguji`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_nilai_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sertifikasi`

@@ -61,7 +61,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //======================================================================
 
         public function testModel_guru() {
-            $this->assertTrue(class_exists('Model_guru'), 'Login is loadable');
+            $this->assertTrue(class_exists('Model_guru'), 'guru is loadable');
             $model = new Model_guru();
             //delete data
             $this->assertTrue($model->deleteData(['nip' => 1]));
@@ -117,7 +117,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         }
         
         public function testModel_siswa() {
-            $this->assertTrue(class_exists('Model_siswa'), 'Login is loadable');
+            $this->assertTrue(class_exists('Model_siswa'), 'Siswa is loadable');
             $model = new Model_siswa();
             //delete data
             $this->assertTrue($model->deleteData(['nis' => 1001]));
@@ -165,7 +165,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         }
         
         public function testModel_nilai() {
-            $this->assertTrue(class_exists('Model_nilai'), 'Login is loadable');
+            $this->assertTrue(class_exists('Model_nilai'), 'NIlai is loadable');
             $model = new Model_nilai();
             //add data
             $data = [
@@ -198,7 +198,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             //checkAttributes
             $no_uh = 1;
             $nis = 1001;
-            $nilai = $model->getData(1, 1001);
+            $nilai = $model->getData($no_uh, $nis);
             $this->assertObjectHasAttribute('no_uh', $nilai);
             $this->assertObjectHasAttribute('nis', $nilai);
             $this->assertObjectHasAttribute('tanggal', $nilai);
@@ -223,53 +223,54 @@ class ModelTest extends PHPUnit_Framework_TestCase
         }
         
         public function testModel_sertifikasi() {
-//            $this->assertTrue(class_exists('Model_sertifikasi'), 'Login is loadable');
-//            $model = new Model_sertifikasi();
-//            //add data
-//            $data = [
-//                'id' => 12345,
-//                'nis' => 1001,
-//                'tanggal' => '2015-12-12',
-//                'juz' => 4,
-//                'halaman' => 4,
-//                'nilai' => 89,
-//                'penguji' => 1
-//                ];
-//            $this->assertTrue($model->insertData($data));
-//            $this->assertFalse($model->insertData($data));
-//            //delete data
-//            $this->assertTrue($model->deleteData(['id' => 12345]));
-//            $this->assertFalse($model->deleteData(['id' => 12345]));
-//            $model->insertData($data);
-//            //update data
-//            $data['nilai'] = 78;
-//            $this->assertTrue($model->updateData($data));
-//            $data['id'] = 10002;
-//            $this->assertFalse($model->updateData($data));
-//            
+            $this->assertTrue(class_exists('Model_sertifikasi'), 'Sertifikasi is loadable');
+            $model = new Model_sertifikasi();
+            //add data
+            $data = [
+                'id' => 12345,
+                'nis' => 1001,
+                'nama' => 'user',
+                'tgl_ujian' => '2015-12-12',
+                'tempat_ujian' => 'SMA IT Ihsanul Fikri Magelang',
+                'juz' => 4,
+                'nilai' => 89,
+                'predikat' => 'Jayyid Jiddan',
+                'keterangan' => 'terferifikasi'
+                ];
+            $this->assertTrue($model->insertData($data));
+            $this->assertFalse($model->insertData($data));
+            //delete data
+            $this->assertTrue($model->deleteData(['id' => 12345]));
+            $this->assertFalse($model->deleteData(['id' => 12345]));
+            $model->insertData($data);
+            //update data
+            $data['tgl_ujian'] = '2014-12-12';
+            $this->assertTrue($model->updateData($data));
+            $data['id'] = 10002;
+            $this->assertFalse($model->updateData($data));
+            
         }
-//        
-//        public function testModel_sertifikasi_2(){
-//            $model = new Model_sertifikasi();
-//            //checkAttributes
-//            $id = 12345;
-//            $nilai = $model->getDataById($id);
-//            $this->assertObjectHasAttribute('id', $nilai);
-//            $this->assertObjectHasAttribute('nis', $nilai);
-//            $this->assertObjectHasAttribute('tanggal', $nilai);
-//            $this->assertObjectHasAttribute('juz', $nilai);
-//            $this->assertObjectHasAttribute('halaman', $nilai);
-//            $this->assertObjectHasAttribute('nilai', $nilai);
-//            $this->assertObjectHasAttribute('penguji', $nilai);
-//            $nis = 1001;
-//            $nilai_array = $model->getDatabyNis($nis);
-//            $this->assertObjectHasAttribute('nis', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('id', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('nis', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('tanggal', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('juz', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('halaman', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
-//            $this->assertObjectHasAttribute('penguji', $nilai_array[0]);
-//        }
+        
+        public function testModel_sertifikasi_2(){
+            $model = new Model_sertifikasi();
+            //checkAttributes
+            $id = 12345;
+            $nis = 1001;
+            for($i = 0; $i <=1; $i++){
+                if ($i === 0) {
+                    $nilai_array = $model->getDatabyNis($nis);
+                }else{
+                    $nilai_array = $model->getDatabyId($id);
+                }
+                $this->assertObjectHasAttribute('id', $nilai_array[0]);
+                $this->assertObjectHasAttribute('nis', $nilai_array[0]);
+                $this->assertObjectHasAttribute('nama', $nilai_array[0]);
+                $this->assertObjectHasAttribute('tempat_ujian', $nilai_array[0]);
+                $this->assertObjectHasAttribute('tgl_ujian', $nilai_array[0]);
+                $this->assertObjectHasAttribute('juz', $nilai_array[0]);
+                $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
+                $this->assertObjectHasAttribute('predikat', $nilai_array[0]);
+                $this->assertObjectHasAttribute('keterangan', $nilai_array[0]);
+            }
+        }
 }
