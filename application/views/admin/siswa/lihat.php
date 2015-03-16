@@ -27,7 +27,7 @@ THE SOFTWARE.
 </h1>
 <ol class="breadcrumb">
     <li>
-        <a href="<?=base_url();?>admin/home">Beranda</a>
+        <a href="<?=base_url();?>home">Beranda</a>
     </li>
     <li class="active">
         Siswa
@@ -105,15 +105,18 @@ THE SOFTWARE.
             <td><?= $kelas;?></td>
             <td><?= $siswa->nama_ortu;?></td>
             <td>
-            <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->nis;?>">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->nis;?>">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
+                <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->nis?>">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->nis;?>">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->nis;?>">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
             </td>
             </tr>
             <?php endforeach;?>

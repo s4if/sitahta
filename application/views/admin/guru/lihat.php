@@ -27,7 +27,7 @@ THE SOFTWARE.
 </h1>
 <ol class="breadcrumb">
     <li>
-        <a href="<?=base_url();?>admin/home">Beranda</a>
+        <a href="<?=base_url();?>home">Beranda</a>
     </li>
     <li class="active">
         Guru

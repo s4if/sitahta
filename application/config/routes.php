@@ -52,3 +52,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// Custom Routing Starts Here
+$route['siswa'] = 'admin/siswa/lihat';
+$route['logout'] = '/login/logout';
+$route['home'] = 'admin/home';
+$route['home/password'] = 'admin/home/password';
+$route['guru'] = 'admin/guru/lihat';
+$route['siswa'] = 'admin/siswa/lihat';
+$route['siswa/(:num)'] = 'admin/siswa/profil/$1';

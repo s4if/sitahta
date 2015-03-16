@@ -32,7 +32,7 @@
 </h1>
 <ol class="breadcrumb">
     <li>
-        <a href="<?=base_url();?>admin/home">Beranda</a>
+        <a href="<?=base_url();?>home">Beranda</a>
     </li>
     <li class="active">
         Ganti Password
@@ -64,7 +64,7 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-6">
                 <button type="submit" class="btn btn-sm btn-primary">OK</button>
-                <a class="btn btn-sm btn-warning" href="<?=base_url();?>admin/home/">Cancel</a>
+                <a class="btn btn-sm btn-warning" href="<?=base_url();?>home/">Cancel</a>
             </div>
         </div>
     </form>

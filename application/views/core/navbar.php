@@ -45,11 +45,11 @@
                     <a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp; Profil</a>
                 </li>
                 <li>
-                    <a href="<?=base_url();?>admin/home/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
+                    <a href="<?=base_url();?>home/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
                 </li>
                 <li class="divider"></li>
                 <li>
-                    <a href="<?=base_url()?>login/logout"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out</a>
+                    <a href="<?=base_url()?>logout"><span class="glyphicon glyphicon-log-out"></span> &nbsp; Log Out</a>
                 </li>
             </ul>
         </li>
@@ -58,14 +58,14 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
             <li>
-                <a href="<?=base_url()?>admin/home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
+                <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
             </li>
             <?php if($position === 'admin'):?>
             <li>
-                <a href="<?=base_url()?>admin/guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
+                <a href="<?=base_url()?>guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
             <li>
-                <a href="<?=base_url()?>admin/siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
+                <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
             </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
