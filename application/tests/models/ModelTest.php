@@ -170,6 +170,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             //add data
             $data = [
                 'no_uh' => 1,
+                'kelas' => 'XI',
                 'nis' => 1001,
                 'tanggal' => '2015-12-12',
                 'juz' => 4,
@@ -198,7 +199,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
             //checkAttributes
             $no_uh = 1;
             $nis = 1001;
-            $nilai = $model->getData($no_uh, $nis);
+            $kelas = 'XI';
+            $nilai = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas])[0];
             $this->assertObjectHasAttribute('no_uh', $nilai);
             $this->assertObjectHasAttribute('nis', $nilai);
             $this->assertObjectHasAttribute('tanggal', $nilai);
@@ -206,11 +208,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('halaman', $nilai);
             $this->assertObjectHasAttribute('nilai', $nilai);
             $this->assertObjectHasAttribute('penguji', $nilai);
-            for($i = 0; $i <=1; $i++){
+            for($i = 0; $i <=2; $i++){
                 if ($i === 0) {
                     $nilai_array = $model->getDatabyNis($nis);
-                }else{
+                }elseif ($i === 1){
                     $nilai_array = $model->getDatabyId($no_uh);
+                }
+                else{
+                    $nilai_array = $model->getDatabyKelas($kelas);
                 }
                 $this->assertObjectHasAttribute('no_uh', $nilai_array[0]);
                 $this->assertObjectHasAttribute('nis', $nilai_array[0]);

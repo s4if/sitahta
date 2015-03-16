@@ -35,9 +35,9 @@ class Model_nilai extends CI_Model {
         parent::__construct();
     }
     
-    public function getData($no_uh, $nis){
-        $data = $this->db->get_where('nilai', ['no_uh' => $no_uh, 'nis' => $nis]);
-        return $data->row();
+    public function getData($where){
+        $data = $this->db->get_where('nilai', $where);
+        return $data->result();
     }
     
     public function getDataById($no_uh){
@@ -47,6 +47,11 @@ class Model_nilai extends CI_Model {
     
     public function getDataByNis($nis){
         $data = $this->db->query("select * from nilai "."Where nis = ".$nis);
+        return $data->result();
+    }
+    
+    public function getDataByKelas($kelas){
+        $data = $this->db->query("select * from nilai "."Where kelas = '".$kelas."'");
         return $data->result();
     }
     
@@ -84,6 +89,7 @@ class Model_nilai extends CI_Model {
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data){
         if (!empty($data['no_uh'])) : $this->db->set('no_uh',$data['no_uh']); endif;
+        if (!empty($data['kelas'])) : $this->db->set('kelas',$data['kelas']); endif;
         if (!empty($data['nis'])) : $this->db->set('nis',$data['nis']); endif;
         if (!empty($data['tanggal'])) : $this->db->set('tanggal',$data['tanggal']); endif;
         if (!empty($data['juz'])) : $this->db->set('juz',$data['juz']); endif;

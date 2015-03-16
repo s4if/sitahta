@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 16, 2015 at 08:56 PM
+-- Generation Time: Mar 16, 2015 at 10:12 PM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.6
 
@@ -66,13 +66,14 @@ CREATE TABLE IF NOT EXISTS `hafalan_awal` (
 
 CREATE TABLE IF NOT EXISTS `nilai` (
   `no_uh` int(11) NOT NULL,
+  `kelas` varchar(5) NOT NULL,
   `nis` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
   `juz` int(11) DEFAULT NULL,
   `halaman` int(11) DEFAULT NULL,
   `nilai` int(11) DEFAULT NULL,
   `penguji` int(11) DEFAULT NULL,
-  PRIMARY KEY (`no_uh`,`nis`),
+  PRIMARY KEY (`no_uh`,`kelas`,`nis`),
   KEY `fk_nilai_1_idx` (`nis`),
   KEY `fk_nilai_2_idx` (`penguji`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -81,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `nilai` (
 -- Dumping data for table `nilai`
 --
 
-INSERT INTO `nilai` (`no_uh`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
-(1, 1001, '2015-12-12', 4, 4, 78, 1);
+INSERT INTO `nilai` (`no_uh`, `kelas`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
+(1, 'XI', 1001, '2015-12-12', 4, 4, 78, 1);
 
 -- --------------------------------------------------------
 
@@ -154,8 +155,8 @@ ALTER TABLE `hafalan_awal`
 -- Constraints for table `nilai`
 --
 ALTER TABLE `nilai`
-  ADD CONSTRAINT `fk_nilai_2` FOREIGN KEY (`penguji`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_nilai_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_nilai_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_nilai_2` FOREIGN KEY (`penguji`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sertifikasi`
