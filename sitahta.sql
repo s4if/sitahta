@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 16, 2015 at 10:12 PM
+-- Generation Time: Mar 18, 2015 at 11:07 PM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.6
 
@@ -44,7 +44,8 @@ CREATE TABLE IF NOT EXISTS `guru` (
 --
 
 INSERT INTO `guru` (`nip`, `nama`, `jenis_kelamin`, `alamat`, `email`, `no_telp`, `password`, `kewenangan`) VALUES
-(1, 'admin', 'L', 'foo city', 'foo@google.com', '08674839291', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'admin');
+(1, 'admin', 'L', 'foo city', 'foo@google.com', '08674839291', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'admin'),
+(2, 'guru', 'P', 'Magelang', 'sss@ss.com', '+62874938182', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'guru');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `hafalan_awal` (
 --
 
 CREATE TABLE IF NOT EXISTS `nilai` (
-  `no_uh` int(11) NOT NULL,
+  `no_uh` varchar(3) NOT NULL,
   `kelas` varchar(5) NOT NULL,
   `nis` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
@@ -83,7 +84,35 @@ CREATE TABLE IF NOT EXISTS `nilai` (
 --
 
 INSERT INTO `nilai` (`no_uh`, `kelas`, `nis`, `tanggal`, `juz`, `halaman`, `nilai`, `penguji`) VALUES
-(1, 'XI', 1001, '2015-12-12', 4, 4, 78, 1);
+('1', 'XI', 1001, '2015-12-12', 4, 4, 78, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai_uas`
+--
+
+CREATE TABLE IF NOT EXISTS `nilai_uas` (
+  `nis` int(11) NOT NULL,
+  `kelas` varchar(3) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `nilai` int(11) DEFAULT NULL,
+  PRIMARY KEY (`nis`,`kelas`,`semester`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nilai_uts`
+--
+
+CREATE TABLE IF NOT EXISTS `nilai_uts` (
+  `nis` int(11) NOT NULL,
+  `kelas` varchar(3) NOT NULL,
+  `semester` int(11) NOT NULL,
+  `nilai` int(11) DEFAULT NULL,
+  PRIMARY KEY (`nis`,`kelas`,`semester`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -138,8 +167,8 @@ CREATE TABLE IF NOT EXISTS `siswa` (
 
 INSERT INTO `siswa` (`nis`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `kelas`, `jurusan`, `no_kelas`, `password`, `nama_ortu`) VALUES
 (1001, 'user', 'L', 'magelang', '2000-12-12', 'XI', 'IPS', 2, 'd8578edf8458ce06fbc5bb76a58c5ca4', 'ortu'),
-(1002, 'user2', 'P', 'Kebumen', '2001-01-01', 'X', 'Tahfidz', 2, 'd8578edf8458ce06fbc5bb76a58c5ca4', 'Ortu2'),
-(1003, 'user3', 'L', 'Tenggarong', '1999-10-07', 'XII', 'IPA', 1, 'd8578edf8458ce06fbc5bb76a58c5ca4', 'Orang Tua3');
+(1002, 'user2', 'P', 'Kebumen', '2001-01-01', 'X', 'Tahfidz', 2, '', 'Orang Tua2'),
+(1003, 'User3', 'P', 'Tenggarong', '1999-01-01', 'XII', 'IPS', 2, 'd8578edf8458ce06fbc5bb76a58c5ca4', 'Ortu 3');
 
 --
 -- Constraints for dumped tables
@@ -157,6 +186,18 @@ ALTER TABLE `hafalan_awal`
 ALTER TABLE `nilai`
   ADD CONSTRAINT `fk_nilai_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_nilai_2` FOREIGN KEY (`penguji`) REFERENCES `guru` (`nip`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `nilai_uas`
+--
+ALTER TABLE `nilai_uas`
+  ADD CONSTRAINT `fk_nilai_uas_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `nilai_uts`
+--
+ALTER TABLE `nilai_uts`
+  ADD CONSTRAINT `fk_nilai_uts_1` FOREIGN KEY (`nis`) REFERENCES `siswa` (`nis`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `sertifikasi`

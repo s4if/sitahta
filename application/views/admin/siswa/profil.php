@@ -23,7 +23,7 @@ THE SOFTWARE.
 -->
 
 <h1 class="page-header">
-    Lihat Siswa
+    Profil Siswa
 </h1>
 <ol class="breadcrumb">
     <li>
@@ -36,4 +36,172 @@ THE SOFTWARE.
         Profil
     </li>
 </ol>
-<?=$siswa->nama?>
+<h3><em>Data Diri</em></h3>
+<div class="col-md-12 container-fluid">
+    <table>
+        <tr>
+            <td> Nama </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=$siswa->nama?> </td>
+        </tr>
+        <tr>
+            <td> NIS </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=$siswa->nis?> </td>
+        </tr>
+        <tr>
+            <td> I/A </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=($siswa->jenis_kelamin == 'L')?'Ikhwan': 'Akhwat'?> </td>
+        </tr>
+        <tr>
+            <td> TTL </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=  ucwords($siswa->tempat_lahir) ?>, <?=  nice_date($siswa->tgl_lahir, 'd F Y') ?> </td>
+        </tr>
+        <?php
+            $kelas = ($siswa->kelas !== 'X')?$siswa->kelas."-".$siswa->jurusan."-".$siswa->no_kelas:
+                $siswa->kelas."-".$siswa->no_kelas;
+        ?>
+        <tr>
+            <td> Kelas </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=$kelas?> </td>
+        </tr>
+        <tr>
+            <td> Nama Ortu / Wali </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> <?=$siswa->nama_ortu?> </td>
+        </tr>
+        <tr>
+            <td> Hafalan sebelum <br> masuk sma </td>
+            <td> &nbsp;:&nbsp; </td>
+            <td> - </td>
+        </tr>
+    </table>
+    &nbsp;
+</div>
+<h3><em>Sertifikasi Hafalan</em></h3>
+<div class="col-md-12 container-fluid">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td>Nama</td>
+                    <td>Tanggal Ujian</td>
+                    <td>Tempat Ujian</td>
+                    <td>Juz</td>
+                    <td>Nilai</td>
+                    <td>Predikat</td>
+                    <td>Keterangan</td>
+                    <td>Aksi</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(empty($data_sertifikasi[0])) :?>
+                <tr>
+                <td><?= $sertifikasi->nama;?></td>
+                <td><?= nice_date($sertifikasi->tgl_ujian, 'd F Y');?></td>
+                <td><?= $sertifikasi->tempat_ujian;?></td>
+                <td><?= $sertifikasi->juz;?></td>
+                <td><?= $sertifikasi->nilai;?></td>
+                <td><?= $sertifikasi->predikat;?></td>
+                <td><?= $sertifikasi->keterangan;?></td>
+                <td>
+                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahSertifikasi">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                </td>
+                </tr>
+                <?php else :?>
+                <?php foreach ($data_sertifikasi as $sertifikasi):?>
+                <tr>
+                <td><?= $sertifikasi->nama;?></td>
+                <td><?= nice_date($sertifikasi->tgl_ujian, 'd F Y');?></td>
+                <td><?= $sertifikasi->tempat_ujian;?></td>
+                <td><?= $sertifikasi->juz;?></td>
+                <td><?= $sertifikasi->nilai;?></td>
+                <td><?= $sertifikasi->predikat;?></td>
+                <td><?= $sertifikasi->keterangan;?></td>
+                <td>
+                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahSertifikasi">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editSertifikasi<?= $sertifikasi->id;?>">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteSertifikasi<?=$sertifikasi->id;?>">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                </td>
+                </tr>
+                <?php endforeach;?>
+                <?php endif;?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<h3><em>Ulangan Harian</em></h3>
+<div class="col-md-12 container-fluid">
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <td>Kelas</td>
+                    <td>UH</td>
+                    <td>Juz</td>
+                    <td>Halaman</td>
+                    <td>Nilai</td>
+                    <td>Tanggal</td>
+                    <td>Penguji</td>
+                    <td>Aksi</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(empty($data_nilai[0])) :?>
+                <tr>
+                <td><?= $nilai->kelas;?></td>
+                <td>#<?= $nilai->no_uh;?></td>
+                <td><?= $nilai->juz;?></td>
+                <td><?= $nilai->halaman;?></td>
+                <td><?= $nilai->nilai;?></td>
+                <td><?= nice_date($nilai->tanggal, 'd F Y');?></td>
+                <td><?= $nilai->nama_penguji;?></td>
+                <td>
+                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                </td>
+                </tr>
+                <?php else :?>
+                <?php foreach ($data_nilai as $nilai):?>
+                <tr>
+                <td><?= $nilai->kelas;?></td>
+                <td>#<?= $nilai->no_uh;?></td>
+                <td><?= $nilai->juz;?></td>
+                <td><?= $nilai->halaman;?></td>
+                <td><?= $nilai->nilai;?></td>
+                <td><?= nice_date($nilai->tanggal, 'd F Y');?></td>
+                <td><?= $nilai->nama_penguji;?></td>
+                <td>
+                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                </td>
+                </tr>
+                <?php endforeach;?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?=$tambah_sertifikat?>
+<?=$edit_sertifikat?>
+<?=$tambah_nilai?>
+<?=$edit_nilai?>

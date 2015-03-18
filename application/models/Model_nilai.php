@@ -41,12 +41,34 @@ class Model_nilai extends CI_Model {
     }
     
     public function getDataById($no_uh){
-        $data = $this->db->query("select * from nilai "."Where no_uh = ".$no_uh);
+        $data = $this->db->query("select "
+                . "nilai.no_uh as 'no_uh', "
+                . "nilai.kelas as 'kelas', "
+                . "nilai.nis as 'nis', "
+                . "nilai.tanggal as 'tanggal', "
+                . "nilai.juz as 'juz', "
+                . "nilai.halaman as 'halaman', "
+                . "nilai.nilai as 'nilai', "
+                . "nilai.penguji as 'penguji', "
+                . "guru.nama as 'nama_penguji' "
+                . "from nilai inner join guru on nilai.penguji = guru.nip "
+                . "Where nilai.no_uh = ".$no_uh);
         return $data->result();
     }
     
     public function getDataByNis($nis){
-        $data = $this->db->query("select * from nilai "."Where nis = ".$nis);
+        $data = $this->db->query("select "
+                . "nilai.no_uh as 'no_uh', "
+                . "nilai.kelas as 'kelas', "
+                . "nilai.nis as 'nis', "
+                . "nilai.tanggal as 'tanggal', "
+                . "nilai.juz as 'juz', "
+                . "nilai.halaman as 'halaman', "
+                . "nilai.nilai as 'nilai', "
+                . "nilai.penguji as 'penguji', "
+                . "guru.nama as 'nama_penguji' "
+                . "from nilai inner join guru on nilai.penguji = guru.nip "
+                . "Where nilai.nis = ".$nis);
         return $data->result();
     }
     
@@ -55,20 +77,24 @@ class Model_nilai extends CI_Model {
         return $data->result();
     }
     
-    public function insertData($data, $table_name = 'nilai'){
-        if(!$this->dataExist($data['no_uh'], $data['nis'])){
+    public function insertData($data, $replace = false){
+        if((!$this->dataExist($data['no_uh'], $data['nis'], $data['kelas'])) || $replace){
             $this->setData($data);
-            $this->db->insert($table_name);
+            if($replace){
+                $this->db->replace('nilai');
+            }  else {
+                $this->db->insert('nilai');
+            }
             return true;
         }else{
             return false;
         }
     }
     
-    public function updateData($data, $table_name = 'nilai'){
-        if($this->dataExist($data['no_uh'], $data['nis'])){
+    public function updateData($data){
+        if($this->dataExist($data['no_uh'], $data['nis'], $data['kelas'])){
             $this->setData($data);
-            $this->db->replace($table_name);
+            $this->db->replace('nilai');
             return true;
         }else{
             return false;
@@ -76,10 +102,8 @@ class Model_nilai extends CI_Model {
     }
     
     public function deleteData($where){
-        if($this->dataExist($where['no_uh'], $where['nis'])){
-            $this->db->where('no_uh', $where['no_uh']);
-            $this->db->where('nis', $where['nis']);
-            $this->db->delete('nilai');
+        if($this->dataExist($where['no_uh'], $where['nis'], $where['kelas'])){
+            $this->db->delete('nilai', $where);
             return true;
         }else{
             return false;
@@ -98,13 +122,9 @@ class Model_nilai extends CI_Model {
         if (!empty($data['penguji'])) : $this->db->set('penguji',$data['penguji']); endif;
     }
     
-    public function dataExist($no_uh, $nis) {
-        $query = $this->db->get_where('nilai', ['no_uh' => $no_uh, 'nis' => $nis]);
+    public function dataExist($no_uh, $nis, $kelas) {
+        $query = $this->db->get_where('nilai', ['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas]);
         $rows = $query->num_rows();
-        if($rows > 0){
-            return true;
-        }else{
-            return false;
-        }
+        return ($rows > 0)?TRUE:FALSE;
     }
 }

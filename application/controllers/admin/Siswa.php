@@ -75,10 +75,10 @@ class Siswa extends MY_Controller {
             $res = $this->siswa->insertData($data_insert, 'siswa');
             if($res >= 1){
                 $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
-                redirect('admin/siswa');
+                redirect('siswa');
             } else {
                 $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
-                redirect('admin/siswa');
+                redirect('siswa');
             }
         }
     }
@@ -91,10 +91,10 @@ class Siswa extends MY_Controller {
         $res = $this->siswa->updateData($data_insert, 'siswa');
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
-            redirect('admin/siswa');
+            redirect('siswa');
         } else {
             $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
-            redirect('admin/siswa');
+            redirect('siswa');
         }
     }
     
@@ -102,23 +102,72 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         if($this->siswa->deleteData(['nis' => $nis])){
             $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
-            redirect('admin/siswa/lihat', 'refresh');
+            redirect('siswa', 'refresh');
         }  else {
             $this->session->set_flashdata("errors",[0 => "Maaf, Siswa dengan nis = ".$nis." tidak ditemukan"]);
-            redirect('admin/siswa/lihat', 'refresh');
+            redirect('siswa', 'refresh');
         }
     }
     
     public function profil($nis){
         $this->blockUnloggedOne();
         $siswa = $this->siswa->getData($nis);
+        $data_sertifikasi = $this->sertifikasi->getDataByNis($nis);
+        $data_nilai = $this->nilai->getDataByNis($nis);
         $data = [
             'title' => 'Profil Siswa',
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->nama,
-            'siswa' => $siswa
+            'siswa' => $siswa,
+            'data_sertifikasi' => $data_sertifikasi,
+            'data_nilai' => $data_nilai,
+            'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai",['kelas' => $siswa->kelas, 'nis' => $siswa->nis],TRUE),
+            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai",['data_nilai' => $data_nilai],TRUE)
         ];
         $this->loadView('admin/siswa/profil', $data);
+    }
+    
+    public function tambah_nilai($nis){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nis'] = $nis;
+        $data_insert['tanggal'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
+        $data_insert['penguji'] = $this->session->login_data->nip;
+        $res = $this->nilai->insertData($data_insert, TRUE);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+            redirect('siswa/'.$nis);
+        }
+    }
+    
+    public function edit_nilai($nis){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nis'] = $nis;
+        $data_insert['tanggal'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
+        $data_insert['penguji'] = $this->session->login_data->nip;
+        $res = $this->nilai->updateData($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('siswa/'.$nis);
+        }
+    }
+    
+    public function hapus_nilai($nis, $kelas, $no_uh){
+        $this->blockUnloggedOne();
+        if($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas])){
+            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
+            redirect('siswa/'.$nis, 'refresh');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, Siswa dengan nis = ".$nis." tidak ditemukan"]);
+            redirect('siswa/'.$nis, 'refresh');
+        }
     }
 }

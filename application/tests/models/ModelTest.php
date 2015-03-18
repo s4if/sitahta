@@ -181,10 +181,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($model->insertData($data));
             $this->assertFalse($model->insertData($data));
             //data exist
-            $this->assertTrue($model->dataExist(1,1001));
+            $this->assertTrue($model->dataExist(1,1001, 'XI'));
             //delete data
-            $this->assertTrue($model->deleteData(['no_uh' => 1, 'nis' => 1001]));
-            $this->assertFalse($model->deleteData(['no_uh' => 1, 'nis' => 1001]));
+            $this->assertTrue($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI']));
+            $this->assertFalse($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI']));
             $model->insertData($data);
             //update data
             $data['nilai'] = 78;
