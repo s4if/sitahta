@@ -201,7 +201,7 @@ THE SOFTWARE.
         </table>
     </div>
 </div>
-<?=$tambah_sertifikat?>
-<?=$edit_sertifikat?>
+<?=$tambah_sertifikasi?>
+<?=$edit_sertifikasi?>
 <?=$tambah_nilai?>
 <?=$edit_nilai?>

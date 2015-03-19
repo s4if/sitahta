@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 18, 2015 at 11:07 PM
+-- Generation Time: Mar 19, 2015 at 09:46 AM
 -- Server version: 5.5.41-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.6
+-- PHP Version: 5.5.9-1ubuntu4.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `sertifikasi` (
   `keterangan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_sertifikasi_1_idx` (`nis`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12346 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12349 ;
 
 --
 -- Dumping data for table `sertifikasi`

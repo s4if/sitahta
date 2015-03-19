@@ -123,7 +123,9 @@ class Siswa extends MY_Controller {
             'data_sertifikasi' => $data_sertifikasi,
             'data_nilai' => $data_nilai,
             'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai",['kelas' => $siswa->kelas, 'nis' => $siswa->nis],TRUE),
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai",['data_nilai' => $data_nilai],TRUE)
+            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai",['data_nilai' => $data_nilai],TRUE),
+            'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi",['kelas' => $siswa->kelas, 'nis' => $siswa->nis],TRUE),
+            'edit_sertifikasi' => $this->load->view("admin/siswa/edit_sertifikasi",['data_sertifikasi' => $data_sertifikasi],TRUE),
         ];
         $this->loadView('admin/siswa/profil', $data);
     }
@@ -166,7 +168,49 @@ class Siswa extends MY_Controller {
             $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
             redirect('siswa/'.$nis, 'refresh');
         }  else {
-            $this->session->set_flashdata("errors",[0 => "Maaf, Siswa dengan nis = ".$nis." tidak ditemukan"]);
+            $this->session->set_flashdata("errors",[0 => "Maaf, data tidak berhasil dihapus"]);
+            redirect('siswa/'.$nis, 'refresh');
+        }
+    }
+    
+    public function tambah_sertifikasi($nis){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nis'] = $nis;
+        $data_insert['tgl_ujian'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
+        $res = $this->sertifikasi->insertData($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+            redirect('siswa/'.$nis);
+        }
+    }
+    
+    public function edit_sertifikasi($nis, $id){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['id'] = $id;
+        $data_insert['nis'] = $nis;
+        $data_insert['tgl_ujian'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
+        $res = $this->sertifikasi->updateData($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('siswa/'.$nis);
+        }
+    }
+    
+    public function hapus_sertifikasi($nis, $id){
+        $this->blockUnloggedOne();
+        if($this->sertifikasi->deleteData(['nis' => $nis, 'id' => $id])){
+            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
+            redirect('siswa/'.$nis, 'refresh');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, data tidak berhasil dihapus"]);
             redirect('siswa/'.$nis, 'refresh');
         }
     }

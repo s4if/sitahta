@@ -55,10 +55,10 @@ class Model_sertifikasi extends CI_Model {
         }
     }
     
-    public function updateData($data, $table_name = 'sertifikasi'){
+    public function updateData($data){
         if($this->dataExist($data['id'])){
             $this->setData($data);
-            $this->db->replace($table_name);
+            $this->db->replace('sertifikasi');
             return true;
         }else{
             return false;
