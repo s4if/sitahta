@@ -72,6 +72,26 @@ class Model_nilai extends CI_Model {
         return $data->result();
     }
     
+    public function getNilaiSiswa(){
+        $data = $this->db->query("select "
+                . "nilai.no_uh as 'no_uh', "
+                . "nilai.kelas as 'kelas', "
+                . "nilai.nis as 'nis', "
+                . "nilai.tanggal as 'tanggal', "
+                . "nilai.juz as 'juz', "
+                . "nilai.halaman as 'halaman', "
+                . "nilai.nilai as 'nilai', "
+                . "nilai.penguji as 'penguji', "
+                . "siswa.nis as 'nis' "
+                . "from nilai join siswa where nilai.nis = siswa.nis and siswa.kelas = nilai.kelas");
+        $data_arr = array();
+        foreach ($data->result() as $row)
+        {
+            $data_arr[$row->nis][$row->no_uh] = $row;
+        }
+        return $data_arr;
+    }
+
     public function getDataByKelas($kelas){
         $data = $this->db->query("select * from nilai "."Where kelas = '".$kelas."'");
         return $data->result();

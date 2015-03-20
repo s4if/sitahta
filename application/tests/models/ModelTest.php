@@ -162,6 +162,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nama_ortu', $siswa);
             $mod_array = $model->getData();
             $this->assertObjectHasAttribute('nis', $mod_array[0]);
+            $mod_array = $model->getFilteredData(['kelas' => 'XI',
+                'jurusan' => 'IPS',
+                'no_kelas' => '2']);
+            $this->assertObjectHasAttribute('nis', $mod_array[0]);
+            $mod_array = $model->getFilteredData(['kelas' => 'XI',
+                'jurusan' => 'IPS',
+                'no_kelas' => '1']);
+            $this->assertNull($mod_array[0]);
         }
         
         public function testModel_nilai() {
@@ -200,30 +208,27 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $no_uh = 1;
             $nis = 1001;
             $kelas = 'XI';
-            $nilai = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas])[0];
-            $this->assertObjectHasAttribute('no_uh', $nilai);
-            $this->assertObjectHasAttribute('nis', $nilai);
-            $this->assertObjectHasAttribute('tanggal', $nilai);
-            $this->assertObjectHasAttribute('juz', $nilai);
-            $this->assertObjectHasAttribute('halaman', $nilai);
-            $this->assertObjectHasAttribute('nilai', $nilai);
-            $this->assertObjectHasAttribute('penguji', $nilai);
-            for($i = 0; $i <=2; $i++){
+            for($i = 0; $i <=4; $i++){
                 if ($i === 0) {
-                    $nilai_array = $model->getDatabyNis($nis);
+                    $nilai = $model->getDatabyNis($nis)[0];
                 }elseif ($i === 1){
-                    $nilai_array = $model->getDatabyId($no_uh);
+                    $nilai = $model->getDatabyId($no_uh)[0];
+                }elseif ($i === 2){
+                    $nilai = $model->getDatabyKelas($kelas)[0];
+                }elseif ($i === 3){
+                    $nilai = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas])[0];
+                }else{
+                    $nilai_arr = $model->getNilaiSiswa();
+                    $nilai = $nilai_arr['1001']['1'];
+                    $this->assertNull($nilai_arr['1001'][10]);
                 }
-                else{
-                    $nilai_array = $model->getDatabyKelas($kelas);
-                }
-                $this->assertObjectHasAttribute('no_uh', $nilai_array[0]);
-                $this->assertObjectHasAttribute('nis', $nilai_array[0]);
-                $this->assertObjectHasAttribute('tanggal', $nilai_array[0]);
-                $this->assertObjectHasAttribute('juz', $nilai_array[0]);
-                $this->assertObjectHasAttribute('halaman', $nilai_array[0]);
-                $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
-                $this->assertObjectHasAttribute('penguji', $nilai_array[0]);
+                $this->assertObjectHasAttribute('no_uh', $nilai);
+                $this->assertObjectHasAttribute('nis', $nilai);
+                $this->assertObjectHasAttribute('tanggal', $nilai);
+                $this->assertObjectHasAttribute('juz', $nilai);
+                $this->assertObjectHasAttribute('halaman', $nilai);
+                $this->assertObjectHasAttribute('nilai', $nilai);
+                $this->assertObjectHasAttribute('penguji', $nilai);
             }
         }
         
