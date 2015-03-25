@@ -48,6 +48,21 @@
     <!-- Custom DaatePicker -->
     <link href="<?=  base_url() ?>assets/bootstrap-datetimepicker.min.css" rel="stylesheet">
     
+    <!-- jQuery Version 1.11.0 -->
+    <script src="<?=  base_url() ?>assets/js/jquery-1.11.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?=  base_url() ?>assets/js/bootstrap.min.js"></script>
+  
+    <!-- Moment Js -->
+    <script src="<?=  base_url() ?>assets/js/moment.min.js"></script>
+    
+    <!-- Bootstrap DatePicker JavaScript -->
+    <script src="<?=  base_url() ?>assets/js/bootstrap-datetimepicker.min.js"></script>
+    
+    <!-- User Js -->
+    <script src="<?=  base_url() ?>assets/js/user.js"></script>
+    
 </head>
 
 <body>
