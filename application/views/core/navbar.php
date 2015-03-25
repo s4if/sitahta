@@ -67,6 +67,9 @@
             <li>
                 <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
             </li>
+            <li>
+                <a href="<?=base_url()?>nilai"><span class="glyphicon glyphicon-list"></span> &nbsp; Nilai</a>
+            </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
             <li>

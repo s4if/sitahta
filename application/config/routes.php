@@ -61,3 +61,4 @@ $route['home/password'] = 'admin/home/password';
 $route['guru'] = 'admin/guru/lihat';
 $route['siswa'] = 'admin/siswa/lihat';
 $route['siswa/(:num)'] = 'admin/siswa/profil/$1';
+$route['nilai'] = 'admin/nilai/lihat';
