@@ -105,5 +105,21 @@ class Guru extends MY_Controller {
             redirect('admin/guru/lihat', 'refresh');
         }
     }
+    
+    public function import(){
+        $this->blockUnloggedOne();
+        $fileUrl = $_FILES['file']["tmp_name"];
+        $res = $this->guru->importData($fileUrl);
+        if($res == 0){
+            $this->session->set_flashdata("notices",[0 => "Import Data Berhasil!"]);
+            redirect('guru');
+        } elseif($res > 0) {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> cek kembali isi dokumen yang akan diimport!"]);
+            redirect('guru');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> File yang dimasukkan bukan file excel!"]);
+            redirect('guru');
+        }
+    }
 
 }

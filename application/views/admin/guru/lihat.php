@@ -36,7 +36,42 @@
         Guru
     </li>
 </ol>
+<div class="col-md-12">
+    <div class="btn-group">
+        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
+            <span class="glyphicon glyphicon-plus"></span>
+            Tambah
+        </a>
+        <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
+            <span class="glyphicon glyphicon-import"></span>
+            Import
+        </a>
+        <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" method="post" action="<?=base_url();?>admin/guru/import" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Masukkan Input</label>
+                                <input type="file" id="file" name="file">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?=$tambah?>
+<div class="col-md-12">
+    &nbsp;
+</div>
+<div class="col-md-12">
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
         <thead>
@@ -62,9 +97,6 @@
             <td><?= $guru->no_telp;?></td>
             <td><?= $guru->kewenangan;?></td>
             <td>
-            <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
             <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
@@ -76,5 +108,6 @@
             <?php endforeach;?>
         </tbody>
     </table>
+</div>
 </div>
 <?=$edit?>

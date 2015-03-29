@@ -91,4 +91,51 @@ class Model_guru extends CI_Model{
             return false;
         }
     }
+    
+    /**
+     * 
+     * @param type $file_url
+     * @return 0 for ok, -1 for file wrong, > 0 for data wrong
+     */
+    public function importData($file_url){
+        try {
+            $objReader = new PHPExcel_Reader_Excel5();
+            $objPHPExcel = $objReader->load($file_url);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $lastRow = $objWorksheet->getHighestDataRow();
+            $failureCount = 0;
+            $this->db->trans_begin();
+            $data = $objWorksheet->rangeToArray('A1'.':F'.$lastRow, null, TRUE);
+            for ($i = 1; $i < $lastRow;$i++){
+                $row_data = $data[$i];
+                if($this->cellValidation($row_data)){
+                    $this->db->query("REPLACE INTO guru (nip, nama, jenis_kelamin, alamat, email, no_telp, kewenangan, password) "
+                            . "VALUES ('".$row_data[0]."', '".$row_data[1]."', '".$row_data[2]."', '"
+                            . $row_data[3]."', '".$row_data[4]."', '".$row_data[5]."', 'guru', '"
+                            . md5('qwerty')."')");
+                }  else {
+                    $failureCount++;
+                }
+            }
+            if(($failureCount > 0) || !$this->db->trans_status()){
+                $this->db->trans_rollback();
+            }else{
+                $this->db->trans_commit();
+            }
+            return $failureCount;
+        }  catch (PHPExcel_Exception $ex) {
+            return -1;
+        }
+    }
+    
+    private function cellValidation($row_data){
+        $cellValid = true;
+        foreach ($row_data as $cell){
+            if(is_null($cell)){
+                $cellValid = false;
+                break;
+            }
+        }
+        return $cellValid;
+    }
 }

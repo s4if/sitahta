@@ -98,6 +98,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('kewenangan', $model->getData(1));
             $mod_array = $model->getData();
             $this->assertObjectHasAttribute('nip', $mod_array[0]);
+            $this->assertEquals(0, $model->importData('assets/test/coba_guru.xls'));
+            $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+            $this->assertGreaterThan(0,$model->importData('assets/test/coba_guru_error.xls'));
         }
         
         public function testModel_login() {
