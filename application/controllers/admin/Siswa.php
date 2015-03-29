@@ -214,4 +214,20 @@ class Siswa extends MY_Controller {
             redirect('siswa/'.$nis, 'refresh');
         }
     }
+    
+    public function import(){
+        $this->blockUnloggedOne();
+        $fileUrl = $_FILES['file']["tmp_name"];
+        $res = $this->siswa->importData($fileUrl);
+        if($res == 0){
+            $this->session->set_flashdata("notices",[0 => "Import Data Berhasil!"]);
+            redirect('siswa');
+        } elseif($res > 0) {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> Cek kembali isi dokumen yang akan diimport!"]);
+            redirect('siswa');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> File yang dimasukkan bukan file excel!"]);
+            redirect('siswa');
+        }
+    }
 }

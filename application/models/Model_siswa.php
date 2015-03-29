@@ -112,4 +112,67 @@ class Model_siswa extends CI_Model {
         $query = $this->db->get_where("siswa",$where);
         return $query->result();
     }
+    
+    /**
+     * 
+     * @param type $file_url
+     * @return 0 for ok, -1 for file wrong, > 0 for data wrong
+     */
+    public function importData($file_url){
+        try {
+            $objReader = new PHPExcel_Reader_Excel5();
+            $objPHPExcel = $objReader->load($file_url);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $lastRow = $objWorksheet->getHighestDataRow();
+            $failureCount = 0;
+            $this->db->trans_begin();
+            $data = $objWorksheet->rangeToArray('A1'.':I'.$lastRow, null, TRUE);
+            for ($i = 1; $i < $lastRow;$i++){
+                $row_data = $data[$i];
+                if($this->cellValidation($row_data)){
+                    $data_insert = $this->dataCorrection($row_data);
+                    $this->db->query("REPLACE INTO siswa (nis, nama, jenis_kelamin, tempat_lahir, "
+                            . "tgl_lahir, kelas, jurusan, no_kelas, nama_ortu, password) "
+                            . "VALUES ('".$data_insert[0]."', '".$data_insert[1]."', '".$data_insert[2]."', '"
+                            . $data_insert[3]."', '".$data_insert[4]."', '".$data_insert[5]."', '"
+                            . $data_insert[6]."', '".$data_insert[7]."', '".$data_insert[8]."', '"
+                            . md5('qwerty')."')");
+                }  else {
+                    $failureCount++;
+                }
+            }
+            if(($failureCount > 0) || !$this->db->trans_status()){
+                $this->db->trans_rollback();
+            }else{
+                $this->db->trans_commit();
+            }
+            return $failureCount;
+        }  catch (PHPExcel_Exception $ex) {
+            return -1;
+        }
+    }
+    
+    private function cellValidation($row_data){
+        $cellValid = true;
+        foreach ($row_data as $cell){
+            if(is_null($cell)){
+                $cellValid = false;
+                break;
+            }
+        }
+        return $cellValid;
+    }
+    
+    private function dataCorrection($row_data){
+        //cek tanggal
+        $tgl_mentah = explode("/", $row_data[4]);
+        $row_data[4] = $tgl_mentah[2].'-'.$tgl_mentah[1].'-'.$tgl_mentah[0];
+        if(!(($row_data[5] == 'X') || ($row_data[5] == 'XI') || ($row_data[5] == 'XII'))){
+            $row_data[5] = 'X';
+        }
+        if(!(($row_data[6] == 'Reguler') || ($row_data[6] == 'Tahfidz') || ($row_data[6] == 'IPA') || ($row_data[6] == 'IPS'))){
+            $row_data[6] = ($row_data[5] == 'X')?'Reguler':'IPA';
+        }
+        return $row_data;
+    }
 }

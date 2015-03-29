@@ -124,7 +124,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $model = new Model_siswa();
             //delete data
             $this->assertTrue($model->deleteData(['nis' => 1001]));
-            $this->assertFalse($model->deleteData(['nip' => 1001]));
+            $this->assertFalse($model->deleteData(['nis' => 1001]));
             //add data
             $data = [
                 'nis' => 1001,
@@ -165,14 +165,17 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nama_ortu', $siswa);
             $mod_array = $model->getData();
             $this->assertObjectHasAttribute('nis', $mod_array[0]);
-            $mod_array = $model->getFilteredData(['kelas' => 'XI',
+            $mod_array1 = $model->getFilteredData(['kelas' => 'XI',
                 'jurusan' => 'IPS',
                 'no_kelas' => '2']);
-            $this->assertObjectHasAttribute('nis', $mod_array[0]);
-            $mod_array = $model->getFilteredData(['kelas' => 'XI',
+            $this->assertObjectHasAttribute('nis', $mod_array1[0]);
+            $mod_array2 = $model->getFilteredData(['kelas' => 'XI',
                 'jurusan' => 'IPS',
-                'no_kelas' => '1']);
-            $this->assertNull($mod_array[0]);
+                'no_kelas' => '100']);
+            $this->assertNull($mod_array2[0]);
+            $this->assertEquals(0, $model->importData('assets/test/coba_siswa.xls'));
+            $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+            $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
         }
         
         public function testModel_nilai() {
