@@ -204,10 +204,6 @@ class CI_DB_mysqli_driver extends CI_DB {
 		{
 			return $this->data_cache['version'];
 		}
-		elseif ( ! $this->conn_id)
-		{
-			$this->initialize();
-		}
 
 		return $this->data_cache['version'] = $this->conn_id->server_info;
 	}
@@ -436,7 +432,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 * Error
 	 *
 	 * Returns an array containing code and message of the last
-	 * database error that has occured.
+	 * database error that has occurred.
 	 *
 	 * @return	array
 	 */

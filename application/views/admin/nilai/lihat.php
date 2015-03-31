@@ -148,7 +148,6 @@
         </div>
     </div>
 </div>
-<?=$tambah?>
 <div class="col-md-12">
     &nbsp;
 </div>
@@ -174,7 +173,7 @@
             <tr>
                 <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
                 <td><?= $siswa->nama;?></td>
-                <?php for($i = 1; $i<=$uh;$i++) : ?>
+                <?php for($i = 1; $i<=20;$i++) : ?>
                 <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
                 <td>
                     <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">
@@ -218,7 +217,7 @@
             <tr>
                 <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
                 <td><?= $siswa->nama;?></td>
-                <?php for($i = 1; $i<=$uh;$i++) : ?>
+                <?php for($i = 1; $i<=10;$i++) : ?>
                 <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
                 <td>
                     <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">
@@ -262,7 +261,7 @@
             <tr>
                 <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
                 <td><?= $siswa->nama;?></td>
-                <?php for($i = 1; $i<=$uh;$i++) : ?>
+                <?php for($i = 1; $i<=10;$i++) : ?>
                 <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
                 <td>
                     <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">

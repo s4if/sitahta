@@ -53,12 +53,14 @@ class Model_login extends CI_Model{
     }
     
     public function checkPassword($id, $passwd, $position){
+        $data = null;
         if($position === 'guru'){
             $data = $this->db->query("select password from guru Where nip = ?", [$id]);
         }elseif ($position === 'user') {
             $data = $this->db->query("select password from siswa Where nis = ?", [$id]);
         }
-        $stored_passwd =  $data->row()->password;
+        $row = $data->row_array();
+        $stored_passwd =  $row['password'];
         return (md5($passwd) === $stored_passwd)? true : false;
     }
     

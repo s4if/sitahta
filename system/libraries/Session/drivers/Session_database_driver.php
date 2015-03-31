@@ -83,7 +83,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 
 		$CI =& get_instance();
 		isset($CI->db) OR $CI->load->database();
-		$this->_db =& $CI->db;
+		$this->_db = $CI->db;
 
 		if ( ! $this->_db instanceof CI_DB_query_builder)
 		{
@@ -92,6 +92,10 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 		elseif ($this->_db->pconnect)
 		{
 			throw new Exception('Configured database connection is persistent. Aborting.');
+		}
+		elseif ($this->_db->cache_on)
+		{
+			throw new Exception('Configured database connection has cache enabled. Aborting.');
 		}
 
 		$db_driver = $this->_db->dbdriver.(empty($this->_db->subdriver) ? '' : '_'.$this->_db->subdriver);
@@ -122,7 +126,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 	public function open($save_path, $name)
 	{
 		return empty($this->_db->conn_id)
-			? ( ! $this->_db->autoinit && $this->_db->db_connect())
+			? (bool) $this->_db->db_connect()
 			: TRUE;
 	}
 
@@ -252,7 +256,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 	 *
 	 * Releases locks
 	 *
-	 * @return	void
+	 * @return	bool
 	 */
 	public function close()
 	{
@@ -319,7 +323,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 		if ($this->_platform === 'mysql')
 		{
 			$arg = $session_id.($this->_config['match_ip'] ? '_'.$_SERVER['REMOTE_ADDR'] : '');
-			if ($this->_db->query("SELECT GET_LOCK('".$arg."', 10) AS ci_session_lock")->row()->ci_session_lock)
+			if ($this->_db->query("SELECT GET_LOCK('".$arg."', 300) AS ci_session_lock")->row()->ci_session_lock)
 			{
 				$this->_lock = $arg;
 				return TRUE;

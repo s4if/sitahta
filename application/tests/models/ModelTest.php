@@ -172,7 +172,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $mod_array2 = $model->getFilteredData(['kelas' => 'XI',
                 'jurusan' => 'IPS',
                 'no_kelas' => '100']);
-            $this->assertNull($mod_array2[0]);
+            $this->assertEmpty($mod_array2);
             $this->assertEquals(0, $model->importData('assets/test/coba_siswa.xls'));
             $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
             $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
@@ -226,7 +226,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
                 }else{
                     $nilai_arr = $model->getNilaiSiswa();
                     $nilai = $nilai_arr['1001']['1'];
-                    $this->assertNull($nilai_arr['1001'][10]);
+                    $nilai2 = empty($nilai_arr['1001'][10])?null:'not empty';
+                    $this->assertNull($nilai2);
                 }
                 $this->assertObjectHasAttribute('no_uh', $nilai);
                 $this->assertObjectHasAttribute('nis', $nilai);
