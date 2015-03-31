@@ -50,13 +50,18 @@ class Nilai extends MY_Controller {
     public function lihat(){
         $this->blockUnloggedOne();
         $data_siswa = $this->siswa->getData();
+        $data_siswa_10 = $this->siswa->getFilteredData(['kelas' => 'X']);
+        $data_siswa_11 = $this->siswa->getFilteredData(['kelas' => 'XI']);
+        $data_siswa_12 = $this->siswa->getFilteredData(['kelas' => 'XII']);
         $data_nilai =  $this->nilai->getNilaiSiswa();
         $data = [
             'title' => 'Nilai',
             'user' => ucwords($this->session->login_data->nama),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->nama,
-            'data_siswa' => $data_siswa,
+            'data_siswa_10' => $data_siswa_10,
+            'data_siswa_11' => $data_siswa_11,
+            'data_siswa_12' => $data_siswa_12,
             'data_nilai' => $data_nilai,
             'edit' => $this->load->view('admin/nilai/edit',['data_siswa' => $data_siswa,
                 'data_nilai' => $data_nilai], true)

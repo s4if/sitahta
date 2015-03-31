@@ -95,17 +95,20 @@ class Model_siswa extends CI_Model {
     }
     
     public function getFilteredData($params){
+        $kelas = (empty($params['kelas']))?'empty':$params['kelas'];
+        $jurusan = (empty($params['jurusan']))?'empty':$params['jurusan'];
+        $no_kelas = (empty($params['no_kelas']))?'0':$params['no_kelas'];
         $where = [];
-        if($params['no_kelas'] === '0' && $params['jurusan'] === 'empty' &&  !($params['kelas'] === 'empty') ){
-            $where = ['kelas' => $params['kelas']];
-        }elseif ($params['no_kelas'] === '0' && $params['kelas'] === 'empty' &&  !($params['jurusan'] === 'empty')) {
-            $where = ['jurusan' => $params['jurusan']];
-        }elseif ($params['no_kelas'] === '0' && !($params['jurusan'] === 'empty') && !($params['kelas'] === 'empty')) {
-            $where = ['kelas' => $params['kelas'], 'jurusan' => $params['jurusan']];
-        }elseif ($params['kelas'] === 'empty' && !($params['jurusan'] === 'empty') && !($params['no_kelas'] === '0')) {
-            $where = ['jurusan' => $params['jurusan'], 'no_kelas' => $params['no_kelas']];
-        }elseif(!($params['no_kelas'] === '0') && !($params['jurusan'] === 'empty') && !($params['kelas'] === 'empty')){
-            $where = ['kelas' => $params['kelas'], 'jurusan' => $params['jurusan'], 'no_kelas' => $params['no_kelas']];
+        if($no_kelas === '0' && $jurusan === 'empty' &&  !($kelas === 'empty') ){
+            $where = ['kelas' => $kelas];
+        }elseif ($no_kelas === '0' && $kelas === 'empty' &&  !($jurusan === 'empty')) {
+            $where = ['jurusan' => $jurusan];
+        }elseif ($no_kelas === '0' && !($jurusan === 'empty') && !($kelas === 'empty')) {
+            $where = ['kelas' => $$kelas, 'jurusan' => $jurusan];
+        }elseif ($kelas === 'empty' && !($jurusan === 'empty') && !($no_kelas === '0')) {
+            $where = ['jurusan' => $jurusan, 'no_kelas' => $no_kelas];
+        }elseif(!($no_kelas === '0') && !($jurusan === 'empty') && !($kelas === 'empty')){
+            $where = ['kelas' => $kelas, 'jurusan' => $jurusan, 'no_kelas' => $no_kelas];
         }else{
             
         }
