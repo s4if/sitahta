@@ -146,9 +146,6 @@
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->nis?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
-                <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahModal">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </a>
                 <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->nis;?>">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
