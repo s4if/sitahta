@@ -111,7 +111,7 @@ class Model_guru extends MY_Model{
                     $failureCount++;
                 }
             }
-            if(($failureCount > 0) || !$this->db->trans_status()){
+            if(($failureCount > 0)){
 //                $this->db->trans_rollback();
                 $this->em->getConnection()->rollback();
             }else{
