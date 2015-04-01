@@ -5,9 +5,9 @@ php:
   - hhvm
   
 before_script:
+  - composer install
   - vendor/bin/doctrine orm:schema-tool:drop --force
   - vendor/bin/doctrine orm:schema-tool:create
-  - composer install
   
 script:
   - phpunit #default test command
