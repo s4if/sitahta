@@ -100,7 +100,6 @@ class Model_guru extends MY_Model{
             $objWorksheet = $objPHPExcel->getActiveSheet();
             $lastRow = $objWorksheet->getHighestDataRow();
             $failureCount = 0;
-//            $this->db->trans_begin();
             $this->em->getConnection()->beginTransaction();
             $data = $objWorksheet->rangeToArray('A1'.':F'.$lastRow, null, TRUE);
             for ($i = 1; $i < $lastRow;$i++){
@@ -112,10 +111,8 @@ class Model_guru extends MY_Model{
                 }
             }
             if(($failureCount > 0)){
-//                $this->db->trans_rollback();
                 $this->em->getConnection()->rollback();
             }else{
-//                $this->db->trans_commit();
                 $this->em->getConnection()->commit();
             }
             return $failureCount;

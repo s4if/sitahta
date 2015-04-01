@@ -29,7 +29,10 @@
  *
  * @author s4if
  */
-class Model_siswa extends CI_Model {
+class Model_siswa extends MY_Model {
+    
+    protected $siswa;
+    
     public function __construct() {
         parent::__construct();
     }
@@ -38,20 +41,24 @@ class Model_siswa extends CI_Model {
         return $this->em->getRepository('Siswa')->getData($nis);
     }
     
-    public function insertData($data, $table_name = 'siswa'){
-        if(!$this->dataExist($data['nis'])){
+    public function insertData($data){
+        if(is_null($this->em->find("Siswa", $data['nis']))){
+            $this->siswa = new Siswa();
             $this->setData($data);
-            $this->db->insert($table_name);
+            $this->em->persist($this->siswa);
+            $this->em->flush();
             return true;
-        }else{
+        }  else{
             return false;
         }
     }
     
-    public function updateData($data, $table_name = 'siswa'){
-        if($this->dataExist($data['nis'])){
+    public function updateData($data){
+        $this->siswa = $this->em->find("Siswa", $data['nis']);
+        if(!is_null($this->siswa)){
             $this->setData($data);
-            $this->db->replace($table_name);
+            $this->em->persist($this->siswa);
+            $this->em->flush();
             return true;
         }else{
             return false;
@@ -59,59 +66,35 @@ class Model_siswa extends CI_Model {
     }
     
     public function deleteData($where){
-        if($this->dataExist($where['nis'])){
-            $this->db->delete('siswa', $where);
-            return true;
-        }else{
+        $entity = $this->em->find("Siswa", $where['nis']);
+        if(!is_null($entity)){
+             $this->em->remove($entity);
+             $this->em->flush();
+             return true;
+        }  else {
             return false;
         }
     }
     
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data){
-        if (!empty($data['nis'])) : $this->db->set('nis',$data['nis']); endif;
-        if (!empty($data['nama'])) : $this->db->set('nama',$data['nama']); endif;
-        if (!empty($data['jenis_kelamin'])) : $this->db->set('jenis_kelamin',$data['jenis_kelamin']); endif;
-        if (!empty($data['tempat_lahir'])) : $this->db->set('tempat_lahir',$data['tempat_lahir']); endif;
-        if (!empty($data['tgl_lahir'])) : $this->db->set('tgl_lahir',$data['tgl_lahir']); endif;
-        if (!empty($data['kelas'])) : $this->db->set('kelas',$data['kelas']); endif;
-        if (!empty($data['jurusan'])) : $this->db->set('jurusan',$data['jurusan']); endif;
-        if (!empty($data['no_kelas'])) : $this->db->set('no_kelas',$data['no_kelas']); endif;
-        if (!empty($data['password'])) : $this->db->set('password',$data['password']); endif;
-        if (!empty($data['nama_ortu'])) : $this->db->set('nama_ortu',$data['nama_ortu']); endif;
-    }
-    
-    //$where is an array that has nis properties
-    public function dataExist($nis) {
-        $query = $this->db->query("SELECT * FROM siswa where nis ='".$nis."';");
-        $rows = $query->num_rows();
-        if($rows == 1){
-            return true;
-        }else{
-            return false;
-        }
+        if (!empty($data['nis'])) : $this->siswa->setNis($data['nis']); endif;
+        if (!empty($data['nama'])) : $this->siswa->setNama($data['nama']); endif;
+        if (!empty($data['jenis_kelamin'])) : $this->siswa->setJenis_kelamin($data['jenis_kelamin']); endif;
+        if (!empty($data['tempat_lahir'])) : $this->siswa->setTempat_lahir($data['tempat_lahir']); endif;
+        $tgl_arr = explode('-', $data['tgl_lahir']);
+        $tgl = new DateTime();
+        $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+        if (!empty($data['tgl_lahir'])) : $this->siswa->setTgl_lahir($tgl); endif;
+        if (!empty($data['kelas'])) : $this->siswa->setKelas($data['kelas']); endif;
+        if (!empty($data['jurusan'])) : $this->siswa->setJurusan($data['jurusan']); endif;
+        if (!empty($data['no_kelas'])) : $this->siswa->setNo_kelas($data['no_kelas']); endif;
+        if (!empty($data['password'])) : $this->siswa->setPassword($data['password']); endif;
+        if (!empty($data['nama_ortu'])) : $this->siswa->setNama_ortu($data['nama_ortu']); endif;
     }
     
     public function getFilteredData($params){
-        $kelas = (empty($params['kelas']))?'empty':$params['kelas'];
-        $jurusan = (empty($params['jurusan']))?'empty':$params['jurusan'];
-        $no_kelas = (empty($params['no_kelas']))?'0':$params['no_kelas'];
-        $where = [];
-        if($no_kelas === '0' && $jurusan === 'empty' &&  !($kelas === 'empty') ){
-            $where = ['kelas' => $kelas];
-        }elseif ($no_kelas === '0' && $kelas === 'empty' &&  !($jurusan === 'empty')) {
-            $where = ['jurusan' => $jurusan];
-        }elseif ($no_kelas === '0' && !($jurusan === 'empty') && !($kelas === 'empty')) {
-            $where = ['kelas' => $$kelas, 'jurusan' => $jurusan];
-        }elseif ($kelas === 'empty' && !($jurusan === 'empty') && !($no_kelas === '0')) {
-            $where = ['jurusan' => $jurusan, 'no_kelas' => $no_kelas];
-        }elseif(!($no_kelas === '0') && !($jurusan === 'empty') && !($kelas === 'empty')){
-            $where = ['kelas' => $kelas, 'jurusan' => $jurusan, 'no_kelas' => $no_kelas];
-        }else{
-            
-        }
-        $query = $this->db->get_where("siswa",$where);
-        return $query->result();
+        return $this->em->getRepository('Siswa')->getFilteredData($params);
     }
     
     /**
@@ -126,26 +109,20 @@ class Model_siswa extends CI_Model {
             $objWorksheet = $objPHPExcel->getActiveSheet();
             $lastRow = $objWorksheet->getHighestDataRow();
             $failureCount = 0;
-            $this->db->trans_begin();
+            $this->em->getConnection()->beginTransaction();
             $data = $objWorksheet->rangeToArray('A1'.':I'.$lastRow, null, TRUE);
             for ($i = 1; $i < $lastRow;$i++){
                 $row_data = $data[$i];
                 if($this->cellValidation($row_data)){
-                    $data_insert = $this->dataCorrection($row_data);
-                    $this->db->query("REPLACE INTO siswa (nis, nama, jenis_kelamin, tempat_lahir, "
-                            . "tgl_lahir, kelas, jurusan, no_kelas, nama_ortu, password) "
-                            . "VALUES ('".$data_insert[0]."', '".$data_insert[1]."', '".$data_insert[2]."', '"
-                            . $data_insert[3]."', '".$data_insert[4]."', '".$data_insert[5]."', '"
-                            . $data_insert[6]."', '".$data_insert[7]."', '".$data_insert[8]."', '"
-                            . md5('qwerty')."')");
+                    $this->transQuery($row_data);
                 }  else {
                     $failureCount++;
                 }
             }
-            if(($failureCount > 0) || !$this->db->trans_status()){
-                $this->db->trans_rollback();
+            if(($failureCount > 0)){
+                $this->em->getConnection()->rollback();
             }else{
-                $this->db->trans_commit();
+                $this->em->getConnection()->commit();
             }
             return $failureCount;
         }  catch (PHPExcel_Exception $ex) {
@@ -167,7 +144,9 @@ class Model_siswa extends CI_Model {
     private function dataCorrection($row_data){
         //cek tanggal
         $tgl_mentah = explode("/", $row_data[4]);
-        $row_data[4] = $tgl_mentah[2].'-'.$tgl_mentah[1].'-'.$tgl_mentah[0];
+        $tgl = new DateTime();
+        $tgl->setDate($tgl_mentah[2], $tgl_mentah[1], $tgl_mentah[0]);
+        $row_data[4] = $tgl;
         if(!(($row_data[5] == 'X') || ($row_data[5] == 'XI') || ($row_data[5] == 'XII'))){
             $row_data[5] = 'X';
         }
@@ -175,5 +154,23 @@ class Model_siswa extends CI_Model {
             $row_data[6] = ($row_data[5] == 'X')?'Reguler':'IPA';
         }
         return $row_data;
+    }
+    
+    private function transQuery($row_data){
+        $data_insert = $this->dataCorrection($row_data);
+        $this->siswa = (is_null($this->em->find("Siswa", $data_insert[0])))?
+                new Siswa() : $this->em->find("Siswa", $data_insert[0]);
+        $this->siswa->setNis($data_insert[0]);
+        $this->siswa->setNama($data_insert[1]);
+        $this->siswa->setJenis_kelamin($data_insert[2]);
+        $this->siswa->setTempat_lahir($data_insert[3]);
+        $this->siswa->setTgl_lahir($data_insert[4]);
+        $this->siswa->setKelas($data_insert[5]);
+        $this->siswa->setJurusan($data_insert[6]);
+        $this->siswa->setNo_kelas($data_insert[7]);
+        $this->siswa->setNama_ortu($data_insert[8]);
+        $this->siswa->setPassword(md5('qwerty'));
+        $this->em->persist($this->siswa);
+        $this->em->flush();
     }
 }
