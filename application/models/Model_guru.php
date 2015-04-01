@@ -29,32 +29,36 @@
  *
  * @author s4if
  */
-class Model_guru extends CI_Model{
+class Model_guru extends MY_Model{
+    
+    protected $guru;
     
     public function __construct() {
         parent::__construct();
     }
     
-    public function getData($nip = "Empty"){
-        $where = ($nip === "Empty")?"":"Where nip = ".$nip;
-        $data = $this->db->query("select * from guru ".$where);
-        return ($nip === "Empty")?$data->result():$data->result()[0];
+    public function getData($nip = -1){
+        return $this->em->getRepository('Guru')->getData($nip);
     }
     
-    public function insertData($data, $table_name = 'guru'){
-        if(!$this->dataExist($data['nip'])){
+    public function insertData($data){
+        if(is_null($this->em->find("Guru", $data['nip']))){
+            $this->guru = new Guru();
             $this->setData($data);
-            $this->db->insert($table_name);
+            $this->em->persist($this->guru);
+            $this->em->flush();
             return true;
-        }else{
+        }  else{
             return false;
         }
     }
     
-    public function updateData($data, $table_name = 'guru'){
-        if($this->dataExist($data['nip'])){
+    public function updateData($data){
+        $this->guru = $this->em->find("Guru", $data['nip']);
+        if(!is_null($this->guru)){
             $this->setData($data);
-            $this->db->replace($table_name);
+            $this->em->persist($this->guru);
+            $this->em->flush();
             return true;
         }else{
             return false;
@@ -62,34 +66,26 @@ class Model_guru extends CI_Model{
     }
     
     public function deleteData($where){
-        if($this->dataExist($where['nip'])){
-            $this->db->delete('guru', $where);
-            return true;
-        }else{
+        $entity = $this->em->find("Guru", $where['nip']);
+        if(!is_null($entity)){
+             $this->em->remove($entity);
+             $this->em->flush();
+             return true;
+        }  else {
             return false;
         }
     }
-    
+
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data){
-        if (!empty($data['nip'])) : $this->db->set('nip',$data['nip']); endif;
-        if (!empty($data['nama'])) : $this->db->set('nama',$data['nama']); endif;
-        if (!empty($data['jenis_kelamin'])) : $this->db->set('jenis_kelamin',$data['jenis_kelamin']); endif;
-        if (!empty($data['alamat'])) : $this->db->set('alamat',$data['alamat']); endif;
-        if (!empty($data['email'])) : $this->db->set('email',$data['email']); endif;
-        if (!empty($data['no_telp'])) : $this->db->set('no_telp',$data['no_telp']); endif;
-        if (!empty($data['password'])) : $this->db->set('password',$data['password']); endif;
-        if (!empty($data['kewenangan'])) : $this->db->set('kewenangan',$data['kewenangan']); endif;
-    }
-    
-    public function dataExist($nip) {
-        $query = $this->db->query("SELECT * FROM guru where nip ='".$nip."';");
-        $rows = $query->num_rows();
-        if($rows == 1){
-            return true;
-        }else{
-            return false;
-        }
+        if (!empty($data['nip'])) : $this->guru->setNip($data['nip']); endif;
+        if (!empty($data['nama'])) : $this->guru->setNama($data['nama']); endif;
+        if (!empty($data['jenis_kelamin'])) : $this->guru->setJenis_kelamin($data['jenis_kelamin']); endif;
+        if (!empty($data['alamat'])) : $this->guru->setAlamat($data['alamat']); endif;
+        if (!empty($data['email'])) : $this->guru->setEmail($data['email']); endif;
+        if (!empty($data['no_telp'])) : $this->guru->setNo_telp($data['no_telp']); endif;
+        if (!empty($data['password'])) : $this->guru->setPassword($data['password']); endif;
+        if (!empty($data['kewenangan'])) : $this->guru->setKewenangan($data['kewenangan']); endif;
     }
     
     /**
@@ -104,23 +100,23 @@ class Model_guru extends CI_Model{
             $objWorksheet = $objPHPExcel->getActiveSheet();
             $lastRow = $objWorksheet->getHighestDataRow();
             $failureCount = 0;
-            $this->db->trans_begin();
+//            $this->db->trans_begin();
+            $this->em->getConnection()->beginTransaction();
             $data = $objWorksheet->rangeToArray('A1'.':F'.$lastRow, null, TRUE);
             for ($i = 1; $i < $lastRow;$i++){
                 $row_data = $data[$i];
                 if($this->cellValidation($row_data)){
-                    $this->db->query("REPLACE INTO guru (nip, nama, jenis_kelamin, alamat, email, no_telp, kewenangan, password) "
-                            . "VALUES ('".$row_data[0]."', '".$row_data[1]."', '".$row_data[2]."', '"
-                            . $row_data[3]."', '".$row_data[4]."', '".$row_data[5]."', 'guru', '"
-                            . md5('qwerty')."')");
+                    $this->transQuery($row_data);
                 }  else {
                     $failureCount++;
                 }
             }
             if(($failureCount > 0) || !$this->db->trans_status()){
-                $this->db->trans_rollback();
+//                $this->db->trans_rollback();
+                $this->em->getConnection()->rollback();
             }else{
-                $this->db->trans_commit();
+//                $this->db->trans_commit();
+                $this->em->getConnection()->commit();
             }
             return $failureCount;
         }  catch (PHPExcel_Exception $ex) {
@@ -137,5 +133,19 @@ class Model_guru extends CI_Model{
             }
         }
         return $cellValid;
+    }
+    
+    private function transQuery($row_data){
+        $this->guru = (is_null($this->em->find("Guru", $row_data[0])))? new Guru(): $this->em->find("Guru", $row_data[0]); 
+        $this->guru->setNip($row_data[0]); 
+        $this->guru->setNama($row_data[1]);
+        $this->guru->setJenis_kelamin($row_data[2]); 
+        $this->guru->setAlamat($row_data[3]); 
+        $this->guru->setEmail($row_data[4]); 
+        $this->guru->setNo_telp($row_data[5]); 
+        $this->guru->setPassword(md5("qwerty")); 
+        $this->guru->setKewenangan("guru");
+        $this->em->persist($this->guru);
+        $this->em->flush();
     }
 }

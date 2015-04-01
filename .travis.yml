@@ -5,10 +5,9 @@ php:
   - hhvm
   
 before_script:
-  - mysql -e 'create database sitahta;'
-  - mysql sitahta < sitahta.sql
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - vendor/bin/doctrine orm:schema-tool:drop --force
+  - vendor/bin/doctrine orm:schema-tool:create
   - composer install
   
 script:
-- phpunit #default test command
+  - phpunit #default test command

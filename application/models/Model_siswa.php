@@ -34,10 +34,8 @@ class Model_siswa extends CI_Model {
         parent::__construct();
     }
     
-    public function getData($nis = "Empty"){
-        $where = ($nis === "Empty")?"":"Where nis = ".$nis;
-        $data = $this->db->query("select * from siswa ".$where);
-        return ($nis === "Empty")?$data->result():$data->result()[0];
+    public function getData($nis = -1){
+        return $this->em->getRepository('Siswa')->getData($nis);
     }
     
     public function insertData($data, $table_name = 'siswa'){
