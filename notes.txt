@@ -14,3 +14,6 @@
 
 [8/3/15]
 -   INSERT INTO `sitahta`.`siswa` (`nis`, `nama`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `kelas`, `jurusan`, `no_kelas`, `password`) VALUES ('1001', 'user', 'L', 'Magelang', '2000-2-23', 'XI', 'IPS', '1', 'd8578edf8458ce06fbc5bb76a58c5ca4');
+
+
+Doctrine\DBAL\Exception\UniqueConstraintViolationException

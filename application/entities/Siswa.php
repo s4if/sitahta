@@ -59,6 +59,15 @@ class Siswa
      */
     protected $nama_ortu;
     
+    /**
+     * @OneToMany(targetEntity="NilaiHarian", mappedBy="siswa")
+     **/
+    protected $nilai;
+
+    public function __construct() {
+        $this->nilai = new Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function getNis() {
         return $this->nis;
     }
@@ -97,6 +106,10 @@ class Siswa
 
     public function getNama_ortu() {
         return $this->nama_ortu;
+    }
+    
+    public function getNilai() {
+        return $this->nilai;
     }
 
     public function setNis($nis) {
@@ -149,4 +162,9 @@ class Siswa
         return $this;
     }
 
+    public function setNilai($nilai) {
+        $this->nilai = $nilai;
+        return $this;
+    }
+    
 }

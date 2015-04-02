@@ -82,10 +82,12 @@ class Model_siswa extends MY_Model {
         if (!empty($data['nama'])) : $this->siswa->setNama($data['nama']); endif;
         if (!empty($data['jenis_kelamin'])) : $this->siswa->setJenis_kelamin($data['jenis_kelamin']); endif;
         if (!empty($data['tempat_lahir'])) : $this->siswa->setTempat_lahir($data['tempat_lahir']); endif;
-        $tgl_arr = explode('-', $data['tgl_lahir']);
-        $tgl = new DateTime();
-        $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
-        if (!empty($data['tgl_lahir'])) : $this->siswa->setTgl_lahir($tgl); endif;
+        if (!empty($data['tgl_lahir'])){
+            $tgl_arr = explode('-', $data['tgl_lahir']);
+            $tgl = new DateTime();
+            $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+            $this->siswa->setTgl_lahir($tgl); 
+        }
         if (!empty($data['kelas'])) : $this->siswa->setKelas($data['kelas']); endif;
         if (!empty($data['jurusan'])) : $this->siswa->setJurusan($data['jurusan']); endif;
         if (!empty($data['no_kelas'])) : $this->siswa->setNo_kelas($data['no_kelas']); endif;

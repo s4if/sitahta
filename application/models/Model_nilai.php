@@ -29,122 +29,115 @@
  *
  * @author s4if
  */
-class Model_nilai extends CI_Model {
+class Model_nilai extends MY_Model {
     
+    protected $nilai;
+
     public function __construct() {
         parent::__construct();
     }
     
     public function getData($where){
-        $data = $this->db->get_where('nilai', $where);
-        return $data->result();
+        return $this->em->getRepository('NilaiHarian')->getData($where);
     }
     
-    public function getDataById($no_uh){
-        $data = $this->db->query("select "
-                . "nilai.no_uh as 'no_uh', "
-                . "nilai.kelas as 'kelas', "
-                . "nilai.nis as 'nis', "
-                . "nilai.tanggal as 'tanggal', "
-                . "nilai.juz as 'juz', "
-                . "nilai.halaman as 'halaman', "
-                . "nilai.nilai as 'nilai', "
-                . "nilai.penguji as 'penguji', "
-                . "guru.nama as 'nama_penguji' "
-                . "from nilai inner join guru on nilai.penguji = guru.nip "
-                . "Where nilai.no_uh = ".$no_uh);
-        return $data->result();
+    public function getDataByNo_uh($no_uh){
+        return $this->em->getRepository('NilaiHarian')->getDataByNo_uh($no_uh);
     }
     
     public function getDataByNis($nis){
-        $data = $this->db->query("select "
-                . "nilai.no_uh as 'no_uh', "
-                . "nilai.kelas as 'kelas', "
-                . "nilai.nis as 'nis', "
-                . "nilai.tanggal as 'tanggal', "
-                . "nilai.juz as 'juz', "
-                . "nilai.halaman as 'halaman', "
-                . "nilai.nilai as 'nilai', "
-                . "nilai.penguji as 'penguji', "
-                . "guru.nama as 'nama_penguji' "
-                . "from nilai inner join guru on nilai.penguji = guru.nip "
-                . "Where nilai.nis = ".$nis);
-        return $data->result();
+        return $this->em->getRepository('NilaiHarian')->getDataBySiswa($nis);
     }
     
     public function getNilaiSiswa(){
-        $data = $this->db->query("select "
-                . "nilai.no_uh as 'no_uh', "
-                . "nilai.kelas as 'kelas', "
-                . "nilai.nis as 'nis', "
-                . "nilai.tanggal as 'tanggal', "
-                . "nilai.juz as 'juz', "
-                . "nilai.halaman as 'halaman', "
-                . "nilai.nilai as 'nilai', "
-                . "nilai.penguji as 'penguji', "
-                . "siswa.nis as 'nis' "
-                . "from nilai join siswa where nilai.nis = siswa.nis and siswa.kelas = nilai.kelas");
+        $data = $this->em->getRepository('NilaiHarian')->getNilaiSaatIni();
         $data_arr = array();
-        foreach ($data->result() as $row)
+        foreach ($data as $row)
         {
-            $data_arr[$row->nis][$row->no_uh] = $row;
+            $data_arr[$row->getSiswa()->getNis()][$row->getNo_uh()] = $row;
         }
         return $data_arr;
     }
 
     public function getDataByKelas($kelas){
-        $data = $this->db->query("select * from nilai "."Where kelas = '".$kelas."'");
-        return $data->result();
+        return $this->em->getRepository('NilaiHarian')->getDataByKelas($kelas);
     }
     
-    public function insertData($data, $replace = false){
-        if((!$this->dataExist($data['no_uh'], $data['nis'], $data['kelas'])) || $replace){
-            $this->setData($data);
-            if($replace){
-                $this->db->replace('nilai');
-            }  else {
-                $this->db->insert('nilai');
+    public function insertData($data){
+        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        if(is_null($this->em->find("NilaiHarian", $id))){
+            $this->nilai = new NilaiHarian();
+            try{
+                $this->setData($data);
+            } catch (Exception $ex) {
+                return false;
             }
+            $this->nilai->generateId();
+            $this->em->persist($this->nilai);
+            $this->em->flush();
+            $this->nilai = null;
             return true;
-        }else{
+        }  else{
             return false;
         }
     }
     
     public function updateData($data){
-        if($this->dataExist($data['no_uh'], $data['nis'], $data['kelas'])){
-            $this->setData($data);
-            $this->db->replace('nilai');
+        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        if(!is_null($this->em->find("NilaiHarian", $id))){
+            $this->nilai = $this->em->find("NilaiHarian", $id);
+            try {
+                $this->setData($data);
+            } catch (Exception $ex) {
+                return false;
+            }
+            $this->em->persist($this->nilai);
+            $this->em->flush();
+            $this->nilai = null;
             return true;
-        }else{
+        }  else{
             return false;
         }
     }
     
-    public function deleteData($where){
-        if($this->dataExist($where['no_uh'], $where['nis'], $where['kelas'])){
-            $this->db->delete('nilai', $where);
-            return true;
-        }else{
+    public function deleteData($data){
+        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        $entity = $this->em->find("NilaiHarian", $id);
+        if(!is_null($entity)){
+             $this->em->remove($entity);
+             $this->em->flush();
+             $this->nilai = null;
+             return true;
+        }  else {
             return false;
         }
     }
-    
+
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data){
-        if (!empty($data['no_uh'])) : $this->db->set('no_uh',$data['no_uh']); endif;
-        if (!empty($data['kelas'])) : $this->db->set('kelas',$data['kelas']); endif;
-        if (!empty($data['nis'])) : $this->db->set('nis',$data['nis']); endif;
-        if (!empty($data['tanggal'])) : $this->db->set('tanggal',$data['tanggal']); endif;
-        if (!empty($data['juz'])) : $this->db->set('juz',$data['juz']); endif;
-        if (!empty($data['halaman'])) : $this->db->set('halaman',$data['halaman']); endif;
-        if (!empty($data['nilai'])) : $this->db->set('nilai',$data['nilai']); endif;
-        if (!empty($data['penguji'])) : $this->db->set('penguji',$data['penguji']); endif;
+        if (!empty($data['no_uh'])) : $this->nilai->setNo_uh($data['no_uh']); endif;
+        if (!empty($data['kelas'])) : $this->nilai->setKelas($data['kelas']); endif;
+        if (!empty($data['nis'])){ 
+            $siswa = $this->em->find("Siswa", $data['nis']);
+            $this->nilai->setSiswa($siswa);
+        }
+        if (!empty($data['tanggal'])) {
+            $tgl_arr = explode('-', $data['tanggal']);
+            $tgl = new DateTime();
+            $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+            $this->nilai->setTanggal($tgl); 
+        }
+        if (!empty($data['juz'])) : $this->nilai->setJuz($data['juz']); endif;
+        if (!empty($data['halaman'])) : $this->nilai->setHalaman($data['halaman']); endif;
+        if (!empty($data['nilai'])) : $this->nilai->setNilai($data['nilai']); endif;
+        if (!empty($data['penguji'])){ 
+            $penguji = $this->em->find("Guru", $data['penguji']);
+            $this->nilai->setPenguji($penguji);
+        }
     }
     
     public function dataExist($no_uh, $nis, $kelas) {
-        $query = $this->db->get_where('nilai', ['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas]);
-        $rows = $query->num_rows();
-        return ($rows > 0)?TRUE:FALSE;
+        $id = $no_uh.$kelas.$nis;
+        return !is_null($this->em->find("NilaiHarian", $id));
     }
 }
