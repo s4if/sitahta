@@ -105,23 +105,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
             $this->assertGreaterThan(0,$model->importData('assets/test/coba_guru_error.xls'));
         }
-//        
-//        public function testModel_login() {
-//            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
-//            $model = new Model_login();
-//            $this->assertStringStartsWith($model->checkUserid(1), 'guru');
-//            $this->assertStringStartsWith($model->checkUserid(1001), 'user');
-//            $this->assertStringStartsWith($model->checkUserid(109), 'null');
-//            //method checkPassword
-//            $this->assertTrue($model->checkPassword(1, 'qwerty', 'guru'));
-//            $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
-//            $this->assertFalse($model->checkPassword(1, 'foo', 'user'));
-//            //method getData
-//            $this->assertObjectHasAttribute('nip', $model->getData('1','guru'));
-//            $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
-//            $this->assertTrue($model->updatePassword(1, 'qwerty', 'guru'));
-//        }
-        
+       
         public function testModel_siswa() {
             $this->assertTrue(class_exists('Model_siswa'), 'Siswa is loadable');
             $model = new Model_siswa();
@@ -181,6 +165,23 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
             $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
         }
+        
+        public function testModel_login() {
+            $this->assertTrue(class_exists('Model_login'), 'Login is loadable');
+            $model = new Model_login();
+            $this->assertStringStartsWith($model->checkUserid(1), 'guru');
+            $this->assertStringStartsWith($model->checkUserid(1001), 'user');
+            $this->assertStringStartsWith($model->checkUserid(109), 'null');
+            //method checkPassword
+            $this->assertTrue($model->checkPassword(1, 'qwerty', 'guru'));
+            $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
+            $this->assertFalse($model->checkPassword(1, 'foo', 'guru'));
+            //method getData
+            $this->assertObjectHasAttribute('nip', $model->getData('1','guru'));
+            $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
+            $this->assertTrue($model->updatePassword(1, 'qwerty', 'guru'));
+        }
+        
 //        
 //        public function testModel_nilai() {
 //            $this->assertTrue(class_exists('Model_nilai'), 'NIlai is loadable');
