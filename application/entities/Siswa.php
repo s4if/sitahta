@@ -63,9 +63,15 @@ class Siswa
      * @OneToMany(targetEntity="NilaiHarian", mappedBy="siswa")
      **/
     protected $nilai;
+    
+    /**
+     * @OneToMany(targetEntity="Sertifikat", mappedBy="siswa")
+     **/
+    protected $sertifikat;
 
     public function __construct() {
         $this->nilai = new Doctrine\Common\Collections\ArrayCollection();
+        $this->sertifikat = new Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getNis() {

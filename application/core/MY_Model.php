@@ -53,4 +53,14 @@ class MY_Model extends CI_Model {
         $this->em = \Doctrine\ORM\EntityManager::create($conn, $config);
     }
     
+    public function truncate($tableNames, $cascade = false){
+        $connection = $this->em->getConnection();
+        $platform = $connection->getDatabasePlatform();
+        //MUSTBE Enabled if i wanna use MYSQL
+        //$connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
+        foreach ($tableNames as $name) {
+            $connection->executeUpdate($platform->getTruncateTableSQL($name,$cascade));
+        }
+        //$connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
+    }
 }

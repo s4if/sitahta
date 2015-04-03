@@ -26,9 +26,9 @@ class NilaiHarian {
     
     /**
      * @ManyToOne(targetEntity="Siswa", inversedBy="nilai")
-     * @JoinColumn(name="siswa", referencedColumnName="nis")
+     * @JoinColumn(name="siswa", referencedColumnName="nis", nullable=false)
      **/
-    private $siswa;
+    protected $siswa;
     
     /**
      * @Column(type="date", nullable=false)

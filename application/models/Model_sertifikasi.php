@@ -29,36 +29,41 @@
  *
  * @author s4if
  */
-class Model_sertifikasi extends CI_Model {
+class Model_sertifikasi extends MY_Model {
     
+    private $sertifikat;
+
     public function __construct() {
         parent::__construct();
     }
     
-    public function getDataById($id){
-        $data = $this->db->query("select * from sertifikasi "."Where id = ".$id);
-        return $data->result();
+    public function getData($id = -1){
+        return $this->em->getRepository('Sertifikat')->getData($id);
     }
     
     public function getDataByNis($nis){
-        $data = $this->db->query("select * from sertifikasi "."Where nis = ".$nis);
-        return $data->result();
+        return $this->em->getRepository('Sertifikat')->getDataBySiswa($nis);
     }
     
-    public function insertData($data, $table_name = 'sertifikasi'){
-        if(!$this->dataExist($data['id'])){
+    public function insertData($data){
+        $data['id'] = empty($data['id'])?-1:$data['id'];
+        if(is_null($this->em->find("Sertifikat", $data['id']))){
+            $this->sertifikat = new Sertifikat();
             $this->setData($data);
-            $this->db->insert($table_name);
+            $this->em->persist($this->sertifikat);
+            $this->em->flush();
             return true;
-        }else{
+        }  else{
             return false;
         }
     }
     
     public function updateData($data){
-        if($this->dataExist($data['id'])){
+        $this->sertifikat = $this->em->find("Sertifikat", $data['id']);
+        if(!is_null($this->sertifikat)){
             $this->setData($data);
-            $this->db->replace('sertifikasi');
+            $this->em->persist($this->sertifikat);
+            $this->em->flush();
             return true;
         }else{
             return false;
@@ -66,35 +71,34 @@ class Model_sertifikasi extends CI_Model {
     }
     
     public function deleteData($where){
-        if($this->dataExist($where['id'])){
-            $this->db->where('id', $where['id']);
-            $this->db->delete('sertifikasi');
-            return true;
-        }else{
+        $entity = $this->em->find("Sertifikat", $where['id']);
+        if(!is_null($entity)){
+             $this->em->remove($entity);
+             $this->em->flush();
+             return true;
+        }  else {
             return false;
         }
     }
     
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     private function setData($data){
-        if (!empty($data['id'])) : $this->db->set('id',$data['id']); endif;
-        if (!empty($data['nis'])) : $this->db->set('nis',$data['nis']); endif;
-        if (!empty($data['nama'])) : $this->db->set('nama',$data['nama']); endif;
-        if (!empty($data['tempat_ujian'])) : $this->db->set('tempat_ujian',$data['tempat_ujian']); endif;
-        if (!empty($data['tgl_ujian'])) : $this->db->set('tgl_ujian',$data['tgl_ujian']); endif;
-        if (!empty($data['juz'])) : $this->db->set('juz',$data['juz']); endif;
-        if (!empty($data['nilai'])) : $this->db->set('nilai',$data['nilai']); endif;
-        if (!empty($data['predikat'])) : $this->db->set('predikat',$data['predikat']); endif;
-        if (!empty($data['keterangan'])) : $this->db->set('keterangan',$data['keterangan']); endif;
-    }
-    
-    private function dataExist($id) {
-        $query = $this->db->get_where('sertifikasi', ['id' => $id]);
-        $rows = $query->num_rows();
-        if($rows > 0){
-            return true;
-        }else{
-            return false;
+        $this->sertifikat = new Sertifikat();
+        if ((!empty($data['id']))&&($data['id']!=-1)) : $this->sertifikat->setId($data['id']); endif;
+        if (!empty($data['nis'])){ 
+            $siswa = $this->em->find('siswa', $data['nis']);
+            $this->sertifikat->setSiswa($siswa); 
         }
-    }
+        if (!empty($data['tempat_ujian'])) : $this->sertifikat->setTempat_ujian($data['tempat_ujian']); endif;
+        if (!empty($data['tgl_ujian'])) {
+            $tgl_arr = explode('-', $data['tgl_ujian']);
+            $tgl = new DateTime();
+            $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+            $this->sertifikat->setTgl_ujian($tgl);
+        }
+        if (!empty($data['juz'])) : $this->sertifikat->setJuz($data['juz']); endif;
+        if (!empty($data['nilai'])) : $this->sertifikat->setNilai($data['nilai']); endif;
+        if (!empty($data['predikat'])) : $this->sertifikat->setPredikat($data['predikat']); endif;
+        if (!empty($data['keterangan'])) : $this->sertifikat->setKeterangan($data['keterangan']); endif;
+    }    
 }
