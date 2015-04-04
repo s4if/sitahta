@@ -5,7 +5,7 @@ require_once "vendor/autoload.php";
 
 // Create a simple "default" Doctrine ORM configuration for XML Mapping
 $isDevMode = true;
-$config = Setup::createAnnotationMetadataConfiguration(array(FCPATH."application/entities"), $isDevMode, FCPATH."data/proxyData");
+$config = Setup::createAnnotationMetadataConfiguration(array(FCPATH."application/entities"), $isDevMode /*, FCPATH."data/proxyData"*/);
 
 // database configuration parameters
 $conn = array(

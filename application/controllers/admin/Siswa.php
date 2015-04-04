@@ -113,8 +113,8 @@ class Siswa extends MY_Controller {
     public function profil($nis){
         $this->blockUnloggedOne();
         $siswa = $this->siswa->getData($nis);
-        $data_sertifikasi = $this->sertifikasi->getDataByNis($nis);
-        $data_nilai = $this->nilai->getDataByNis($nis);
+        $data_sertifikasi = $siswa->getSertifikat();
+        $data_nilai = $siswa->getNilai();
         $data = [
             'title' => 'Profil Siswa',
             'user' => ucwords($this->session->login_data->nama),

@@ -117,6 +117,10 @@ class SiswaEntity
     public function getNilai() {
         return $this->nilai;
     }
+    
+    public function getSertifikat() {
+        return $this->sertifikat;
+    }
 
     public function setNis($nis) {
         $this->nis = $nis;
@@ -173,4 +177,10 @@ class SiswaEntity
         return $this;
     }
     
+    public function setSertifikat($sertifikat) {
+        $this->sertifikat = $sertifikat;
+        return $this;
+    }
+
+
 }
