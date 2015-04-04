@@ -34,13 +34,6 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/tambah_sertifikasi/<?=$nis?>">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Nama :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="" required="true">
-                        </div>
-                    </div>
                     <?php
                         $tgl = explode("-", date('Y-m-d'));
                     ?>

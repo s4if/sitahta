@@ -46,8 +46,8 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function insertData($data){
-        $data['id'] = empty($data['id'])?-1:$data['id'];
-        if(is_null($this->em->find("SertifikatEntity", $data['id']))){
+        $search_id = empty($data['id'])?-1:$data['id'];
+        if(is_null($this->em->find("SertifikatEntity", $search_id))){
             $this->sertifikat = new SertifikatEntity();
             $this->setData($data);
             $this->em->persist($this->sertifikat);
@@ -83,8 +83,7 @@ class Model_sertifikasi extends MY_Model {
     
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     private function setData($data){
-        $this->sertifikat = new SertifikatEntity();
-        if ((!empty($data['id']))&&($data['id']!=-1)) : $this->sertifikat->setId($data['id']); endif;
+        //if ((!empty($data['id']))&&($data['id']!=-1)) : $this->sertifikat->setId($data['id']); endif;
         if (!empty($data['nis'])){ 
             $siswa = $this->em->find('SiswaEntity', $data['nis']);
             $this->sertifikat->setSiswa($siswa); 

@@ -25,7 +25,7 @@
  */
 ?>
 <?php foreach ($data_sertifikasi as $sertifikasi):?>
-<div class="modal fade" id="editSertifikasi<?=$sertifikasi->id?>" tabindex="-1" role="dialog" aria-labelledby="editNilai" aria-hidden="true">
+<div class="modal fade" id="editSertifikasi<?=$sertifikasi->getId()?>" tabindex="-1" role="dialog" aria-labelledby="editNilai" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -33,16 +33,14 @@
                 <h4 class="modal-title text-center" id="tambahModal">Edit Nilai</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/edit_sertifikasi/<?= $sertifikasi->nis;?>/<?= $sertifikasi->id;?>">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Nama :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?=$sertifikasi-nama?>" required="true">
-                        </div>
-                    </div>
+                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/edit_sertifikasi/<?= $sertifikasi->getSiswa()->getNis();?>/<?= $sertifikasi->getId();?>">
                     <?php
-                        $tgl = explode("-", $sertifikasi->tgl_ujian);
+                        $t_obj = $sertifikasi->getTgl_ujian();
+                        $tgl = [
+                            0 => date("Y", $t_obj->getTimestamp()),
+                            1 => date("n", $t_obj->getTimestamp()),
+                            2 => date("j", $t_obj->getTimestamp())
+                            ];
                     ?>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tgl Ujian :</label>
@@ -105,34 +103,34 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tempat Ujian :</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control col-sm-10" rows="3" name="tempat_ujian" required="true"><?=$sertifikasi->tempat_ujian?></textarea>
+                            <textarea class="form-control col-sm-10" rows="3" name="tempat_ujian" required="true"><?=$sertifikasi->getTempat_ujian()?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Juz :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="juz" 
-                                   placeholder="Masukkan Juz" value="<?=$sertifikasi-juz?>" required="true">
+                                   placeholder="Masukkan Juz" value="<?=$sertifikasi->getJuz()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="nilai" 
-                                   placeholder="Masukkan NIlai" value="<?=$sertifikasi->nilai?>" required="true">
+                                   placeholder="Masukkan NIlai" value="<?=$sertifikasi->getNilai()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Predikat :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="predikat" 
-                                   placeholder="Masukkan Predikat" value="<?=$sertifikasi->predikat?>" required="true">
+                                   placeholder="Masukkan Predikat" value="<?=$sertifikasi->getPredikat()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Keterangan :</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control col-sm-10" rows="3" name="keterangan" required="false"><?=$sertifikasi->keterangan?></textarea>
+                            <textarea class="form-control col-sm-10" rows="3" name="keterangan" required="false"><?=$sertifikasi->getKeterangan()?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -150,7 +148,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="deleteSertifikasi<?= $sertifikasi->id;?>" tabindex="-1" role="dialog" aria-labelledby="deleteNilai<?=$sertifikasi->id?>" aria-hidden="true">
+<div class="modal fade" id="deleteSertifikasi<?= $sertifikasi->getId();?>" tabindex="-1" role="dialog" aria-labelledby="deleteNilai<?=$sertifikasi->getId()?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -162,9 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/siswa/hapus_sertifikasi';?>/
-                <?= $sertifikasi->nis;?>/
-                <?= $sertifikasi->id;?>">OK</a>
+                <a class="btn btn-danger" href="<?php echo base_url().'admin/siswa/hapus_sertifikasi';?>/<?= $sertifikasi->getSiswa()->getNis();?>/<?= $sertifikasi->getId();?>">OK</a>
             </div>
         </div>
     </div>

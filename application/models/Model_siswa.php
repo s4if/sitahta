@@ -175,4 +175,8 @@ class Model_siswa extends MY_Model {
         $this->em->persist($this->siswa);
         $this->em->flush();
     }
+    
+    public function dataExist($nis){
+        return !is_null($this->em->find("SiswaEntity", $nis));
+    }
 }

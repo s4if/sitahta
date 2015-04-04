@@ -45,26 +45,26 @@
         <tr>
             <td> Nama </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=$siswa->nama?> </td>
+            <td> <?=$siswa->getNama();?> </td>
         </tr>
         <tr>
             <td> NIS </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=$siswa->nis?> </td>
+            <td> <?=$siswa->getNis()?> </td>
         </tr>
         <tr>
             <td> I/A </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=($siswa->jenis_kelamin == 'L')?'Ikhwan': 'Akhwat'?> </td>
+            <td> <?=($siswa->getJenis_kelamin() == 'L')?'Ikhwan': 'Akhwat'?> </td>
         </tr>
         <tr>
             <td> TTL </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=  ucwords($siswa->tempat_lahir) ?>, <?=  nice_date($siswa->tgl_lahir, 'd F Y') ?> </td>
+            <td> <?=  ucwords($siswa->getTempat_lahir()) ?>, <?=  date('d F Y',$siswa->getTgl_lahir()->getTimestamp()) ?> </td>
         </tr>
         <?php
-            $kelas = ($siswa->kelas !== 'X')?$siswa->kelas."-".$siswa->jurusan."-".$siswa->no_kelas:
-                $siswa->kelas."-".$siswa->no_kelas;
+            $kelas = ($siswa->getKelas() !== 'X')?$siswa->getKelas()."-".$siswa->getJurusan()."-".$siswa->getNo_kelas():
+                $siswa->getKelas()."-".$siswa->getNo_kelas();
         ?>
         <tr>
             <td> Kelas </td>
@@ -74,7 +74,7 @@
         <tr>
             <td> Nama Ortu / Wali </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=$siswa->nama_ortu?> </td>
+            <td> <?=$siswa->getNama_ortu()?> </td>
         </tr>
         <tr>
             <td> Hafalan sebelum <br> masuk sma </td>
@@ -103,13 +103,13 @@
             <tbody>
                 <?php if(empty($data_sertifikasi[0])) :?>
                 <tr>
-                <td><?= $sertifikasi->nama;?></td>
-                <td><?= nice_date($sertifikasi->tgl_ujian, 'd F Y');?></td>
-                <td><?= $sertifikasi->tempat_ujian;?></td>
-                <td><?= $sertifikasi->juz;?></td>
-                <td><?= $sertifikasi->nilai;?></td>
-                <td><?= $sertifikasi->predikat;?></td>
-                <td><?= $sertifikasi->keterangan;?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>
                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahSertifikasi">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -119,21 +119,21 @@
                 <?php else :?>
                 <?php foreach ($data_sertifikasi as $sertifikasi):?>
                 <tr>
-                <td><?= $sertifikasi->nama;?></td>
-                <td><?= nice_date($sertifikasi->tgl_ujian, 'd F Y');?></td>
-                <td><?= $sertifikasi->tempat_ujian;?></td>
-                <td><?= $sertifikasi->juz;?></td>
-                <td><?= $sertifikasi->nilai;?></td>
-                <td><?= $sertifikasi->predikat;?></td>
-                <td><?= $sertifikasi->keterangan;?></td>
+                <td><?= $siswa->getNama();?></td>
+                <td><?= date('d F Y',$sertifikasi->getTgl_ujian()->getTimestamp());?></td>
+                <td><?= $sertifikasi->getTempat_ujian();?></td>
+                <td><?= $sertifikasi->getJuz();?></td>
+                <td><?= $sertifikasi->getNilai();?></td>
+                <td><?= $sertifikasi->getPredikat();?></td>
+                <td><?= $sertifikasi->getKeterangan();?></td>
                 <td>
                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahSertifikasi">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editSertifikasi<?= $sertifikasi->id;?>">
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editSertifikasi<?= $sertifikasi->getId();?>">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteSertifikasi<?=$sertifikasi->id;?>">
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteSertifikasi<?=$sertifikasi->getId();?>">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
                 </td>
@@ -163,13 +163,13 @@
             <tbody>
                 <?php if(empty($data_nilai[0])) :?>
                 <tr>
-                <td><?= $nilai->kelas;?></td>
-                <td>#<?= $nilai->no_uh;?></td>
-                <td><?= $nilai->juz;?></td>
-                <td><?= $nilai->halaman;?></td>
-                <td><?= $nilai->nilai;?></td>
-                <td><?= nice_date($nilai->tanggal, 'd F Y');?></td>
-                <td><?= $nilai->nama_penguji;?></td>
+                <td></td>
+                <td>#</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>
                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -179,21 +179,21 @@
                 <?php else :?>
                 <?php foreach ($data_nilai as $nilai):?>
                 <tr>
-                <td><?= $nilai->kelas;?></td>
-                <td>#<?= $nilai->no_uh;?></td>
-                <td><?= $nilai->juz;?></td>
-                <td><?= $nilai->halaman;?></td>
-                <td><?= $nilai->nilai;?></td>
-                <td><?= nice_date($nilai->tanggal, 'd F Y');?></td>
-                <td><?= $nilai->nama_penguji;?></td>
+                <td><?= $nilai->getKelas();?></td>
+                <td>#<?= $nilai->getNo_uh();?></td>
+                <td><?= $nilai->getJuz();?></td>
+                <td><?= $nilai->getHalaman();?></td>
+                <td><?= $nilai->getNilai();?></td>
+                <td><?= date('d F Y',$nilai->getTanggal()->getTimestamp());?></td>
+                <td><?= $nilai->getPenguji()->getNama();?></td>
                 <td>
                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $nilai->getKelas();?><?= $nilai->getNo_uh();?>">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai<?= $siswa->getNis();?><?= $nilai->getKelas();?><?= $nilai->getNo_uh();?>">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
                 </td>

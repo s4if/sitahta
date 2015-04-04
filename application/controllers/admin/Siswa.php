@@ -53,9 +53,9 @@ class Siswa extends MY_Controller {
         $data_siswa = $this->siswa->getData();
         $data = [
             'title' => 'Lihat Siswa',
-            'user' => ucwords($this->session->login_data->nama),
+            'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
-            'nama' => $this->session->login_data->nama,
+            'nama' => $this->session->login_data->getNama(),
             'tambah' => $this->load->view("admin/siswa/tambah",[],TRUE),
             'edit' => $this->load->view("admin/siswa/edit",['data_siswa' => $data_siswa],TRUE),
             'data_siswa' => $data_siswa
@@ -72,7 +72,7 @@ class Siswa extends MY_Controller {
             $this->session->set_flashdata("errors",[0 => "Maaf, NIS yang dimasukkan sudah terpakai!"]);
             redirect('admin/siswa');
         }else{
-            $res = $this->siswa->insertData($data_insert, 'siswa');
+            $res = $this->siswa->insertData($data_insert);
             if($res >= 1){
                 $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
                 redirect('siswa');
@@ -88,7 +88,7 @@ class Siswa extends MY_Controller {
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
         $data_insert['tgl_lahir'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
-        $res = $this->siswa->updateData($data_insert, 'siswa');
+        $res = $this->siswa->updateData($data_insert);
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
             redirect('siswa');
@@ -109,6 +109,7 @@ class Siswa extends MY_Controller {
         }
     }
     
+    //belum
     public function profil($nis){
         $this->blockUnloggedOne();
         $siswa = $this->siswa->getData($nis);
@@ -122,9 +123,9 @@ class Siswa extends MY_Controller {
             'siswa' => $siswa,
             'data_sertifikasi' => $data_sertifikasi,
             'data_nilai' => $data_nilai,
-            'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai",['kelas' => $siswa->kelas, 'nis' => $siswa->nis],TRUE),
+            'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai",['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()],TRUE),
             'edit_nilai' => $this->load->view("admin/siswa/edit_nilai",['data_nilai' => $data_nilai],TRUE),
-            'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi",['kelas' => $siswa->kelas, 'nis' => $siswa->nis],TRUE),
+            'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi",['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()],TRUE),
             'edit_sertifikasi' => $this->load->view("admin/siswa/edit_sertifikasi",['data_sertifikasi' => $data_sertifikasi],TRUE),
         ];
         $this->loadView('admin/siswa/profil', $data);

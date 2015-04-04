@@ -41,7 +41,7 @@ class MY_Model extends CI_Model {
         //Adding Doctrine
         // Create a simple "default" Doctrine ORM configuration for XML Mapping
         $isDevMode = true;
-        $config = Setup::createAnnotationMetadataConfiguration(array(FCPATH."application/entities"), $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration(array(FCPATH."application/entities"), $isDevMode, FCPATH."data/proxyData");
 
         // database configuration parameters
         $conn = array(

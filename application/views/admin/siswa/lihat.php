@@ -88,68 +88,30 @@
         <tbody>
             <?php foreach ($data_siswa as $siswa):?>
             <tr>
-            <td><?= $siswa->nis;?></td>
-            <td><?= $siswa->nama;?></td>
-            <td><?= $siswa->jenis_kelamin;?></td>
+            <td><?= $siswa->getNis();?></td>
+            <td><?= $siswa->getNama();?></td>
+            <td><?= $siswa->getJenis_kelamin();?></td>
             <?php
-            $tmpt = ucwords($siswa->tempat_lahir);
-            $tgl = explode('-', $siswa->tgl_lahir);
-            $bln = '';
-            switch ($tgl[1]):
-                case 1 :
-                    $bln = 'Jan';
-                    break;
-                case 2 :
-                    $bln = 'Feb';
-                    break;
-                case 3 :
-                    $bln = 'Mar';
-                    break;
-                case 4 :
-                    $bln = 'Apr';
-                    break;
-                case 5 :
-                    $bln = 'Mei';
-                    break;
-                case 6 :
-                    $bln = 'Jun';
-                    break;
-                case 7 :
-                    $bln = 'Jul';
-                    break;
-                case 8 :
-                    $bln = 'Ags';
-                    break;
-                case 9 :
-                    $bln = 'Sep';
-                    break;
-                case 10 :
-                    $bln = 'Okt';
-                    break;
-                case 11 :
-                    $bln = 'Nov';
-                    break;
-                case 12 :
-                    $bln = 'Des';
-                    break;
-            endswitch;
-            $ttl = $tmpt.", ".$tgl[2]." ".$bln." ".$tgl[0];
+            $tmpt = ucwords($siswa->getTempat_lahir());
+            $tgl = $siswa->getTgl_lahir();
+            $tanggal = date("d F Y", $tgl->getTimestamp());
+            $ttl = $tmpt.", ".$tanggal;
             ?>
             <td><?= $ttl;?></td>
             <?php
-            $kelas = ($siswa->kelas !== 'X')?$siswa->kelas."-".$siswa->jurusan."-".$siswa->no_kelas:
-                $siswa->kelas."-".$siswa->no_kelas;
+            $kelas = ($siswa->getKelas() !== 'X')?$siswa->getKelas()."-".$siswa->getJurusan()."-".$siswa->getNo_kelas():
+                $siswa->getKelas()."-".$siswa->getNo_kelas();
             ?>
             <td><?= $kelas;?></td>
-            <td><?= $siswa->nama_ortu;?></td>
+            <td><?= $siswa->getNama_ortu();?></td>
             <td>
-                <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->nis?>">
+                <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->getNis()?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->nis;?>">
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->getNis();?>">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->nis;?>">
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->getNis();?>">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
             </td>

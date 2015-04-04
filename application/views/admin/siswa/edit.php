@@ -28,7 +28,7 @@
 //lalu di echokan kedalam view dalam bentuk data
 ?>
 <?php foreach ($data_siswa as $siswa):?>
-<div class="modal fade" id="editModal<?= $siswa->nis;?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $siswa->nis;?>" aria-hidden="true">
+<div class="modal fade" id="editModal<?= $siswa->getNis();?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $siswa->getNis();?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,19 +36,19 @@
                 <h4 class="modal-title text-center" id="tambahModal">Edit Siswa</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/edit/<?= $siswa->nis;?>">
+                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/edit/<?= $siswa->getNis();?>">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">NIS :</label>
                         <div class="col-sm-8 error">
                             <input type="number" class="form-control" name="nis" disabled="true"
-                                   placeholder="Masukkan NIS" value="<?= $siswa->nis;?>" required="true">
+                                   placeholder="Masukkan NIS" value="<?= $siswa->getNis();?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?= $siswa->nama;?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?= $siswa->getNama();?>" required="true">
                         </div>
                     </div>
                     <!-- -->
@@ -58,8 +58,8 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="jenis_kelamin" value="L" 
-                                        <?php if(!empty($siswa->jenis_kelamin)):?>
-                                            <?php if($siswa->jenis_kelamin=='L'):?>
+                                        <?php if(!empty($siswa->getJenis_kelamin())):?>
+                                            <?php if($siswa->getJenis_kelamin()=='L'):?>
                                                 checked
                                             <?php endif;?>
                                         <?php endif;?>>
@@ -69,8 +69,8 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="jenis_kelamin" value="P"
-                                        <?php if(!empty($siswa->jenis_kelamin)):?>
-                                            <?php if($siswa->jenis_kelamin=='P'):?>
+                                        <?php if(!empty($siswa->getJenis_kelamin())):?>
+                                            <?php if($siswa->getJenis_kelamin()=='P'):?>
                                                 checked
                                             <?php endif;?>
                                         <?php endif;?>>
@@ -80,7 +80,12 @@
                         </div>
                     </div>
                     <?php
-                        $tgl = explode("-", $siswa->tgl_lahir);
+                    $t_obj = $siswa->getTgl_lahir();
+                    $tgl = [
+                        0 => date("Y", $t_obj->getTimestamp()),
+                        1 => date("n", $t_obj->getTimestamp()),
+                        2 => date("j", $t_obj->getTimestamp())
+                        ];
                     ?>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal Lahir :</label>
@@ -144,37 +149,37 @@
                         <label class="col-sm-3 control-label">Tempat Lahir :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="tempat_lahir" 
-                                   placeholder="Masukkan Kota/Kabupaten" value="<?=$siswa->tempat_lahir?>" required="true">
+                                   placeholder="Masukkan Kota/Kabupaten" value="<?=$siswa->getTempat_lahir()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-2">
                             <select class="form-control" name="kelas">
-                                <option value="X" <?php echo ($siswa->kelas === "X")?'selected="true"':'';?>>X</option>
-                                <option value="XI" <?php echo ($siswa->kelas === "XI")?'selected="true"':'';?>>XI</option>
-                                <option value="XII" <?php echo ($siswa->kelas === "XII")?'selected="true"':'';?>>XII</option>
+                                <option value="X" <?php echo ($siswa->getKelas() === "X")?'selected="true"':'';?>>X</option>
+                                <option value="XI" <?php echo ($siswa->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
+                                <option value="XII" <?php echo ($siswa->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" name="jurusan">
-                                <option value="Tahfidz" <?php echo ($siswa->jurusan === "Tahfidz")?'selected="true"':'';?>>
+                                <option value="Tahfidz" <?php echo ($siswa->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
                                     Tahfidz</option>
-                                <option value="IPA" <?php echo ($siswa->jurusan === "IPA")?'selected="true"':'';?>>IPA</option>
-                                <option value="IPS" <?php echo ($siswa->jurusan === "IPS")?'selected="true"':'';?>>IPS</option>
-                                <option value="Reguler" <?php echo ($siswa->jurusan === "Reguler")?'selected="true"':'';?>>Reguler</option>
+                                <option value="IPA" <?php echo ($siswa->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
+                                <option value="IPS" <?php echo ($siswa->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
+                                <option value="Reguler" <?php echo ($siswa->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" name="no_kelas" 
-                                   placeholder="Paralel" value="<?=$siswa->no_kelas?>" required="true" pattern="[1-9]{1}">
+                                   placeholder="Paralel" value="<?=$siswa->getNo_kelas()?>" required="true" pattern="[1-9]{1}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama_ortu" 
-                                   placeholder="Masukkan Nama" value="<?= $siswa->nama_ortu;?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?= $siswa->getNama_ortu();?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -191,19 +196,19 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal<?= $siswa->nis;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$siswa->nis?>" aria-hidden="true">
+<div class="modal fade" id="myModal<?= $siswa->getNis();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$siswa->getNis()?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel<?= $siswa->nis;?>">Konfirmasi</h4>
+                <h4 class="modal-title" id="myModalLabel<?= $siswa->getNis();?>">Konfirmasi</h4>
             </div>
             <div class="modal-body">
-                Apakah Anda Yakin Untuk Menghapus Data Siswa dengan Nis = <?= $siswa->nis;?>
+                Apakah Anda Yakin Untuk Menghapus Data Siswa dengan Nis = <?= $siswa->getNis();?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/siswa/hapus/'.$siswa->nis;?>">OK</a>
+                <a class="btn btn-danger" href="<?php echo base_url().'admin/siswa/hapus/'.$siswa->getNis();?>">OK</a>
             </div>
         </div>
     </div>
