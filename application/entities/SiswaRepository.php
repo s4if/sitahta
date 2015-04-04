@@ -8,13 +8,13 @@ class SiswaRepository extends EntityRepository{
         $qb = $this->getEntityManager()->createQueryBuilder();
         if($nis == -1){
             $qb->select('s')
-                ->from('Siswa', 's')
+                ->from('SiswaEntity', 's')
                 ->orderBy('s.nis', 'ASC');
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('s')
-                ->from('Siswa', 's')
+                ->from('SiswaEntity', 's')
                 ->where('s.nis = :nis')
                 ->orderBy('s.nis', 'ASC')
                 ->setParameter('nis', $nis);
@@ -29,7 +29,7 @@ class SiswaRepository extends EntityRepository{
         $no_kelas = (empty($params['no_kelas']))?'0':$params['no_kelas'];
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('s')
-                ->from('Siswa', 's');
+                ->from('SiswaEntity', 's');
         if($no_kelas === '0' && $jurusan === 'empty' &&  !($kelas === 'empty') ){
             $qb->andWhere("s.kelas = :kelas")
                 ->setParameter('kelas', $kelas)

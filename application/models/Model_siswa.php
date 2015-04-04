@@ -38,12 +38,12 @@ class Model_siswa extends MY_Model {
     }
     
     public function getData($nis = -1){
-        return $this->em->getRepository('Siswa')->getData($nis);
+        return $this->em->getRepository('SiswaEntity')->getData($nis);
     }
     
     public function insertData($data){
-        if(is_null($this->em->find("Siswa", $data['nis']))){
-            $this->siswa = new Siswa();
+        if(is_null($this->em->find("SiswaEntity", $data['nis']))){
+            $this->siswa = new SiswaEntity();
             $this->setData($data);
             $this->em->persist($this->siswa);
             $this->em->flush();
@@ -54,7 +54,7 @@ class Model_siswa extends MY_Model {
     }
     
     public function updateData($data){
-        $this->siswa = $this->em->find("Siswa", $data['nis']);
+        $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
         if(!is_null($this->siswa)){
             $this->setData($data);
             $this->em->persist($this->siswa);
@@ -66,7 +66,7 @@ class Model_siswa extends MY_Model {
     }
     
     public function deleteData($where){
-        $entity = $this->em->find("Siswa", $where['nis']);
+        $entity = $this->em->find("SiswaEntity", $where['nis']);
         if(!is_null($entity)){
              $this->em->remove($entity);
              $this->em->flush();
@@ -96,7 +96,7 @@ class Model_siswa extends MY_Model {
     }
     
     public function getFilteredData($params){
-        return $this->em->getRepository('Siswa')->getFilteredData($params);
+        return $this->em->getRepository('SiswaEntity')->getFilteredData($params);
     }
     
     /**
@@ -160,8 +160,8 @@ class Model_siswa extends MY_Model {
     
     private function transQuery($row_data){
         $data_insert = $this->dataCorrection($row_data);
-        $this->siswa = (is_null($this->em->find("Siswa", $data_insert[0])))?
-                new Siswa() : $this->em->find("Siswa", $data_insert[0]);
+        $this->siswa = (is_null($this->em->find("SiswaEntity", $data_insert[0])))?
+                new SiswaEntity() : $this->em->find("SiswaEntity", $data_insert[0]);
         $this->siswa->setNis($data_insert[0]);
         $this->siswa->setNama($data_insert[1]);
         $this->siswa->setJenis_kelamin($data_insert[2]);

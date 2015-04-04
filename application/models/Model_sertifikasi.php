@@ -38,17 +38,17 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function getData($id = -1){
-        return $this->em->getRepository('Sertifikat')->getData($id);
+        return $this->em->getRepository('SertifikatEntity')->getData($id);
     }
     
     public function getDataByNis($nis){
-        return $this->em->getRepository('Sertifikat')->getDataBySiswa($nis);
+        return $this->em->getRepository('SertifikatEntity')->getDataBySiswa($nis);
     }
     
     public function insertData($data){
         $data['id'] = empty($data['id'])?-1:$data['id'];
-        if(is_null($this->em->find("Sertifikat", $data['id']))){
-            $this->sertifikat = new Sertifikat();
+        if(is_null($this->em->find("SertifikatEntity", $data['id']))){
+            $this->sertifikat = new SertifikatEntity();
             $this->setData($data);
             $this->em->persist($this->sertifikat);
             $this->em->flush();
@@ -59,7 +59,7 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function updateData($data){
-        $this->sertifikat = $this->em->find("Sertifikat", $data['id']);
+        $this->sertifikat = $this->em->find("SertifikatEntity", $data['id']);
         if(!is_null($this->sertifikat)){
             $this->setData($data);
             $this->em->persist($this->sertifikat);
@@ -71,7 +71,7 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function deleteData($where){
-        $entity = $this->em->find("Sertifikat", $where['id']);
+        $entity = $this->em->find("SertifikatEntity", $where['id']);
         if(!is_null($entity)){
              $this->em->remove($entity);
              $this->em->flush();
@@ -83,10 +83,10 @@ class Model_sertifikasi extends MY_Model {
     
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     private function setData($data){
-        $this->sertifikat = new Sertifikat();
+        $this->sertifikat = new SertifikatEntity();
         if ((!empty($data['id']))&&($data['id']!=-1)) : $this->sertifikat->setId($data['id']); endif;
         if (!empty($data['nis'])){ 
-            $siswa = $this->em->find('siswa', $data['nis']);
+            $siswa = $this->em->find('SiswaEntity', $data['nis']);
             $this->sertifikat->setSiswa($siswa); 
         }
         if (!empty($data['tempat_ujian'])) : $this->sertifikat->setTempat_ujian($data['tempat_ujian']); endif;

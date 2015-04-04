@@ -6,50 +6,50 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="SertifikatRepository")
  * @Table(name="sertifikat")
  */
-class Sertifikat 
+class SertifikatEntity
 {
     
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
     
     /**
-     * @ManyToOne(targetEntity="Siswa", inversedBy="sertifikat")
+     * @ManyToOne(targetEntity="SiswaEntity", inversedBy="sertifikat")
      * @JoinColumn(name="siswa", referencedColumnName="nis", nullable=false)
      **/
-   protected $siswa;
+   private $siswa;
     
     /**
      * @Column(type="string", nullable=true)
      */
-    protected $tempat_ujian;
+    private $tempat_ujian;
     
     /**
      * @Column(type="date", nullable=false)
      */
-    protected $tgl_ujian;
+    private $tgl_ujian;
     
     /**
      * @Column(type="integer", nullable=false)
      */
-    protected $juz;
+    private $juz;
     
     /**
      * @Column(type="integer", nullable=false)
      */
-    protected $nilai;
+    private $nilai;
     
     /**
      * @Column(type="string", length=15, nullable=true)
      */
-    protected $predikat;
+    private $predikat;
     
     /**
      * @Column(type="string", nullable=true)
      */
-    protected $keterangan;
+    private $keterangan;
     
     public function getId() {
         return $this->id;

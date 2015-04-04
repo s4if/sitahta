@@ -6,68 +6,68 @@ Use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="SiswaRepository")
  * @Table(name="siswa")
  */
-class Siswa 
+class SiswaEntity
 {
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="NONE")
      */
-    protected $nis;
+    private $nis;
     
     /**
      * @Column(type="string", length=40, nullable=false)
      */
-    protected $nama;
+    private $nama;
     
     /**
      * @Column(type="string", name="jenis_kelamin", length=2, nullable=false)
      */
-    protected $jenis_kelamin;
+    private $jenis_kelamin;
     
     /**
      * @Column(type="string", nullable=false)
      */
-    protected $tempat_lahir;
+    private $tempat_lahir;
     
     /**
      * @Column(type="date", nullable=false)
      */
-    protected $tgl_lahir;
+    private $tgl_lahir;
     
     /**
      * @Column(type="string", nullable=true, length=4)
      */
-    protected $kelas;
+    private $kelas;
     
     /**
      * @Column(type="string", nullable=true, length=10)
      */
-    protected $jurusan;
+    private $jurusan;
     
     /**
      * @Column(type="integer", nullable=true)
      */
-    protected $no_kelas;
+    private $no_kelas;
     
     /**
      * @Column(type="string", nullable=false)
      */
-    protected $password;
+    private $password;
     
     /**
      * @Column(type="string", nullable=true)
      */
-    protected $nama_ortu;
+    private $nama_ortu;
     
     /**
-     * @OneToMany(targetEntity="NilaiHarian", mappedBy="siswa")
+     * @OneToMany(targetEntity="NilaiHarianEntity", mappedBy="siswa")
      **/
-    protected $nilai;
+    private $nilai;
     
     /**
-     * @OneToMany(targetEntity="Sertifikat", mappedBy="siswa")
+     * @OneToMany(targetEntity="SertifikatEntity", mappedBy="siswa")
      **/
-    protected $sertifikat;
+    private $sertifikat;
 
     public function __construct() {
         $this->nilai = new Doctrine\Common\Collections\ArrayCollection();

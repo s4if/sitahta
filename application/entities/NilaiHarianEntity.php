@@ -6,55 +6,55 @@ Use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="NilaiHarianRepository")
  * @Table(name="nilai_harian")
  */
-class NilaiHarian {
+class NilaiHarianEntity {
     
     /**
      * @Id @Column(type="string")
      * @GeneratedValue(strategy="NONE")
      */
-    protected $id;
+    private $id;
     
     /**
      * @Column(type="integer", nullable=false)
      */
-    protected $no_uh;
+    private $no_uh;
     
     /**
      * @Column(type="string", nullable=false, length=4)
      */
-    protected $kelas;
+    private $kelas;
     
     /**
-     * @ManyToOne(targetEntity="Siswa", inversedBy="nilai")
+     * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
      * @JoinColumn(name="siswa", referencedColumnName="nis", nullable=false)
      **/
-    protected $siswa;
+    private $siswa;
     
     /**
      * @Column(type="date", nullable=false)
      */
-    protected $tanggal;
+    private $tanggal;
     
     /**
      * @Column(type="integer", nullable=true)
      */
-    protected $juz;
+    private $juz;
     
     /**
      * @Column(type="string", nullable=true, length=4)
      */
-    protected $halaman;
+    private $halaman;
     
     /**
      * @Column(type="integer", nullable=true)
      */
-    protected $nilai;
+    private $nilai;
     
     /**
-     * @ManyToOne(targetEntity="Guru")
+     * @ManyToOne(targetEntity="GuruEntity")
      * @JoinColumn(name="penguji", referencedColumnName="nip")
      **/
-    protected $penguji;
+    private $penguji;
     
     public function getId() {
         return $this->id;

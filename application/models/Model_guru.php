@@ -38,12 +38,12 @@ class Model_guru extends MY_Model{
     }
     
     public function getData($nip = -1){
-        return $this->em->getRepository('Guru')->getData($nip);
+        return $this->em->getRepository('GuruEntity')->getData($nip);
     }
     
     public function insertData($data){
-        if(is_null($this->em->find("Guru", $data['nip']))){
-            $this->guru = new Guru();
+        if(is_null($this->em->find("GuruEntity", $data['nip']))){
+            $this->guru = new GuruEntity();
             $this->setData($data);
             $this->em->persist($this->guru);
             $this->em->flush();
@@ -54,7 +54,7 @@ class Model_guru extends MY_Model{
     }
     
     public function updateData($data){
-        $this->guru = $this->em->find("Guru", $data['nip']);
+        $this->guru = $this->em->find("GuruEntity", $data['nip']);
         if(!is_null($this->guru)){
             $this->setData($data);
             $this->em->persist($this->guru);
@@ -66,7 +66,7 @@ class Model_guru extends MY_Model{
     }
     
     public function deleteData($where){
-        $entity = $this->em->find("Guru", $where['nip']);
+        $entity = $this->em->find("GuruEntity", $where['nip']);
         if(!is_null($entity)){
              $this->em->remove($entity);
              $this->em->flush();
@@ -133,7 +133,7 @@ class Model_guru extends MY_Model{
     }
     
     private function transQuery($row_data){
-        $this->guru = (is_null($this->em->find("Guru", $row_data[0])))? new Guru(): $this->em->find("Guru", $row_data[0]); 
+        $this->guru = (is_null($this->em->find("GuruEntity", $row_data[0])))? new GuruEntity(): $this->em->find("GuruEntity", $row_data[0]); 
         $this->guru->setNip($row_data[0]); 
         $this->guru->setNama($row_data[1]);
         $this->guru->setJenis_kelamin($row_data[2]); 

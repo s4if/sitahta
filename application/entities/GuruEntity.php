@@ -6,48 +6,54 @@ Use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="GuruRepository")
  * @Table(name="guru")
  */
-class Guru 
+class GuruEntity
 {
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="NONE")
      */
-    protected $nip;
+    private $nip;
     
     /**
      * @Column(type="string", length=40)
      */
-    protected $nama;
+    private $nama;
     
     /**
      * @Column(type="string", name="jenis_kelamin", length=2, nullable=false)
      */
-    protected $jenis_kelamin;
+    private $jenis_kelamin;
     
     /**
      * @Column(type="string", nullable=true)
      */
-    protected $alamat;
+    private $alamat;
     
     /**
      * @Column(type="string", nullable=true, length=40)
      */
-    protected $email;
+    private $email;
     
     /**
      * @Column(type="string", nullable=true, name="no_telp", length=14)
      */
-    protected $no_telp;
+    private $no_telp;
     
     /**
      * @Column(type="string", nullable=false)
      */
-    protected $password;
+    private $password;
     
     /**
      * @Column(type="string", nullable=false, length=8)
      */
-    protected $kewenangan;
+    private $kewenangan;
+    
+    public function __get($name){
+        if(property_exists($this, $name)){
+            return $this->$name;
+        }
+    }
     
     public function getNip() {
         return $this->nip;

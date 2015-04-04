@@ -8,13 +8,13 @@ class GuruRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder();
         if($nip == -1){
             $qb->select('g')
-                ->from('Guru', 'g')
+                ->from('GuruEntity', 'g')
                 ->orderBy('g.nip', 'ASC');
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('g')
-                ->from('Guru', 'g')
+                ->from('GuruEntity', 'g')
                 ->where('g.nip = :nip')
                 ->orderBy('g.nip', 'ASC')
                 ->setParameter('nip', $nip);

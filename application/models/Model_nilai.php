@@ -38,19 +38,19 @@ class Model_nilai extends MY_Model {
     }
     
     public function getData($where){
-        return $this->em->getRepository('NilaiHarian')->getData($where);
+        return $this->em->getRepository('NilaiHarianEntity')->getData($where);
     }
     
     public function getDataByNo_uh($no_uh){
-        return $this->em->getRepository('NilaiHarian')->getDataByNo_uh($no_uh);
+        return $this->em->getRepository('NilaiHarianEntity')->getDataByNo_uh($no_uh);
     }
     
     public function getDataByNis($nis){
-        return $this->em->getRepository('NilaiHarian')->getDataBySiswa($nis);
+        return $this->em->getRepository('NilaiHarianEntity')->getDataBySiswa($nis);
     }
     
     public function getNilaiSiswa(){
-        $data = $this->em->getRepository('NilaiHarian')->getNilaiSaatIni();
+        $data = $this->em->getRepository('NilaiHarianEntity')->getNilaiSaatIni();
         $data_arr = array();
         foreach ($data as $row)
         {
@@ -60,18 +60,18 @@ class Model_nilai extends MY_Model {
     }
 
     public function getDataByKelas($kelas){
-        return $this->em->getRepository('NilaiHarian')->getDataByKelas($kelas);
+        return $this->em->getRepository('NilaiHarianEntity')->getDataByKelas($kelas);
     }
     
     public function insertData($data){
         $id = $data['no_uh'].$data['kelas'].$data['nis'];
-        if(is_null($this->em->find("NilaiHarian", $id))){
-            $this->nilai = new NilaiHarian();
-            try{
+        if(is_null($this->em->find("NilaiHarianEntity", $id))){
+            $this->nilai = new NilaiHarianEntity();
+//            try{
                 $this->setData($data);
-            } catch (Exception $ex) {
-                return false;
-            }
+//            } catch (Exception $ex) {
+//                return false;
+//            }
             $this->nilai->generateId();
             $this->em->persist($this->nilai);
             $this->em->flush();
@@ -84,13 +84,13 @@ class Model_nilai extends MY_Model {
     
     public function updateData($data){
         $id = $data['no_uh'].$data['kelas'].$data['nis'];
-        if(!is_null($this->em->find("NilaiHarian", $id))){
-            $this->nilai = $this->em->find("NilaiHarian", $id);
-            try {
+        if(!is_null($this->em->find("NilaiHarianEntity", $id))){
+            $this->nilai = $this->em->find("NilaiHarianEntity", $id);
+//            try {
                 $this->setData($data);
-            } catch (Exception $ex) {
-                return false;
-            }
+//            } catch (Exception $ex) {
+//                return false;
+//            }
             $this->em->persist($this->nilai);
             $this->em->flush();
             $this->nilai = null;
@@ -102,7 +102,7 @@ class Model_nilai extends MY_Model {
     
     public function deleteData($data){
         $id = $data['no_uh'].$data['kelas'].$data['nis'];
-        $entity = $this->em->find("NilaiHarian", $id);
+        $entity = $this->em->find("NilaiHarianEntity", $id);
         if(!is_null($entity)){
              $this->em->remove($entity);
              $this->em->flush();
@@ -118,7 +118,7 @@ class Model_nilai extends MY_Model {
         if (!empty($data['no_uh'])) : $this->nilai->setNo_uh($data['no_uh']); endif;
         if (!empty($data['kelas'])) : $this->nilai->setKelas($data['kelas']); endif;
         if (!empty($data['nis'])){ 
-            $siswa = $this->em->find("Siswa", $data['nis']);
+            $siswa = $this->em->find("SiswaEntity", $data['nis']);
             $this->nilai->setSiswa($siswa);
         }
         if (!empty($data['tanggal'])) {
@@ -131,13 +131,13 @@ class Model_nilai extends MY_Model {
         if (!empty($data['halaman'])) : $this->nilai->setHalaman($data['halaman']); endif;
         if (!empty($data['nilai'])) : $this->nilai->setNilai($data['nilai']); endif;
         if (!empty($data['penguji'])){ 
-            $penguji = $this->em->find("Guru", $data['penguji']);
+            $penguji = $this->em->find("GuruEntity", $data['penguji']);
             $this->nilai->setPenguji($penguji);
         }
     }
     
     public function dataExist($no_uh, $nis, $kelas) {
         $id = $no_uh.$kelas.$nis;
-        return !is_null($this->em->find("NilaiHarian", $id));
+        return !is_null($this->em->find("NilaiHarianEntity", $id));
     }
 }

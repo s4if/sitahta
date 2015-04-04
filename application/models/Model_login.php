@@ -36,11 +36,11 @@ class Model_login extends MY_Model{
     }
     
     public function checkUserid($id){
-        if(!is_null($this->em->find('Guru', $id))){
+        if(!is_null($this->em->find('GuruEntity', $id))){
             //return level admin (guru)
             return 'guru';
         }else{
-            if(!is_null($this->em->find('Siswa', $id))){
+            if(!is_null($this->em->find('SiswaEntity', $id))){
                 //return level user (siswa)
                 return 'user';
             }else{
@@ -51,20 +51,20 @@ class Model_login extends MY_Model{
     }
     
     public function checkPassword($id, $passwd, $position){
-        $ent = ($position == 'user')?'Siswa':$position;
-        $data = $this->em->find(ucfirst($ent),$id);
+        $ent = ($position == 'user')?'Siswa':'Guru';
+        $data = $this->em->find(ucfirst($ent).'Entity',$id);
         $stored_passwd =  $data->getPassword();
         return (md5($passwd) === $stored_passwd)? true : false;
     }
     
     public function getData($id, $position){
         $ent = ($position == 'user')?'Siswa':$position;
-        return $this->em->find(ucfirst($ent),$id);
+        return $this->em->find(ucfirst($ent).'Entity',$id);
     }
             
     public function updatePassword($id, $passwd, $position){
         $ent = ($position == 'user')?'Siswa':$position;
-        $data = $this->em->find(ucfirst($ent),$id);
+        $data = $this->em->find(ucfirst($ent).'Entity',$id);
         if(!is_null($data)){
             $data->setPassword($passwd);
             $this->em->persist($data);

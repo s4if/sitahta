@@ -8,13 +8,13 @@ class SertifikatRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder();
         if($id == -1){
             $qb->select('r')
-                ->from('Sertifikat', 'r')
+                ->from('SertifikatEntity', 'r')
                 ->orderBy('r.id', 'ASC');
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('r')
-                ->from('Sertifikat', 'r')
+                ->from('SertifikatEntity', 'r')
                 ->where('r.id = :id')
                 ->orderBy('r.id', 'ASC')
                 ->setParameter('id', $id);
@@ -24,10 +24,10 @@ class SertifikatRepository extends EntityRepository {
     }
     
     public function getDataBySiswa($nis){
-        $siswa = $this->getEntityManager()->getPartialReference('Siswa', $nis);
+        $siswa = $this->getEntityManager()->getPartialReference('SiswaEntity', $nis);
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('r')
-            ->from('Sertifikat', 'r')
+            ->from('SertifikatEntity', 'r')
             ->where('r.siswa = :siswa')
             ->orderBy('r.id', 'ASC')
             ->setParameter('siswa', $siswa);
