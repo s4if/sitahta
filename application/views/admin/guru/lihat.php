@@ -89,13 +89,13 @@
         <tbody>
             <?php foreach ($data_guru as $guru):?>
             <tr>
-            <td><?= $guru->nip;?></td>
-            <td><?= $guru->nama;?></td>
-            <td><?= $guru->jenis_kelamin;?></td>
-            <td><?= $guru->alamat;?></td>
-            <td><?= $guru->email;?></td>
-            <td><?= $guru->no_telp;?></td>
-            <td><?= $guru->kewenangan;?></td>
+            <td><?= $guru->getNip();?></td>
+            <td><?= $guru->getNama();?></td>
+            <td><?= $guru->getJenis_kelamin();?></td>
+            <td><?= $guru->getAlamat();?></td>
+            <td><?= $guru->getEmail();?></td>
+            <td><?= $guru->getNo_telp();?></td>
+            <td><?= $guru->getKewenangan();?></td>
             <td>
             <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->nip;?>">
                 <span class="glyphicon glyphicon-pencil"></span>

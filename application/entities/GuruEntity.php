@@ -75,8 +75,8 @@ class GuruEntity
         return $this->email;
     }
 
-    public function getNo_elp() {
-        return $this->no_elp;
+    public function getNo_telp() {
+        return $this->no_telp;
     }
 
     public function getPassword() {

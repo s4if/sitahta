@@ -28,7 +28,7 @@
 //lalu di echokan kedalam view dalam bentuk data
 ?>
 <?php foreach ($data_guru as $guru):?>
-<div class="modal fade" id="editModal<?= $guru->nip;?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $guru->nip;?>" aria-hidden="true">
+<div class="modal fade" id="editModal<?= $guru->getNip();?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $guru->getNip();?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,19 +36,19 @@
                 <h4 class="modal-title text-center" id="tambahModal">Edit Guru</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/guru/edit/<?= $guru->nip;?>">
+                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/guru/edit/<?= $guru->getNip();?>">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">NIP :</label>
                         <div class="col-sm-8 error">
                             <input type="text" class="form-control" name="nip" disabled="true"
-                                   placeholder="Masukkan NIP" value="<?= $guru->nip;?>" required="true">
+                                   placeholder="Masukkan NIP" value="<?= $guru->getNip();?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?= $guru->nama;?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?= $guru->getNama;?>" required="true">
                         </div>
                     </div>
                     <!-- -->
@@ -58,9 +58,9 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="jenis_kelamin" value="L" 
-                                        <?php if(!empty($guru->jenis_kelamin)):?>
-                                            <?php if($guru->jenis_kelamin=='L'):?>
-                                                checked
+                                        <?php if(!empty($guru->getJenis_kelamin())):?>
+                                            <?php if($guru->getJenis_kelamin() ==='L'):?>
+                                            checked="true"
                                             <?php endif;?>
                                         <?php endif;?>>
                                     Laki - Laki
@@ -69,9 +69,9 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="jenis_kelamin" value="P"
-                                        <?php if(!empty($guru->jenis_kelamin)):?>
-                                            <?php if($guru->jenis_kelamin=='P'):?>
-                                                checked
+                                        <?php if(!empty($guru->getJenis_kelamin())):?>
+                                            <?php if($guru->getJenis_kelamin() ==='P'):?>
+                                           checked="true"
                                             <?php endif;?>
                                         <?php endif;?>>
                                     Perempuan
@@ -82,21 +82,21 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Alamat :</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control col-sm-10" rows="3" name="alamat"><?=$guru->alamat?></textarea>
+                            <textarea class="form-control col-sm-10" rows="3" name="alamat"><?=$guru->getAlamat()?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">E-mail :</label>
                         <div class="col-sm-8">
                             <input type="email" class="form-control" name="email" 
-                                   placeholder="Masukkan Email" value="<?=$guru->email?>" required="true">
+                                   placeholder="Masukkan Email" value="<?=$guru->getEmail()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">No. Telepon :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="no_telp" 
-                                   placeholder="Masukkan Nomor Telepon" value="<?=$guru->no_telp?>" required="true">
+                                   placeholder="Masukkan Nomor Telepon" value="<?=$guru->getNo_telp?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -104,16 +104,16 @@
                         <div class="col-sm-5">
                             <select class="form-control" name="kewenangan">
                                 <option value="admin" 
-                                    <?php if(!empty($guru->kewenangan)):?>
-                                        <?php if($guru->kewenangan=='admin'): ?>
+                                    <?php if(!empty($guru->getKewenangan())):?>
+                                        <?php if($guru->getKewenangan()=='admin'): ?>
                                                 selected="true"
                                         <?php endif;?>
                                     <?php endif;?>>
                                     Admin
                                 </option>
                                 <option value="guru" 
-                                    <?php if(!empty($guru->kewenangan)):?>
-                                        <?php if($guru->kewenangan=='guru'): ?>
+                                    <?php if(!empty($guru->getKewenangan())):?>
+                                        <?php if($guru->getKewenangan()=='guru'): ?>
                                                 selected="true"
                                         <?php endif;?>
                                     <?php endif;?>>
@@ -136,19 +136,19 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal<?= $guru->nip;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$guru->nip?>" aria-hidden="true">
+<div class="modal fade" id="myModal<?= $guru->getNip();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$guru->getNip()?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel<?= $guru->nip;?>">Konfirmasi</h4>
+                <h4 class="modal-title" id="myModalLabel<?= $guru->getNip();?>">Konfirmasi</h4>
             </div>
             <div class="modal-body">
-                Apakah Anda Yakin Untuk Menghapus Data Guru dengan NIP = <?= $guru->nip;?>
+                Apakah Anda Yakin Untuk Menghapus Data Guru dengan NIP = <?= $guru->getNip();?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$guru->nip;?>">OK</a>
+                <a class="btn btn-danger" href="<?php echo base_url().'admin/guru/hapus/'.$guru->getNip();?>">OK</a>
             </div>
         </div>
     </div>

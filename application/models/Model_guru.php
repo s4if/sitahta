@@ -145,4 +145,8 @@ class Model_guru extends MY_Model{
         $this->em->persist($this->guru);
         $this->em->flush();
     }
+    
+    public function dataExist($nip){
+        return !is_null($this->em->find("GuruEntity", $nip));
+    }
 }

@@ -67,8 +67,9 @@ class Login extends MY_Controller {
     private function setData($id, $position){
         $data = $this->user->getData($id, $position);
         $this->session->set_userdata('login_data', $data);
-        if($position === 'guru' && $data->kewenangan === 'admin'){
-            $this->session->set_userdata('position', $data->kewenangan);
+        $stored_pos = $data->__get('kewenangan');
+        if($position === 'guru' && $stored_pos === 'admin'){
+            $this->session->set_userdata('position', $data->getKewenangan());
         }else{
             $this->session->set_userdata('position', $position);
         }
