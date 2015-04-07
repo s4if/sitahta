@@ -17,7 +17,7 @@ class SertifikatEntity
     
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="sertifikat")
-     * @JoinColumn(name="siswa", referencedColumnName="nis", nullable=false)
+     * @JoinColumn(name="siswa", referencedColumnName="nis", onDelete="CASCADE", nullable=false)
      **/
    private $siswa;
     

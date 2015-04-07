@@ -171,20 +171,25 @@
         <tbody>
             <?php foreach ($data_siswa_10 as $siswa):?>
             <tr>
-                <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
-                <td><?= $siswa->nama;?></td>
+                <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
+                <td><?= $siswa->getNama();?></td>
+                <?php 
+                $nilai_10 = array();
+                foreach ($siswa->getNilai() as $nilai) :
+                    $nilai_10[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+                endforeach;?>
                 <?php for($i = 1; $i<=20;$i++) : ?>
-                <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
+                <?php if(empty($nilai_10[$siswa->getNis()][$i])) : ?>
                 <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">
+                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
                         --
                     </a>
                 </td>
                 <?php else : ?>
-                <?php $nilai = $data_nilai[$siswa->nis][$i]?>
+                <?php $data_nilai = $nilai_10[$siswa->getNis()][$i]?>
                 <td>
-                    <a data-toggle="modal" data-target="#editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
-                        <?= $nilai->nilai;?>
+                    <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
+                        <?= $nilai->getNilai();?>
                     </a>
                 </td>
                 <?php endif;?>
@@ -215,20 +220,25 @@
         <tbody>
             <?php foreach ($data_siswa_11 as $siswa):?>
             <tr>
-                <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
-                <td><?= $siswa->nama;?></td>
+                <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
+                <td><?= $siswa->getNama();?></td>
+                <?php 
+                $nilai_11 = array();
+                foreach ($siswa->getNilai() as $nilai) :
+                    $nilai_11[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+                endforeach;?>
                 <?php for($i = 1; $i<=10;$i++) : ?>
-                <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
+                <?php if(empty($nilai_11[$siswa->getNis()][$i])) : ?>
                 <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">
+                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
                         --
                     </a>
                 </td>
                 <?php else : ?>
-                <?php $nilai = $data_nilai[$siswa->nis][$i]?>
+                <?php $data_nilai = $nilai_11[$siswa->getNis()][$i]?>
                 <td>
-                    <a data-toggle="modal" data-target="#editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
-                        <?= $nilai->nilai;?>
+                    <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
+                        <?= $data_nilai->getNilai();?>
                     </a>
                 </td>
                 <?php endif;?>
@@ -259,20 +269,25 @@
         <tbody>
             <?php foreach ($data_siswa_12 as $siswa):?>
             <tr>
-                <td><a href="<?=  base_url().'siswa/'.$siswa->nis?>"><?= $siswa->nis;?></a></td>
-                <td><?= $siswa->nama;?></td>
+                <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
+                <td><?= $siswa->getNama();?></td>
+                <?php 
+                $nilai_12 = array();
+                foreach ($siswa->getNilai() as $nilai) :
+                    $nilai_12[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+                endforeach;?>
                 <?php for($i = 1; $i<=10;$i++) : ?>
-                <?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
+                <?php if(empty($nilai_12[$siswa->getNis()][$i])) : ?>
                 <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->nis."_".$i?>">
+                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
                         --
                     </a>
                 </td>
                 <?php else : ?>
-                <?php $nilai = $data_nilai[$siswa->nis][$i]?>
+                <?php $data_nilai = $nilai_12[$siswa->getNis()][$i]?>
                 <td>
-                    <a data-toggle="modal" data-target="#editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
-                        <?= $nilai->nilai;?>
+                    <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
+                        <?= $data_nilai->getNilai();?>
                     </a>
                 </td>
                 <?php endif;?>

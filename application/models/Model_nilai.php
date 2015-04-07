@@ -140,4 +140,8 @@ class Model_nilai extends MY_Model {
         $id = $no_uh.$kelas.$nis;
         return !is_null($this->em->find("NilaiHarianEntity", $id));
     }
+    
+    public function getFilteredData($params){
+        return $this->em->getRepository('NilaiHarianEntity')->getFilteredData($params);
+    }
 }

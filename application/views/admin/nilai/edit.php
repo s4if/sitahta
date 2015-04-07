@@ -24,10 +24,15 @@
  * THE SOFTWARE.
  */
 ?>
-<?php foreach ($data_siswa as $siswa):?>
-<?php for($i = 1; $i<=20;$i++) : ?>
-<?php if(empty($data_nilai[$siswa->nis][$i])) : ?>
-<div class="modal fade" id="tambahNilai<?=$siswa->nis."_".$i?>" tabindex="-1" role="dialog" aria-labelledby="tambahNilai" aria-hidden="true">
+<?php 
+foreach ($data_siswa as $siswa):
+    $nilai_arr = array();
+    foreach ($siswa->getNilai() as $nilai) :
+        $nilai_arr[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+    endforeach;
+    for($i = 1; $i<=20;$i++) : 
+        if(empty($nilai_arr[$siswa->getNis()][$i])) : ?>
+<div class="modal fade" id="tambahNilai<?=$siswa->getNis()."_".$i?>" tabindex="-1" role="dialog" aria-labelledby="tambahNilai" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,12 +41,12 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" method="post" 
-                      action="<?=base_url();?>admin/nilai/tambah_nilai/<?=$siswa->nis?>/<?=$i?>/<?=$siswa->kelas?>">
+                      action="<?=base_url();?>admin/nilai/tambah_nilai/<?=$siswa->getNis()?>/<?=$i?>/<?=$siswa->getKelas()?>">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama" disabled="true" 
-                                   placeholder="Ulangan Harian" value="<?=$siswa->nama?>" required="true">
+                                   placeholder="Ulangan Harian" value="<?=$siswa->getNama()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -55,7 +60,7 @@
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="no_uh" disabled="true"
-                                   placeholder="Ulangan Harian" value="<?=$siswa->kelas?>" required="true">
+                                   placeholder="Ulangan Harian" value="<?=$siswa->getKelas()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -155,9 +160,9 @@
     </div>
 </div>
 <?php else : ?>
-<?php $nilai = $data_nilai[$siswa->nis][$i] ?>
-<div class="modal fade" id="editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>" 
-     tabindex="-1" role="dialog" aria-labelledby="editNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>" aria-hidden="true">
+<?php $data_nilai = $nilai_arr[$siswa->getNis()][$i] ?>
+<div class="modal fade" id="editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>" 
+     tabindex="-1" role="dialog" aria-labelledby="editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -166,28 +171,28 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" method="post" 
-                      action="<?=base_url();?>admin/nilai/edit_nilai/<?=$siswa->nis?>/<?=$i?>/<?=$siswa->kelas?>">
+                      action="<?=base_url();?>admin/nilai/edit_nilai/<?=$siswa->getNis()?>/<?=$i?>/<?=$siswa->getKelas()?>">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="no_uh" disabled="true"
-                                   placeholder="Ulangan Harian" value="<?=$siswa->nama?>" required="false">
+                                   placeholder="Ulangan Harian" value="<?=$siswa->getNama()?>" required="false">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">UH Ke :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="no_uh" disabled="true"
-                                   placeholder="Ulangan Harian" value="<?=$nilai->no_uh?>" required="true">
+                                   placeholder="Ulangan Harian" value="<?=$data_nilai->getNo_uh()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-2">
                             <select class="form-control" name="kelas">
-                                <option value="X" <?php echo ($nilai->kelas === "X")?'selected="true"':'';?>>X</option>
-                                <option value="XI" <?php echo ($nilai->kelas === "XI")?'selected="true"':'';?>>XI</option>
-                                <option value="XII" <?php echo ($nilai->kelas === "XII")?'selected="true"':'';?>>XII</option>
+                                <option value="X" <?php echo ($data_nilai->getKelas() === "X")?'selected="true"':'';?>>X</option>
+                                <option value="XI" <?php echo ($data_nilai->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
+                                <option value="XII" <?php echo ($data_nilai->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
                             </select>
                         </div>
                     </div>
@@ -195,25 +200,31 @@
                         <label class="col-sm-3 control-label">Juz :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="juz" 
-                                   placeholder="Masukkan Juz" value="<?=$nilai->juz?>" required="true">
+                                   placeholder="Masukkan Juz" value="<?=$data_nilai->getJuz()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Halaman :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="halaman" 
-                                   placeholder="Masukkan Nama" value="<?=$nilai->halaman?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?=$data_nilai->getHalaman()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
                             <input type="number" class="form-control" name="nilai" 
-                                   placeholder="Masukkan Nama" value="<?=$nilai->nilai?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?=$data_nilai->getNilai()?>" required="true">
                         </div>
                     </div>
                     <?php
-                        $tgl = explode("-", $nilai->tanggal);
+                        $t_obj = $data_nilai->getTanggal();
+                        $tgl = [
+                            0 => date("Y", $t_obj->getTimestamp()),
+                            1 => date("n", $t_obj->getTimestamp()),
+                            2 => date("j", $t_obj->getTimestamp())
+                            ];
+                    ?>
                     ?>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tgl Ulangan :</label>
@@ -278,7 +289,7 @@
                             <button type="submit" class="btn btn-primary">OK</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                             <button type="button" class="btn btn-danger" data-toggle="modal" 
-                                    data-target="#deleteNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>">
+                                    data-target="#deleteNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
                                 Hapus
                             </button>
                         </div>
@@ -291,22 +302,19 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="deleteNilai<?= $nilai->nis;?><?= $nilai->kelas;?><?= $nilai->no_uh;?>" tabindex="-1" role="dialog" aria-labelledby="deleteNilai<?=$siswa->nis?>" aria-hidden="true">
+<div class="modal fade" id="deleteNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>" tabindex="-1" role="dialog" aria-labelledby="deleteNilai<?=$siswa->getNis()?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel<?= $siswa->nis;?>">Konfirmasi</h4>
+                <h4 class="modal-title" id="myModalLabel<?= $siswa->getNis();?>">Konfirmasi</h4>
             </div>
             <div class="modal-body">
                 Apakah Anda Yakin Untuk Menghapus Data nilai?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/nilai/hapus_nilai';?>/
-                <?= $nilai->nis;?>/
-                <?= $nilai->kelas;?>/
-                <?= $nilai->no_uh;?>">OK</a>
+                <a class="btn btn-danger" href="<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $siswa->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getNo_uh();?>">OK</a>
             </div>
         </div>
     </div>

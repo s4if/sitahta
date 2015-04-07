@@ -26,7 +26,7 @@ class NilaiHarianEntity {
     
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
-     * @JoinColumn(name="siswa", referencedColumnName="nis", nullable=false)
+     * @JoinColumn(name="siswa", onDelete="CASCADE", referencedColumnName="nis", nullable=false)
      **/
     private $siswa;
     
@@ -52,7 +52,7 @@ class NilaiHarianEntity {
     
     /**
      * @ManyToOne(targetEntity="GuruEntity")
-     * @JoinColumn(name="penguji", referencedColumnName="nip")
+     * @JoinColumn(name="penguji", onDelete="SET NULL", referencedColumnName="nip")
      **/
     private $penguji;
     

@@ -23,7 +23,7 @@ class SiswaRepository extends EntityRepository{
         }
     }
     
-    public function getFilteredData($params){
+    public function getFilteredData($params, $eager = false){
         $kelas = (empty($params['kelas']))?'empty':$params['kelas'];
         $jurusan = (empty($params['jurusan']))?'empty':$params['jurusan'];
         $no_kelas = (empty($params['no_kelas']))?'0':$params['no_kelas'];
@@ -62,6 +62,9 @@ class SiswaRepository extends EntityRepository{
             
         }
         $query = $qb->getQuery();
+        if($eager){
+            $query->setFetchMode("Siswa", "nilai", Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
+        }
         return $query->getResult();
     }
 }

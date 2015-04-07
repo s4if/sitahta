@@ -60,12 +60,12 @@ class SiswaEntity
     private $nama_ortu;
     
     /**
-     * @OneToMany(targetEntity="NilaiHarianEntity", mappedBy="siswa")
+     * @OneToMany(targetEntity="NilaiHarianEntity", mappedBy="siswa", cascade={"persist", "remove"})
      **/
     private $nilai;
     
     /**
-     * @OneToMany(targetEntity="SertifikatEntity", mappedBy="siswa")
+     * @OneToMany(targetEntity="SertifikatEntity", mappedBy="siswa" , cascade={"persist", "remove"})
      **/
     private $sertifikat;
 

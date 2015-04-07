@@ -95,8 +95,8 @@ class Model_siswa extends MY_Model {
         if (!empty($data['nama_ortu'])) : $this->siswa->setNama_ortu($data['nama_ortu']); endif;
     }
     
-    public function getFilteredData($params){
-        return $this->em->getRepository('SiswaEntity')->getFilteredData($params);
+    public function getFilteredData($params, $eager = false){
+        return $this->em->getRepository('SiswaEntity')->getFilteredData($params,$eager);
     }
     
     /**
