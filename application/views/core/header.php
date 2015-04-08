@@ -46,7 +46,7 @@
     <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom DaatePicker -->
-    <link href="<?=  base_url() ?>assets/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="<?=  base_url() ?>assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     
     <!-- jQuery Version 1.11.0 -->
     <script src="<?=  base_url() ?>assets/js/jquery-1.11.0.js"></script>
