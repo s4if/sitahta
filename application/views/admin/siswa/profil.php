@@ -147,7 +147,7 @@
 <h3><em>Ulangan Harian</em></h3>
 <div class="col-md-12 container-fluid">
     <div class="table-responsive">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered" id="tabel_nilai">
             <thead>
                 <tr>
                     <td>Kelas</td>
@@ -204,6 +204,15 @@
         </table>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tabel_nilai').DataTable({
+            "order": [[ 2, "asc" ]],
+            "search": false,
+            "paging": false
+        });
+    } );
+</script>
 <?=$tambah_sertifikasi?>
 <?=$edit_sertifikasi?>
 <?=$tambah_nilai?>

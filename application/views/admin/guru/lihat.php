@@ -73,7 +73,7 @@
 </div>
 <div class="col-md-12">
 <div class="table-responsive">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" id="tabel_utama">
         <thead>
             <tr>
                 <td>NIP</td>
@@ -110,4 +110,9 @@
     </table>
 </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#tabel_utama').DataTable();
+    } );
+</script>
 <?=$edit?>
