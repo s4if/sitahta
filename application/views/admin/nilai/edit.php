@@ -24,15 +24,7 @@
  * THE SOFTWARE.
  */
 ?>
-<?php 
-foreach ($data_siswa as $siswa):
-    $nilai_arr = array();
-    foreach ($siswa->getNilai() as $nilai) :
-        $nilai_arr[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
-    endforeach;
-    for($i = 1; $i<=20;$i++) : 
-        if(empty($nilai_arr[$siswa->getNis()][$i])) : ?>
-<div class="modal fade" id="tambahNilai<?=$siswa->getNis()."_".$i?>" tabindex="-1" role="dialog" aria-labelledby="tambahNilai" aria-hidden="true">
+<div class="modal fade" id="tambahNilai" tabindex="-1" role="dialog" aria-labelledby="tambahNilai" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,27 +32,27 @@ foreach ($data_siswa as $siswa):
                 <h4 class="modal-title text-center" id="tambahModal">Tambah Nilai</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" 
-                      action="<?=base_url();?>admin/nilai/tambah_nilai/<?=$siswa->getNis()?>/<?=$i?>/<?=$siswa->getKelas()?>">
+                <form id="addModalForm" class="form-horizontal" role="form" method="post" 
+                      action="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama" disabled="true" 
-                                   placeholder="Ulangan Harian" value="<?=$siswa->getNama()?>" required="true">
+                            <input id="addModalInputNama" type="text" class="form-control" name="nama" disabled="true" 
+                                   placeholder="Ulangan Harian" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">UH Ke :</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" name="no_uh" disabled="true"
-                                   placeholder="Ulangan Harian" value="<?=$i?>" required="true">
+                            <input id="addModalInputUH" type="number" class="form-control" name="no_uh" disabled="true"
+                                   placeholder="Ulangan Harian" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="no_uh" disabled="true"
-                                   placeholder="Ulangan Harian" value="<?=$siswa->getKelas()?>" required="true">
+                            <input id="addModelInputKelas" type="text" class="form-control" name="kelas" disabled="true"
+                                   placeholder="Ulangan Harian" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -159,7 +151,14 @@ foreach ($data_siswa as $siswa):
         </div>
     </div>
 </div>
-<?php else : ?>
+<?php 
+foreach ($data_siswa as $siswa):
+    $nilai_arr = array();
+    foreach ($siswa->getNilai() as $nilai) :
+        $nilai_arr[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+    endforeach;
+    for($i = 1; $i<=20;$i++) : 
+        if(!empty($nilai_arr[$siswa->getNis()][$i])) : ?>
 <?php $data_nilai = $nilai_arr[$siswa->getNis()][$i] ?>
 <div class="modal fade" id="editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>" 
      tabindex="-1" role="dialog" aria-labelledby="editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>" aria-hidden="true">

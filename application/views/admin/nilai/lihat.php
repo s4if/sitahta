@@ -151,57 +151,9 @@
 <div class="col-md-12">
     &nbsp;
 </div>
+<?php $jml_uh = ($kelas == 'X')?20:10; ?>
 <div class="col-md-12">
-    <h4>Kelas 10</h4>
-</div>
-<div class="col-md-12">
-<div class="table-responsive">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <td>NIS</td>
-                <td>Nama</td>
-                <?php 
-                for($i = 1; $i<=20;$i++) : 
-                    echo '<td>#'.$i.'</td>'; 
-                endfor;
-                ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data_siswa_10 as $siswa):?>
-            <tr>
-                <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
-                <td><?= $siswa->getNama();?></td>
-                <?php 
-                $nilai_10 = array();
-                foreach ($siswa->getNilai() as $nilai) :
-                    $nilai_10[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
-                endforeach;?>
-                <?php for($i = 1; $i<=20;$i++) : ?>
-                <?php if(empty($nilai_10[$siswa->getNis()][$i])) : ?>
-                <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
-                        --
-                    </a>
-                </td>
-                <?php else : ?>
-                <?php $data_nilai = $nilai_10[$siswa->getNis()][$i]?>
-                <td>
-                    <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
-                        <?= $nilai->getNilai();?>
-                    </a>
-                </td>
-                <?php endif;?>
-                <?php endfor;?>
-            </tr>
-            <?php endforeach;?>
-        </tbody>
-    </table>
-</div>
-</div>
-<div class="col-md-12">
-    <h4>Kelas 11</h4>
+    <h4>Kelas <?=$kelas?></h4>
 </div>
 <div class="col-md-12">
 <div class="table-responsive">
@@ -211,80 +163,41 @@
                 <td>NIS</td>
                 <td>Nama</td>
                 <?php 
-                for($i = 1; $i<=10;$i++) : 
+                for($i = 1; $i<=$jml_uh;$i++) : 
                     echo '<td>#'.$i.'</td>'; 
                 endfor;
                 ?>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data_siswa_11 as $siswa):?>
+            <?php foreach ($data_siswa as $siswa):?>
             <tr>
                 <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
                 <td><?= $siswa->getNama();?></td>
                 <?php 
-                $nilai_11 = array();
-                foreach ($siswa->getNilai() as $nilai) :
-                    $nilai_11[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
+                $nilai = array();
+                foreach ($siswa->getNilai() as $nilai_siswa) :
+                    $nilai[$siswa->getNis()][$nilai_siswa->getNo_uh()] = $nilai_siswa;
                 endforeach;?>
-                <?php for($i = 1; $i<=10;$i++) : ?>
-                <?php if(empty($nilai_11[$siswa->getNis()][$i])) : ?>
+                <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
+                <?php if(empty($nilai[$siswa->getNis()][$i])) : ?>
                 <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
+                    <a id="tombol<?=$siswa->getNis()."_".$i?>">
                         --
                     </a>
+                    <script type="text/javascript">
+                        $("#tombol<?=$siswa->getNis()."_".$i?>").click(function (){
+                            assignVal(
+                                "<?=base_url();?>admin/nilai/tambah_nilai/<?=$siswa->getNis()?>/<?=$i?>/<?=$siswa->getKelas()?>",
+                                "<?=$siswa->getNama()?>",
+                                "<?=$i?>",
+                                "<?=$siswa->getKelas()?>");
+                            $("#tambahNilai").modal("toggle");
+                        });
+                    </script>
                 </td>
                 <?php else : ?>
-                <?php $data_nilai = $nilai_11[$siswa->getNis()][$i]?>
-                <td>
-                    <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
-                        <?= $data_nilai->getNilai();?>
-                    </a>
-                </td>
-                <?php endif;?>
-                <?php endfor;?>
-            </tr>
-            <?php endforeach;?>
-        </tbody>
-    </table>
-</div>
-</div>
-<div class="col-md-12">
-    <h4>Kelas 12</h4>
-</div>
-<div class="col-md-12">
-<div class="table-responsive">
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <td>NIS</td>
-                <td>Nama</td>
-                <?php 
-                for($i = 1; $i<=10;$i++) : 
-                    echo '<td>#'.$i.'</td>'; 
-                endfor;
-                ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data_siswa_12 as $siswa):?>
-            <tr>
-                <td><a href="<?=  base_url().'siswa/'.$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
-                <td><?= $siswa->getNama();?></td>
-                <?php 
-                $nilai_12 = array();
-                foreach ($siswa->getNilai() as $nilai) :
-                    $nilai_12[$siswa->getNis()][$nilai->getNo_uh()] = $nilai;
-                endforeach;?>
-                <?php for($i = 1; $i<=10;$i++) : ?>
-                <?php if(empty($nilai_12[$siswa->getNis()][$i])) : ?>
-                <td>
-                    <a data-toggle="modal" data-target="#tambahNilai<?=$siswa->getNis()."_".$i?>">
-                        --
-                    </a>
-                </td>
-                <?php else : ?>
-                <?php $data_nilai = $nilai_12[$siswa->getNis()][$i]?>
+                <?php $data_nilai = $nilai[$siswa->getNis()][$i]?>
                 <td>
                     <a data-toggle="modal" data-target="#editNilai<?= $siswa->getNis();?><?= $data_nilai->getKelas();?><?= $data_nilai->getNo_uh();?>">
                         <?= $data_nilai->getNilai();?>

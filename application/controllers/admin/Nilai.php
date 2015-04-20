@@ -47,28 +47,17 @@ class Nilai extends MY_Controller {
         }
     }
     
-    public function lihat(){
+    public function lihat($kelas = 'X'){
         $this->blockUnloggedOne();
-//        $siswa = $this->siswa->getData(1021);
-//        $nilai_coll = $siswa->getNilai();
-//        $nilai = $nilai_coll->get(0);
-//        var_dump($nilai);
-        $data_siswa_10 = $this->siswa->getFilteredData(['kelas' => 'X'], true);
-        $data_siswa_11 = $this->siswa->getFilteredData(['kelas' => 'XI'], true);
-        $data_siswa_12 = $this->siswa->getFilteredData(['kelas' => 'XII'], true);
-        $data_siswa_all =  new Doctrine\Common\Collections\ArrayCollection(
-                array_merge($data_siswa_10, 
-                        array_merge($data_siswa_11, $data_siswa_12)
-                        ));
+        $data_siswa = $this->siswa->getFilteredData(['kelas' => $kelas], true);
         $data = [
             'title' => 'Nilai',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
-            'data_siswa_10' => $data_siswa_10,
-            'data_siswa_11' => $data_siswa_11,
-            'data_siswa_12' => $data_siswa_12,
-            'edit' => $this->load->view('admin/nilai/edit',['data_siswa' => $data_siswa_all], true)
+            'data_siswa' => $data_siswa,
+            'kelas' => $kelas,
+            'edit' => $this->load->view('admin/nilai/edit',['data_siswa' => $data_siswa], true)
         ];
         $this->loadView('admin/nilai/lihat', $data, FALSE);
     }
@@ -84,10 +73,10 @@ class Nilai extends MY_Controller {
         $res = $this->nilai->insertData($data_insert, TRUE);
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         } else {
             $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         }
     }
     
@@ -102,10 +91,10 @@ class Nilai extends MY_Controller {
         $res = $this->nilai->updateData($data_insert);
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         } else {
             $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         }
     }
     
@@ -113,10 +102,10 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         if($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas])){
             $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         }  else {
             $this->session->set_flashdata("errors",[0 => "Maaf, data tidak berhasil dihapus"]);
-            redirect('nilai');
+            redirect('nilai/'.$kelas);
         }
     }
     

@@ -27,64 +27,9 @@ $(document).ready(function() {
     //$('#data_table').dataTable();
 } );
 
-function pilih_semua()
-{
-	// mengecek Banyak checkbox di dalam form
-	jumKomponen = $("input:checkbox").length;
-	
-	// myForm[0] merupakan checkbox induk untuk centang semua data
-	if(document.myForm[0].checked === false)
-	{
-		//jika status checked(false) maka akan checked(true) semuanya
-		for(x = 1; x <= jumKomponen ; x++ )
-		{
-			if(document.myForm[x].type === "checkbox") document.myForm[x].checked = false;
-		}
-	}
-	else 
-	{
-		//jika status checked(true) maka akan checked(false) semuanya
-		for(x = 1; x <= jumKomponen ; x++ )
-		{
-			if(document.myForm[x].type === "checkbox") document.myForm[x].checked = true;
-		}
-	}
-}
-function konfirmasi()
-{
-	// jika checked lebih dari satu maka di exsekusi
-	if($("input:checked").length > 0)
-	{
-		if(confirm('apakah anda yakin menghapus ?') === true)
-		{
-			return true;  
-		} else {
-			return false;
-		}
-	} else {
-		alert("Anda Belum ada mencentang.");
-		return false;
-	}
-}
-
-$(document)  
-  .on('show.bs.modal', '.modal', function(event) {
-    $(this).appendTo($('body'));
-  })
-  .on('shown.bs.modal', '.modal.in', function(event) {
-    setModalsAndBackdropsOrder();
-  })
-  .on('hidden.bs.modal', '.modal', function(event) {
-    setModalsAndBackdropsOrder();
-  });
-
-function setModalsAndBackdropsOrder() {  
-  var modalZIndex = 1040;
-  $('.modal.in').each(function(index) {
-    var $modal = $(this);
-    modalZIndex++;
-    $modal.css('zIndex', modalZIndex);
-    $modal.next('.modal-backdrop.in').addClass('hidden').css('zIndex', modalZIndex - 1);
-});
-  $('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
-}
+function assignVal(formAction, namaVal, UHVal, kelasVal){
+    $("#addModalForm").attr("action", formAction);
+    $("#addModalInputNama").attr("value", namaVal);
+    $("#addModalInputUH").attr("value", UHVal);
+    $("#addModelInputKelas").attr("value", kelasVal);
+};

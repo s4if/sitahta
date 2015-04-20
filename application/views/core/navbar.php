@@ -67,8 +67,22 @@
             <li>
                 <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
             </li>
+<!--            <li>
+                <a href="<?base_url()?>nilai"><span class="glyphicon glyphicon-list"></span> &nbsp; Nilai</a>
+            </li>-->
             <li>
-                <a href="<?=base_url()?>nilai"><span class="glyphicon glyphicon-list"></span> &nbsp; Nilai</a>
+                <a href="javascript:;" data-toggle="collapse" data-target="#nilai"><span class="glyphicon glyphicon-list"></span> Nilai <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="nilai" class="collapse">
+                    <li>
+                        <a href="<?=base_url()?>nilai/X">Kelas X</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>nilai/XI">Kelas XI</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>nilai/XII">Kelas XII</a>
+                    </li>
+                </ul>
             </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
