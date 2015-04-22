@@ -47,16 +47,21 @@ class Nilai extends MY_Controller {
         }
     }
     
-    public function lihat($kelas = 'X'){
+    public function lihat($kelas = 'empty', $jurusan = 'empty', $no_kelas = 0){
         $this->blockUnloggedOne();
-        $data_siswa = $this->siswa->getFilteredData(['kelas' => $kelas], true);
+        $param = ['kelas' => $kelas, 'jurusan' => $jurusan, 'no_kelas' => $no_kelas];
+        if ($kelas == 'X' && ($jurusan == 'IPA' || $jurusan =='IPS')){
+            $param['jurusan'] = 'empty';
+        }
+        $data_siswa = $this->siswa->getFilteredData($param, true);
         $data = [
             'title' => 'Nilai',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
             'data_siswa' => $data_siswa,
-            'kelas' => $kelas,
+            'list_kelas' => $this->nilai->getListKelas($kelas),
+            'kelas' => $param,
             'edit' => $this->load->view('admin/nilai/edit',['data_siswa' => $data_siswa], true)
         ];
         $this->loadView('admin/nilai/lihat', $data, FALSE);
@@ -109,4 +114,11 @@ class Nilai extends MY_Controller {
         }
     }
     
+    //hanya untuk uji coba
+    public function uji_coba($kelas = 'X'){
+        $list = $this->nilai->getListKelas($kelas);
+        foreach ($list as $kelas){
+            echo $kelas->getKelas().$kelas->getJurusan().$kelas->getNo_kelas()."<br>";
+        }
+    }
 }

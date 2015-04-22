@@ -49,58 +49,24 @@
                 <li role="presentation"><a role="menuitem" tabindex="-1" data-toggle="modal" data-target="#ModalImportUH">Import Ulangan Harian</a></li>
             </ul>
         </div>
-        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#ModalSort">
-            <span class="glyphicon glyphicon-filter"></span>
-            Filter
-        </button>
-    </div>
-</div>
-<div class="modal fade" id="ModalSort" tabindex="-1" role="dialog" aria-labelledby="ModalSort" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="ModalImportLabel>">Filter Berdasarkan :</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <form role="form form-inline" method="post" action="<?=base_url();?>admin/siswa/filter">
-                        <div class="form-group col-xs-12">
-                            <div class="col-xs-4">
-                                <label class="control-label">
-                                    <small>Kelas - Jurusan - Paralel :</small>
-                                </label>
-                            </div>
-                            <div class="input-group-sm col-xs-3">
-                                <select class="form-control" name="kelas">
-                                    <option value="empty" >--</option>
-                                    <option value="X">X</option>
-                                    <option value="XI">XI</option>
-                                    <option value="XII">XII</option>
-                                </select>
-                            </div>
-                            <div class="input-group-sm col-xs-3">
-                                <select class="form-control" name="jurusan">
-                                    <option value="empty" >--</option>
-                                    <option value="Reguler" >Reguler</option>
-                                    <option value="Tahfidz">Tahfidz</option>
-                                    <option value="IPA">IPA</option>
-                                    <option value="IPS">IPS</option>
-                                </select>
-                            </div>
-                            <div class="input-group-sm col-xs-2">
-                                <input type="text" class="form-control" name="paralel" value="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-6">
-                                <button type="submit" class="btn btn-sm btn-primary">OK</button>
-                                <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-import"></span>
+                Kelas
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>nilai/<?=$kelas['kelas']?>">
+                        Semua
+                    </a></li>
+                <?php foreach ($list_kelas as $item_kelas) :?>
+                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>nilai/<?=$item_kelas->getKelas()?>/<?php echo ($item_kelas->getKelas() == 'X')?'empty':$item_kelas->getJurusan();?>/<?=$item_kelas->getNo_kelas()?>">
+                        <?=$item_kelas->getKelas()?>-
+                        <?php echo ($item_kelas->getKelas() == 'X')?'':$item_kelas->getJurusan().'-';?>
+                        <?=$item_kelas->getNo_kelas()?>
+                    </a></li>
+                <?php endforeach;?>
+            </ul>
         </div>
     </div>
 </div>
@@ -153,7 +119,8 @@
 </div>
 <?php $jml_uh = ($kelas == 'X')?20:10; ?>
 <div class="col-md-12">
-    <h4>Kelas <?=$kelas?></h4>
+    <h4>Kelas <?=$kelas['kelas']?><?php echo ($kelas['kelas'] == 'X' || $kelas['jurusan'] == 'empty')?'':'-'.$kelas['jurusan'];?><?php echo ($kelas['no_kelas'] == 0)?'':'-'.$kelas['no_kelas'];?>
+    </h4>
 </div>
 <div class="col-md-12">
 <div class="table-responsive">

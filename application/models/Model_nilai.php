@@ -144,4 +144,8 @@ class Model_nilai extends MY_Model {
     public function getFilteredData($params){
         return $this->em->getRepository('NilaiHarianEntity')->getFilteredData($params);
     }
+    
+    public function getListKelas($kelas){
+        return $this->em->getRepository('SiswaEntity')->getListKelas($kelas);
+    }
 }

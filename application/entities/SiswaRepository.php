@@ -50,6 +50,12 @@ class SiswaRepository extends EntityRepository{
                 ->setParameter('jurusan', $jurusan)
                 ->setParameter('no_kelas', $no_kelas)
                 ->orderBy("s.nis", "ASC");
+        }elseif (!($kelas === 'empty') && $jurusan === 'empty' && !($no_kelas === '0')) {
+            $qb->andWhere("s.kelas = :kelas")
+                ->andWhere("s.no_kelas = :no_kelas")
+                ->setParameter('kelas', $kelas)
+                ->setParameter('no_kelas', $no_kelas)
+                ->orderBy("s.nis", "ASC");
         }elseif(!($no_kelas === '0') && !($jurusan === 'empty') && !($kelas === 'empty')){
             $qb->andWhere("s.jurusan = :jurusan")
                 ->andWhere("s.no_kelas = :no_kelas")
@@ -65,6 +71,20 @@ class SiswaRepository extends EntityRepository{
         if($eager){
             $query->setFetchMode("Siswa", "nilai", Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
         }
+        return $query->getResult();
+    }
+    
+    public function getListKelas($kelas){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('SiswaEntity', 's')
+            ->groupBy('s.kelas')
+            ->addGroupBy('s.jurusan')
+            ->addGroupBy('s.no_kelas')
+            ->having('s.kelas = :kelas')
+            ->addOrderBy('s.no_kelas', 'ASC')
+            ->setParameter('kelas', $kelas);
+        $query = $qb->getQuery();
         return $query->getResult();
     }
 }
