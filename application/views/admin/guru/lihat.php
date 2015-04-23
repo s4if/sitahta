@@ -73,7 +73,7 @@
 </div>
 <div class="col-md-12">
 <div class="table-responsive">
-    <table class="table table-striped table-bordered" id="tabel_utama">
+    <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
             <tr>
                 <td>NIP</td>
