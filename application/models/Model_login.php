@@ -64,9 +64,10 @@ class Model_login extends MY_Model{
             
     public function updatePassword($id, $passwd, $position){
         $ent = ($position == 'user')?'Siswa':$position;
+        $ent = ($ent == 'admin')?'Guru':$position;
         $data = $this->em->find(ucfirst($ent).'Entity',$id);
         if(!is_null($data)){
-            $data->setPassword($passwd);
+            $data->setPassword(md5($passwd));
             $this->em->persist($data);
             $this->em->flush();
             return true;

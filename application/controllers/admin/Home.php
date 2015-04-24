@@ -49,9 +49,9 @@ class Home extends MY_Controller{
         $this->blockUnloggedOne();
         $data = [
             'title' => 'Beranda',
-            'user' => ucwords($this->session->login_data->nama),
+            'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
-            'nama' => $this->session->login_data->nama,
+            'nama' => $this->session->login_data->getNama(),
         ];
         $this->loadView('admin/index', $data);
     }
@@ -60,9 +60,9 @@ class Home extends MY_Controller{
         $this->blockUnloggedOne();
         $data = [
             'title' => 'Ganti Password',
-            'user' => ucwords($this->session->login_data->nama),
+            'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
-            'nama' => $this->session->login_data->nama
+            'nama' => $this->session->login_data->getNama()
         ];
         $this->loadView('admin/password', $data);
     }
@@ -72,7 +72,7 @@ class Home extends MY_Controller{
         $new_pass = $this->input->post('new_password', true);
         $confirm_pass = $this->input->post('confirm_password', TRUE);
         $stored_pass = $this->input->post('stored_password', true);
-        $nip = $this->session->login_data->nip;
+        $nip = $this->session->login_data->getNip();
         $position = $this->session->position;
         if($new_pass === $confirm_pass){
             if($this->login->checkPassword($nip, $stored_pass, $position)){
