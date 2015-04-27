@@ -59,6 +59,8 @@ class NilaiHarianRepository extends EntityRepository {
         return $query->getResult();
     }
     
+    
+    //akan error
     public function getNilaiSaatIni(){
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('n')
@@ -76,6 +78,7 @@ class NilaiHarianRepository extends EntityRepository {
 //        return $query->getResult();
     }
     
+    //mungkin ga akan terpakai lagi
     public function getFilteredData($params){
         $kelas = (empty($params['kelas']))?'empty':$params['kelas'];
         $jurusan = (empty($params['jurusan']))?'empty':$params['jurusan'];

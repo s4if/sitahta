@@ -35,19 +35,13 @@ class SiswaEntity
     private $tgl_lahir;
     
     /**
-     * @Column(type="string", nullable=true, length=4)
-     */
+     * @ManyToMany(targetEntity="KelasEntity", inversedBy="siswa")
+     * @JoinTable(name="list_kelas",
+     *      joinColumns={@JoinColumn(name="siswa_nis", referencedColumnName="nis")},
+     *      inverseJoinColumns={@JoinColumn(name="kelas_id", referencedColumnName="id")}
+     *      )
+     **/
     private $kelas;
-    
-    /**
-     * @Column(type="string", nullable=true, length=10)
-     */
-    private $jurusan;
-    
-    /**
-     * @Column(type="integer", nullable=true)
-     */
-    private $no_kelas;
     
     /**
      * @Column(type="string", nullable=false)
@@ -72,8 +66,9 @@ class SiswaEntity
     public function __construct() {
         $this->nilai = new Doctrine\Common\Collections\ArrayCollection();
         $this->sertifikat = new Doctrine\Common\Collections\ArrayCollection();
+        $this->kelas = new Doctrine\Common\Collections\ArrayCollection();
     }
-
+    
     public function getNis() {
         return $this->nis;
     }
@@ -98,14 +93,6 @@ class SiswaEntity
         return $this->kelas;
     }
 
-    public function getJurusan() {
-        return $this->jurusan;
-    }
-
-    public function getNo_kelas() {
-        return $this->no_kelas;
-    }
-
     public function getPassword() {
         return $this->password;
     }
@@ -113,11 +100,11 @@ class SiswaEntity
     public function getNama_ortu() {
         return $this->nama_ortu;
     }
-    
+
     public function getNilai() {
         return $this->nilai;
     }
-    
+
     public function getSertifikat() {
         return $this->sertifikat;
     }
@@ -147,21 +134,6 @@ class SiswaEntity
         return $this;
     }
 
-    public function setKelas($kelas) {
-        $this->kelas = $kelas;
-        return $this;
-    }
-
-    public function setJurusan($jurusan) {
-        $this->jurusan = $jurusan;
-        return $this;
-    }
-
-    public function setNo_kelas($no_kelas) {
-        $this->no_kelas = $no_kelas;
-        return $this;
-    }
-
     public function setPassword($password) {
         $this->password = $password;
         return $this;
@@ -172,15 +144,20 @@ class SiswaEntity
         return $this;
     }
 
-    public function setNilai($nilai) {
-        $this->nilai = $nilai;
+    public function addNilai(NilaiHarianEntity $nilai) {
+        $this->nilai[] = $nilai;
+        return $this;
+    }
+
+    public function addSertifikat(SertifikatEntity $sertifikat) {
+        $this->sertifikat[] = $sertifikat;
         return $this;
     }
     
-    public function setSertifikat($sertifikat) {
-        $this->sertifikat = $sertifikat;
+    public function addKelas(KelasEntity $kelas) {
+        $kelas->addSiswa($this);
+        $this->kelas[] = $kelas;
         return $this;
     }
-
-
+    
 }

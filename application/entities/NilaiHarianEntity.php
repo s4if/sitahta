@@ -20,9 +20,20 @@ class NilaiHarianEntity {
     private $no_uh;
     
     /**
+     * @OneToOne(targetEntity="KelasEntity", fetch="EXTRA_LAZY")
+     * @JoinColumn(name="kelas", referencedColumnName="id")
+     **/
+    private $kelas;
+    
+    /**
+     * @Column(type="integer", nullable=false)
+     */
+    private $semester;
+    
+    /**
      * @Column(type="string", nullable=false, length=4)
      */
-    private $kelas;
+    private $tahun_ajaran;
     
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
@@ -51,10 +62,17 @@ class NilaiHarianEntity {
     private $nilai;
     
     /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $nilai_remidi;
+    
+    /**
      * @ManyToOne(targetEntity="GuruEntity")
      * @JoinColumn(name="penguji", onDelete="SET NULL", referencedColumnName="nip")
      **/
     private $penguji;
+    
+    const KKM = 80;
     
     public function getId() {
         return $this->id;
@@ -88,16 +106,42 @@ class NilaiHarianEntity {
         return $this->nilai;
     }
 
+    public function getNilai_remidi() {
+        if($this->nilai >= KKM){
+            return null;
+        }else{
+            return $this->nilai_remidi;
+        }
+    }
+
+    public function getNilai_akhir() {
+        if($this->nilai >= KKM){
+            return $this->nilai;
+        }elseif ($this->nilai_remidi >= KKM) {
+            return KKM;
+        }else{
+            return $this->nilai_remidi;
+        }
+    }
+
+    public function getTahun_ajaran() {
+        return $this->tahun_ajaran;
+    }
+
     public function getPenguji() {
         return $this->penguji;
     }
 
-    //disabled
-//    public function setId($id) {
-//        $this->id = $id;
-//        return $this;
-//    }
+    public function getSemester() {
+        return $this->semester;
+    }
 
+    public function setSemester($semester) {
+        $this->semester = $semester;
+        return $this;
+    }
+
+        
     public function setNo_uh($no_uh) {
         $this->no_uh = $no_uh;
         return $this;
@@ -108,7 +152,7 @@ class NilaiHarianEntity {
         return $this;
     }
 
-    public function setSiswa($siswa) {
+    public function setSiswa(SiswaEntity $siswa) {
         $this->siswa = $siswa;
         return $this;
     }
@@ -133,13 +177,38 @@ class NilaiHarianEntity {
         return $this;
     }
 
+    public function setNilai_remidi($nilai_remidi) {
+        if($this->nilai >= KKM){
+            $this->nilai_remidi = null;
+        }else {
+            $this->nilai_remidi = $nilai_remidi;
+        }
+        return $this;
+    }
+    
+    public function setTahun_ajaran($tahun_ajaran) {
+        $this->tahun_ajaran = $tahun_ajaran;
+        return $this;
+    }
+
     public function setPenguji($penguji) {
         $this->penguji = $penguji;
         return $this;
     }
 
     public function generateId(){
-        $this->id = $this->no_uh.$this->kelas.$this->siswa->getNis();
+        $this->id = $this->siswa->getNis().'-'.$this->kelas->getId().'-'.$this->semester;
+    }
+    
+    //keterangan lulusnya seperti apa
+    public function getKeterangan(){
+        if($this->nilai >= KKM){
+            return "Lulus tanpa remidi";
+        }elseif ($this->nilai_remidi >= KKM) {
+            return "Lulus dengan remidi";
+        }else{
+            return "Belum lulus/remidi";
+        }
     }
     
 }

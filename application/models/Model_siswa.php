@@ -32,6 +32,7 @@
 class Model_siswa extends MY_Model {
     
     protected $siswa;
+    protected $kelas;
     
     public function __construct() {
         parent::__construct();
@@ -88,9 +89,23 @@ class Model_siswa extends MY_Model {
             $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
             $this->siswa->setTgl_lahir($tgl); 
         }
-        if (!empty($data['kelas'])) : $this->siswa->setKelas($data['kelas']); endif;
-        if (!empty($data['jurusan'])) : $this->siswa->setJurusan($data['jurusan']); endif;
-        if (!empty($data['no_kelas'])) : $this->siswa->setNo_kelas($data['no_kelas']); endif;
+        if (!(empty($data['kelas'])&&empty($data['jurusan'])&&empty($data['no_kelas'])&&empty($data['tahun_ajaran']))) :
+            $str_jur = ($data['kelas'] == 'X')?'':$data['jurusan'].'-';
+            $id = $data['kelas']."-".$str_jur.$data['no_kelas'].'-'.$data['tahun_ajaran'];
+            $this->kelas = $this->em->find("KelasEntity", $id);
+            if(!is_null($this->kelas)){
+                $this->siswa->addKelas($this->kelas);
+            }else{
+                $this->kelas = new KelasEntity();
+                $this->kelas->setKelas($data['kelas'])
+                        ->setJurusan($data['jurusan'])
+                        ->setNo_kelas($data['no_kelas'])
+                        ->setTahun_ajaran($data['tahun_ajaran'])
+                        ->generateId();
+                $this->em->persist($this->kelas);
+                $this->siswa->addKelas($this->kelas);
+            }
+        endif;
         if (!empty($data['password'])) : $this->siswa->setPassword($data['password']); endif;
         if (!empty($data['nama_ortu'])) : $this->siswa->setNama_ortu($data['nama_ortu']); endif;
     }
@@ -112,7 +127,7 @@ class Model_siswa extends MY_Model {
             $lastRow = $objWorksheet->getHighestDataRow();
             $failureCount = 0;
             $this->em->getConnection()->beginTransaction();
-            $data = $objWorksheet->rangeToArray('A1'.':I'.$lastRow, null, TRUE);
+            $data = $objWorksheet->rangeToArray('A1'.':J'.$lastRow, null, TRUE);
             for ($i = 1; $i < $lastRow;$i++){
                 $row_data = $data[$i];
                 if($this->cellValidation($row_data)){
@@ -167,15 +182,32 @@ class Model_siswa extends MY_Model {
         $this->siswa->setJenis_kelamin($data_insert[2]);
         $this->siswa->setTempat_lahir($data_insert[3]);
         $this->siswa->setTgl_lahir($data_insert[4]);
-        $this->siswa->setKelas($data_insert[5]);
-        $this->siswa->setJurusan($data_insert[6]);
-        $this->siswa->setNo_kelas($data_insert[7]);
-        $this->siswa->setNama_ortu($data_insert[8]);
+        $this->siswa->addKelas($this->initKelas($data_insert));
+        $this->siswa->setNama_ortu($data_insert[9]);
         $this->siswa->setPassword(md5('qwerty'));
         $this->em->persist($this->siswa);
         $this->em->flush();
     }
     
+    private function initKelas($data_insert){
+        $str_jur = ($data_insert[5] == 'X')?'':$data_insert[6].'-';
+        $id = $data_insert[5]."-".$str_jur.$data_insert[7].'-'.$data_insert[8];
+        $kelas = $this->em->find("KelasEntity", $id);
+        if(!is_null($kelas)){
+            return $kelas;
+        }else{
+            $kelas = new KelasEntity();
+            $kelas->setKelas($data_insert[5])
+                    ->setJurusan($data_insert[6])
+                    ->setNo_kelas($data_insert[7])
+                    ->setTahun_ajaran($data_insert[8])
+                    ->generateId();
+            $this->em->persist($kelas);
+            return $kelas;
+        }
+    }
+
+
     public function dataExist($nis){
         return !is_null($this->em->find("SiswaEntity", $nis));
     }

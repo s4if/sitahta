@@ -117,6 +117,7 @@ class Model_nilai extends MY_Model {
     public function setData($data){
         if (!empty($data['no_uh'])) : $this->nilai->setNo_uh($data['no_uh']); endif;
         if (!empty($data['kelas'])) : $this->nilai->setKelas($data['kelas']); endif;
+        if (!empty($data['tahun_ajaran'])) : $this->nilai->setKelas($data['tahun_ajaran']); endif;
         if (!empty($data['nis'])){ 
             $siswa = $this->em->find("SiswaEntity", $data['nis']);
             $this->nilai->setSiswa($siswa);
@@ -130,6 +131,7 @@ class Model_nilai extends MY_Model {
         if (!empty($data['juz'])) : $this->nilai->setJuz($data['juz']); endif;
         if (!empty($data['halaman'])) : $this->nilai->setHalaman($data['halaman']); endif;
         if (!empty($data['nilai'])) : $this->nilai->setNilai($data['nilai']); endif;
+        if (!empty($data['nilai_remidi'])) : $this->nilai->setNilai($data['nilai_remidi']); endif;
         if (!empty($data['penguji'])){ 
             $penguji = $this->em->find("GuruEntity", $data['penguji']);
             $this->nilai->setPenguji($penguji);

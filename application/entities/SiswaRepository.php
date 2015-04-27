@@ -23,6 +23,8 @@ class SiswaRepository extends EntityRepository{
         }
     }
     
+    
+    //ged filtered data sebaiknya dihapus, diganti dengan get kelas
     public function getFilteredData($params, $eager = false){
         $kelas = (empty($params['kelas']))?'empty':$params['kelas'];
         $jurusan = (empty($params['jurusan']))?'empty':$params['jurusan'];
@@ -74,6 +76,7 @@ class SiswaRepository extends EntityRepository{
         return $query->getResult();
     }
     
+    //ini juga diganti dengan get kelas
     public function getListKelas($kelas){
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('s')

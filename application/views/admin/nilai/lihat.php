@@ -117,7 +117,7 @@
 <div class="col-md-12">
     &nbsp;
 </div>
-<?php $jml_uh = ($kelas == 'X')?20:10; ?>
+<?php $jml_uh = ($kelas ['kelas'] == 'X')?20:10; ?>
 <div class="col-md-12">
     <h4>Kelas <?=$kelas['kelas']?><?php echo ($kelas['kelas'] == 'X' || $kelas['jurusan'] == 'empty')?'':'-'.$kelas['jurusan'];?><?php echo ($kelas['no_kelas'] == 0)?'':'-'.$kelas['no_kelas'];?>
     </h4>
@@ -129,11 +129,9 @@
             <tr>
                 <td>NIS</td>
                 <td>Nama</td>
-                <?php 
-                for($i = 1; $i<=$jml_uh;$i++) : 
-                    echo '<td>#'.$i.'</td>'; 
-                endfor;
-                ?>
+                <?php for($i = 1; $i<=$jml_uh/2;$i++) : ?>
+                <td colspan="2">#<?=$i?></td>
+                <?php endfor;?>
             </tr>
         </thead>
         <tbody>
