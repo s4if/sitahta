@@ -97,10 +97,10 @@
             <td><?= $guru->getNo_telp();?></td>
             <td><?= $guru->getKewenangan();?></td>
             <td>
-            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->nip;?>">
+            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->getNip();?>">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
-            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->nip;?>">
+            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->getNip();?>">
                 <span class="glyphicon glyphicon-remove"></span>
             </a>
             </td>

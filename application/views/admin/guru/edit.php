@@ -48,7 +48,7 @@
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?= $guru->getNama;?>" required="true">
+                                   placeholder="Masukkan Nama" value="<?= $guru->getNama();?>" required="true">
                         </div>
                     </div>
                     <!-- -->
@@ -96,7 +96,7 @@
                         <label class="col-sm-3 control-label">No. Telepon :</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" name="no_telp" 
-                                   placeholder="Masukkan Nomor Telepon" value="<?=$guru->getNo_telp?>" required="true">
+                                   placeholder="Masukkan Nomor Telepon" value="<?=$guru->getNo_telp()?>" required="true">
                         </div>
                     </div>
                     <div class="form-group">
