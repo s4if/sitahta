@@ -133,7 +133,9 @@ class Model_siswa extends MY_Model {
                 if($this->cellValidation($row_data)){
                     $this->transQuery($row_data);
                 }  else {
-                    $failureCount++;
+                    $failureCount=+2;
+                    //$this->em->getConnection()->rollback();
+                    break;
                 }
             }
             if(($failureCount > 0)){

@@ -171,8 +171,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
 //                'no_kelas' => '100']);
 //            $this->assertEmpty($mod_array2);
             $this->assertEquals(0, $model->importData('assets/test/coba_siswa.xls'));
-//            $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
-//            $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
+            $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+            $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
         }
         
         public function testModel_login() {
