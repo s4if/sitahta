@@ -20,20 +20,14 @@ class NilaiHarianEntity {
     private $no_uh;
     
     /**
-     * @OneToOne(targetEntity="KelasEntity", fetch="EXTRA_LAZY")
-     * @JoinColumn(name="kelas", referencedColumnName="id")
-     **/
+     * @Column(type="string", nullable=false, length=4)
+     */
     private $kelas;
     
     /**
      * @Column(type="integer", nullable=false)
      */
     private $semester;
-    
-    /**
-     * @Column(type="string", nullable=false, length=4)
-     */
-    private $tahun_ajaran;
     
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
@@ -124,10 +118,6 @@ class NilaiHarianEntity {
         }
     }
 
-    public function getTahun_ajaran() {
-        return $this->tahun_ajaran;
-    }
-
     public function getPenguji() {
         return $this->penguji;
     }
@@ -185,11 +175,6 @@ class NilaiHarianEntity {
         }
         return $this;
     }
-    
-    public function setTahun_ajaran($tahun_ajaran) {
-        $this->tahun_ajaran = $tahun_ajaran;
-        return $this;
-    }
 
     public function setPenguji($penguji) {
         $this->penguji = $penguji;
@@ -197,7 +182,7 @@ class NilaiHarianEntity {
     }
 
     public function generateId(){
-        $this->id = $this->siswa->getNis().'-'.$this->kelas->getId().'-'.$this->semester;
+        $this->id = $this->siswa->getNis().'-'.$this->kelas.'-'.$this->semester.'-'.$this->no_uh;
     }
     
     //keterangan lulusnya seperti apa

@@ -64,18 +64,18 @@ class Model_nilai extends MY_Model {
     }
     
     public function insertData($data){
-        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
         if(is_null($this->em->find("NilaiHarianEntity", $id))){
             $this->nilai = new NilaiHarianEntity();
 //            try{
                 $this->setData($data);
-//            } catch (Exception $ex) {
-//                return false;
-//            }
             $this->nilai->generateId();
             $this->em->persist($this->nilai);
             $this->em->flush();
             $this->nilai = null;
+//            } catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
+//                return false;
+//            }
             return true;
         }  else{
             return false;
@@ -83,7 +83,7 @@ class Model_nilai extends MY_Model {
     }
     
     public function updateData($data){
-        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
         if(!is_null($this->em->find("NilaiHarianEntity", $id))){
             $this->nilai = $this->em->find("NilaiHarianEntity", $id);
 //            try {
@@ -101,7 +101,7 @@ class Model_nilai extends MY_Model {
     }
     
     public function deleteData($data){
-        $id = $data['no_uh'].$data['kelas'].$data['nis'];
+        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
         $entity = $this->em->find("NilaiHarianEntity", $id);
         if(!is_null($entity)){
              $this->em->remove($entity);
@@ -117,6 +117,7 @@ class Model_nilai extends MY_Model {
     public function setData($data){
         if (!empty($data['no_uh'])) : $this->nilai->setNo_uh($data['no_uh']); endif;
         if (!empty($data['kelas'])) : $this->nilai->setKelas($data['kelas']); endif;
+        if (!empty($data['semester'])) : $this->nilai->setSemester($data['semester']); endif;
         if (!empty($data['tahun_ajaran'])) : $this->nilai->setKelas($data['tahun_ajaran']); endif;
         if (!empty($data['nis'])){ 
             $siswa = $this->em->find("SiswaEntity", $data['nis']);
@@ -138,8 +139,8 @@ class Model_nilai extends MY_Model {
         }
     }
     
-    public function dataExist($no_uh, $nis, $kelas) {
-        $id = $no_uh.$kelas.$nis;
+    public function dataExist($no_uh, $nis, $kelas, $semester) {
+        $id = $nis.'-'.$kelas.'-'.$semester.'-'.$no_uh;
         return !is_null($this->em->find("NilaiHarianEntity", $id));
     }
     

@@ -88,11 +88,11 @@ class SiswaEntity
     public function getTgl_lahir() {
         return $this->tgl_lahir;
     }
-
+    
     public function getKelas() {
         return $this->kelas;
     }
-
+    
     public function getPassword() {
         return $this->password;
     }

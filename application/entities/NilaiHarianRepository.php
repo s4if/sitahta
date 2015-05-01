@@ -6,8 +6,8 @@ class NilaiHarianRepository extends EntityRepository {
     
     public function getData ($where = [], $number = 50) {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $id = (empty($where['no_uh'])||empty($where['kelas'])||empty($where['nis']))?
-                $id = -1 : $where['no_uh'].$where['kelas'].$where['nis'];
+        $id = (empty($where['no_uh'])||empty($where['kelas'])||empty($where['nis'])||empty($where['semester']))?
+                $id = -1 : $where['nis'].'-'.$where['kelas'].'-'.$where['semester'].'-'.$where['no_uh'];
         if($id == -1){
             $qb->select('n')
                 ->from('NilaiHarianEntity', 'n')
