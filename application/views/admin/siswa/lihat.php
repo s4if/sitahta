@@ -46,6 +46,20 @@
             <span class="glyphicon glyphicon-import"></span>
             Import
         </a>
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-import"></span>
+                Kelas
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <?php foreach ($list_kelas as $item_kelas) :?>
+                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>siswa/kelas/<?=$item_kelas->getId()?>">
+                        <?=$item_kelas->getNamaKelas()?>
+                    </a></li>
+                <?php endforeach;?>
+            </ul>
+        </div>
         <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -86,7 +100,9 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data_siswa as $siswa):?>
+            <?php foreach ($data_kelas as $kelas) : ?>
+            <?php if (!$kelas->getSiswa()->isEmpty()) : ?>
+            <?php foreach ($kelas->getSiswa() as $siswa): ?>
             <tr>
             <td><?= $siswa->getNis();?></td>
             <td><?= $siswa->getNama();?></td>
@@ -98,11 +114,7 @@
             $ttl = $tmpt.", ".$tanggal;
             ?>
             <td><?= $ttl;?></td>
-            <?php
-            $kelas = ($siswa->getKelas() !== 'X')?$siswa->getKelas()."-".$siswa->getJurusan()."-".$siswa->getNo_kelas():
-                $siswa->getKelas()."-".$siswa->getNo_kelas();
-            ?>
-            <td><?= $kelas;?></td>
+            <td><?= $kelas->getNamaKelas()?></td>
             <td><?= $siswa->getNama_ortu();?></td>
             <td>
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->getNis()?>">
@@ -116,6 +128,8 @@
                 </a>
             </td>
             </tr>
+            <?php endforeach;?>
+            <?php endif;?>
             <?php endforeach;?>
         </tbody>
     </table>

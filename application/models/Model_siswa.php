@@ -42,6 +42,16 @@ class Model_siswa extends MY_Model {
         return $this->em->getRepository('SiswaEntity')->getData($nis);
     }
     
+    public function getKelas($kelas = 'X'){
+        $data = new Doctrine\Common\Collections\ArrayCollection();
+        if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
+            $data = $this->em->getRepository('KelasEntity')->getData($kelas);
+        } else {
+            $data = $this->em->getRepository('KelasEntity')->getDataById($kelas);
+        }
+        return $data;
+    }
+    
     public function insertData($data){
         if(is_null($this->em->find("SiswaEntity", $data['nis']))){
             $this->siswa = new SiswaEntity();

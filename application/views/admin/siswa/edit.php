@@ -27,7 +27,9 @@
 //modal disini nanti di load pake load view true kemudian dikumpulkan dalam bentuk array, 
 //lalu di echokan kedalam view dalam bentuk data
 ?>
-<?php foreach ($data_siswa as $siswa):?>
+<?php foreach ($data_kelas as $kelas) : ?>
+<?php if (!$kelas->getSiswa()->isEmpty()) : ?>
+<?php foreach ($kelas->getSiswa() as $siswa): ?>
 <div class="modal fade" id="editModal<?= $siswa->getNis();?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $siswa->getNis();?>" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,29 +154,29 @@
                                    placeholder="Masukkan Kota/Kabupaten" value="<?=$siswa->getTempat_lahir()?>" required="true">
                         </div>
                     </div>
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-2">
                             <select class="form-control" name="kelas">
-                                <option value="X" <?php echo ($siswa->getKelas() === "X")?'selected="true"':'';?>>X</option>
-                                <option value="XI" <?php echo ($siswa->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
-                                <option value="XII" <?php echo ($siswa->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
+                                <option value="X" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "X")?'selected="true"':'';?>>X</option>
+                                <option value="XI" <?ph echo ($siswa->ggetKelasSekarang($tahun_ajaran)->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
+                                <option value="XII" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" name="jurusan">
-                                <option value="Tahfidz" <?php echo ($siswa->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
+                                <option value="Tahfidz" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
                                     Tahfidz</option>
-                                <option value="IPA" <?php echo ($siswa->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
-                                <option value="IPS" <?php echo ($siswa->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
-                                <option value="Reguler" <?php echo ($siswa->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
+                                <option value="IPA" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
+                                <option value="IPS" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
+                                <option value="Reguler" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <input type="text" class="form-control" name="no_kelas" 
-                                   placeholder="Paralel" value="<?=$siswa->getNo_kelas()?>" required="true" pattern="[1-9]{1}">
+                                   placeholder="Paralel" value="<?$siswa->getNo_kelas()?>" required="true" pattern="[1-9]{1}">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
                         <div class="col-sm-8">
@@ -213,4 +215,6 @@
         </div>
     </div>
 </div>
-<?php endforeach; ?>
+<?php endforeach;?>
+<?php endif;?>
+<?php endforeach;?>

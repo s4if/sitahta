@@ -64,12 +64,23 @@
             <li>
                 <a href="<?=base_url()?>guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
-            <li>
-                <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
-            </li>
 <!--            <li>
-                <a href="<?base_url()?>nilai"><span class="glyphicon glyphicon-list"></span> &nbsp; Nilai</a>
+                <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
             </li>-->
+            <li>
+                <a href="javascript:;" data-toggle="collapse" data-target="#siswa"><span class="glyphicon glyphicon-user"></span> Siswa <i class="fa fa-fw fa-caret-down"></i></a>
+                <ul id="siswa" class="collapse">
+                    <li>
+                        <a href="<?=base_url()?>siswa/kelas/X">Kelas X</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>siswa/kelas/XI">Kelas XI</a>
+                    </li>
+                    <li>
+                        <a href="<?=base_url()?>siswa/kelas/XII">Kelas XII</a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#nilai"><span class="glyphicon glyphicon-list"></span> Nilai <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="nilai" class="collapse">

@@ -93,6 +93,14 @@ class SiswaEntity
         return $this->kelas;
     }
     
+    //belum terji
+    public function getKelasTahun($tahun_ajaran){
+        $criteria = Doctrine\Common\Collections\Criteria::create();
+        $criteria->where(Doctrine\Common\Collections\Criteria::expr()->eq('tahun_ajaran', $tahun_ajaran))
+                ->getFirstResult();
+        return $this->kelas->matching($criteria);
+    }
+    
     public function getPassword() {
         return $this->password;
     }

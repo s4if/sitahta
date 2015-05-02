@@ -48,17 +48,22 @@ class Siswa extends MY_Controller {
         }
     }
     
-    public function lihat(){
+    public function lihat($kelas = 'X'){
         $this->blockUnloggedOne();
-        $data_siswa = $this->siswa->getData();
+        $data_kelas = $this->siswa->getKelas($kelas);
+        $kelas_2 = ($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII')?[0 => $kelas]:  explode('-', $kelas);
+        $list_kelas = $this->siswa->getKelas($kelas_2[0]);
         $data = [
             'title' => 'Lihat Siswa',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $this->session->semester,
             'tambah' => $this->load->view("admin/siswa/tambah",[],TRUE),
-            'edit' => $this->load->view("admin/siswa/edit",['data_siswa' => $data_siswa],TRUE),
-            'data_siswa' => $data_siswa
+            'edit' => $this->load->view("admin/siswa/edit",['data_kelas' => $data_kelas],TRUE),
+            'list_kelas' => $list_kelas,
+            'data_kelas' => $data_kelas
         ];
         $this->loadView('admin/siswa/lihat', $data);
     }

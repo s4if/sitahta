@@ -74,10 +74,21 @@ class Login extends MY_Controller {
         }else{
             $this->session->set_userdata('position', $position);
         }
+        $this->setTahunAjaran();
     }
     
     public function logout(){
         $this->session->sess_destroy();
         redirect('login', 'refresh');
+    }
+    
+    private function setTahunAjaran(){
+        $tahun = date('Y');
+        $semester = ((int)date('m')<7)?1:2;
+        $tahun_ajaran = ($semester == 1)? (int)$tahun: (int)$tahun -1;
+        $this->session->set_userdata('tahun_ajaran', $tahun_ajaran);
+        $this->session->set_userdata('semester', $semester); 
+        $this->session->set_userdata('tahun_ajaran', 2014);
+        $this->session->set_userdata('semester', 2);  
     }
 }

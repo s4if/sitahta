@@ -3,7 +3,7 @@
 Use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="SiswaRepository")
+ * @Entity(repositoryClass="KelasRepository")
  * @Table(name="kelas")
  */
 class KelasEntity {
@@ -51,6 +51,11 @@ class KelasEntity {
     public function generateId(){
         $str_jur = ($this->kelas == 'X')?'':$this->jurusan.'-';
         $this->id = $this->kelas."-".$str_jur.$this->no_kelas.'-'.$this->tahun_ajaran;
+    }
+    
+    public function getNamaKelas() {
+        $str_jur = ($this->kelas == 'X')?'':$this->jurusan.'-';
+        return $this->kelas."-".$str_jur.$this->no_kelas;
     }
     
     public function getId() {
