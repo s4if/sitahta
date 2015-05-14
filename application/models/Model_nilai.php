@@ -30,125 +30,124 @@
  * @author s4if
  */
 class Model_nilai extends MY_Model {
-    
-    protected $nilai;
 
-    public function __construct() {
-        parent::__construct();
-    }
-    
-    public function getData($where){
-        return $this->em->getRepository('NilaiHarianEntity')->getData($where);
-    }
-    
-    public function getDataByNo_uh($no_uh){
-        return $this->em->getRepository('NilaiHarianEntity')->getDataByNo_uh($no_uh);
-    }
-    
-    public function getDataByNis($nis){
-        return $this->em->getRepository('NilaiHarianEntity')->getDataBySiswa($nis);
-    }
-    
-    public function getNilaiSiswa(){
-        $data = $this->em->getRepository('NilaiHarianEntity')->getNilaiSaatIni();
-        $data_arr = array();
-        foreach ($data as $row)
-        {
-            $data_arr[$row->getSiswa()->getNis()][$row->getNo_uh()] = $row;
-        }
-        return $data_arr;
-    }
+	protected $nilai;
 
-    public function getDataByKelas($kelas){
-        return $this->em->getRepository('NilaiHarianEntity')->getDataByKelas($kelas);
-    }
-    
-    public function insertData($data){
-        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
-        if(is_null($this->em->find("NilaiHarianEntity", $id))){
-            $this->nilai = new NilaiHarianEntity();
+	public function __construct() {
+		parent::__construct();
+	}
+
+	public function getData($where) {
+		return $this->em->getRepository('NilaiHarianEntity')->getData($where);
+	}
+
+	public function getDataByNo_uh($no_uh) {
+		return $this->em->getRepository('NilaiHarianEntity')->getDataByNo_uh($no_uh);
+	}
+
+	public function getDataByNis($nis) {
+		return $this->em->getRepository('NilaiHarianEntity')->getDataBySiswa($nis);
+	}
+
+	public function getNilaiSiswa() {
+		$data = $this->em->getRepository('NilaiHarianEntity')->getNilaiSaatIni();
+		$data_arr = array();
+		foreach ($data as $row) {
+			$data_arr[$row->getSiswa()->getNis()][$row->getNo_uh()] = $row;
+		}
+		return $data_arr;
+	}
+
+	public function getDataByKelas($kelas) {
+		return $this->em->getRepository('NilaiHarianEntity')->getDataByKelas($kelas);
+	}
+
+	public function insertData($data) {
+		$id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+		if (is_null($this->em->find("NilaiHarianEntity", $id))) {
+			$this->nilai = new NilaiHarianEntity();
 //            try{
-                $this->setData($data);
-            $this->nilai->generateId();
-            $this->em->persist($this->nilai);
-            $this->em->flush();
-            $this->nilai = null;
+			$this->setData($data);
+			$this->nilai->generateId();
+			$this->em->persist($this->nilai);
+			$this->em->flush();
+			$this->nilai = null;
 //            } catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
-//                return false;
-//            }
-            return true;
-        }  else{
-            return false;
-        }
-    }
-    
-    public function updateData($data){
-        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
-        if(!is_null($this->em->find("NilaiHarianEntity", $id))){
-            $this->nilai = $this->em->find("NilaiHarianEntity", $id);
-//            try {
-                $this->setData($data);
-//            } catch (Exception $ex) {
-//                return false;
-//            }
-            $this->em->persist($this->nilai);
-            $this->em->flush();
-            $this->nilai = null;
-            return true;
-        }  else{
-            return false;
-        }
-    }
-    
-    public function deleteData($data){
-        $id = $data['nis'].'-'.$data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
-        $entity = $this->em->find("NilaiHarianEntity", $id);
-        if(!is_null($entity)){
-             $this->em->remove($entity);
-             $this->em->flush();
-             $this->nilai = null;
-             return true;
-        }  else {
-            return false;
-        }
-    }
+			//                return false;
+			//            }
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
-    public function setData($data){
-        if (!empty($data['no_uh'])) : $this->nilai->setNo_uh($data['no_uh']); endif;
-        if (!empty($data['kelas'])) : $this->nilai->setKelas($data['kelas']); endif;
-        if (!empty($data['semester'])) : $this->nilai->setSemester($data['semester']); endif;
-        if (!empty($data['tahun_ajaran'])) : $this->nilai->setKelas($data['tahun_ajaran']); endif;
-        if (!empty($data['nis'])){ 
-            $siswa = $this->em->find("SiswaEntity", $data['nis']);
-            $this->nilai->setSiswa($siswa);
-        }
-        if (!empty($data['tanggal'])) {
-            $tgl_arr = explode('-', $data['tanggal']);
-            $tgl = new DateTime();
-            $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
-            $this->nilai->setTanggal($tgl); 
-        }
-        if (!empty($data['juz'])) : $this->nilai->setJuz($data['juz']); endif;
-        if (!empty($data['halaman'])) : $this->nilai->setHalaman($data['halaman']); endif;
-        if (!empty($data['nilai'])) : $this->nilai->setNilai($data['nilai']); endif;
-        if (!empty($data['nilai_remidi'])) : $this->nilai->setNilai($data['nilai_remidi']); endif;
-        if (!empty($data['penguji'])){ 
-            $penguji = $this->em->find("GuruEntity", $data['penguji']);
-            $this->nilai->setPenguji($penguji);
-        }
-    }
-    
-    public function dataExist($no_uh, $nis, $kelas, $semester) {
-        $id = $nis.'-'.$kelas.'-'.$semester.'-'.$no_uh;
-        return !is_null($this->em->find("NilaiHarianEntity", $id));
-    }
-    
-    public function getFilteredData($params){
-        return $this->em->getRepository('NilaiHarianEntity')->getFilteredData($params);
-    }
-    
-    public function getListKelas($kelas){
-        return $this->em->getRepository('SiswaEntity')->getListKelas($kelas);
-    }
+	public function updateData($data) {
+		$id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+		if (!is_null($this->em->find("NilaiHarianEntity", $id))) {
+			$this->nilai = $this->em->find("NilaiHarianEntity", $id);
+//            try {
+			$this->setData($data);
+//            } catch (Exception $ex) {
+			//                return false;
+			//            }
+			$this->em->persist($this->nilai);
+			$this->em->flush();
+			$this->nilai = null;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function deleteData($data) {
+		$id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+		$entity = $this->em->find("NilaiHarianEntity", $id);
+		if (!is_null($entity)) {
+			$this->em->remove($entity);
+			$this->em->flush();
+			$this->nilai = null;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	//jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
+	public function setData($data) {
+		if (!empty($data['no_uh'])):$this->nilai->setNo_uh($data['no_uh']);endif;
+		if (!empty($data['kelas'])):$this->nilai->setKelas($data['kelas']);endif;
+		if (!empty($data['semester'])):$this->nilai->setSemester($data['semester']);endif;
+		if (!empty($data['tahun_ajaran'])):$this->nilai->setKelas($data['tahun_ajaran']);endif;
+		if (!empty($data['nis'])) {
+			$siswa = $this->em->find("SiswaEntity", $data['nis']);
+			$this->nilai->setSiswa($siswa);
+		}
+		if (!empty($data['tanggal'])) {
+			$tgl_arr = explode('-', $data['tanggal']);
+			$tgl = new DateTime();
+			$tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+			$this->nilai->setTanggal($tgl);
+		}
+		if (!empty($data['juz'])):$this->nilai->setJuz($data['juz']);endif;
+		if (!empty($data['halaman'])):$this->nilai->setHalaman($data['halaman']);endif;
+		if (!empty($data['nilai'])):$this->nilai->setNilai($data['nilai']);endif;
+		if (!empty($data['nilai_remidi'])):$this->nilai->setNilai_remidi($data['nilai_remidi']);endif;
+		if (!empty($data['penguji'])) {
+			$penguji = $this->em->find("GuruEntity", $data['penguji']);
+			$this->nilai->setPenguji($penguji);
+		}
+	}
+
+	public function dataExist($no_uh, $nis, $kelas, $semester) {
+		$id = $nis . '-' . $kelas . '-' . $semester . '-' . $no_uh;
+		return !is_null($this->em->find("NilaiHarianEntity", $id));
+	}
+
+	public function getFilteredData($params) {
+		return $this->em->getRepository('NilaiHarianEntity')->getFilteredData($params);
+	}
+
+	public function getListKelas($kelas) {
+		return $this->em->getRepository('SiswaEntity')->getListKelas($kelas);
+	}
 }

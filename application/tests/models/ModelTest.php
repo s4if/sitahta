@@ -71,7 +71,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
                 'alamat' => 'foo city',
                 'email' => 'foo@google.com',
                 'no_telp' => '08674839291',
-                'password' => md5('qwerty'),
+                'password' => md5('zaraki'),
                 'kewenangan' => 'guru'
                 ];
             //initial Data
@@ -182,13 +182,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertStringStartsWith($model->checkUserid(1001), 'user');
             $this->assertStringStartsWith($model->checkUserid(109), 'null');
             //method checkPassword
-            $this->assertTrue($model->checkPassword(1, 'qwerty', 'guru'));
+            $this->assertTrue($model->checkPassword(1, 'zaraki', 'guru'));
             $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
             $this->assertFalse($model->checkPassword(1, 'foo', 'guru'));
             //method getData
             $this->assertObjectHasAttribute('nip', $model->getData('1','guru'));
             $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
-            $this->assertTrue($model->updatePassword(1, md5('qwerty'), 'guru'));
+            $this->assertTrue($model->updatePassword(1, 'qwerty', 'guru'));
         }
         
         
