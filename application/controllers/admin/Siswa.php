@@ -126,7 +126,7 @@ class Siswa extends MY_Controller {
 			'siswa' => $siswa,
 			'data_sertifikasi' => $data_sertifikasi,
 			'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
-			'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
+			'edit_nilai' => $this->load->view("admin/siswa/edit_nilai_js", [], TRUE),
 			'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
 			'edit_sertifikasi' => $this->load->view("admin/siswa/edit_sertifikasi", ['data_sertifikasi' => $data_sertifikasi], TRUE),
 		];
@@ -154,7 +154,7 @@ class Siswa extends MY_Controller {
 		$data_insert = $this->input->post(null, true);
 		$data_insert['nis'] = $nis;
 		$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
-		$data_insert['penguji'] = $this->session->login_data->nip;
+		$data_insert['penguji'] = $this->session->login_data->getNip();
 		$res = $this->nilai->updateData($data_insert);
 		if ($res >= 1) {
 			$this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);

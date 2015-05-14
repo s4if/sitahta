@@ -165,7 +165,7 @@ class NilaiHarianEntity {
 	}
 
 	public function setNilai_remidi($nilai_remidi) {
-		if ($this->nilai >= self::KKM) {
+if ($this->nilai >= self::KKM || $nilai_remidi <= 0) {
 			$this->nilai_remidi = null;
 		} else {
 			$this->nilai_remidi = $nilai_remidi;

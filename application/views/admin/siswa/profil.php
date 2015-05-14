@@ -200,10 +200,29 @@
                     <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai<? $siswa->getNis();?><? $nilai->getKelas();?><? $nilai->getNo_uh();?>">
+                    <!--<a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai">-->
+                        <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                    <!--</a>-->
+                    <a id="btnEditNilai<?=$nilai->getId();?>" class="btn btn-sm btn-warning">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai<? $siswa->getNis();?><? $nilai->getKelas();?><? $nilai->getNo_uh();?>">
+                    <script type="text/javascript">
+                        $("#btnEditNilai<?=$nilai->getId();?>").click(function (){
+                        $("#formEdit").attr("action", "<?=base_url();?>admin/siswa/edit_nilai/<?= $nilai->getSiswa()->getNis();?>");
+                        $("#UhEdit").attr("value", "<?=$nilai->getNo_uh()?>");
+                        $("#kelasEdit").attr("value", "<?=$nilai->getKelas()?>");
+                        $("#semesterEdit").attr("value", "<?=$nilai->getSemester()?>");
+                        $("#juzEdit").attr("value", "<?=$nilai->getJuz()?>");
+                        $("#halamanEdit").attr("value", "<?=$nilai->getHalaman()?>");
+                        $("#nilaiEdit").attr("value", "<?=$nilai->getNilai()?>");
+                        $("#nilaiRemidiEdit").attr("value", "<?php echo (is_null($nilai->getNilai_remidi())) ? '' : $nilai->getNilai_remidi();?>");
+                        $("#tglEdit").attr("value", "<?=date('d', $nilai->getTanggal()->getTimestamp());?>");
+                        $("#bulanEdit<?=date('n', $nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
+                        $("#tahunEdit").attr("value", "<?=date('Y', $nilai->getTanggal()->getTimestamp());?>");
+                        $("#editNilai").modal("toggle");
+                        });
+                    </script>
+                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     </td>
@@ -217,6 +236,6 @@
 <?php endfor;?>
 <?php endforeach;?>
 <?=$tambah_nilai?>
-<?php //$edit_nilai?>
+<?=$edit_nilai?>
 <?=$tambah_sertifikasi?>
 <?=$edit_sertifikasi?>
