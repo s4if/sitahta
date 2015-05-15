@@ -179,9 +179,21 @@
                     <td></td>
                     <td></td>
                     <td>
-                    <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
+                    <a id="btnAddNilai<?=$kelas_tabel;?>_<?=$i?>" class="btn btn-sm btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
+                    <script type="text/javascript">
+                        $("#btnAddNilai<?=$kelas_tabel;?>_<?=$i?>").click(function (){
+                            $("#formEdit").attr("action", "<?=base_url();?>admin/siswa/tambah_nilai/<?= $siswa->getNis();?>");
+                            $("#UhEdit").removeAttr("readonly");
+                            $("#kelasEdit").attr("value", "<?=$kelas_tabel;?>");
+                            $("#semesterEdit").attr("value", "<?=$i;?>");
+                            $("#tglEdit").attr("value", "<?=date('d');?>");
+                            $("#bulanEdit<?=date('n');?>").attr("selected", "true");
+                            $("#tahunEdit").attr("value", "<?=date('Y');?>");
+                            $("#editNilai").modal("toggle");
+                        });
+                    </script>
                     </td>
                     </tr>
                     <?php else: ?>
@@ -197,12 +209,21 @@
                     <td><?=$nilai->getPenguji()->getNama();?></td>
                     <td><?=$nilai->getKeterangan()?></td>
                     <td>
-                    <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahNilai">
+                    <a id="btnAddNilai<?=$nilai->getId();?>" class="btn btn-sm btn-primary">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
-                    <!--<a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editNilai">-->
-                        <!--<span class="glyphicon glyphicon-pencil"></span>-->
-                    <!--</a>-->
+                    <script type="text/javascript">
+                        $("#btnAddNilai<?=$nilai->getId();?>").click(function (){
+                            $("#formEdit").attr("action", "<?=base_url();?>admin/siswa/tambah_nilai/<?= $nilai->getSiswa()->getNis();?>");
+                            $("#UhEdit").removeAttr("readonly");
+                            $("#kelasEdit").attr("value", "<?=$nilai->getKelas()?>");
+                            $("#semesterEdit").attr("value", "<?=$nilai->getSemester()?>");
+                            $("#tglEdit").attr("value", "<?=date('d');?>");
+                            $("#bulanEdit<?=date('n');?>").attr("selected", "true");
+                            $("#tahunEdit").attr("value", "<?=date('Y');?>");
+                            $("#editNilai").modal("toggle");
+                        });
+                    </script>
                     <a id="btnEditNilai<?=$nilai->getId();?>" class="btn btn-sm btn-warning">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
@@ -222,9 +243,18 @@
                         $("#editNilai").modal("toggle");
                         });
                     </script>
-                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai">
+<!--                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteNilai">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>-->
+                    <a id="btnHapusNilai<?=$nilai->getId();?>" class="btn btn-sm btn-danger">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
+                    <script type="text/javascript">
+                        $("#btnHapusNilai<?=$nilai->getId();?>").click(function (){
+                            $("#btnDelOk").attr("href", "<?php echo base_url().'admin/siswa/hapus_nilai';?>/<?= $nilai->getSiswa()->getNis();?>/<?= $nilai->getKelas();?>/<?= $nilai->getSemester();?>/<?= $nilai->getNo_uh();?>");
+                        $("#deleteNilai").modal("toggle");
+                        });
+                    </script>
                     </td>
                     </tr>
                     <?php endforeach;?>
@@ -235,7 +265,6 @@
 </div>
 <?php endfor;?>
 <?php endforeach;?>
-<?=$tambah_nilai?>
 <?=$edit_nilai?>
 <?=$tambah_sertifikasi?>
 <?=$edit_sertifikasi?>

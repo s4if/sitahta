@@ -125,8 +125,7 @@ class Siswa extends MY_Controller {
 			'nama' => $this->session->login_data->getNama(),
 			'siswa' => $siswa,
 			'data_sertifikasi' => $data_sertifikasi,
-			'tambah_nilai' => $this->load->view("admin/siswa/tambah_nilai", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
-			'edit_nilai' => $this->load->view("admin/siswa/edit_nilai_js", [], TRUE),
+			'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
 			'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
 			'edit_sertifikasi' => $this->load->view("admin/siswa/edit_sertifikasi", ['data_sertifikasi' => $data_sertifikasi], TRUE),
 		];
@@ -165,9 +164,9 @@ class Siswa extends MY_Controller {
 		}
 	}
 
-	public function hapus_nilai($nis, $kelas, $no_uh) {
+	public function hapus_nilai($nis, $kelas, $semester, $no_uh) {
 		$this->blockUnloggedOne();
-		if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas])) {
+		if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester])) {
 			$this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
 			redirect('siswa/' . $nis, 'refresh');
 		} else {
