@@ -42,10 +42,11 @@ class Model_siswa extends MY_Model {
         return $this->em->getRepository('SiswaEntity')->getData($nis);
     }
     
-    public function getKelas($kelas = 'X'){
+    //kurang tahun pelajaran
+    public function getKelas($kelas = 'X', $tahun_ajaran = '2014'){
         $data = new Doctrine\Common\Collections\ArrayCollection();
         if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
-            $data = $this->em->getRepository('KelasEntity')->getData($kelas);
+            $data = $this->em->getRepository('KelasEntity')->getData($kelas, $tahun_ajaran);
         } else {
             $data = $this->em->getRepository('KelasEntity')->getDataById($kelas);
         }
@@ -65,15 +66,21 @@ class Model_siswa extends MY_Model {
     }
     
     public function updateData($data){
-        $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
-        if(!is_null($this->siswa)){
-            $this->setData($data);
-            $this->em->persist($this->siswa);
-            $this->em->flush();
-            return true;
-        }else{
+        try {
+            $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
+            if(!is_null($this->siswa)){
+                $this->setData($data);
+                $this->em->persist($this->siswa);
+                $this->em->flush();
+                    return true;
+            }else{
+                return false;
+            }
+        } catch (Exception $ex) {
+            $ex->getMessage();
             return false;
         }
+        
     }
     
     public function deleteData($where){
@@ -104,7 +111,7 @@ class Model_siswa extends MY_Model {
             $id = $data['kelas']."-".$str_jur.$data['no_kelas'].'-'.$data['tahun_ajaran'];
             $this->kelas = $this->em->find("KelasEntity", $id);
             if(!is_null($this->kelas)){
-                $this->siswa->addKelas($this->kelas);
+                $this->siswa->addKelas($this->kelas, $data['kelas'], $data['tahun_ajaran']);
             }else{
                 $this->kelas = new KelasEntity();
                 $this->kelas->setKelas($data['kelas'])
@@ -113,7 +120,7 @@ class Model_siswa extends MY_Model {
                         ->setTahun_ajaran($data['tahun_ajaran'])
                         ->generateId();
                 $this->em->persist($this->kelas);
-                $this->siswa->addKelas($this->kelas);
+                $this->siswa->addKelas($this->kelas, $data['kelas'], $data['tahun_ajaran']);
             }
         endif;
         if (!empty($data['password'])) : $this->siswa->setPassword($data['password']); endif;
@@ -194,7 +201,7 @@ class Model_siswa extends MY_Model {
         $this->siswa->setJenis_kelamin($data_insert[2]);
         $this->siswa->setTempat_lahir($data_insert[3]);
         $this->siswa->setTgl_lahir($data_insert[4]);
-        $this->siswa->addKelas($this->initKelas($data_insert));
+        $this->siswa->addKelas($this->initKelas($data_insert),$data_insert[5],$data_insert[8]);
         $this->siswa->setNama_ortu($data_insert[9]);
         $this->siswa->setPassword(md5('qwerty'));
         $this->em->persist($this->siswa);

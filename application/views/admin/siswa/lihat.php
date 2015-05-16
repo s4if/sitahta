@@ -86,6 +86,14 @@
     &nbsp;
 </div>
 <div class="col-md-12">
+    <h3><?php foreach ($judul_kelas as $str_kelas) :
+        echo $str_kelas.' ';
+    endforeach;?></h3>
+</div>
+<div class="col-md-12">
+    &nbsp;
+</div>
+<div class="col-md-12">
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
