@@ -27,10 +27,7 @@
 //modal disini nanti di load pake load view true kemudian dikumpulkan dalam bentuk array, 
 //lalu di echokan kedalam view dalam bentuk data
 ?>
-<?php foreach ($data_kelas as $kelas) : ?>
-<?php if (!$kelas->getSiswa()->isEmpty()) : ?>
-<?php foreach ($kelas->getSiswa() as $siswa): ?>
-<div class="modal fade" id="editModal<?= $siswa->getNis();?>" tabindex="-1" role="dialog" aria-labelledby="editModal<?= $siswa->getNis();?>" aria-hidden="true">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -38,19 +35,19 @@
                 <h4 class="modal-title text-center" id="tambahModal">Edit Siswa</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/edit/<?= $siswa->getNis();?>">
+                <form id="formEdit" class="form-horizontal" role="form" method="post" action="">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">NIS :</label>
                         <div class="col-sm-8 error">
-                            <input type="number" class="form-control" name="nis" disabled="true"
-                                   placeholder="Masukkan NIS" value="<?= $siswa->getNis();?>" required="true">
+                            <input id="nisEdit" type="number" class="form-control" name="nis" disabled="true"
+                                   placeholder="Masukkan NIS" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="<?= $siswa->getNama();?>" required="true">
+                            <input id="namaEdit" type="text" class="form-control" name="nama" 
+                                   placeholder="Masukkan Nama" value="" required="true">
                         </div>
                     </div>
                     <!-- -->
@@ -59,99 +56,50 @@
                         <div class="col-sm-5">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="jenis_kelamin" value="L" 
-                                        <?php if(!empty($siswa->getJenis_kelamin())):?>
-                                            <?php if($siswa->getJenis_kelamin()=='L'):?>
-                                                checked
-                                            <?php endif;?>
-                                        <?php endif;?>>
+                                    <input id="jkEditL" type="radio" name="jenis_kelamin" value="L">
                                     Laki - Laki
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="jenis_kelamin" value="P"
-                                        <?php if(!empty($siswa->getJenis_kelamin())):?>
-                                            <?php if($siswa->getJenis_kelamin()=='P'):?>
-                                                checked
-                                            <?php endif;?>
-                                        <?php endif;?>>
+                                    <input id="jkEditP" type="radio" name="jenis_kelamin" value="P">
                                     Perempuan
                                 </label>
                             </div>
                         </div>
                     </div>
-                    <?php
-                    $t_obj = $siswa->getTgl_lahir();
-                    $tgl = [
-                        0 => date("Y", $t_obj->getTimestamp()),
-                        1 => date("n", $t_obj->getTimestamp()),
-                        2 => date("j", $t_obj->getTimestamp())
-                        ];
-                    ?>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal Lahir :</label>
                         <div class="col-sm-2">
-                            <select class="form-control" name="tanggal">
-                                <option value="1" <?php echo ($tgl[2] == 1)?'selected="true"':'';?>>1</option>
-                                <option value="2" <?php echo ($tgl[2] == 2)?'selected="true"':'';?>>2</option>
-                                <option value="3" <?php echo ($tgl[2] == 3)?'selected="true"':'';?>>3</option>
-                                <option value="4" <?php echo ($tgl[2] == 4)?'selected="true"':'';?>>4</option>
-                                <option value="5" <?php echo ($tgl[2] == 5)?'selected="true"':'';?>>5</option>
-                                <option value="6" <?php echo ($tgl[2] == 6)?'selected="true"':'';?>>6</option>
-                                <option value="7" <?php echo ($tgl[2] == 7)?'selected="true"':'';?>>7</option>
-                                <option value="8" <?php echo ($tgl[2] == 8)?'selected="true"':'';?>>8</option>
-                                <option value="9" <?php echo ($tgl[2] == 9)?'selected="true"':'';?>>9</option>
-                                <option value="10" <?php echo ($tgl[2] == 10)?'selected="true"':'';?>>10</option>
-                                <option value="11" <?php echo ($tgl[2] == 11)?'selected="true"':'';?>>11</option>
-                                <option value="12" <?php echo ($tgl[2] == 12)?'selected="true"':'';?>>12</option>
-                                <option value="13" <?php echo ($tgl[2] == 13)?'selected="true"':'';?>>13</option>
-                                <option value="14" <?php echo ($tgl[2] == 14)?'selected="true"':'';?>>14</option>
-                                <option value="15" <?php echo ($tgl[2] == 15)?'selected="true"':'';?>>15</option>
-                                <option value="16" <?php echo ($tgl[2] == 16)?'selected="true"':'';?>>16</option>
-                                <option value="17" <?php echo ($tgl[2] == 17)?'selected="true"':'';?>>17</option>
-                                <option value="18" <?php echo ($tgl[2] == 18)?'selected="true"':'';?>>18</option>
-                                <option value="19" <?php echo ($tgl[2] == 19)?'selected="true"':'';?>>19</option>
-                                <option value="20" <?php echo ($tgl[2] == 20)?'selected="true"':'';?>>20</option>
-                                <option value="21" <?php echo ($tgl[2] == 21)?'selected="true"':'';?>>21</option>
-                                <option value="22" <?php echo ($tgl[2] == 22)?'selected="true"':'';?>>22</option>
-                                <option value="23" <?php echo ($tgl[2] == 23)?'selected="true"':'';?>>23</option>
-                                <option value="24" <?php echo ($tgl[2] == 24)?'selected="true"':'';?>>24</option>
-                                <option value="25" <?php echo ($tgl[2] == 25)?'selected="true"':'';?>>25</option>
-                                <option value="26" <?php echo ($tgl[2] == 26)?'selected="true"':'';?>>26</option>
-                                <option value="27" <?php echo ($tgl[2] == 27)?'selected="true"':'';?>>27</option>
-                                <option value="28" <?php echo ($tgl[2] == 28)?'selected="true"':'';?>>28</option>
-                                <option value="29" <?php echo ($tgl[2] == 29)?'selected="true"':'';?>>29</option>
-                                <option value="30" <?php echo ($tgl[2] == 30)?'selected="true"':'';?>>30</option>
-                                <option value="31" <?php echo ($tgl[2] == 31)?'selected="true"':'';?>>31</option>
-                            </select>
+                            <input id="tglEdit" type="text" class="form-control" name="tanggal" pattern="[0-9]{2}"
+                                   placeholder="Tanggal" value="" required="true">
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" name="bulan">
-                                <option value="1" <?php echo ($tgl[1] == 1)?'selected="true"':'';?>>Jan</option>
-                                <option value="2" <?php echo ($tgl[1] == 2)?'selected="true"':'';?>>Feb</option>
-                                <option value="3" <?php echo ($tgl[1] == 3)?'selected="true"':'';?>>Mar</option>
-                                <option value="4" <?php echo ($tgl[1] == 4)?'selected="true"':'';?>>Apr</option>
-                                <option value="5" <?php echo ($tgl[1] == 5)?'selected="true"':'';?>>Mei</option>
-                                <option value="6" <?php echo ($tgl[1] == 6)?'selected="true"':'';?>>Jun</option>
-                                <option value="7" <?php echo ($tgl[1] == 7)?'selected="true"':'';?>>Jul</option>
-                                <option value="8" <?php echo ($tgl[1] == 8)?'selected="true"':'';?>>Agu</option>
-                                <option value="9" <?php echo ($tgl[1] == 9)?'selected="true"':'';?>>Sep</option>
-                                <option value="10" <?php echo ($tgl[1] == 10)?'selected="true"':'';?>>Okt</option>
-                                <option value="11" <?php echo ($tgl[1] == 11)?'selected="true"':'';?>>Nov</option>
-                                <option value="12" <?php echo ($tgl[1] == 12)?'selected="true"':'';?>>Des</option>
+                                <option id="bulanEdit1" value="1">Jan</option>
+                                <option id="bulanEdit2" value="2">Feb</option>
+                                <option id="bulanEdit3" value="3">Mar</option>
+                                <option id="bulanEdit4" value="4">Apr</option>
+                                <option id="bulanEdit5" value="5">Mei</option>
+                                <option id="bulanEdit6" value="6">Jun</option>
+                                <option id="bulanEdit7" value="7">Jul</option>
+                                <option id="bulanEdit8" value="8">Agu</option>
+                                <option id="bulanEdit9" value="9">Sep</option>
+                                <option id="bulanEdit10" value="10">Okt</option>
+                                <option id="bulanEdit11" value="11">Nov</option>
+                                <option id="bulanEdit12" value="12">Des</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
-                                   placeholder="Tahun" value="<?=$tgl[0]?>" required="true">
+                            <input id="tahunEdit" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
+                                   placeholder="Tahun" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tempat Lahir :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="tempat_lahir" 
-                                   placeholder="Masukkan Kota/Kabupaten" value="<?=$siswa->getTempat_lahir()?>" required="true">
+                            <input id="tempatEdit" type="text" class="form-control" name="tempat_lahir" 
+                                   placeholder="Masukkan Kota/Kabupaten" value="" required="true">
                         </div>
                     </div>
 <!--                    <div class="form-group">
@@ -180,8 +128,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" name="nama_ortu" 
-                                   placeholder="Masukkan Nama" value="<?= $siswa->getNama_ortu();?>" required="true">
+                            <input id="ortuEdit" type="text" class="form-control" name="nama_ortu" 
+                                   placeholder="Masukkan Nama" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -198,23 +146,20 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal<?= $siswa->getNis();?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel<?=$siswa->getNis()?>" aria-hidden="true">
+<div class="modal fade" id="deleteSiswa" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel<?= $siswa->getNis();?>">Konfirmasi</h4>
+                <h4 class="modal-title" id="deleteSiswa">Konfirmasi</h4>
             </div>
             <div class="modal-body">
-                Apakah Anda Yakin Untuk Menghapus Data Siswa dengan Nis = <?= $siswa->getNis();?>
+                Apakah Anda Yakin Untuk Menghapus Data Siswa?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/siswa/hapus/'.$siswa->getNis();?>">OK</a>
+                <a id="btnDelOk" class="btn btn-danger" href="">OK</a>
             </div>
         </div>
     </div>
 </div>
-<?php endforeach;?>
-<?php endif;?>
-<?php endforeach;?>

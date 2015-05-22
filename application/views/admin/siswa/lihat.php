@@ -128,12 +128,35 @@
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->getNis()?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->getNis();?>">
+                <a id="btnEditSiswa<?= $siswa->getNis();?>" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $siswa->getNis();?>">
+                <script type="text/javascript">
+                    $("#btnEditSiswa<?= $siswa->getNis();?>").click(function (){
+                        $("#formEdit").attr("action", "<?=base_url();?>admin/siswa/edit/<?= $siswa->getNis();?>");
+                        $("#nisEdit").attr("value", "<?= $siswa->getNis();?>");
+                        $("#namaEdit").attr("value", "<?= $siswa->getNama();?>");
+                        $("#jkEdit<?= $siswa->getJenis_kelamin();?>").attr("checked", "true");
+                        $("#tempatEdit").attr("value", "<?=$siswa->getTempat_lahir()?>");
+                        $("#ortuEdit").attr("value", "<?=$siswa->getNama_ortu();?>");
+                        $("#tglEdit").attr("value", "<?=date('d', $siswa->getTgl_lahir()->getTimestamp());?>");
+                        $("#bulanEdit<?=date('n', $siswa->getTgl_lahir()->getTimestamp());?>").attr("selected", "true");
+                        $("#tahunEdit").attr("value", "<?=date('Y', $siswa->getTgl_lahir()->getTimestamp());?>");
+                        $("#editModal").modal("toggle");
+                    });
+                </script>
+<!--                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->getNis();?>">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>-->
+                <a id="btnHapusSiswa<?=$siswa->getNis();?>" class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
+                <script type="text/javascript">
+                    $("#btnHapusSiswa<?=$siswa->getNis();?>").click(function (){
+                        $("#btnDelOk").attr("href", "<?=base_url().'admin/siswa/hapus/'.$siswa->getNis();?>");
+                        $("#deleteSiswa").modal("toggle");
+                    });
+                </script>
             </td>
             </tr>
             <?php endforeach;?>

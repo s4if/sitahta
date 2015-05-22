@@ -66,7 +66,7 @@ class Siswa extends MY_Controller {
 			'tahun_ajaran' => $this->session->tahun_ajaran,
 			'semester' => $this->session->semester,
 			'tambah' => $this->load->view("admin/siswa/tambah", [], TRUE),
-			'edit' => $this->load->view("admin/siswa/edit", ['data_kelas' => $data_kelas], TRUE),
+			'edit' => $this->load->view("admin/siswa/edit", [], TRUE),
 			'list_kelas' => $list_kelas,
 			'data_kelas' => $data_kelas
 		];
