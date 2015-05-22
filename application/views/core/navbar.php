@@ -57,11 +57,11 @@
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-            <li>
+            <li id="navDashboard">
                 <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
             </li>
             <?php if($position === 'admin'):?>
-            <li>
+            <li id="navGuru">
                 <a href="<?=base_url()?>guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
 <!--            <li>
@@ -70,13 +70,13 @@
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#siswa"><span class="glyphicon glyphicon-user"></span> Siswa <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="siswa" class="collapse">
-                    <li>
+                    <li id="navSiswaX" class="active">
                         <a href="<?=base_url()?>siswa/kelas/X">Kelas X</a>
                     </li>
-                    <li>
+                    <li id="navSiswaXI">
                         <a href="<?=base_url()?>siswa/kelas/XI">Kelas XI</a>
                     </li>
-                    <li>
+                    <li id="navSiswaXII">
                         <a href="<?=base_url()?>siswa/kelas/XII">Kelas XII</a>
                     </li>
                 </ul>
@@ -84,20 +84,20 @@
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#nilai"><span class="glyphicon glyphicon-list"></span> Nilai <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="nilai" class="collapse">
-                    <li>
+                    <li id="navNilaiX">
                         <a href="<?=base_url()?>nilai/X">Kelas X</a>
                     </li>
-                    <li>
+                    <li id="navNilaiXI">
                         <a href="<?=base_url()?>nilai/XI">Kelas XI</a>
                     </li>
-                    <li>
+                    <li id="navNilaiXII">
                         <a href="<?=base_url()?>nilai/XII">Kelas XII</a>
                     </li>
                 </ul>
             </li>
             <?php else :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
-            <li>
+            <li id="navUser">
                 <a href="<?=base_url()?>"><i class="glyphicon glyphicon-dashboard"></i> &nbsp; User</a>
             </li>
             <?php endif;?>
@@ -105,3 +105,6 @@
     </div>
     <!-- /.navbar-collapse -->
 </nav>
+<script type="text/javascript">
+    $("#nav<?=  ucfirst($nav_pos);?>").attr('class','active');
+</script>

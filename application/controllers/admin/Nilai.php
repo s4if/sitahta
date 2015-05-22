@@ -59,6 +59,7 @@ class Nilai extends MY_Controller {
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
+            'nav_pos' => 'N',
             'data_siswa' => $data_siswa,
             'list_kelas' => $this->nilai->getListKelas($kelas),
             'kelas' => $param,

@@ -54,6 +54,7 @@ class Guru extends MY_Controller {
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
+            'nav_pos' => 'guru',
             'tambah' => $this->load->view("admin/guru/tambah",[],TRUE),
             'edit' => $this->load->view("admin/guru/edit",['data_guru' => $data_guru],TRUE),
             'data_guru' => $data_guru
