@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @Entity(repositoryClass="SiswaRepository")
@@ -63,9 +64,9 @@ class SiswaEntity {
     private $sertifikat;
 
     public function __construct() {
-        $this->nilai = new Doctrine\Common\Collections\ArrayCollection();
-        $this->sertifikat = new Doctrine\Common\Collections\ArrayCollection();
-        $this->kelas = new Doctrine\Common\Collections\ArrayCollection();
+        $this->nilai = new ArrayCollection();
+        $this->sertifikat = new ArrayCollection();
+        $this->kelas = new ArrayCollection();
     }
 
     public function getNis() {
@@ -94,8 +95,8 @@ class SiswaEntity {
 
     //belum terji
     public function getKelasTahun($tahun_ajaran) {
-        $criteria = Doctrine\Common\Collections\Criteria::create();
-        $criteria->where(Doctrine\Common\Collections\Criteria::expr()->eq('tahun_ajaran', $tahun_ajaran))
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('tahun_ajaran', $tahun_ajaran))
                  ->getFirstResult();
         return $this->kelas->matching($criteria);
     }
@@ -113,12 +114,20 @@ class SiswaEntity {
     }
 
     public function getNilaiByKelas($kelas, $semester = -4) {
-        $criteria = Doctrine\Common\Collections\Criteria::create()
-                ->where(Doctrine\Common\Collections\Criteria::expr()->eq('kelas', $kelas));
+        $criteria = Criteria::create()
+                ->where(Criteria::expr()->eq('kelas', $kelas));
         if ($semester == 1 || $semester == 2) {
-            $criteria->andWhere(Doctrine\Common\Collections\Criteria::expr()->eq('semester', $semester));
+            $criteria->andWhere(Criteria::expr()->eq('semester', $semester));
         }
-        $criteria->orderBy(array("no_uh" => Doctrine\Common\Collections\Criteria::ASC));
+        $criteria->orderBy(array("no_uh" => Criteria::ASC));
+        return $this->nilai->matching($criteria);
+    }
+    
+    public function getNilaiByUH($kelas, $no_uh, $semester = -4) {
+        $criteria = Criteria::create()
+                ->where(Criteria::expr()->eq('kelas', $kelas))
+                ->andWhere(Criteria::expr()->eq('no_uh', $no_uh))
+                ->andWhere(Criteria::expr()->eq('semester', $semester));
         return $this->nilai->matching($criteria);
     }
 
@@ -178,21 +187,21 @@ class SiswaEntity {
     }
     
     protected function cekKelas($kelas, $tahun){
-        $criteria = Doctrine\Common\Collections\Criteria::create();
-        $criteria->where(Doctrine\Common\Collections\Criteria::expr()->eq('tahun_ajaran', $tahun))
-                ->andWhere(Doctrine\Common\Collections\Criteria::expr()->eq('kelas', $kelas));
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('tahun_ajaran', $tahun))
+                ->andWhere(Criteria::expr()->eq('kelas', $kelas));
         return $this->kelas->matching($criteria);
     }
     
     protected function cekTingkat($kelas){
-        $criteria = Doctrine\Common\Collections\Criteria::create();
-        $criteria->where(Doctrine\Common\Collections\Criteria::expr()->eq('kelas', $kelas));
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('kelas', $kelas));
         return $this->kelas->matching($criteria);
     }
     
     protected function cekTahun($tahun){
-        $criteria = Doctrine\Common\Collections\Criteria::create();
-        $criteria->where(Doctrine\Common\Collections\Criteria::expr()->eq('tahun_ajaran', $tahun));
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('tahun_ajaran', $tahun));
         return $this->kelas->matching($criteria);
     }
     
