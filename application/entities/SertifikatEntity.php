@@ -1,7 +1,5 @@
 <?php
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * @Entity(repositoryClass="SertifikatRepository")
  * @Table(name="sertifikat")

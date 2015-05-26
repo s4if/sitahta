@@ -1,7 +1,5 @@
 <?php
 
-Use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * @Entity(repositoryClass="GuruRepository")
  * @Table(name="guru")

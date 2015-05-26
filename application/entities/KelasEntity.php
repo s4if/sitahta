@@ -43,9 +43,9 @@ class KelasEntity {
     private $siswa;
     
     public function __construct() {
-        $this->nilai = new Doctrine\Common\Collections\ArrayCollection();
-        $this->sertifikat = new Doctrine\Common\Collections\ArrayCollection();
-        $this->kelas = new Doctrine\Common\Collections\ArrayCollection();
+        $this->nilai = new ArrayCollection();
+        $this->sertifikat = new ArrayCollection();
+        $this->kelas = new ArrayCollection();
     }
     
     public function generateId(){
