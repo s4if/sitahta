@@ -83,10 +83,10 @@ class Nilai extends MY_Controller {
         $res = $this->nilai->insertData($data_insert, TRUE);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Tambah Data Berhasil!"]);
-            redirect('nilai/' . $kelas);
+            redirect('nilai/' . $kelas .'/'. $data_insert['semester']);
         } else {
             $this->session->set_flashdata("errors", [0 => "Tambah Data Gagal!"]);
-            redirect('nilai/' . $kelas);
+            redirect('nilai/' . $kelas .'/'.$data_insert['semester']);
         }
     }
 
@@ -110,10 +110,10 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester])) {
             $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
-            redirect('nilai/' . $kelas, 'refresh');
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
         } else {
             $this->session->set_flashdata("errors", [0 => "Maaf, data tidak berhasil dihapus"]);
-            redirect('nilai/' . $kelas, 'refresh');
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
         }
     }
 }

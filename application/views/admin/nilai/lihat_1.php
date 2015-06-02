@@ -33,7 +33,7 @@
         <a href="<?=base_url();?>home">Beranda</a>
     </li>
     <li class="active">
-        Siswa
+        Nilai
     </li>
 </ol>
 <div class="col-md-12">
@@ -53,8 +53,14 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                    <a role="menuitem" href="<?=  base_url()?>nilai/<?=$judul_kelas[0]?>/<?=$semester?>">
+                        Semua
+                    </a>
+                </li>
                 <?php foreach ($list_kelas as $item_kelas) :?>
-                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>nilai/<?=$item_kelas->getId()?>/<?=$semester?>">
+                <li role="presentation">
+                    <a role="menuitem" href="<?=  base_url()?>nilai/<?=$item_kelas->getId()?>/<?=$semester?>">
                         <?=$item_kelas->getNamaKelas()?>
                     </a></li>
                 <?php endforeach;?>
@@ -107,7 +113,9 @@
 <div class="col-md-12">
     <h3><?php foreach ($judul_kelas as $str_kelas) :
         echo $str_kelas.' ';
-    endforeach;?></h3>
+    endforeach;?>
+        &nbsp;Semester <?=$semester?>
+    </h3>
 </div>
 <div class="col-md-12">
     &nbsp;

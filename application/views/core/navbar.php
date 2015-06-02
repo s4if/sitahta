@@ -34,7 +34,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">SB Admin</a>
+        <a class="navbar-brand" href="#">Sistem Informasi Program Tahsin Tahfidz</a>
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
@@ -86,13 +86,13 @@
                 <a href="javascript:;" data-toggle="collapse" data-target="#nilai"><span class="glyphicon glyphicon-list"></span> Nilai <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="nilai" class="collapse">
                     <li id="navNilaiX">
-                        <a href="<?=base_url()?>nilai/X">Kelas X</a>
+                        <a href="<?=base_url()?>nilai/X/<?=(empty($semester))?'':$semester;?>">Kelas X</a>
                     </li>
                     <li id="navNilaiXI">
-                        <a href="<?=base_url()?>nilai/XI">Kelas XI</a>
+                        <a href="<?=base_url()?>nilai/XI/<?=(empty($semester))?'':$semester;?>">Kelas XI</a>
                     </li>
                     <li id="navNilaiXII">
-                        <a href="<?=base_url()?>nilai/XII">Kelas XII</a>
+                        <a href="<?=base_url()?>nilai/XII/<?=(empty($semester))?'':$semester;?>">Kelas XII</a>
                     </li>
                 </ul>
             </li>
