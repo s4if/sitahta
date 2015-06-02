@@ -64,4 +64,5 @@ $route['siswa/kelas/(:any)'] = 'admin/siswa/lihat/$1';
 $route['siswa/(:num)'] = 'admin/siswa/profil/$1';
 $route['nilai'] = 'admin/nilai/lihat';
 $route['nilai/(:any)'] = 'admin/nilai/lihat/$1';
+$route['nilai/(:any)/(:num)'] = 'admin/nilai/lihat/$1/$2';
 $route['nilai/(:any)/(:any)/(:num)'] = 'admin/nilai/lihat/$1/$2/$3';

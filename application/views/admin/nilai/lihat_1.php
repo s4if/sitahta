@@ -47,17 +47,36 @@
             Import
         </a>
         <div class="btn-group"role="group">
-            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                <span class="glyphicon glyphicon-import"></span>
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-list-alt"></span>
                 Kelas
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <?php foreach ($list_kelas as $item_kelas) :?>
-                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>siswa/kelas/<?=$item_kelas->getId()?>">
+                <li role="presentation"><a role="menuitem" href="<?=  base_url()?>nilai/<?=$item_kelas->getId()?>/<?=$semester?>">
                         <?=$item_kelas->getNamaKelas()?>
                     </a></li>
                 <?php endforeach;?>
+            </ul>
+        </div>
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-time"></span>
+                Semester
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                <li role="presentation">
+                    <a role="menuitem" href="<?=  base_url()?>nilai/<?=$judul_kelas[0]?>/1">
+                        1
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" href="<?=  base_url()?>nilai/<?=$judul_kelas[0]?>/2">
+                        2
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
@@ -81,7 +100,7 @@
         </div>
     </div>
 </div>
-<?=$tambah?>
+<?php //echo $tambah;?>
 <div class="col-md-12">
     &nbsp;
 </div>
@@ -94,17 +113,31 @@
     &nbsp;
 </div>
 <div class="col-md-12">
-<div class="table-responsive">
+    <style type="text/css">
+        .fixed-panel {
+              min-width: 10;
+              max-width: 10;
+              //overflow-y: scroll;
+              overflow-x: scroll;
+        }
+  </style>
+<div class="fixed-panel">
+<div class="table">
     <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
             <tr>
-                <td>NIS</td>
-                <td>Nama</td>
-                <td>P/L</td>
-                <td>TTL</td>
-                <td>Kelas</td>
-                <td>Nama Orang Tua</td>
-                <td>Aksi</td>
+                <td rowspan="2">NIS</td>
+                <td rowspan="2">Nama</td>
+                <?php $jml_uh = ($judul_kelas [0] == 'X')?20:10; ?>
+                <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
+                <td colspan="2">#<?=$i?></td>
+                <?php endfor;?>
+            </tr>
+            <tr>
+                <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
+                <td>N</td>
+                <td>R</td>
+                <?php endfor;?>
             </tr>
         </thead>
         <tbody>
@@ -112,52 +145,55 @@
             <?php if (!$kelas->getSiswa()->isEmpty()) : ?>
             <?php foreach ($kelas->getSiswa() as $siswa): ?>
             <tr>
-            <td><?= $siswa->getNis();?></td>
+                <td><a href="<?=base_url();?>siswa/<?=$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
             <td><?= $siswa->getNama();?></td>
-            <td><?= $siswa->getJenis_kelamin();?></td>
-            <?php
-            $tmpt = ucwords($siswa->getTempat_lahir());
-            $tgl = $siswa->getTgl_lahir();
-            $tanggal = date("d F Y", $tgl->getTimestamp());
-            $ttl = $tmpt.", ".$tanggal;
-            ?>
-            <td><?= $ttl;?></td>
-            <td><?= $kelas->getNamaKelas()?></td>
-            <td><?= $siswa->getNama_ortu();?></td>
+            <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
+            <?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0])) : ?>
             <td>
-                <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->getNis()?>">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-                <a id="btnEditSiswa<?= $siswa->getNis();?>" class="btn btn-sm btn-warning">
-                    <span class="glyphicon glyphicon-pencil"></span>
+                <a id="tombol<?=$siswa->getNis()."_".$i?>">
+                    --
                 </a>
                 <script type="text/javascript">
-                    $("#btnEditSiswa<?= $siswa->getNis();?>").click(function (){
-                        $("#formEdit").attr("action", "<?=base_url();?>admin/siswa/edit/<?= $siswa->getNis();?>");
-                        $("#nisEdit").attr("value", "<?= $siswa->getNis();?>");
-                        $("#namaEdit").attr("value", "<?= $siswa->getNama();?>");
-                        $("#jkEdit<?= $siswa->getJenis_kelamin();?>").attr("checked", "true");
-                        $("#tempatEdit").attr("value", "<?=$siswa->getTempat_lahir()?>");
-                        $("#ortuEdit").attr("value", "<?=$siswa->getNama_ortu();?>");
-                        $("#tglEdit").attr("value", "<?=date('d', $siswa->getTgl_lahir()->getTimestamp());?>");
-                        $("#bulanEdit<?=date('n', $siswa->getTgl_lahir()->getTimestamp());?>").attr("selected", "true");
-                        $("#tahunEdit").attr("value", "<?=date('Y', $siswa->getTgl_lahir()->getTimestamp());?>");
-                        $("#editModal").modal("toggle");
-                    });
-                </script>
-<!--                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->getNis();?>">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>-->
-                <a id="btnHapusSiswa<?=$siswa->getNis();?>" class="btn btn-sm btn-danger">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
-                <script type="text/javascript">
-                    $("#btnHapusSiswa<?=$siswa->getNis();?>").click(function (){
-                        $("#btnDelOk").attr("href", "<?=base_url().'admin/siswa/hapus/'.$siswa->getNis();?>");
-                        $("#deleteSiswa").modal("toggle");
+                    $("#tombol<?=$siswa->getNis()."_".$i?>").click(function (){
+                        $("#formAdd").attr("action", "<?=base_url();?>admin/nilai/tambah_nilai/<?=$judul_kelas[0]?>/<?= $siswa->getNis();?>");
+                        $("#UhAdd").attr("value", "<?=$i?>");
+                        $("#kelasAdd").attr("value", "<?=$judul_kelas[0]?>");
+                        $("#semesterAdd").attr("value", "<?=$semester?>");
+                        $("#tglAdd").attr("value", "<?=date('d');?>");
+                        $("#bulanAdd<?=date('n');?>").attr("selected", "true");
+                        $("#tahunAdd").attr("value", "<?=date('Y');?>");
+                        $("#addNilai").modal("toggle");
                     });
                 </script>
             </td>
+            <td> -- </td>
+            <?php else : ?>
+            <?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0];?>
+            <td>
+                <a data-toggle="modal" id="editNilai<?=$data_nilai->getId();?>">
+                    <?= $data_nilai->getNilai();?>
+                </a>
+                <script type="text/javascript">
+                    $("#editNilai<?=$data_nilai->getId();?>").click(function (){
+                        $("#formEdit").attr("action", "<?=base_url();?>admin/nilai/edit_nilai/<?=$data_nilai->getKelas()?>/<?= $data_nilai->getSiswa()->getNis();?>");
+                        $("#UhEdit").attr("value", "<?=$data_nilai->getNo_uh()?>");
+                        $("#kelasEdit").attr("value", "<?=$data_nilai->getKelas()?>");
+                        $("#semesterEdit").attr("value", "<?=$data_nilai->getSemester()?>");
+                        $("#juzEdit").attr("value", "<?=$data_nilai->getJuz()?>");
+                        $("#halamanEdit").attr("value", "<?=$data_nilai->getHalaman()?>");
+                        $("#nilaiEdit").attr("value", "<?=$data_nilai->getNilai()?>");
+                        $("#nilaiRemidiEdit").attr("value", "<?php echo (is_null($data_nilai->getNilai_remidi())) ? '' : $data_nilai->getNilai_remidi();?>");
+                        $("#tglEdit").attr("value", "<?=date('d', $data_nilai->getTanggal()->getTimestamp());?>");
+                        $("#bulanEdit<?=date('n', $data_nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
+                        $("#tahunEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
+                        $("#btnDelOk").attr("href", "<?php echo base_url().'admin/siswa/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>");
+                        $("#editNilai").modal("toggle");
+                    });
+                </script>
+            </td>
+            <td> <?php echo (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();?> </td>
+            <?php endif;?>
+            <?php endfor;?>
             </tr>
             <?php endforeach;?>
             <?php endif;?>
@@ -166,9 +202,31 @@
     </table>
 </div>
 </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#tabel_utama').DataTable();
     } );
+    $(document)
+            .on('show.bs.modal', '.modal', function(event) {
+                $(this).appendTo($('body'));
+            })
+            .on('shown.bs.modal', '.modal.in', function(event) {
+                setModalsAndBackdropsOrder();
+            })
+            .on('hidden.bs.modal', '.modal', function(event) {
+                setModalsAndBackdropsOrder();
+            });
+
+    function setModalsAndBackdropsOrder() {  
+        var modalZIndex = 1040;
+        $('.modal.in').each(function(index) {
+            var $modal = $(this);
+            modalZIndex++;
+            $modal.css('zIndex', modalZIndex);
+            $modal.next('.modal-backdrop.in').addClass('hidden').css('zIndex', modalZIndex - 1);
+    });
+        $('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
+    }
 </script>
-<?=$edit?>
+<?= $edit;?>

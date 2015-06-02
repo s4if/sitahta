@@ -47,79 +47,73 @@ class Nilai extends MY_Controller {
         }
     }
     
-    public function lihat($kelas = 'empty', $jurusan = 'empty', $no_kelas = 0){
+    public function lihat($kelas = 'X', $in_semester = 9) {
         $this->blockUnloggedOne();
-        $param = ['kelas' => $kelas, 'jurusan' => $jurusan, 'no_kelas' => $no_kelas];
-        if ($kelas == 'X' && ($jurusan == 'IPA' || $jurusan =='IPS')){
-            $param['jurusan'] = 'empty';
+        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
+        $kelas_2 = array();
+        if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
+            $kelas_2 = [0 => $kelas, 1 => $this->session->tahun_ajaran];
+        }  else {
+            $kelas_2 = explode('-', $kelas);
         }
-        $data_siswa = $this->siswa->getFilteredData($param, true);
+        $list_kelas = $this->siswa->getKelas($kelas_2[0], $this->session->tahun_ajaran);
         $data = [
-            'title' => 'Nilai',
+            'title' => 'Lihat Nilai',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
-            'nav_pos' => 'N',
-            'data_siswa' => $data_siswa,
-            'list_kelas' => $this->nilai->getListKelas($kelas),
-            'kelas' => $param,
-            'edit' => $this->load->view('admin/nilai/edit',['data_siswa' => $data_siswa], true)
+            'nav_pos' => "nilai".$kelas_2[0],
+            'judul_kelas' => $kelas_2,
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'edit' => $this->load->view("admin/nilai/edit_1", [], TRUE),
+            'semester' => $semester,
+            'list_kelas' => $list_kelas,
+            'data_kelas' => $data_kelas
         ];
-        $this->loadView('admin/nilai/lihat', $data, FALSE);
+        $this->loadView('admin/nilai/lihat_1', $data);
     }
     
-    public function tambah_nilai($nis, $no_uh, $kelas){
+    public function tambah_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['no_uh'] = $no_uh;
-        $data_insert['kelas'] = $kelas;
-        $data_insert['tanggal'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
-        $data_insert['penguji'] = $this->session->login_data->nip;
+        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->insertData($data_insert, TRUE);
-        if($res >= 1){
-            $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
-            redirect('nilai/'.$kelas);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Tambah Data Berhasil!"]);
+            redirect('nilai/' . $kelas);
         } else {
-            $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
-            redirect('nilai/'.$kelas);
+            $this->session->set_flashdata("errors", [0 => "Tambah Data Gagal!"]);
+            redirect('nilai/' . $kelas);
         }
     }
-    
-    public function edit_nilai($nis, $no_uh, $kelas){
+
+    public function edit_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['no_uh'] = $no_uh;
-        $data_insert['kelas'] = $kelas;
-        $data_insert['tanggal'] = $data_insert['tahun']."-".$data_insert['bulan']."-".$data_insert['tanggal'];
-        $data_insert['penguji'] = $this->session->login_data->nip;
+        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->updateData($data_insert);
-        if($res >= 1){
-            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
-            redirect('nilai/'.$kelas);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);
+            redirect('nilai/' . $kelas);
         } else {
-            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
-            redirect('nilai/'.$kelas);
+            $this->session->set_flashdata("errors", [0 => "Edit Data Gagal!"]);
+            redirect('nilai/' . $kelas);
         }
     }
-    
-    public function hapus_nilai($nis, $kelas, $no_uh){
+
+    public function hapus_nilai($nis, $kelas, $semester, $no_uh) {
         $this->blockUnloggedOne();
-        if($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas])){
-            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
-            redirect('nilai/'.$kelas);
-        }  else {
-            $this->session->set_flashdata("errors",[0 => "Maaf, data tidak berhasil dihapus"]);
-            redirect('nilai/'.$kelas);
-        }
-    }
-    
-    //hanya untuk uji coba
-    public function uji_coba($kelas = 'X'){
-        $list = $this->nilai->getListKelas($kelas);
-        foreach ($list as $kelas){
-            echo $kelas->getKelas().$kelas->getJurusan().$kelas->getNo_kelas()."<br>";
+        if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester])) {
+            $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
+            redirect('siswa/' . $nis, 'refresh');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Maaf, data tidak berhasil dihapus"]);
+            redirect('siswa/' . $nis, 'refresh');
         }
     }
 }
