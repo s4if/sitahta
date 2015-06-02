@@ -168,8 +168,18 @@
             </td>
             <td> -- </td>
             <?php else : ?>
-            <?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0];?>
-            <td>
+            <?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0];
+            $keterangan = $data_nilai->getKeterangan();
+            $css_cell;
+            if($keterangan == "Lulus tanpa remidi"){
+                $css_cell = 'success';
+            } elseif($data_nilai->getKeterangan() == "Lulus dengan remidi"){
+                $css_cell = 'warning';
+            } else {
+                $css_cell = 'danger';
+            }
+            ?>
+            <td class="<?=$css_cell?>">
                 <a data-toggle="modal" id="editNilai<?=$data_nilai->getId();?>">
                     <?= $data_nilai->getNilai();?>
                 </a>
@@ -186,12 +196,12 @@
                         $("#tglEdit").attr("value", "<?=date('d', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#bulanEdit<?=date('n', $data_nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
                         $("#tahunEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
-                        $("#btnDelOk").attr("href", "<?php echo base_url().'admin/siswa/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>");
+                        $("#btnDelOk").attr("href", "<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>");
                         $("#editNilai").modal("toggle");
                     });
                 </script>
             </td>
-            <td> <?php echo (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();?> </td>
+            <td class="<?=$css_cell?>"> <?php echo (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();?> </td>
             <?php endif;?>
             <?php endfor;?>
             </tr>

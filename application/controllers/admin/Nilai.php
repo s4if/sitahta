@@ -110,10 +110,10 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester])) {
             $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
-            redirect('siswa/' . $nis, 'refresh');
+            redirect('nilai/' . $kelas, 'refresh');
         } else {
             $this->session->set_flashdata("errors", [0 => "Maaf, data tidak berhasil dihapus"]);
-            redirect('siswa/' . $nis, 'refresh');
+            redirect('nilai/' . $kelas, 'refresh');
         }
     }
 }
