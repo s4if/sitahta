@@ -66,12 +66,12 @@ class Nilai extends MY_Controller {
             'nav_pos' => "nilai".$kelas_2[0],
             'judul_kelas' => $kelas_2,
             'tahun_ajaran' => $this->session->tahun_ajaran,
-            'edit' => $this->load->view("admin/nilai/edit_1", [], TRUE),
+            'edit' => $this->load->view("admin/nilai/edit", [], TRUE),
             'semester' => $semester,
             'list_kelas' => $list_kelas,
             'data_kelas' => $data_kelas
         ];
-        $this->loadView('admin/nilai/lihat_1', $data);
+        $this->loadView('admin/nilai/lihat', $data);
     }
     
     public function tambah_nilai($kelas, $nis) {
