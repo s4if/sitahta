@@ -117,7 +117,6 @@ class Model_nilai extends MY_Model {
         if (!empty($data['no_uh'])):$this->nilai->setNo_uh($data['no_uh']);endif;
         if (!empty($data['kelas'])):$this->nilai->setKelas($data['kelas']);endif;
         if (!empty($data['semester'])):$this->nilai->setSemester($data['semester']);endif;
-        if (!empty($data['tahun_ajaran'])):$this->nilai->setKelas($data['tahun_ajaran']);endif;
         if (!empty($data['nis'])) {
             $siswa = $this->em->find("SiswaEntity", $data['nis']);
             $this->nilai->setSiswa($siswa);
@@ -125,6 +124,7 @@ class Model_nilai extends MY_Model {
         if (!empty($data['tanggal'])) {
             $tgl_arr = explode('-', $data['tanggal']);
             $tgl = new DateTime();
+            //sistem tanggal yang di explode : yyyy:mm:dd
             $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
             $this->nilai->setTanggal($tgl);
         }
@@ -150,4 +150,121 @@ class Model_nilai extends MY_Model {
     public function getListKelas($kelas) {
         return $this->em->getRepository('SiswaEntity')->getListKelas($kelas);
     }
+    
+    // NOT YET EDITED!!!! //
+    /**
+     * 
+     * @param type $file_url
+     * @return 0 for ok, -1 for file wrong, > 0 for data wrong
+     */
+    public function importData($file_url){
+        try {
+            $objReader = new PHPExcel_Reader_Excel5();
+            $objPHPExcel = $objReader->load($file_url);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $lastRow = $objWorksheet->getHighestDataRow();
+            $failureCount = 0;
+            $lastCol = $objWorksheet->getHighestDataColumn();
+            $data = $objWorksheet->rangeToArray('A1'.':'.$lastCol.$lastRow, null, TRUE);
+            for($i = 0; $i <= 5; $i++){
+                if(is_null($data[$i][1])){
+                    $failureCount++;
+                }
+            }
+            if($failureCount > 0){
+                return $failureCount;
+            }else{
+                return $this->doImport($data, $lastRow);
+            }
+        }  catch (PHPExcel_Exception $ex) {
+            return -1;
+        }
+    }
+    
+    private function doImport($data, $lastRow){
+        $this->em->getConnection()->beginTransaction();
+        $failureCount = 0;
+        // $i dimulai dari index mulai masuk tabel nilai
+        for ($i = 9; $i < $lastRow;$i++){
+            $row_data = $data[$i];
+            if($this->rowValidation($data, $row_data)){
+                $this->transQuery($this->dataTranslator($data, $row_data));
+            }  else {
+                $failureCount++;
+            }
+        }
+        if(($failureCount > 0)){
+            $this->em->getConnection()->rollback();
+        }else{
+            $this->em->getConnection()->commit();
+        }
+        return $failureCount;
+    }
+    
+    private function rowValidation($data, $row_data){
+        $rowValid = true;
+        if(is_null($row_data[0])){
+            $rowValid = false;
+        }
+        $i = 2;
+        while ($i < count($row_data)){
+            if(is_null($row_data[$i])){
+                $rowValid = false;
+                break;
+            }
+            if(is_null($data[6][$i+1])){
+                $rowValid = false;
+                break;
+            }
+            if(is_null($data[7][$i+1])){
+                $rowValid = false;
+                break;
+            }
+            $i= $i + 2;
+        }
+        return $rowValid;
+    }
+
+    private function dataTranslator($data, $row_data){
+        //trans_row adalah row data yang sudah diubah, sedangkan trans_data adalah kumpulan dari trans_row
+        $trans_data = [];
+        $i = 2;
+        while ($i < count($row_data)){
+            $trans_row = [];
+            $trans_row ['no_uh'] = $data[6][$i+1];
+            $trans_row ['kelas'] = $data[0][1];
+            $trans_row ['semester'] = $data[1][1];
+            $t_a = explode('/', $data[2][1]);
+            $trans_row ['tahun_ajaran'] = $t_a[0];
+            $trans_row ['nis'] = $row_data[0];
+            $tgl_arr = explode("-", $data[4][1]);
+            $tgl = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+            $trans_row ['tanggal'] = $tgl;
+            $trans_row ['juz'] = $data[3][1];
+            $trans_row ['halaman'] = (is_null($data[7][$i+1]))?$data[6][$i+1]:$data[7][$i+1];
+            $trans_row ['nilai'] = $row_data[$i];
+            $trans_row ['nilai_remidi'] = $row_data[$i+1];
+            $trans_row ['penguji'] = $data[5][1];
+            $trans_data[] = $trans_row;
+            $i = $i+2;
+        }
+        return $trans_data;
+    }
+    
+    private function transQuery($arr_data){
+        foreach ($arr_data as $data){
+            $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+            $entity = $this->em->find("NilaiHarianEntity", $id);
+            if (is_null($entity)) {
+                $this->nilai = new NilaiHarianEntity();
+            } else {
+                $this->nilai = $entity;
+            }
+            $this->setData($data);
+            $this->nilai->generateId();
+            $this->em->persist($this->nilai);
+            $this->em->flush();
+        }
+    }
+
 }

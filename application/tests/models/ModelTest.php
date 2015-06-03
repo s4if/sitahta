@@ -284,21 +284,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
             $this->assertObjectHasAttribute('nilai', $nilai4);
             $this->assertObjectHasAttribute('nilai_remidi', $nilai4);
             $this->assertObjectHasAttribute('penguji', $nilai4);
-            //===
-//            $nilai_arr = $model->getNilaiSiswa();
-//            $nilai = $nilai_arr['1001']['1'];
-//            $nilai2 = empty($nilai_arr['1001'][10])?null:'not empty';
-//            $this->assertNull($nilai2);
-//            $this->assertObjectHasAttribute('no_uh', $nilai);
-//            $this->assertObjectHasAttribute('siswa', $nilai);
-//            $this->assertObjectHasAttribute('kelas', $nilai);
-//            $this->assertObjectHasAttribute('semester', $nilai);
-//            $this->assertObjectHasAttribute('tanggal', $nilai);
-//            $this->assertObjectHasAttribute('juz', $nilai);
-//            $this->assertObjectHasAttribute('halaman', $nilai);
-//            $this->assertObjectHasAttribute('nilai', $nilai);
-//            $this->assertObjectHasAttribute('nilai_remidi', $nilai);
-//            $this->assertObjectHasAttribute('penguji', $nilai);
+            $this->assertEquals(0, $model->importData('assets/test/coba_nilai.xls'));
+            $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+            $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
         }
         
         public function testModel_sertifikasi() {
