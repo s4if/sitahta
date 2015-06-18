@@ -38,21 +38,32 @@
 </ol>
 <div class="col-md-12">
     <div class="btn-group">
-        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
-            <span class="glyphicon glyphicon-plus"></span>
-            Tambah
-        </a>
-        <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
-            <span class="glyphicon glyphicon-import"></span>
-            Import
-        </a>
         <div class="btn-group"role="group">
-            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+            <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownImport" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-import"></span>
+                Import
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownImport">
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" data-target="#ModalImportGen">
+                        Buat Template
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" data-target="#ModalImportUp">
+                        Upload Template
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownKelas" data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-list-alt"></span>
                 Kelas
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownKelas">
                 <li role="presentation">
                     <a role="menuitem" href="<?=  base_url()?>nilai/<?=$judul_kelas[0]?>/<?=$semester?>">
                         Semua
@@ -85,7 +96,100 @@
                 </li>
             </ul>
         </div>
-        <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
+        <!-- Form template generator -->
+        <div class="modal fade" id="ModalImportGen" tabindex="-1" role="dialog" aria-labelledby="ModalGenImport" aria-hidden="true">
+            <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="addModal">Tambah Nilai</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal input_fields_wrap" role="form" method="post" action="<?=base_url();?>admin/nilai/template/<?=$id_kelas?>/<?=$semester?>">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Kelas :</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="kelas" 
+                                   placeholder="Kelas" value="<?=$judul_kelas[0]?>" required="true" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Semester :</label>
+                        <div class="col-sm-2">
+                            <input type="number" class="form-control" name="semester" 
+                                   placeholder="Semester" value="<?=$semester?>" required="true" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tahun Ajaran :</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="tahun_ajaran" 
+                                   placeholder="Semester" value="<?=$tahun_ajaran.'/'.($tahun_ajaran+1)?>" required="true" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Juz :</label>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control" name="juz" 
+                                   placeholder="Masukkan Juz" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">UH :</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="text" name="uh[]">
+                        </div>
+                        <label class="col-sm-2 control-label">Halaman :</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" type="text" name="halaman[]">
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="add_field_button btn btn-primary">Tambah</a>
+                        </div>
+                    </div>
+                    <div class="form-group insert_point">
+                        <label class="col-sm-3 control-label">Tgl Ulangan :</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" name="hari" pattern="[0-9]{2}"
+                                   placeholder="Tanggal" value="" required="true">
+                        </div>
+                        <div class="col-sm-3">
+                            <select class="form-control" name="bulan">
+                                <option value="1">Jan</option>
+                                <option value="2">Feb</option>
+                                <option value="3">Mar</option>
+                                <option value="4">Apr</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Jun</option>
+                                <option value="7">Jul</option>
+                                <option value="8">Agu</option>
+                                <option value="9">Sep</option>
+                                <option value="10">Okt</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Des</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
+                                   placeholder="Tahun" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" class="btn btn-primary">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+        </div>
+        <!-- Real Import -->
+        <div class="modal fade" id="ModalImportUp" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,7 +197,7 @@
                         <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form" method="post" action="<?=base_url();?>admin/siswa/import" enctype="multipart/form-data">
+                        <form role="form" method="post" action="<?=base_url();?>admin/nilai/import/<?=$judul_kelas[0]?>/<?=$semester?>" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Masukkan Input</label>
                                 <input type="file" id="file" name="file">
@@ -246,5 +350,41 @@
     });
         $('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
     }
+    $(document).ready(function() {
+        var max_fields      = 10; //maximum input boxes allowed
+        var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+        var point         = $(".insert_point"); //Fields wrapper
+        var add_button      = $(".add_field_button"); //Add button ID
+
+        var id = 1;
+        var x = 1; //initlal text box count
+        $(add_button).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                var inpt = '<div class="form-group">'+
+                        '<label class="col-sm-3 control-label">UH :</label>'+
+                        '<div class="col-sm-2">'+
+                        '<input class="form-control" type="text" name="uh[]">'+
+                        '</div>'+
+                        '<label class="col-sm-2 control-label">Halaman :</label>'+
+                        '<div class="col-sm-2">'+
+                        '<input class="form-control" type="text" name="halaman[]">'+
+                        '</div>'+
+                        '<div class="col-sm-2">'+
+                        '<a href="#" class="remove_field btn btn-warning">Hapus</a>'+
+                        '</div>'+
+                        '</div>';
+                $(point).before(inpt);
+                id++;
+                //$(wrapper).append('<div class="col-sm-12"><input class="col-sm-3 form-control" type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            }
+        });
+
+        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+            e.preventDefault(); 
+            $(this).parent('div').parent('div').remove(); x--;
+        });
+    });
 </script>
 <?= $edit;?>

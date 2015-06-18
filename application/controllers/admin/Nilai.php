@@ -68,6 +68,7 @@ class Nilai extends MY_Controller {
             'tahun_ajaran' => $this->session->tahun_ajaran,
             'edit' => $this->load->view("admin/nilai/edit", [], TRUE),
             'semester' => $semester,
+            'id_kelas' => $kelas,
             'list_kelas' => $list_kelas,
             'data_kelas' => $data_kelas
         ];
@@ -116,4 +117,30 @@ class Nilai extends MY_Controller {
             redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
         }
     }
+    
+    public function import($kelas, $semester) {
+        $this->blockUnloggedOne();
+        $fileUrl = $_FILES['file']["tmp_name"];
+        $res = $this->nilai->importData($fileUrl);
+        if ($res == 0) {
+            $this->session->set_flashdata("notices", [0 => "Import Data Berhasil!"]);
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
+        } elseif ($res > 0) {
+            $this->session->set_flashdata("errors", [0 => "Import Data Gagal!,<br> Cek kembali isi dokumen yang akan diimport!"]);
+            redirect('nilai');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Import Data Gagal!,<br> File yang dimasukkan bukan file excel!"]);
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
+        }
+    }
+    
+    public function template($kelas, $semester){
+        $data = $this->input->post(null,true);
+        $data['tanggal'] = $data['hari'].'-'.$data['bulan'].'-'.$data['tahun'];
+        $data['data_kelas'] = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $data['pengampu'] = $this->session->login_data->getNip();
+        $fileName = 'template nilai ('.$kelas.' Semester '.$semester.')';
+        $this->nilai->generate($data, $fileName);
+    }
+    
 }

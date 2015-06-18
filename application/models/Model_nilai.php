@@ -266,5 +266,57 @@ class Model_nilai extends MY_Model {
             $this->em->flush();
         }
     }
-
+    
+    public function generate($data, $file_name){
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Kelas :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', $data['kelas']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A2', 'Semester :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B2', $data['semester']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A3', 'Tahun Ajaran :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B3', $data['tahun_ajaran']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A4', 'Juz :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B4', $data['juz']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A5', 'Tanggal :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B5', $data['tanggal']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A6', 'Pengampu :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B6', $data['pengampu']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A9', 'NIS');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B9', 'Nama');
+        $sis_count = 10;
+//        foreach ($data['siswa'] as $siswa){
+//            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
+//            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
+//            $sis_count++;
+//        }
+        foreach ($data['data_kelas'] as $kelas) {
+            if (!$kelas->getSiswa()->isEmpty()) {
+                foreach ($kelas->getSiswa() as $siswa) {
+                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
+                    $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
+                    $sis_count++;
+                }
+            }
+        }
+        $kolom_uh = 2;
+        $id_uh = 0;
+        foreach ($data['uh'] as $uh){
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', 'UH :');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'8', 'Halaman :');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'9', 'Nilai');
+            $kolom_uh++;
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', $uh);
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'8', $data['halaman'][$id_uh]);
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'9', 'Remidi');
+            $kolom_uh++;
+            $id_uh++;
+        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+        $objWriter->save('php://output');
+        exit;
+    }
 }
