@@ -100,7 +100,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (empty($data_sertifikasi[0])): ?>
+                <?php if (empty($data_sertifikat[0])): ?>
                 <tr>
                 <td></td>
                 <td></td>
@@ -116,23 +116,23 @@
                 </td>
                 </tr>
                 <?php else: ?>
-                <?php foreach ($data_sertifikasi as $sertifikasi): ?>
+                <?php foreach ($data_sertifikat as $sertifikat): ?>
                 <tr>
                 <td><?=$siswa->getNama();?></td>
-                <td><?=date('d F Y', $sertifikasi->getTgl_ujian()->getTimestamp());?></td>
-                <td><?=$sertifikasi->getTempat_ujian();?></td>
-                <td><?=$sertifikasi->getJuz();?></td>
-                <td><?=$sertifikasi->getNilai();?></td>
-                <td><?=$sertifikasi->getPredikat();?></td>
-                <td><?=$sertifikasi->getKeterangan();?></td>
+                <td><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                <td><?=$sertifikat->getTempat_ujian();?></td>
+                <td><?=$sertifikat->getJuz();?></td>
+                <td><?=$sertifikat->getNilai();?></td>
+                <td><?=$sertifikat->getPredikat();?></td>
+                <td><?=$sertifikat->getKeterangan();?></td>
                 <td>
                 <a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahSertifikasi">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editSertifikasi<?=$sertifikasi->getId();?>">
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editSertifikasi<?=$sertifikat->getId();?>">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteSertifikasi<?=$sertifikasi->getId();?>">
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteSertifikasi<?=$sertifikat->getId();?>">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
                 </td>
@@ -266,5 +266,5 @@
 <?php endfor;?>
 <?php endforeach;?>
 <?=$edit_nilai?>
-<?=$tambah_sertifikasi?>
-<?=$edit_sertifikasi?>
+<?=$tambah_sertifikat?>
+<?=$edit_sertifikat?>

@@ -25,14 +25,35 @@
  */
 
 /**
- * Description of Model_sertifikasi
+ * Description of Sertifikasi
  *
  * @author s4if
  */
-class Model_sertifikasi extends MY_Model {
-    
+class Sertifikasi extends MY_Controller {
     public function __construct() {
         parent::__construct();
     }
     
+    public function index() {
+        if (is_cli()) {
+            echo 'This Is For Avoiding Load Session in CLI. ';
+            return;
+        } else {
+            $this->lihat();
+        }
+    }
+    
+    public function lihat($kelas = 'X') {
+        $this->blockUnloggedOne();
+        $data = [
+            'title' => 'Lihat Siswa',
+            'user' => ucwords($this->session->login_data->getNama()),
+            'position' => $this->session->position,
+            'nama' => $this->session->login_data->getNama(),
+            'nav_pos' => "sertifikasi",
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $this->session->semester
+        ];
+        $this->loadView('admin/sertifikasi/lihat', $data);
+    }
 }

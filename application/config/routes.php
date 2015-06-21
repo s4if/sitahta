@@ -66,3 +66,5 @@ $route['nilai'] = 'admin/nilai/lihat';
 $route['nilai/(:any)'] = 'admin/nilai/lihat/$1';
 $route['nilai/(:any)/(:num)'] = 'admin/nilai/lihat/$1/$2';
 $route['nilai/(:any)/(:any)/(:num)'] = 'admin/nilai/lihat/$1/$2/$3';
+$route['sertifikasi'] = 'admin/sertifikasi/lihat';
+$route['sertifikasi/(:any)'] = 'admin/sertifikasi/lihat/$1';

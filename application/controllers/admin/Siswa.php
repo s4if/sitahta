@@ -35,7 +35,7 @@ class Siswa extends MY_Controller {
         parent::__construct();
         $this->load->model('model_siswa', 'siswa', TRUE);
         $this->load->model('model_nilai', 'nilai', TRUE);
-        $this->load->model('model_sertifikasi', 'sertifikasi', TRUE);
+        $this->load->model('model_sertifikat', 'sertifikat', TRUE);
     }
 
     public function index() {
@@ -124,17 +124,17 @@ class Siswa extends MY_Controller {
     public function profil($nis) {
         $this->blockUnloggedOne();
         $siswa = $this->siswa->getData($nis);
-        $data_sertifikasi = $siswa->getSertifikat();
+        $data_sertifikat = $siswa->getSertifikat();
         $data = [
             'title' => 'Profil Siswa',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
             'siswa' => $siswa,
-            'data_sertifikasi' => $data_sertifikasi,
+            'data_sertifikat' => $data_sertifikat,
             'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
-            'tambah_sertifikasi' => $this->load->view("admin/siswa/tambah_sertifikasi", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
-            'edit_sertifikasi' => $this->load->view("admin/siswa/edit_sertifikasi", ['data_sertifikasi' => $data_sertifikasi], TRUE),
+            'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
+            'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
         $this->loadView('admin/siswa/profil', $data);
     }
@@ -182,12 +182,12 @@ class Siswa extends MY_Controller {
         }
     }
 
-    public function tambah_sertifikasi($nis) {
+    public function tambah_sertifikat($nis) {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
         $data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
-        $res = $this->sertifikasi->insertData($data_insert);
+        $res = $this->sertifikat->insertData($data_insert);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Tambah Data Berhasil!"]);
             redirect('siswa/' . $nis);
@@ -197,13 +197,13 @@ class Siswa extends MY_Controller {
         }
     }
 
-    public function edit_sertifikasi($nis, $id) {
+    public function edit_sertifikat($nis, $id) {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['id'] = $id;
         $data_insert['nis'] = $nis;
         $data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
-        $res = $this->sertifikasi->updateData($data_insert);
+        $res = $this->sertifikat->updateData($data_insert);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);
             redirect('siswa/' . $nis);
@@ -213,9 +213,9 @@ class Siswa extends MY_Controller {
         }
     }
 
-    public function hapus_sertifikasi($nis, $id) {
+    public function hapus_sertifikat($nis, $id) {
         $this->blockUnloggedOne();
-        if ($this->sertifikasi->deleteData(['nis' => $nis, 'id' => $id])) {
+        if ($this->sertifikat->deleteData(['nis' => $nis, 'id' => $id])) {
             $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
             redirect('siswa/' . $nis, 'refresh');
         } else {

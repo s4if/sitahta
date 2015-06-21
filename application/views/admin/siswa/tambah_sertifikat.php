@@ -33,7 +33,7 @@
                 <h4 class="modal-title text-center" id="tambahModal">Tambah Sertifikat</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/tambah_sertifikasi/<?=$nis?>">
+                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/siswa/tambah_sertifikat/<?=$nis?>">
                     <?php
                         $tgl = explode("-", date('Y-m-d'));
                     ?>
