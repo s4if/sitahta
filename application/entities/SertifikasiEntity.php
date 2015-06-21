@@ -3,7 +3,7 @@
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="SertifikasiRepository")
  * @Table(name="sertifikasi")
  */
 
