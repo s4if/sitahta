@@ -69,7 +69,7 @@ class Home extends MY_Controller{
     }
     
     public function changePassword(){
-        $this->blockUnloggedOne();
+        $this->blockUnloggedOne(false);
         $new_pass = $this->input->post('new_password', true);
         $confirm_pass = $this->input->post('confirm_password', TRUE);
         $stored_pass = $this->input->post('stored_password', true);

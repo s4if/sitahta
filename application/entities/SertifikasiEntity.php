@@ -76,6 +76,17 @@ class SertifikasiEntity {
     public function getKkm() {
         return $this->kkm;
     }
+    
+    //custom
+    public function getJumlahPeserta(){
+        return $this->getPeserta()->count();
+    }
+    
+    //belum selesai... :p
+    public function getStatus(){
+        return "belum";
+    }
+    //end custom
 
     public function setId($id) {
         $this->id = $id;

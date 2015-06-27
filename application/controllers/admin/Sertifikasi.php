@@ -32,6 +32,7 @@
 class Sertifikasi extends MY_Controller {
     public function __construct() {
         parent::__construct();
+        $this->load->model('model_sertifikasi','sertifikasi',TRUE);
     }
     
     public function index() {
@@ -43,16 +44,38 @@ class Sertifikasi extends MY_Controller {
         }
     }
     
-    public function lihat($kelas = 'X') {
+    public function lihat() {
         $this->blockUnloggedOne();
+        $data_sertifikasi = $this->sertifikasi->getData();
         $data = [
-            'title' => 'Lihat Siswa',
+            'title' => 'Lihat Sertifikasi',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
             'nama' => $this->session->login_data->getNama(),
             'nav_pos' => "sertifikasi",
+            'data_sertifikasi' => $data_sertifikasi,
             'tahun_ajaran' => $this->session->tahun_ajaran,
-            'semester' => $this->session->semester
+            'semester' => $this->session->semester,
+            'tambah' => "", //belum
+            'edit' => $this->load->view("admin/sertifikasi/edit", [], TRUE),
+        ];
+        $this->loadView('admin/sertifikasi/lihat', $data);
+    }
+    //belum
+    public function sertifikasi($id) {
+        $this->blockUnloggedOne();
+        $data_sertifikasi = $this->sertifikasi->getData();
+        $data = [
+            'title' => 'Lihat Sertifikasi',
+            'user' => ucwords($this->session->login_data->getNama()),
+            'position' => $this->session->position,
+            'nama' => $this->session->login_data->getNama(),
+            'nav_pos' => "sertifikasi",
+            'data_sertifikasi' => $data_sertifikasi,
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $this->session->semester,
+            'tambah' => "", //belum
+            'edit' => "" //belum
         ];
         $this->loadView('admin/sertifikasi/lihat', $data);
     }

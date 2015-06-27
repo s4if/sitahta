@@ -39,7 +39,7 @@
     </li>
 </ol>
 <div class="container-fluid">
-    <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/home/changePassword">
+    <form class="form-horizontal" role="form" method="post" action="<?=base_url();?><?=($position === 'admin')?'admin/home':'user';?>/changePassword">
         <div class="form-group error">
             <label class="col-sm-2 control-label">Password Lama :</label>
             <div class="col-sm-6 error">

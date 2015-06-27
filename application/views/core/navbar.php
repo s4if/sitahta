@@ -46,7 +46,7 @@
                     <a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp; Profil</a>
                 </li>
                 <li>
-                    <a href="<?=base_url();?>home/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
+                    <a href="<?=base_url();?><?=($position === 'admin')?'home':'user';?>/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
                 </li>
                 <li class="divider"></li>
                 <li>
@@ -58,16 +58,13 @@
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
+            <?php if($position === 'admin'):?>
             <li id="navDashboard">
                 <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
             </li>
-            <?php if($position === 'admin'):?>
             <li id="navGuru">
                 <a href="<?=base_url()?>guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
-<!--            <li>
-                <a href="<?=base_url()?>siswa"><span class="glyphicon glyphicon-user"></span> &nbsp; Siswa</a>
-            </li>-->
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#siswa"><span class="glyphicon glyphicon-user"></span> Siswa <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="siswa" class="collapse">
@@ -99,10 +96,19 @@
             <li id="navSertifikasi">
                 <a href="<?=base_url()?>sertifikasi"><span class="glyphicon glyphicon-list-alt"></span> &nbsp; Sertifikasi</a>
             </li>
-            <?php else :?>
+            <?php elseif($position === 'user') :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
-            <li id="navUser">
-                <a href="<?=base_url()?>"><i class="glyphicon glyphicon-dashboard"></i> &nbsp; User</a>
+            <li id="navDashboardUser">
+                <a href="<?=base_url()?>user/home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
+            </li>
+            <li id="navProfilUser">
+                <a href="<?=base_url()?>user/profil"><i class="glyphicon glyphicon-user"></i> &nbsp; Profil</a>
+            </li>
+            <li id="navNilaiUser">
+                <a href="<?=base_url()?>user/nilai"><i class="glyphicon glyphicon-list"></i> &nbsp; Nilai</a>
+            </li>
+            <li id="navHafalanUser">
+                <a href="<?=base_url()?>user/hafalan"><i class="glyphicon glyphicon-list-alt"></i> &nbsp; Hafalan</a>
             </li>
             <?php endif;?>
         </ul>

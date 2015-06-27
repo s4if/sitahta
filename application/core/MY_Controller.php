@@ -58,10 +58,26 @@ class MY_Controller extends CI_Controller {
         }
     }
     
-    protected function blockUnloggedOne(){
+    protected function blockUnloggedOne($user = FALSE, $accessibleForAll = false){
         if(!$this->session->has_userdata('login_data')){
             $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap login Dulu!"]);
             redirect('login', 'refresh');
+        }  elseif(!$accessibleForAll) {
+            $this->blockAdmin($user);
+        }
+    }
+    
+    protected function blockAdmin($user){
+        if($user && $this->session->position == 'user'){
+            //do nothing
+        } elseif ($user && !($this->session->position == 'user')) {
+            $this->session->set_flashdata("errors",[0 => "Maaf, anda tidak berhak melihat halaman personal Siswa!"]);
+            redirect('admin/home', 'refresh');
+        } elseif (!$user && $this->session->position == 'user') {
+            $this->session->set_flashdata("errors",[0 => "Maaf, anda tidak berhak melihat halaman Admin!"]);
+            redirect('user/home', 'refresh');
+        } elseif (!$user && !($this->session->position == 'user')) {
+            //do nothing
         }
     }
 }

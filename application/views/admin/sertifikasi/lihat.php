@@ -57,23 +57,30 @@
                 <td>Tanggal</td>
                 <td>Nama</td>
                 <td>Tempat</td>
+                <td>Jumlah Peserta</td>
+                <td>Status</td>
                 <td>Aksi</td>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($data_sertifikasi as $sertifikasi):?>
             <tr>
-            <td><?= $guru->getId();?></td>
-            <td><?= $guru->getTanggal();?></td>
-            <td><?= $guru->getNama();?></td>
-            <td><?= $guru->getTempat();?></td>
+            <td><?= $sertifikasi->getId();?></td>
+            <td><?= $sertifikasi->getTanggal()->format("l, j F Y");?></td>
+            <td><?= $sertifikasi->getNama();?></td>
+            <td><?= $sertifikasi->getTempat();?></td>
+            <td><?= $sertifikasi->getJumlahPeserta();?></td>
+            <td><?= $sertifikasi->getStatus();?></td>
             <td>
-            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $guru->getNip();?>">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $guru->getNip();?>">
-                <span class="glyphicon glyphicon-remove"></span>
-            </a>
+                <a class="btn btn-sm btn-success" href="<?=base_url();?>sertifikasi/<?=$sertifikasi->getId()?>">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
             </td>
             </tr>
             <?php endforeach;?>
