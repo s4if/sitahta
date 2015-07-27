@@ -38,7 +38,7 @@
     </div>
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
-        <a class="navbar-brand" href="#"></a>
+        <li><a data-toggle="modal" data-target="#modalTA" >TA : <?=$this->session->tahun_ajaran?>, SEM : <?=$this->session->semester?></a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> &nbsp; <?=$user?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -55,6 +55,7 @@
             </ul>
         </li>
     </ul>
+    
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
@@ -115,6 +116,47 @@
     </div>
     <!-- /.navbar-collapse -->
 </nav>
+
+<div class="modal fade" id="modalTA" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" method="post" role="form" action="<?=base_url()?>admin/home/tahun_ajaran">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tahun Ajaran :</label>
+                        <div class="col-sm-9">
+                            <input id="tahunEdit" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
+                                   placeholder="Ex. 2014" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Semester :</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="semester">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" class="btn btn-sm btn-primary">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $("#nav<?=  ucfirst($nav_pos);?>").attr('class','active');
 </script>

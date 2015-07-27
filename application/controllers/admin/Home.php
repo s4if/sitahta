@@ -90,4 +90,12 @@ class Home extends MY_Controller{
         }
         
     }
+    
+    public function tahun_ajaran(){
+        $semester = $this->input->post('semester');
+        $tahun_ajaran = $this->input->post('tahun');
+        $this->session->set_userdata('tahun_ajaran', $tahun_ajaran);
+        $this->session->set_userdata('semester', $semester);
+        redirect('admin/home', 'refresh');
+    }
 }
