@@ -62,10 +62,10 @@ class MY_Model extends CI_Model {
         $connection = $this->em->getConnection();
         $platform = $connection->getDatabasePlatform();
         //MUSTBE Enabled if i wanna use MYSQL
-        //$connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 0;');
         foreach ($tableNames as $name) {
             $connection->executeUpdate($platform->getTruncateTableSQL($name,$cascade));
         }
-        //$connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
+        $connection->executeQuery('SET FOREIGN_KEY_CHECKS = 1;');
     }
 }
