@@ -45,8 +45,13 @@ class MY_Model extends CI_Model {
 
         // database configuration parameters
         $conn = array(
-            'driver' => 'pdo_sqlite',
-            'path' => FCPATH . '/db.sqlite',
+//            'driver' => 'pdo_sqlite',
+//            'path' => FCPATH . '/db.sqlite',
+            'dbname' => 'sitahta_test',
+            'user' => 'sitahta_test',
+            'password' => 'sitahta',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
         );
 
         // obtaining the entity manager

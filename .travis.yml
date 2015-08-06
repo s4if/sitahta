@@ -6,9 +6,8 @@ php:
   
 before_script:
   - composer install
-  - mysql -e 'create database sitahta;'
-  - mysql sitahta < sitahta.sql
-  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  - mysql -e 'create database sitahta_test;'
+  - echo "CREATE USER 'sitahta_test'@'localhost' IDENTIFIED BY 'sitahta';" | mysql -u root
   - vendor/bin/doctrine orm:schema-tool:drop --force
   - vendor/bin/doctrine orm:schema-tool:create
   

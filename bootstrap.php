@@ -9,8 +9,13 @@ $config = Setup::createAnnotationMetadataConfiguration(array("application/entiti
 
 // database configuration parameters
 $conn = array(
-    'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/db.sqlite',
+//    'driver' => 'pdo_sqlite',
+//    'path' => __DIR__ . '/db.sqlite',
+    'dbname' => 'sitahta_test',
+    'user' => 'sitahta_test',
+    'password' => 'sitahta',
+    'host' => 'localhost',
+    'driver' => 'pdo_mysql',
 );
 
 // obtaining the entity manager
