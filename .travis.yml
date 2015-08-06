@@ -8,6 +8,8 @@ before_script:
   - composer install
   - mysql -e 'create database sitahta_test;'
   - echo "CREATE USER 'sitahta_test'@'localhost' IDENTIFIED BY 'sitahta';" | mysql -u root
+  - echo "GRANT ALL ON sitahta_test.* TO 'sitahta_test'@'localhost';" | mysql -u root
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('zaraki') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
   - vendor/bin/doctrine orm:schema-tool:drop --force
   - vendor/bin/doctrine orm:schema-tool:create
   

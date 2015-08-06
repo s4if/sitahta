@@ -121,7 +121,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'kelas' => 'XI',
             'jurusan' => 'IPS',
             'no_kelas' => '1',
-            'tahun_ajaran' => '2014',
+            'tahun_ajaran' => '2015',
             'password' => md5('qwerty'),
             'nama_ortu' => 'ortu'
             ];
@@ -313,7 +313,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($model->deleteData(['id' => 1]));
         $model->insertData($data);
         //update data
-        $data['tgl_ujian'] = '2014-12-12';
+        $data['tgl_ujian'] = '2015-12-12';
+        $data['id'] = 2;
         $this->assertTrue($model->updateData($data));
         $data['id'] = 10002;
         $this->assertFalse($model->updateData($data));
@@ -323,7 +324,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_sertifikat_2(){
         $model = new Model_sertifikat();
         //checkAttributes
-        $id = 1;
+        $id = 2;
         $nis = 1001;
         $nilai_array = $model->getDataByNis($nis);
         $this->assertObjectHasAttribute('id', $nilai_array[0]);
@@ -354,7 +355,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $data = [
             'id' => 1,
             'nama' => 'Mukhoyyam sapujagad 1',
-            'tahun_ajaran' => '2014/2015',
+            'tahun_ajaran' => '2015/2016',
             'tanggal' => '2015-06-10',
             'tempat' => 'SMA IT Ihsanul Fikri',
             'kkm' => 80
