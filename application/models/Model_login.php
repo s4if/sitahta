@@ -30,7 +30,7 @@
  * @author s4if
  */
 class Model_login extends MY_Model{
-
+        
     public function __construct() {
         parent::__construct();
     }
@@ -54,7 +54,8 @@ class Model_login extends MY_Model{
         $ent = ($position == 'user')?'Siswa':'Guru';
         $data = $this->em->find(ucfirst($ent).'Entity',$id);
         $stored_passwd =  $data->getPassword();
-        return (md5($passwd) === $stored_passwd)? true : false;
+        $result = password_verify($passwd, $stored_passwd);
+        return $result;
     }
     
     public function getData($id, $position){
@@ -73,7 +74,7 @@ class Model_login extends MY_Model{
         }
         $data = $this->em->find(ucfirst($ent).'Entity',$id);
         if(!is_null($data)){
-            $data->setPassword(md5($passwd));
+            $data->setPassword(password_hash($passwd, PASSWORD_BCRYPT));
             $this->em->persist($data);
             $this->em->flush();
             return true;

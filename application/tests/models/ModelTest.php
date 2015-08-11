@@ -71,7 +71,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'alamat' => 'foo city',
             'email' => 'foo@google.com',
             'no_telp' => '08674839291',
-            'password' => md5('zaraki'),
+            'password' => password_hash('zaraki', PASSWORD_BCRYPT),
             'kewenangan' => 'guru'
             ];
         //initial Data
@@ -122,7 +122,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'jurusan' => 'IPS',
             'no_kelas' => '1',
             'tahun_ajaran' => '2015',
-            'password' => md5('qwerty'),
+            'password' => password_hash('qwerty', PASSWORD_BCRYPT),
             'nama_ortu' => 'ortu'
             ];
         $model->insertData($data);
