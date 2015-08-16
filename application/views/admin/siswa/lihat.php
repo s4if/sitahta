@@ -173,7 +173,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tabel_utama').DataTable();
+        $('#tabel_utama').DataTable({
+            "order": [[ 1, "asc" ]]
+        } );
     } );
 </script>
 <?=$edit?>

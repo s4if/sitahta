@@ -1,6 +1,7 @@
 <?php
 
 Use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @Entity(repositoryClass="KelasRepository")
@@ -80,6 +81,8 @@ class KelasEntity {
 
     public function getSiswa() {
         return $this->siswa;
+        //$criteria = Criteria::create()->orderBy(array("nama" => Criteria::ASC));
+        //return $this->siswa->matching($criteria);
     }
 
     public function setKelas($kelas) {
