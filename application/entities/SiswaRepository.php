@@ -9,14 +9,14 @@ class SiswaRepository extends EntityRepository{
         if($nis == -1){
             $qb->select('s')
                 ->from('SiswaEntity', 's')
-                ->orderBy('s.nis', 'ASC');
+                ->orderBy('s.nama', 'ASC');
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('s')
                 ->from('SiswaEntity', 's')
                 ->where('s.nis = :nis')
-                ->orderBy('s.nis', 'ASC')
+                ->orderBy('s.nama', 'ASC')
                 ->setParameter('nis', $nis);
             $query = $qb->getQuery();
             return $query->getSingleResult();
@@ -86,6 +86,17 @@ class SiswaRepository extends EntityRepository{
             ->addGroupBy('s.no_kelas')
             ->having('s.kelas = :kelas')
             ->addOrderBy('s.no_kelas', 'ASC')
+            ->setParameter('kelas', $kelas);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+    
+    public function getDataByKelas ($kelas) {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('SiswaEntity', 's')
+            ->innerJoin('s.kelas', 'k', Doctrine\ORM\Query\Expr\Join::WITH, 'k.id = :kelas')
+            ->orderBy('s.nama', 'ASC')
             ->setParameter('kelas', $kelas);
         $query = $qb->getQuery();
         return $query->getResult();

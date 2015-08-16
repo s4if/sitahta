@@ -81,8 +81,10 @@ class KelasEntity {
 
     public function getSiswa() {
         return $this->siswa;
-        //$criteria = Criteria::create()->orderBy(array("nama" => Criteria::ASC));
-        //return $this->siswa->matching($criteria);
+//        $criteria = Criteria::create()->orderBy(array("nama" => Criteria::ASC))
+//                ->setFirstResult(0)
+//                ->setMaxResults(40);
+//        return $this->siswa->matching($criteria);
     }
 
     public function setKelas($kelas) {

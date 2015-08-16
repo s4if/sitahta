@@ -292,7 +292,9 @@ class Model_nilai extends MY_Model {
 //        }
         foreach ($data['data_kelas'] as $kelas) {
             if (!$kelas->getSiswa()->isEmpty()) {
-                foreach ($kelas->getSiswa() as $siswa) {
+                $siswaRepo = $this->em->getRepository('SiswaEntity');
+                $siswa_di_kelas = $siswaRepo->getDataByKelas($kelas->getId());
+                foreach ($siswa_di_kelas as $siswa) {
                     $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
                     $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
                     $sis_count++;

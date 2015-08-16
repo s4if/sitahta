@@ -328,7 +328,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#tabel_utama').DataTable({
-            "order": [[ 1, "desc" ]]
+            "order": [[ 1, "asc" ]]
         } );
     } );
     $(document)
