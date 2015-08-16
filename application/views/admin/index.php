@@ -32,4 +32,22 @@
         <a href="#">Beranda</a>
     </li>
 </ol>
-Selamat Datang <?=$nama?>, Posisi : <?=$position?> || <a href="<?=base_url()?>login/logout">logout</a>
+<h1 id="selamat-datang-di-sitahta-v0-1-2-beta">Selamat datang di SITAHTA v0.1.2-beta</h1>
+<h2 id="pendahuluan">Pendahuluan</h2>
+<p>Sitahta adalah kepedekan dari Sistem Administrasi Tahsin-Tahfidz (TahTa) yang insyaAllah akan diterapkan di SMAIT Ihsanul Fikri Mungkid. Sistem ini berfungsi untuk mempermudah administrasi dan penilaian dari Program Tahsin-Tahfidz di SMAIT Ihsanul Fikri.  </p>
+<h2 id="fungsi">Fungsi</h2>
+<p>Sistem Ini memiliki beberapa fungsi yaitu :</p>
+<ul>
+<li>Manajemen Peserta Program TahTa</li>
+<li>Manajemen Guru TahTa</li>
+<li>Manajemen Nilai TahTa</li>
+<li>Manajemen Sertifikat TahTa *</li>
+<li>Manajemen Mukhoyyam Sertifikasi **</li>
+<li>Manajemen Percetakan Raport **</li>
+<li>Pengawasan Online dari Orang Tua Siswa*  </li>
+</ul>
+<p><em>* Belum sempurna</em><br><em>** Akan diterapkan di versi berikutnya</em>  </p>
+<h2 id="keterbatasan">Keterbatasan</h2>
+<p>Sistem ini belum sempurna dan masih dalam tahap ujicoba dan pengembangan sehingga masih banyak fitur yang belum di-implementasikan. Saya selaku developer mohon maaf. InsyaAllah fitur-fitur yang akan masih belum diterapkan atau masih belum sempurna, akan diimplementasikan sesegera mungkin.  </p>
+<p><em>Hormat saya,</em><br>.<br>.</p>
+<p><em>Saiful Habib</em></p>

@@ -30,7 +30,7 @@ $guru = new GuruEntity();
 $guru->setNip('1');
 $guru->setNama("admin");
 $guru->setJenis_kelamin("L");
-$guru->setPassword(md5('qwerty'));
+$guru->setPassword(password_hash('qwerty', PASSWORD_BCRYPT));
 $guru->setKewenangan('admin');
 
 $entityManager->persist($guru);
