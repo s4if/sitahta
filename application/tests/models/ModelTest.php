@@ -185,7 +185,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertStringStartsWith($model->checkUserid(109), 'null');
         //method checkPassword
         $this->assertTrue($model->checkPassword(1, 'zaraki', 'guru'));
-        $this->assertTrue($model->checkPassword(1001, 'qwerty', 'user'));
+        $this->assertTrue($model->checkPassword(1001, '12-12-2000', 'user'));
         $this->assertFalse($model->checkPassword(1, 'foo', 'guru'));
         //method getData
         $this->assertObjectHasAttribute('nip', $model->getData('1','guru'));
@@ -198,10 +198,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model_guru = new Model_guru();
         $model_siswa = new Model_siswa();
         foreach ($model_siswa->getData() as $siswa){
-            $this->assertTrue($model->checkPassword($siswa->getNis(), date("d F Y", $siswa->getTgl_Lahir()->getTimestamp()), 'user'));
+            $this->assertTrue($model->checkPassword($siswa->getNis(), date("d-m-Y", $siswa->getTgl_Lahir()->getTimestamp()), 'user'));
         }
         foreach ($model_guru->getData() as $guru){
-            $this->assertTrue($model->checkPassword($guru->getNis(), 'qwerty', 'guru'));
+            $this->assertTrue($model->checkPassword($guru->getNip(), 'qwerty', 'guru'));
         }
     }
 
