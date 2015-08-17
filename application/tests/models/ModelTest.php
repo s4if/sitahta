@@ -192,7 +192,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('nis', $model->getData('1001','user'));
         $this->assertTrue($model->updatePassword(1, 'qwerty', 'guru'));
     }
-
+    
+    public function testModel_login2(){
+        $model = new Model_login();
+        $model_guru = new Model_guru();
+        $model_siswa = new Model_siswa();
+        foreach ($model_siswa->getData() as $siswa){
+            $this->assertTrue($model->checkPassword($siswa->getNis(), date("d F Y", $siswa->getTgl_Lahir()->getTimestamp()), 'user'));
+        }
+        foreach ($model_guru->getData() as $guru){
+            $this->assertTrue($model->checkPassword($guru->getNis(), 'qwerty', 'guru'));
+        }
+    }
 
     public function testModel_nilai() {
         $this->assertTrue(class_exists('Model_nilai'), 'NIlai is loadable');

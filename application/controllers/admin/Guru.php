@@ -65,7 +65,7 @@ class Guru extends MY_Controller {
     public function tambah(){
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
-        $data_insert['password'] = md5("qwerty");
+        $data_insert['password'] = password_hash("qwerty", PASSWORD_BCRYPT);
         print_r($data_insert);
         if($this->guru->dataExist($this->input->post('nip', true))){
             $this->session->set_flashdata("errors",[0 => "Maaf, NIP yang dimasukkan sudah terpakai!"]);

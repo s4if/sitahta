@@ -105,6 +105,8 @@ class Model_siswa extends MY_Model {
             $tgl = new DateTime();
             $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
             $this->siswa->setTgl_lahir($tgl); 
+            //insert password adalah tgl lahir
+            $data['password'] = password_hash($tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0], PASSWORD_BCRYPT);
         }
         if (!(empty($data['kelas'])&&empty($data['jurusan'])&&empty($data['no_kelas'])&&empty($data['tahun_ajaran']))) :
             $str_jur = ($data['kelas'] == 'X')?'':$data['jurusan'].'-';
@@ -189,6 +191,7 @@ class Model_siswa extends MY_Model {
         if(!(($row_data[6] == 'Reguler') || ($row_data[6] == 'Tahfidz') || ($row_data[6] == 'IPA') || ($row_data[6] == 'IPS'))){
             $row_data[6] = ($row_data[5] == 'X')?'Reguler':'IPA';
         }
+        $row_data[10] = $tgl_mentah[0].'-'.$tgl_mentah[1].'-'.$tgl_mentah[2];
         return $row_data;
     }
     
@@ -203,7 +206,7 @@ class Model_siswa extends MY_Model {
         $this->siswa->setTgl_lahir($data_insert[4]);
         $this->siswa->addKelas($this->initKelas($data_insert),$data_insert[5],$data_insert[8]);
         $this->siswa->setNama_ortu($data_insert[9]);
-        $this->siswa->setPassword(md5('qwerty'));
+        $this->siswa->setPassword(password_hash($data_insert[10], PASSWORD_BCRYPT));
         $this->em->persist($this->siswa);
         $this->em->flush();
     }

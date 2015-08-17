@@ -78,7 +78,7 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['tgl_lahir'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
-        $data_insert['password'] = md5("qwerty");
+        $data_insert['password'] = password_hash($data_insert['tanggal'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tahun'], PASSWORD_BCRYPT);
         if ($this->siswa->dataExist($this->input->post('nis', true))) {
             $this->session->set_flashdata("errors", [0 => "Maaf, NIS yang dimasukkan sudah terpakai!"]);
             redirect('admin/siswa');

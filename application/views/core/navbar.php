@@ -59,13 +59,15 @@
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-            <?php if($position === 'admin'):?>
+            <?php if($position === 'admin' || $position === 'guru'):?>
             <li id="navDashboard">
                 <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
             </li>
+            <?php if($position === 'admin'):?>
             <li id="navGuru">
                 <a href="<?=base_url()?>guru"><span class="glyphicon glyphicon-user"></span> &nbsp; Guru</a>
             </li>
+            <?php endif; ?>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#siswa"><span class="glyphicon glyphicon-user"></span> Siswa <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="siswa" class="collapse">
