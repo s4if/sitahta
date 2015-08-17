@@ -140,7 +140,7 @@ class Model_guru extends MY_Model{
         $this->guru->setAlamat($row_data[3]); 
         $this->guru->setEmail($row_data[4]); 
         $this->guru->setNo_telp($row_data[5]); 
-        $this->guru->setPassword(md5("qwerty")); 
+        $this->guru->setPassword(password_hash('qwerty', PASSWORD_BCRYPT)); 
         $this->guru->setKewenangan("guru");
         $this->em->persist($this->guru);
         $this->em->flush();
