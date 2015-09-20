@@ -42,6 +42,21 @@ class SiswaEntity {
      *      )
      **/
     private $kelas;
+    
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $X_absen;
+    
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $XI_absen;
+    
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $XII_absen;
 
     /**
      * @Column(type="string", nullable=false)
@@ -91,6 +106,10 @@ class SiswaEntity {
 
     public function getKelas() {
         return $this->kelas;
+    }
+    
+    public function getAbsen($kelas) {
+        return $this->$kelas."_absen";
     }
 
     //belum terji

@@ -135,7 +135,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //update data
         $data['kelas'] = 'X';
         $this->assertFalse($model->updateData($data));
-        $data['tahun_ajaran'] = '2013';
+        $data['tahun_ajaran'] = '2014';
         $this->assertTrue($model->updateData($data));
         $data['nis'] = 4321;
         $this->assertFalse($model->updateData($data));

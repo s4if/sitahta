@@ -136,7 +136,7 @@ class Nilai extends MY_Controller {
     
     public function template($kelas, $semester){
         $data = $this->input->post(null,true);
-        $data['tanggal'] = $data['hari'].'-'.$data['bulan'].'-'.$data['tahun'];
+        //$data['tanggal'] = $data['hari'].'-'.$data['bulan'].'-'.$data['tahun'];
         $data['data_kelas'] = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
         $data['pengampu'] = $this->session->login_data->getNip();
         $fileName = 'template nilai ('.$kelas.' Semester '.$semester.')';

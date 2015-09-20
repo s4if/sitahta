@@ -17,3 +17,7 @@
 
 
 Doctrine\DBAL\Exception\UniqueConstraintViolationException
+
+
+CheatSheet
+vendor/doctrine/orm/bin/doctrine orm:schema-tool:create

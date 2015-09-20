@@ -136,18 +136,30 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">UH :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <input class="form-control" type="text" name="uh[]">
                         </div>
                         <label class="col-sm-2 control-label">Halaman :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <input class="form-control" type="text" name="halaman[]">
                         </div>
-                        <div class="col-sm-2">
-                            <a class="add_field_button btn btn-primary">Tambah</a>
+                        <div class="col-sm-1">
+                            &nbsp;
                         </div>
                     </div>
-                    <div class="form-group insert_point">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tgl Ulangan :</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="date" name="tanggal[]">
+                        </div>
+                        <div class="col-sm-3">
+                            <a class="add_field_button btn btn-primary">Tambah</a>
+                        </div>
+                        <div class="col-sm-3">
+                            &nbsp;
+                        </div>
+                    </div>
+<!--                    <div class="form-group insert_point">
                         <label class="col-sm-3 control-label">Tgl Ulangan :</label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control" name="hari" pattern="[0-9]{2}"
@@ -173,8 +185,8 @@
                             <input type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
                                    placeholder="Tahun" value="" required="true">
                         </div>
-                    </div>
-                    <div class="form-group">
+                    </div>-->
+                    <div class="form-group insert_point">
                         <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-primary">OK</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -353,7 +365,7 @@
         $('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
     }
     $(document).ready(function() {
-        var max_fields      = 10; //maximum input boxes allowed
+        var max_fields      = 21; //maximum input boxes allowed
         var wrapper         = $(".input_fields_wrap"); //Fields wrapper
         var point         = $(".insert_point"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
@@ -364,17 +376,29 @@
             e.preventDefault();
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
-                var inpt = '<div class="form-group">'+
+                var inpt = '<div class="form-group extra_delete">'+
                         '<label class="col-sm-3 control-label">UH :</label>'+
-                        '<div class="col-sm-2">'+
+                        '<div class="col-sm-3">'+
                         '<input class="form-control" type="text" name="uh[]">'+
                         '</div>'+
                         '<label class="col-sm-2 control-label">Halaman :</label>'+
-                        '<div class="col-sm-2">'+
+                        '<div class="col-sm-3">'+
                         '<input class="form-control" type="text" name="halaman[]">'+
                         '</div>'+
-                        '<div class="col-sm-2">'+
+                        '<div class="col-sm-1">'+
+                        '&nbsp;'+
+                        '</div>'+
+                        '</div>'+
+                        '<div class="form-group">'+
+                        '<label class="col-sm-3 control-label">Tgl Ulangan :</label>'+
+                        '<div class="col-sm-3">'+
+                        '<input class="form-control" type="date" name="tanggal[]">'+
+                        '</div>'+
+                        '<div class="col-sm-3">'+
                         '<a href="#" class="remove_field btn btn-warning">Hapus</a>'+
+                        '</div>'+
+                        '<div class="col-sm-3">'+
+                        '&nbsp;'+
                         '</div>'+
                         '</div>';
                 $(point).before(inpt);
@@ -385,6 +409,7 @@
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); 
+            $(this).parent('div').parent('div').prev('.extra_delete').remove();
             $(this).parent('div').parent('div').remove(); x--;
         });
     });
