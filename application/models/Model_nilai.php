@@ -114,9 +114,20 @@ class Model_nilai extends MY_Model {
 
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data) {
-        if (!empty($data['no_uh'])):$this->nilai->setNo_uh($data['no_uh']);endif;
-        if (!empty($data['kelas'])):$this->nilai->setKelas($data['kelas']);endif;
-        if (!empty($data['semester'])):$this->nilai->setSemester($data['semester']);endif;
+//        if (!empty($data['no_uh'])):$this->nilai->setNo_uh($data['no_uh']);endif;
+//        if (!empty($data['kelas'])):$this->nilai->setKelas($data['kelas']);endif;
+//        if (!empty($data['semester'])):$this->nilai->setSemester($data['semester']);endif;
+        if ((!empty($data['no_uh']))&&(!empty($data['kelas']))&&(!empty($data['semester']))) {
+            $meta_id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
+            $meta = $this->em->find("KurikulumEntity", $meta_id);
+            if(is_null($meta)){
+                $meta = new KurikulumEntity();
+                $meta->setNo_uh($data['no_uh'])->setKelas($data['kelas'])->setSemester($data['semester'])->generateId();
+                $this->em->persist($meta);
+                $this->em->flush();
+            }
+            $this->nilai->setMeta($meta);
+        }
         if (!empty($data['nis'])) {
             $siswa = $this->em->find("SiswaEntity", $data['nis']);
             $this->nilai->setSiswa($siswa);

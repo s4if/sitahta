@@ -6,191 +6,136 @@
  */
 class NilaiHarianEntity {
 
-	/**
-	 * @Id @Column(type="string")
-	 * @GeneratedValue(strategy="NONE")
-	 */
-	private $id;
+    /**
+     * @Id @Column(type="string")
+     * @GeneratedValue(strategy="NONE")
+     */
+    private $id;
 
-	/**
-	 * @Column(type="integer", nullable=false)
-	 */
-	private $no_uh;
+    /**
+    * @ManyToOne(targetEntity="KurikulumEntity")
+    * @JoinColumn(name="kurikulum_id", referencedColumnName="id", nullable=false)
+    **/
+    private $meta;
 
-	/**
-	 * @Column(type="string", nullable=false, length=4)
-	 */
-	private $kelas;
+    /**
+     * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
+     * @JoinColumn(name="siswa", onDelete="CASCADE", referencedColumnName="nis", nullable=false)
+     **/
+    private $siswa;
 
-	/**
-	 * @Column(type="integer", nullable=false)
-	 */
-	private $semester;
+    /**
+     * @Column(type="date", nullable=false)
+     */
+    private $tanggal;
 
-	/**
-	 * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
-	 * @JoinColumn(name="siswa", onDelete="CASCADE", referencedColumnName="nis", nullable=false)
-	 **/
-	private $siswa;
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $nilai;
 
-	/**
-	 * @Column(type="date", nullable=false)
-	 */
-	private $tanggal;
+    /**
+     * @Column(type="integer", nullable=true)
+     */
+    private $nilai_remidi;
 
-	/**
-	 * @Column(type="integer", nullable=true)
-	 */
-	private $juz;
+    /**
+     * @ManyToOne(targetEntity="GuruEntity")
+     * @JoinColumn(name="penguji", onDelete="SET NULL", referencedColumnName="nip")
+     **/
+    private $penguji;
 
-	/**
-	 * @Column(type="string", nullable=true, length=4)
-	 */
-	private $halaman;
+    const KKM = 80;
 
-	/**
-	 * @Column(type="integer", nullable=true)
-	 */
-	private $nilai;
+    public function getId() {
+        return $this->id;
+    }
 
-	/**
-	 * @Column(type="integer", nullable=true)
-	 */
-	private $nilai_remidi;
+    public function getTanggal() {
+        return $this->tanggal;
+    }
 
-	/**
-	 * @ManyToOne(targetEntity="GuruEntity")
-	 * @JoinColumn(name="penguji", onDelete="SET NULL", referencedColumnName="nip")
-	 **/
-	private $penguji;
+    public function getNilai() {
+        return $this->nilai;
+    }
 
-	const KKM = 80;
+    public function getNilai_remidi() {
+        if ($this->nilai >= self::KKM) {
+            return null;
+        } else {
+            return $this->nilai_remidi;
+        }
+    }
 
-	public function getId() {
-		return $this->id;
-	}
+    public function getNilai_akhir() {
+        if ($this->getNilai() >= self::KKM) {
+            return $this->getNilai();
+        } elseif ($this->getNilai_remidi() >= self::KKM) {
+            return self::KKM;
+        } else {
+            return $this->getNilai();
+        }
+    }
 
-	public function getNo_uh() {
-		return $this->no_uh;
-	}
+    public function getPenguji() {
+        return $this->penguji;
+    }
+    public function getMeta() {
+        return $this->meta;
+    }
 
-	public function getKelas() {
-		return $this->kelas;
-	}
+    public function setMeta($meta) {
+        $this->meta = $meta;
+        return $this;
+    }
 
-	public function getSiswa() {
-		return $this->siswa;
-	}
+    public function setSiswa(SiswaEntity $siswa) {
+        $this->siswa = $siswa;
+        return $this;
+    }
 
-	public function getTanggal() {
-		return $this->tanggal;
-	}
+    public function setTanggal($tanggal) {
+        $this->tanggal = $tanggal;
+        return $this;
+    }
 
-	public function getJuz() {
-		return $this->juz;
-	}
+    public function setNilai($nilai) {
+        $this->nilai = $nilai;
+        return $this;
+    }
 
-	public function getHalaman() {
-		return $this->halaman;
-	}
+    public function setNilai_remidi($nilai_remidi) {
+        if ($this->nilai >= self::KKM || $nilai_remidi <= 0) {
+            $this->nilai_remidi = null;
+        } else {
+            $this->nilai_remidi = $nilai_remidi;
+        }
+        return $this;
+    }
 
-	public function getNilai() {
-		return $this->nilai;
-	}
+    public function setPenguji($penguji) {
+        $this->penguji = $penguji;
+        return $this;
+    }
 
-	public function getNilai_remidi() {
-		if ($this->nilai >= self::KKM) {
-			return null;
-		} else {
-			return $this->nilai_remidi;
-		}
-	}
+    public function generateId() {
+        if(isset($this->siswa, $this->meta)){
+            $this->id = $this->siswa->getNis() . '-' . $this->meta->getId();
+            return true;
+        } else {
+            return FALSE;
+        }
+    }
 
-	public function getNilai_akhir() {
-		if ($this->getNilai() >= self::KKM) {
-			return $this->getNilai();
-		} elseif ($this->getNilai_remidi() >= self::KKM) {
-			return self::KKM;
-		} else {
-			return $this->getNilai();
-		}
-	}
-
-	public function getPenguji() {
-		return $this->penguji;
-	}
-
-	public function getSemester() {
-		return $this->semester;
-	}
-
-	public function setSemester($semester) {
-		$this->semester = $semester;
-		return $this;
-	}
-
-	public function setNo_uh($no_uh) {
-		$this->no_uh = $no_uh;
-		return $this;
-	}
-
-	public function setKelas($kelas) {
-		$this->kelas = $kelas;
-		return $this;
-	}
-
-	public function setSiswa(SiswaEntity $siswa) {
-		$this->siswa = $siswa;
-		return $this;
-	}
-
-	public function setTanggal($tanggal) {
-		$this->tanggal = $tanggal;
-		return $this;
-	}
-
-	public function setJuz($juz) {
-		$this->juz = $juz;
-		return $this;
-	}
-
-	public function setHalaman($halaman) {
-		$this->halaman = $halaman;
-		return $this;
-	}
-
-	public function setNilai($nilai) {
-		$this->nilai = $nilai;
-		return $this;
-	}
-
-	public function setNilai_remidi($nilai_remidi) {
-            if ($this->nilai >= self::KKM || $nilai_remidi <= 0) {
-                $this->nilai_remidi = null;
-            } else {
-                $this->nilai_remidi = $nilai_remidi;
-            }
-            return $this;
-	}
-
-	public function setPenguji($penguji) {
-		$this->penguji = $penguji;
-		return $this;
-	}
-
-	public function generateId() {
-		$this->id = $this->siswa->getNis() . '-' . $this->kelas . '-' . $this->semester . '-' . $this->no_uh;
-	}
-
-	//keterangan lulusnya seperti apa
-	public function getKeterangan() {
-		if ($this->nilai >= self::KKM) {
-			return "Lulus tanpa remidi";
-		} elseif ($this->nilai_remidi >= self::KKM) {
-			return "Lulus dengan remidi";
-		} else {
-			return "Belum lulus/remidi";
-		}
-	}
+    //keterangan lulusnya seperti apa
+    public function getKeterangan() {
+        if ($this->nilai >= self::KKM) {
+                return "Lulus tanpa remidi";
+        } elseif ($this->nilai_remidi >= self::KKM) {
+                return "Lulus dengan remidi";
+        } else {
+                return "Belum lulus/remidi";
+        }
+    }
 
 }

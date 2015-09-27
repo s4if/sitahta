@@ -11,14 +11,16 @@ class NilaiHarianRepository extends EntityRepository {
         if($id == -1){
             $qb->select('n')
                 ->from('NilaiHarianEntity', 'n')
-                ->orderBy('n.no_uh', 'ASC');
+                ->join('n.meta', 'm')
+                ->orderBy('m.no_uh', 'ASC');
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('n')
                 ->from('NilaiHarianEntity', 'n')
+                ->join('n.meta', 'm')
                 ->where('n.id = :id')
-                ->orderBy('n.no_uh', 'ASC')
+                ->orderBy('m.no_uh', 'ASC')
                 ->setParameter('id', $id);
             $query = $qb->getQuery();
             return $query->getSingleResult();
@@ -29,8 +31,9 @@ class NilaiHarianRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('n')
             ->from('NilaiHarianEntity', 'n')
-            ->andwhere('n.no_uh = :no_uh')
-            ->orderBy('n.no_uh', 'ASC')
+            ->join('n.meta', 'm')
+            ->andwhere('m.no_uh = :no_uh')
+            ->orderBy('m.no_uh', 'ASC')
             ->setParameter('no_uh', $no_uh);
         $query = $qb->getQuery();
         return $query->getResult();
@@ -42,7 +45,7 @@ class NilaiHarianRepository extends EntityRepository {
         $qb->select('n')
             ->from('NilaiHarianEntity', 'n')
             ->where('n.siswa = :siswa')
-            ->orderBy('n.no_uh', 'ASC')
+            ->orderBy('n.id', 'ASC')
             ->setParameter('siswa', $siswa);
         $query = $qb->getQuery();
         return $query->getResult();
@@ -52,8 +55,9 @@ class NilaiHarianRepository extends EntityRepository {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('n')
             ->from('NilaiHarianEntity', 'n')
-            ->where('n.kelas = :kelas')
-            ->orderBy('n.no_uh', 'ASC')
+            ->join('n.meta', 'm')
+            ->where('m.kelas = :kelas')
+            ->orderBy('m.no_uh', 'ASC')
             ->setParameter('kelas', $kelas);
         $query = $qb->getQuery();
         return $query->getResult();
@@ -68,7 +72,7 @@ class NilaiHarianRepository extends EntityRepository {
             ->from('NilaiHarianEntity', 'n')
             ->innerJoin('n.siswa', 's')
             ->andWhere('n.kelas = s.kelas')
-            ->orderBy('n.no_uh', 'ASC');
+            ->orderBy('n.id', 'ASC');
         $query = $qb->getQuery();
         $query->setFetchMode('NilaiHarianEntity', 'n', Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
         $query->setFetchMode('SiswaEntity', 's', Doctrine\ORM\Mapping\ClassMetadata::FETCH_EAGER);
