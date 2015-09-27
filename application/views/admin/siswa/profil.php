@@ -156,7 +156,7 @@
                     <tr>
                         <td>UH</td>
                         <td>Juz</td>
-                        <td>Halaman</td>
+                        <td>Materi</td>
                         <td>Nilai Awal</td>
                         <td>Nilai Remidi</td>
                         <td>Nilai Akhir</td>
@@ -200,8 +200,10 @@
                     <?php foreach ($data_nilai as $nilai): ?>
                     <tr>
                     <td>#<?=$nilai->getNo_uh();?></td>
-                    <td><?=$nilai->getJuz();?></td>
-                    <td><?=$nilai->getHalaman();?></td>
+                    <td><?=$nilai->getMeta()->getJuz();?></td>
+                    <td>
+                        <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
+                    </td>
                     <td><?=$nilai->getNilai()?></td>
                     <td><?php echo (is_null($nilai->getNilai_remidi())) ? '-' : $nilai->getNilai_remidi();?></td>
                     <td><?=$nilai->getNilai_akhir();?></td>
@@ -233,8 +235,8 @@
                         $("#UhEdit").attr("value", "<?=$nilai->getNo_uh()?>");
                         $("#kelasEdit").attr("value", "<?=$nilai->getKelas()?>");
                         $("#semesterEdit").attr("value", "<?=$nilai->getSemester()?>");
-                        $("#juzEdit").attr("value", "<?=$nilai->getJuz()?>");
-                        $("#halamanEdit").attr("value", "<?=$nilai->getHalaman()?>");
+                        //$("#juzEdit").attr("value", "<=$nilai->getJuz()?>");
+                        //$("#halamanEdit").attr("value", "<//$nilai->getHalaman()?>");
                         $("#nilaiEdit").attr("value", "<?=$nilai->getNilai()?>");
                         $("#nilaiRemidiEdit").attr("value", "<?php echo (is_null($nilai->getNilai_remidi())) ? '' : $nilai->getNilai_remidi();?>");
                         $("#tglEdit").attr("value", "<?=date('d', $nilai->getTanggal()->getTimestamp());?>");

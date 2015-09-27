@@ -210,8 +210,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model = new Model_kurikulum();
         $model->truncate([0 => 'kurikulum']);
         $data = [
-            'no_uh' => 1,
-            'kelas' => 'XI',
+            'no_uh' => 11,
+            'kelas' => 'X',
             'semester' => 1,
             'juz' => 1,
             'surat_awal' => 'Al Fatihah',
@@ -222,8 +222,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //initial Data
         $model->insertData($data);
         //delete data
-        $this->assertTrue($model->deleteData(['id' => 'XI-1-1']));
-        $this->assertFalse($model->deleteData(['id' => 'XI-1-1']));
+        $this->assertTrue($model->deleteData(['id' => 'X-1-11']));
+        $this->assertFalse($model->deleteData(['id' => 'X-1-11']));
         //add data
         $this->assertTrue($model->insertData($data));
         $this->assertFalse($model->insertData($data));
@@ -235,7 +235,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_kurikulum_2(){
         $model = new Model_kurikulum();
         //checkAttributes
-        $id = 'XI-1-1';
+        $id = 'X-1-11';
         $this->assertObjectHasAttribute('id', $model->getData($id));
         $this->assertObjectHasAttribute('kelas', $model->getData($id));
         $this->assertObjectHasAttribute('semester', $model->getData($id));
@@ -331,7 +331,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('nilai', $nilai4);
         $this->assertObjectHasAttribute('nilai_remidi', $nilai4);
         $this->assertObjectHasAttribute('penguji', $nilai4);
-//        $this->assertEquals(0, $model->importData('assets/test/coba_nilai.xls'));
+        $this->assertEquals(0, $model->importData('assets/test/coba_nilai.xls'));
 //        $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
 //        $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
     }

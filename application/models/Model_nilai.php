@@ -177,7 +177,7 @@ class Model_nilai extends MY_Model {
             $failureCount = 0;
             $lastCol = $objWorksheet->getHighestDataColumn();
             $data = $objWorksheet->rangeToArray('A1'.':'.$lastCol.$lastRow, null, TRUE);
-            for($i = 0; $i <= 4; $i++){
+            for($i = 0; $i <= 3; $i++){
                 if(is_null($data[$i][1])){
                     $failureCount++;
                 }
@@ -196,10 +196,10 @@ class Model_nilai extends MY_Model {
         $this->em->getConnection()->beginTransaction();
         $failureCount = 0;
         // $i dimulai dari index mulai masuk tabel nilai
-        for ($i = 9; $i < $lastRow;$i++){
+        for ($i = 7; $i < $lastRow;$i++){
             $row_data = $data[$i];
             if($this->rowValidation($data, $row_data)){
-            //if(true){
+//            if(true){
                 $this->transQuery($this->dataTranslator($data, $row_data));
             }  else {
                 $failureCount++;
@@ -224,11 +224,11 @@ class Model_nilai extends MY_Model {
                 $rowValid = false;
                 break;
             }
-            if(is_null($data[5][$i+1])){
+            if(is_null($data[4][$i+1])){
                 $rowValid = false;
                 break;
             }
-            if(is_null($data[6][$i+1])){
+            if(is_null($data[5][$i+1])){
                 $rowValid = false;
                 break;
             }
@@ -243,21 +243,18 @@ class Model_nilai extends MY_Model {
         $i = 2;
         while ($i < count($row_data)){
             $trans_row = [];
-            $trans_row ['no_uh'] = $data[5][$i+1];
+            $trans_row ['no_uh'] = $data[4][$i+1];
             $trans_row ['kelas'] = $data[0][1];
             $trans_row ['semester'] = $data[1][1];
             $t_a = explode('/', $data[2][1]);
             $trans_row ['tahun_ajaran'] = $t_a[0];
             $trans_row ['nis'] = $row_data[0];
-            $tgl_arr = explode("-", $data[7][$i+1]);
+            $tgl_arr = explode("-", $data[5][$i+1]);
             $tgl = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
             $trans_row ['tanggal'] = $tgl;
-//            $trans_row ['tanggal'] = $data[7][$i+1];
-            $trans_row ['juz'] = $data[3][1];
-            $trans_row ['halaman'] = (is_null($data[6][$i+1]))?$data[5][$i+1]:$data[6][$i+1];
             $trans_row ['nilai'] = $row_data[$i];
             $trans_row ['nilai_remidi'] = $row_data[$i+1];
-            $trans_row ['penguji'] = $data[4][1];
+            $trans_row ['penguji'] = $data[3][1];
             $trans_data[] = $trans_row;
             $i = $i+2;
         }
@@ -289,15 +286,11 @@ class Model_nilai extends MY_Model {
         $objPHPExcel->getActiveSheet()->SetCellValue('B2', $data['semester']);
         $objPHPExcel->getActiveSheet()->SetCellValue('A3', 'Tahun Ajaran :');
         $objPHPExcel->getActiveSheet()->SetCellValue('B3', $data['tahun_ajaran']);
-        $objPHPExcel->getActiveSheet()->SetCellValue('A4', 'Juz :');
-        $objPHPExcel->getActiveSheet()->SetCellValue('B4', $data['juz']);
-//        $objPHPExcel->getActiveSheet()->SetCellValue('A5', 'Tanggal :');
-//        $objPHPExcel->getActiveSheet()->SetCellValue('B5', $data['tanggal']);
-        $objPHPExcel->getActiveSheet()->SetCellValue('A5', 'Pengampu :');
-        $objPHPExcel->getActiveSheet()->SetCellValue('B5', $data['pengampu']);
-        $objPHPExcel->getActiveSheet()->SetCellValue('A9', 'NIS');
-        $objPHPExcel->getActiveSheet()->SetCellValue('B9', 'Nama');
-        $sis_count = 10;
+        $objPHPExcel->getActiveSheet()->SetCellValue('A4', 'Pengampu :');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B4', $data['pengampu']);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A7', 'NIS');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B7', 'Nama');
+        $sis_count = 8;
 //        foreach ($data['siswa'] as $siswa){
 //            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
 //            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
@@ -317,15 +310,13 @@ class Model_nilai extends MY_Model {
         $kolom_uh = 2;
         $id_uh = 0;
         foreach ($data['uh'] as $uh){
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'6', 'UH :');
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', 'Halaman :');
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'8', 'Tanggal :');
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'9', 'Nilai');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'5', 'UH :');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'6', 'Tanggal :');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', 'Nilai');
             $kolom_uh++;
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'6', $uh);
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', $data['halaman'][$id_uh]);
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'8', $data['tanggal'][$id_uh]);
-            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'9', 'Remidi');
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'5', $uh);
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'6', $data['tanggal'][$id_uh]);
+            $objPHPExcel->getActiveSheet()->SetCellValue(PHPExcel_Cell::stringFromColumnIndex($kolom_uh).'7', 'Remidi');
             $kolom_uh++;
             $id_uh++;
         }

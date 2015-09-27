@@ -57,20 +57,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Juz :</label>
-                        <div class="col-sm-8">
-                            <input id="juzAdd" type="number" class="form-control" name="juz" 
-                                   placeholder="Masukkan Juz" value="" required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Halaman :</label>
-                        <div class="col-sm-8">
-                            <input id="halamanAdd" type="number" class="form-control" name="halaman" 
-                                   placeholder="Masukkan Halaman" value="" required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
                             <input id="nilaiAdd" type="number" class="form-control" name="nilai" 
@@ -158,20 +144,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Juz :</label>
-                        <div class="col-sm-8">
-                            <input id="juzEdit" type="number" class="form-control" name="juz" 
-                                   placeholder="Masukkan Juz" value="" required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Halaman :</label>
-                        <div class="col-sm-8">
-                            <input id="halamanEdit" type="number" class="form-control" name="halaman" 
-                                   placeholder="Masukkan Halaman" value="" required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
                             <input id="nilaiEdit" type="number" class="form-control" name="nilai" 
@@ -208,7 +180,7 @@
                             </select>
                         </div>
                         <div class="col-sm-3">
-                            <input id="tahunEdit" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
+                            <input id="thnEdit" type="number" class="form-control" name="tahun"
                                    placeholder="Tahun" value="" required="true">
                         </div>
                     </div>

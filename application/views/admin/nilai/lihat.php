@@ -128,27 +128,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Juz :</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" name="juz" 
-                                   placeholder="Masukkan Juz" value="" required="true">
+                        <label class="col-sm-3 control-label">Ulangan Harian :</label>
+                        <div class="col-sm-3">
+                            <input class="form-control" type="number" name="uh[]">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">UH :</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" type="text" name="uh[]">
-                        </div>
-                        <label class="col-sm-2 control-label">Halaman :</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" type="text" name="halaman[]">
-                        </div>
-                        <div class="col-sm-1">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Tgl Ulangan :</label>
+                        <label class="col-sm-3 control-label">Tanggal :</label>
                         <div class="col-sm-3">
                             <input class="form-control" type="date" name="tanggal[]">
                         </div>
@@ -159,33 +145,6 @@
                             &nbsp;
                         </div>
                     </div>
-<!--                    <div class="form-group insert_point">
-                        <label class="col-sm-3 control-label">Tgl Ulangan :</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" name="hari" pattern="[0-9]{2}"
-                                   placeholder="Tanggal" value="" required="true">
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="bulan">
-                                <option value="1">Jan</option>
-                                <option value="2">Feb</option>
-                                <option value="3">Mar</option>
-                                <option value="4">Apr</option>
-                                <option value="5">Mei</option>
-                                <option value="6">Jun</option>
-                                <option value="7">Jul</option>
-                                <option value="8">Agu</option>
-                                <option value="9">Sep</option>
-                                <option value="10">Okt</option>
-                                <option value="11">Nov</option>
-                                <option value="12">Des</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
-                                   placeholder="Tahun" value="" required="true">
-                        </div>
-                    </div>-->
                     <div class="form-group insert_point">
                         <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-primary">OK</button>
@@ -216,6 +175,52 @@
                             </div>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#cetakRaport">
+            <span class="glyphicon glyphicon-download-alt"></span>
+            Cetak PDF
+        </a>
+        <div class="modal fade" id="cetakRaport" tabindex="-1" role="dialog" aria-labelledby="cetakRaport" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-center">Cetak Raport</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/nilai/raport">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Kelas :</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="kelas">
+                                        <?php foreach ($list_kelas as $item_kelas) :?>
+                                        <option value='<?=$item_kelas->getId()?>' ><?=$item_kelas->getNamaKelas()?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Semester :</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="semester">
+                                        <option value='1' >1</option>
+                                        <option value='2' >2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button type="submit" class="btn btn-sm btn-primary">OK</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
+                        </form>  
+                    </div>
+                    <div class="modal-footer">
+                        &nbsp;
                     </div>
                 </div>
             </div>
@@ -313,13 +318,11 @@
                         $("#UhEdit").attr("value", "<?=$data_nilai->getNo_uh()?>");
                         $("#kelasEdit").attr("value", "<?=$data_nilai->getKelas()?>");
                         $("#semesterEdit").attr("value", "<?=$data_nilai->getSemester()?>");
-                        $("#juzEdit").attr("value", "<?=$data_nilai->getJuz()?>");
-                        $("#halamanEdit").attr("value", "<?=$data_nilai->getHalaman()?>");
                         $("#nilaiEdit").attr("value", "<?=$data_nilai->getNilai()?>");
                         $("#nilaiRemidiEdit").attr("value", "<?php echo (is_null($data_nilai->getNilai_remidi())) ? '' : $data_nilai->getNilai_remidi();?>");
                         $("#tglEdit").attr("value", "<?=date('d', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#bulanEdit<?=date('n', $data_nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
-                        $("#tahunEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
+                        $("#thnEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#btnDelOk").attr("href", "<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>");
                         $("#editNilai").modal("toggle");
                     });
@@ -377,28 +380,18 @@
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
                 var inpt = '<div class="form-group extra_delete">'+
-                        '<label class="col-sm-3 control-label">UH :</label>'+
+                         '<label class="col-sm-3 control-label">Ulangan Harian :</label>'+
                         '<div class="col-sm-3">'+
-                        '<input class="form-control" type="text" name="uh[]">'+
-                        '</div>'+
-                        '<label class="col-sm-2 control-label">Halaman :</label>'+
-                        '<div class="col-sm-3">'+
-                        '<input class="form-control" type="text" name="halaman[]">'+
-                        '</div>'+
-                        '<div class="col-sm-1">'+
-                        '&nbsp;'+
+                        '<input class="form-control" type="number" name="uh[]">'+
                         '</div>'+
                         '</div>'+
                         '<div class="form-group">'+
-                        '<label class="col-sm-3 control-label">Tgl Ulangan :</label>'+
+                        '<label class="col-sm-3 control-label">Tanggal :</label>'+
                         '<div class="col-sm-3">'+
                         '<input class="form-control" type="date" name="tanggal[]">'+
                         '</div>'+
                         '<div class="col-sm-3">'+
                         '<a href="#" class="remove_field btn btn-warning">Hapus</a>'+
-                        '</div>'+
-                        '<div class="col-sm-3">'+
-                        '&nbsp;'+
                         '</div>'+
                         '</div>';
                 $(point).before(inpt);

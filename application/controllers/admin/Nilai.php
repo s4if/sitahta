@@ -134,6 +134,22 @@ class Nilai extends MY_Controller {
         }
     }
     
+    public function raport(){
+        $this->blockUnloggedOne();
+        $kelas = $this->input->post('kelas');
+        $semester = $this->input->post('semester');
+        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $this->load->library('fpdf');
+        $data = [
+            'title' => 'Raport Tahta',
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $semester,
+            'id_kelas' => $kelas,
+            'data_kelas' => $data_kelas
+        ];
+        $this->load->view('admin/nilai/raport', $data);
+    }
+    
     public function template($kelas, $semester){
         $data = $this->input->post(null,true);
         //$data['tanggal'] = $data['hari'].'-'.$data['bulan'].'-'.$data['tahun'];
