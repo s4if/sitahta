@@ -290,6 +290,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $semester = 1;
         $nilai1 = $model->getDatabyNis($nis)[0];
         $this->assertObjectHasAttribute('meta', $nilai1);
+        $this->assertObjectHasAttribute('no_uh', $nilai1);
+        $this->assertObjectHasAttribute('kelas', $nilai1);
+        $this->assertObjectHasAttribute('semester', $nilai1);
         $this->assertObjectHasAttribute('siswa', $nilai1);
         $this->assertObjectHasAttribute('tanggal', $nilai1);
         $this->assertObjectHasAttribute('nilai', $nilai1);
@@ -298,6 +301,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //===
         $nilai2 = $model->getDataByNo_uh($no_uh)[0];
         $this->assertObjectHasAttribute('meta', $nilai2);
+        $this->assertObjectHasAttribute('no_uh', $nilai1);
+        $this->assertObjectHasAttribute('kelas', $nilai1);
+        $this->assertObjectHasAttribute('semester', $nilai1);
         $this->assertObjectHasAttribute('siswa', $nilai2);
         $this->assertObjectHasAttribute('tanggal', $nilai2);
         $this->assertObjectHasAttribute('nilai', $nilai2);
@@ -306,6 +312,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //===
         $nilai3 = $model->getDatabyKelas($kelas)[0];
         $this->assertObjectHasAttribute('meta', $nilai3);
+        $this->assertObjectHasAttribute('no_uh', $nilai1);
+        $this->assertObjectHasAttribute('kelas', $nilai1);
+        $this->assertObjectHasAttribute('semester', $nilai1);
         $this->assertObjectHasAttribute('siswa', $nilai3);
         $this->assertObjectHasAttribute('tanggal', $nilai3);
         $this->assertObjectHasAttribute('nilai', $nilai3);
@@ -314,6 +323,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //===
         $nilai4 = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas, 'semester' => $semester]);
         $this->assertObjectHasAttribute('meta', $nilai4);
+        $this->assertObjectHasAttribute('no_uh', $nilai1);
+        $this->assertObjectHasAttribute('kelas', $nilai1);
+        $this->assertObjectHasAttribute('semester', $nilai1);
         $this->assertObjectHasAttribute('siswa', $nilai4);
         $this->assertObjectHasAttribute('tanggal', $nilai4);
         $this->assertObjectHasAttribute('nilai', $nilai4);

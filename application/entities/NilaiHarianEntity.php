@@ -17,6 +17,21 @@ class NilaiHarianEntity {
     * @JoinColumn(name="kurikulum_id", referencedColumnName="id", nullable=false)
     **/
     private $meta;
+    
+    /**
+     * @Column(type="integer", nullable=false)
+     */
+    private $no_uh;
+
+    /**
+     * @Column(type="string", nullable=false, length=4)
+     */
+    private $kelas;
+
+    /**
+     * @Column(type="integer", nullable=false)
+     */
+    private $semester;
 
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
@@ -83,6 +98,21 @@ class NilaiHarianEntity {
     public function getMeta() {
         return $this->meta;
     }
+    public function getNo_uh() {
+        return $this->no_uh;
+    }
+
+    public function getKelas() {
+        return $this->kelas;
+    }
+
+    public function getSemester() {
+        return $this->semester;
+    }
+
+    public function getSiswa() {
+        return $this->siswa;
+    }
 
     public function setMeta($meta) {
         $this->meta = $meta;
@@ -121,6 +151,9 @@ class NilaiHarianEntity {
     public function generateId() {
         if(isset($this->siswa, $this->meta)){
             $this->id = $this->siswa->getNis() . '-' . $this->meta->getId();
+            $this->kelas = $this->meta->getkelas();
+            $this->no_uh = $this->meta->getNo_uh();
+            $this->semester = $this->meta->getSemester();
             return true;
         } else {
             return FALSE;

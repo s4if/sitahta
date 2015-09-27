@@ -146,7 +146,7 @@
                         $("#ortuEdit").attr("value", "<?=$siswa->getNama_ortu();?>");
                         $("#tglEdit").attr("value", "<?=date('d', $siswa->getTgl_lahir()->getTimestamp());?>");
                         $("#bulanEdit<?=date('n', $siswa->getTgl_lahir()->getTimestamp());?>").attr("selected", "true");
-                        $("#tahunEdit").attr("value", "<?=date('Y', $siswa->getTgl_lahir()->getTimestamp());?>");
+                        $("#thnEdit").attr("value", "<?=date('Y', $siswa->getTgl_lahir()->getTimestamp());?>");
                         $("#editModal").modal("toggle");
                     });
                 </script>
