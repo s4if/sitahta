@@ -42,7 +42,6 @@ class Model_siswa extends MY_Model {
         return $this->em->getRepository('SiswaEntity')->getData($nis);
     }
     
-    //kurang tahun pelajaran
     public function getKelas($kelas = 'X', $tahun_ajaran = '2014'){
         $data = new Doctrine\Common\Collections\ArrayCollection();
         if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
@@ -53,6 +52,11 @@ class Model_siswa extends MY_Model {
         return $data;
     }
     
+    public function getDataByKelas($kelas){
+        $data = $this->em->getRepository('SiswaEntity')->getDataByKelas($kelas);
+        return $data;
+    }
+
     public function insertData($data){
         if(is_null($this->em->find("SiswaEntity", $data['nis']))){
             $this->siswa = new SiswaEntity();

@@ -138,16 +138,23 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         $kelas = $this->input->post('kelas');
         $semester = $this->input->post('semester');
-        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
-        $this->load->library('fpdf');
+        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran)[0];
+        $data_siswa = $this->siswa->getDataByKelas($data_kelas);
+        $pdf = new \Dompdf\Dompdf();
+        $pdf->setPaper('A4', 'portrait');
         $data = [
             'title' => 'Raport Tahta',
             'tahun_ajaran' => $this->session->tahun_ajaran,
             'semester' => $semester,
             'id_kelas' => $kelas,
-            'data_kelas' => $data_kelas
+            'kelas' => $data_kelas,
+            'data_siswa' => $data_siswa
         ];
-        $this->load->view('admin/nilai/raport', $data);
+//        $this->load->view('admin/nilai/raport', $data, false);
+        $html = $this->load->view('admin/nilai/raport', $data, TRUE);
+        $pdf->loadHtml($html);
+        $pdf->render();
+        $pdf->stream($kelas);
     }
     
     public function template($kelas, $semester){
