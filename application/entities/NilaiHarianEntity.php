@@ -32,6 +32,11 @@ class NilaiHarianEntity {
      * @Column(type="integer", nullable=false)
      */
     private $semester;
+    
+    /**
+     * @Column(type="string", nullable=false, length=4)
+     */
+    private $tahun;
 
     /**
      * @ManyToOne(targetEntity="SiswaEntity", inversedBy="nilai")
@@ -113,8 +118,17 @@ class NilaiHarianEntity {
     public function getSiswa() {
         return $this->siswa;
     }
+    
+    public function getTahun() {
+        return $this->tahun;
+    }
 
-    public function setMeta($meta) {
+    public function setTahun($tahun) {
+        $this->tahun = $tahun;
+        return $this;
+    }
+
+        public function setMeta($meta) {
         $this->meta = $meta;
         return $this;
     }
@@ -154,6 +168,7 @@ class NilaiHarianEntity {
             $this->kelas = $this->meta->getkelas();
             $this->no_uh = $this->meta->getNo_uh();
             $this->semester = $this->meta->getSemester();
+            $this->tahun =  $this->meta->getTahun();
             return true;
         } else {
             return FALSE;

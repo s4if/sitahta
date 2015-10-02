@@ -34,23 +34,50 @@ use Doctrine\ORM\EntityRepository;
 
 class KurikulumRepository extends EntityRepository {
     
-    public function getData ($id = -1) {
+    public function getData ($id = -1, $tahun = -1) {
+        if($tahun == -1){
+            $tahun = date('Y');
+        }
         $qb = $this->getEntityManager()->createQueryBuilder();
         if($id == -1){
             $qb->select('k')
                 ->from('KurikulumEntity', 'k')
-                ->orderBy('k.id', 'ASC');
+                ->andwhere('k.tahun = :tahun')
+                ->addOrderBy('k.kelas', 'ASC')
+                ->addOrderBy('k.semester', 'ASC')
+                ->addOrderBy('k.no_uh', 'ASC')
+                ->setParameter('tahun', $tahun);
             $query = $qb->getQuery();
             return $query->getResult();
         }else {
             $qb->select('k')
                 ->from('KurikulumEntity', 'k')
-                ->where('k.id = :id')
-                ->orderBy('k.id', 'ASC')
+                ->andwhere('k.id = :id')
+                ->addOrderBy('k.kelas', 'ASC')
+                ->addOrderBy('k.semester', 'ASC')
+                ->addOrderBy('k.no_uh', 'ASC')
                 ->setParameter('id', $id);
             $query = $qb->getQuery();
             return $query->getSingleResult();
         }
+    }
+    
+    public function getDataByKelas($kelas, $tahun = -1){
+        if($tahun == -1){
+            $tahun = date('Y');
+        }
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('k')
+                ->from('KurikulumEntity', 'k')
+                ->andwhere('k.kelas = :kelas')
+                ->andwhere('k.tahun = :tahun')
+                ->addOrderBy('k.kelas', 'ASC')
+                ->addOrderBy('k.semester', 'ASC')
+                ->addOrderBy('k.no_uh', 'ASC')
+                ->setParameter('kelas', $kelas)
+                ->setParameter('tahun', $tahun);
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
     
 }

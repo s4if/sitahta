@@ -107,9 +107,9 @@ class Nilai extends MY_Controller {
         }
     }
 
-    public function hapus_nilai($nis, $kelas, $semester, $no_uh) {
+    public function hapus_nilai($nis, $kelas, $semester, $no_uh, $tahun) {
         $this->blockUnloggedOne();
-        if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester])) {
+        if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester, 'tahun_ajaran' => $tahun])) {
             $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
             redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
         } else {

@@ -57,6 +57,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label">TahunAjaran :</label>
+                        <div class="col-sm-2">
+                            <input id="tahun_ajaranAdd" type="number" class="form-control" name="tahun_ajaran" 
+                                   placeholder="Tahun ajaran" value="" required="true" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
                             <input id="nilaiAdd" type="number" class="form-control" name="nilai" 
@@ -141,6 +148,13 @@
                         <div class="col-sm-2">
                             <input id="semesterEdit" type="number" class="form-control" name="semester" 
                                    placeholder="Semester" value="" required="true" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tahun Ajaran :</label>
+                        <div class="col-sm-2">
+                            <input id="tahun_ajaranEdit" type="number" class="form-control" name="tahun_ajaran" 
+                                   placeholder="Tahun Ajaran" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">

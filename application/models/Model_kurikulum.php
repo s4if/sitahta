@@ -36,12 +36,58 @@ class Model_kurikulum extends MY_Model {
         parent::__construct();
     }
     
-    public function getData($id = -1){
-        return $this->em->getRepository('KurikulumEntity')->getData($id);
+    public function getData($id = -1, $tahun = -1){
+        return $this->em->getRepository('KurikulumEntity')->getData($id, $tahun);
+    }
+    
+    public function getDataByKelas($kelas = 'X', $tahun = -1){
+        return $this->em->getRepository('KurikulumEntity')->getDataByKelas($kelas);
+    }
+    
+    // for testing only!!!
+    public function reset($tahun = 2015){
+        $this->truncate(['kurikulum'], TRUE);
+        // Setting Jumlah Ulangan
+        $jumlah_ulangan ['X']= 20;
+        $jumlah_ulangan ['XI'] = 10;
+        $jumlah_ulangan ['XII'] = $jumlah_ulangan ['XI'];
+        $arr_kelas =['X','XI','XII'];
+        // Set Up Kurikulum
+        foreach ($arr_kelas as $kelas){
+            for($j = 1; $j <= 2 ; $j++){
+                for($i = 1; $i <= $jumlah_ulangan[$kelas];$i++){
+                    $kurikulum = new KurikulumEntity();
+                    $kurikulum->setKelas($kelas);
+                    $kurikulum->setSemester($j);
+                    $kurikulum->setNo_uh($i);
+                    $kurikulum->setTahun($tahun);
+                    $kurikulum->generateId();
+                    $this->em->persist($kurikulum);
+                    $this->em->flush();
+                }
+                $kurikulum = new KurikulumEntity();
+                $kurikulum->setKelas($kelas);
+                $kurikulum->setSemester($j);
+                $kurikulum->setNo_uh('UTS');
+                $kurikulum->setTahun($tahun);
+                $kurikulum->generateId();
+                $this->em->persist($kurikulum);
+                $this->em->flush();
+                unset($kurikulum);
+                $kurikulum = new KurikulumEntity();
+                $kurikulum->setKelas($kelas);
+                $kurikulum->setSemester($j);
+                $kurikulum->setNo_uh('UAS');
+                $kurikulum->setTahun($tahun);
+                $kurikulum->generateId();
+                $this->em->persist($kurikulum);
+                $this->em->flush();
+            }
+        }
     }
     
     public function insertData($data){
-        $id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
+        $id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'].'-'.$data['tahun_ajaran'];
         if(is_null($this->em->find("KurikulumEntity", $id))){
             $this->kurikulum = new KurikulumEntity();
             $this->setData($data);
@@ -55,11 +101,24 @@ class Model_kurikulum extends MY_Model {
     }
     
     public function updateData($data){
-        $id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
+        $id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'].'-'.$data['tahun_ajaran'];
         $this->kurikulum = $this->em->find("KurikulumEntity", $id);
         if(!is_null($this->kurikulum)){
             $this->setData($data);
             $this->kurikulum->generateId();
+            $this->em->persist($this->kurikulum);
+            $this->em->flush();
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function resetData($data){
+        $id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'].'-'.$data['tahun_ajaran'];
+        $this->kurikulum = $this->em->find("KurikulumEntity", $id);
+        if(!is_null($this->kurikulum)){
+            $this->kurikulum->reset();
             $this->em->persist($this->kurikulum);
             $this->em->flush();
             return true;
@@ -83,6 +142,7 @@ class Model_kurikulum extends MY_Model {
         if (!empty($data['no_uh'])) : $this->kurikulum->setNo_uh($data['no_uh']); endif;
         if (!empty($data['kelas'])) : $this->kurikulum->setKelas($data['kelas']); endif;
         if (!empty($data['semester'])) : $this->kurikulum->setSemester($data['semester']); endif;
+        if (!empty($data['tahun_ajaran'])) : $this->kurikulum->setTahun($data['tahun_ajaran']); endif;
         if (!empty($data['juz'])) : $this->kurikulum->setJuz($data['juz']); endif;
         if (!empty($data['surat_awal'])) : $this->kurikulum->setSurat_awal($data['surat_awal']); endif;
         if (!empty($data['ayat_awal'])) : $this->kurikulum->setAyat_awal($data['ayat_awal']); endif;

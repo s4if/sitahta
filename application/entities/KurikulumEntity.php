@@ -13,7 +13,7 @@ class KurikulumEntity {
     private $id;
     
     /**
-    * @Column(type="integer", nullable=false)
+    * @Column(type="string", nullable=false)
     */
     private $no_uh;
 
@@ -26,6 +26,11 @@ class KurikulumEntity {
      * @Column(type="integer", nullable=false)
      */
     private $semester;
+    
+    /**
+     * @Column(type="string", nullable=false, length=9)
+     */
+    private $tahun;
     
     /**
     * @Column(type="integer", nullable=true)
@@ -87,14 +92,25 @@ class KurikulumEntity {
     public function getAyat_akhir() {
         return $this->ayat_akhir;
     }
+    public function getTahun() {
+        return $this->tahun;
+    }
 
     public function generateId() {
-        if(isset($this->no_uh, $this->kelas, $this->semester)){
-            $this->id = $this->kelas.'-'.$this->semester.'-'.$this->no_uh;
+        if(isset($this->no_uh, $this->kelas, $this->semester, $this->tahun)){
+            $this->id = $this->kelas.'-'.$this->semester.'-'.$this->no_uh.'-'.$this->tahun;
             return TRUE;
         } else {
             return FALSE;
         }
+    }
+    
+    public function reset(){
+        $this->juz = null;
+        $this->surat_awal = null;
+        $this->surat_akhir = null;
+        $this->ayat_awal = null;
+        $this->ayat_akhir = null;
     }
 
     public function setNo_uh($no_uh) {
@@ -109,6 +125,11 @@ class KurikulumEntity {
 
     public function setSemester($semester) {
         $this->semester = $semester;
+        return $this;
+    }
+    
+    public function setTahun($tahun) {
+        $this->tahun = $tahun;
         return $this;
     }
 
@@ -136,6 +157,5 @@ class KurikulumEntity {
         $this->ayat_akhir = $ayat_akhir;
         return $this;
     }
-
 
 }

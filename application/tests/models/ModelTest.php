@@ -208,11 +208,13 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_kurikulum() {
         $this->assertTrue(class_exists('Model_guru'), 'guru is loadable');
         $model = new Model_kurikulum();
-        $model->truncate([0 => 'kurikulum']);
+        //$model->truncate([0 => 'kurikulum']);
+        $model->reset('2015');
         $data = [
             'no_uh' => 11,
             'kelas' => 'X',
             'semester' => 1,
+            'tahun_ajaran' => 2015,
             'juz' => 1,
             'surat_awal' => 'Al Fatihah',
             'ayat_awal' => 1,
@@ -222,8 +224,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //initial Data
         $model->insertData($data);
         //delete data
-        $this->assertTrue($model->deleteData(['id' => 'X-1-11']));
-        $this->assertFalse($model->deleteData(['id' => 'X-1-11']));
+        $this->assertTrue($model->deleteData(['id' => 'X-1-11-2015']));
+        $this->assertFalse($model->deleteData(['id' => 'X-1-11-2015']));
         //add data
         $this->assertTrue($model->insertData($data));
         $this->assertFalse($model->insertData($data));
@@ -235,7 +237,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_kurikulum_2(){
         $model = new Model_kurikulum();
         //checkAttributes
-        $id = 'X-1-11';
+        $id = 'X-1-11-2015';
         $this->assertObjectHasAttribute('id', $model->getData($id));
         $this->assertObjectHasAttribute('kelas', $model->getData($id));
         $this->assertObjectHasAttribute('semester', $model->getData($id));
@@ -258,6 +260,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'no_uh' => 1,
             'kelas' => 'XI',
             'semester' => 1,
+            'tahun_ajaran' => 2015,
             'nis' => 1001,
             'tanggal' => '2015-12-12',
             'nilai' => 78,
@@ -267,15 +270,15 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($model->insertData($data));
         $this->assertFalse($model->insertData($data));
         //data exist
-        $this->assertTrue($model->dataExist(1,1001, 'XI', 1));
+        $this->assertTrue($model->dataExist(1,1001, 'XI', 1, 2015));
         //update data
         $data['nilai'] = 78;
         $this->assertTrue($model->updateData($data));
         $data['no_uh'] = 10;
         $this->assertFalse($model->updateData($data));
         //delete data
-        $this->assertTrue($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI', 'semester' => 1]));
-        $this->assertFalse($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI', 'semester' => 1]));  
+        $this->assertTrue($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI', 'semester' => 1, 'tahun_ajaran' => 2015]));
+        $this->assertFalse($model->deleteData(['no_uh' => 1, 'nis' => 1001, 'kelas' => 'XI', 'semester' => 1, 'tahun_ajaran' => 2015]));  
         //adding data last
         $data['no_uh'] = 1;
         $this->assertTrue($model->insertData($data));
@@ -288,6 +291,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $nis = 1001;
         $kelas = 'XI';
         $semester = 1;
+        $tahun = 2015;
         $nilai1 = $model->getDatabyNis($nis)[0];
         $this->assertObjectHasAttribute('meta', $nilai1);
         $this->assertObjectHasAttribute('no_uh', $nilai1);
@@ -321,7 +325,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('nilai_remidi', $nilai3);
         $this->assertObjectHasAttribute('penguji', $nilai3);
         //===
-        $nilai4 = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas, 'semester' => $semester]);
+        $nilai4 = $model->getData(['no_uh' => $no_uh, 'nis' => $nis, 'kelas' => $kelas, 'semester' => $semester, 'tahun_ajaran' => $tahun]);
         $this->assertObjectHasAttribute('meta', $nilai4);
         $this->assertObjectHasAttribute('no_uh', $nilai1);
         $this->assertObjectHasAttribute('kelas', $nilai1);

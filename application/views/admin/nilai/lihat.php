@@ -291,6 +291,7 @@
                         $("#tglAdd").attr("value", "<?=date('d');?>");
                         $("#bulanAdd<?=date('n');?>").attr("selected", "true");
                         $("#tahunAdd").attr("value", "<?=date('Y');?>");
+                        $("#tahun_ajaranAdd").attr("value", "<?=date('Y');?>");
                         $("#addNilai").modal("toggle");
                     });
                 </script>
@@ -323,7 +324,8 @@
                         $("#tglEdit").attr("value", "<?=date('d', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#bulanEdit<?=date('n', $data_nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
                         $("#thnEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
-                        $("#btnDelOk").attr("href", "<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>");
+                        $("#tahun_ajaranEdit").attr("value", "<?=$data_nilai->getTahun();?>");
+                        $("#btnDelOk").attr("href", "<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>/<?= $data_nilai->getTahun();?>");
                         $("#editNilai").modal("toggle");
                     });
                 </script>

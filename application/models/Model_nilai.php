@@ -63,44 +63,48 @@ class Model_nilai extends MY_Model {
     }
 
     public function insertData($data) {
-        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
         if (is_null($this->em->find("NilaiHarianEntity", $id))) {
             $this->nilai = new NilaiHarianEntity();
 //            try{
-            $this->setData($data);
-            $this->nilai->generateId();
-            $this->em->persist($this->nilai);
-            $this->em->flush();
-            $this->nilai = null;
+            $data_ok = $this->setData($data);
+            if($data_ok){
+                $this->nilai->generateId();
+                $this->em->persist($this->nilai);
+                $this->em->flush();
+                $this->nilai = null;
+            }
 //            } catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
             //                return false;
             //            }
-            return true;
+            return $data_ok;
         } else {
             return false;
         }
     }
 
     public function updateData($data) {
-        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
         if (!is_null($this->em->find("NilaiHarianEntity", $id))) {
             $this->nilai = $this->em->find("NilaiHarianEntity", $id);
 //            try {
-            $this->setData($data);
+            $data_ok = $this->setData($data);
 //            } catch (Exception $ex) {
             //                return false;
             //            }
+            if($data_ok){
             $this->em->persist($this->nilai);
             $this->em->flush();
             $this->nilai = null;
-            return true;
+            }
+            return $data_ok;
         } else {
             return false;
         }
     }
 
     public function deleteData($data) {
-        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
         $entity = $this->em->find("NilaiHarianEntity", $id);
         if (!is_null($entity)) {
             $this->em->remove($entity);
@@ -114,17 +118,11 @@ class Model_nilai extends MY_Model {
 
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     public function setData($data) {
-//        if (!empty($data['no_uh'])):$this->nilai->setNo_uh($data['no_uh']);endif;
-//        if (!empty($data['kelas'])):$this->nilai->setKelas($data['kelas']);endif;
-//        if (!empty($data['semester'])):$this->nilai->setSemester($data['semester']);endif;
-        if ((!empty($data['no_uh']))&&(!empty($data['kelas']))&&(!empty($data['semester']))) {
-            $meta_id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'];
+        if ((!empty($data['no_uh']))&&(!empty($data['kelas']))&&(!empty($data['semester']))&&(!empty($data['tahun_ajaran']))) {
+            $meta_id = $data['kelas'].'-'.$data['semester'].'-'.$data['no_uh'].'-'.$data['tahun_ajaran'];
             $meta = $this->em->find("KurikulumEntity", $meta_id);
             if(is_null($meta)){
-                $meta = new KurikulumEntity();
-                $meta->setNo_uh($data['no_uh'])->setKelas($data['kelas'])->setSemester($data['semester'])->generateId();
-                $this->em->persist($meta);
-                $this->em->flush();
+                return false;
             }
             $this->nilai->setMeta($meta);
         }
@@ -147,10 +145,11 @@ class Model_nilai extends MY_Model {
             $penguji = $this->em->find("GuruEntity", $data['penguji']);
             $this->nilai->setPenguji($penguji);
         }
+        return TRUE;
     }
 
-    public function dataExist($no_uh, $nis, $kelas, $semester) {
-        $id = $nis . '-' . $kelas . '-' . $semester . '-' . $no_uh;
+    public function dataExist($no_uh, $nis, $kelas, $semester, $tahun_ajaran) {
+        $id = $nis . '-' . $kelas . '-' . $semester . '-' . $no_uh . '-' . $tahun_ajaran;
         return !is_null($this->em->find("NilaiHarianEntity", $id));
     }
 
@@ -263,7 +262,7 @@ class Model_nilai extends MY_Model {
     
     private function transQuery($arr_data){
         foreach ($arr_data as $data){
-            $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'];
+            $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' .$data['tahun_ajaran'];
             $entity = $this->em->find("NilaiHarianEntity", $id);
             if (is_null($entity)) {
                 $this->nilai = new NilaiHarianEntity();

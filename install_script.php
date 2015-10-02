@@ -26,6 +26,7 @@
 
 require_once "bootstrap.php";
 
+// Add Default User
 $guru = new GuruEntity();
 $guru->setNip('1');
 $guru->setNama("admin");
@@ -36,5 +37,35 @@ $guru->setKewenangan('admin');
 $entityManager->persist($guru);
 $entityManager->flush();
 
-echo "Admin Default " . $guru->getNip() . "\n";
+// Setting Jumlah Ulangan
+$jumlah_ulangan ['X']= 20;
+$jumlah_ulangan ['XI'] = 10;
+$jumlah_ulangan ['XII'] = $jumlah_ulangan ['XI'];
+$arr_kelas =['X','XI','XII'];
 
+//fungsi untuk insert kurikulum
+function insert_kurikulum($kelas, $semester, $no_uh, $em){
+    $kurikulum = new KurikulumEntity();
+    $kurikulum->setKelas($kelas);
+    $kurikulum->setSemester($semester);
+    $kurikulum->setNo_uh($no_uh);
+    $kurikulum->generateId();
+    $em->persist($kurikulum);
+    $em->flush();
+}
+
+// Set Up Kurikulum
+foreach ($arr_kelas as $kelas){
+    for($j = 1; $j <= 2 ; $j++){
+        for($i = 1; $i <= $jumlah_ulangan[$kelas];$i++){
+            insert_kurikulum($kelas, $j, $i, $entityManager);
+        }
+        insert_kurikulum($kelas, $j, 'UTS', $entityManager);
+        insert_kurikulum($kelas, $j, 'UAS', $entityManager);
+    }
+}
+
+echo "Admin Default :" . $guru->getNip() . "\n";
+echo "Jumlah Ulangan Kelas X :" . $jumlah_ulangan['X'] . "\n";
+echo "Jumlah Ulangan Kelas XI :" . $jumlah_ulangan['XI'] . "\n";
+echo "Jumlah Ulangan Kelas XII :" . $jumlah_ulangan['XII'] . "\n";
