@@ -43,13 +43,19 @@
     <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link href="<?=  base_url() ?>assets/css/sb-admin.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
     <link href="<?=  base_url() ?>assets/css/dataTables.bootstrap.min.css" rel="stylesheet">
     
+    <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    
+     <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/sb-admin.min.css" rel="stylesheet">
+    
     <!-- jQuery Version 1.11.0 -->
-    <script src="<?=  base_url() ?>assets/js/jquery-1.11.0.js"></script>
+    <script src="<?=  base_url() ?>assets/js/jquery-2.1.4.min.js"></script>
     
 </head>
 
