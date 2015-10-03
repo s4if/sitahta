@@ -131,11 +131,15 @@ class Model_nilai extends MY_Model {
             $this->nilai->setSiswa($siswa);
         }
         if (!empty($data['tanggal'])) {
-            $tgl_arr = explode('-', $data['tanggal']);
-            $tgl = new DateTime();
-            //sistem tanggal yang di explode : yyyy:mm:dd
-            $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
-            $this->nilai->setTanggal($tgl);
+            if(is_object($data['tanggal'])){
+                $this->nilai->setTanggal($data['tanggal']);
+            }else{
+                $tgl_arr = explode('-', $data['tanggal']);
+                $tgl = new DateTime();
+                //sistem tanggal yang di explode : yyyy:mm:dd
+                $tgl->setDate($tgl_arr[0], $tgl_arr[1], $tgl_arr[2]);
+                $this->nilai->setTanggal($tgl);
+            }
         }
         if (!empty($data['juz'])):$this->nilai->setJuz($data['juz']);endif;
         if (!empty($data['halaman'])):$this->nilai->setHalaman($data['halaman']);endif;

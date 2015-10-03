@@ -77,9 +77,11 @@ class Nilai extends MY_Controller {
     
     public function tambah_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
-        $data_insert = $this->input->post(null, true);
+        $data_insert = $this->input->post(null, FALSEs);
         $data_insert['nis'] = $nis;
-        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->insertData($data_insert, TRUE);
         if ($res >= 1) {
@@ -93,9 +95,11 @@ class Nilai extends MY_Controller {
 
     public function edit_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
-        $data_insert = $this->input->post(null, true);
+        $data_insert = $this->input->post(null, false);
         $data_insert['nis'] = $nis;
-        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->updateData($data_insert);
         if ($res >= 1) {

@@ -136,7 +136,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal :</label>
                         <div class="col-sm-3">
-                            <input class="form-control" type="date" name="tanggal[]">
+                            <input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal[]">
                         </div>
                         <div class="col-sm-3">
                             <a class="add_field_button btn btn-primary">Tambah</a>
@@ -288,10 +288,8 @@
                         $("#UhAdd").attr("value", "<?=$i?>");
                         $("#kelasAdd").attr("value", "<?=$judul_kelas[0]?>");
                         $("#semesterAdd").attr("value", "<?=$semester?>");
-                        $("#tglAdd").attr("value", "<?=date('d');?>");
-                        $("#bulanAdd<?=date('n');?>").attr("selected", "true");
-                        $("#tahunAdd").attr("value", "<?=date('Y');?>");
                         $("#tahun_ajaranAdd").attr("value", "<?=date('Y');?>");
+                        $("#tanggalAdd").attr("value", "<?=date('d-n-Y');?>");
                         $("#addNilai").modal("toggle");
                     });
                 </script>
@@ -321,10 +319,8 @@
                         $("#semesterEdit").attr("value", "<?=$data_nilai->getSemester()?>");
                         $("#nilaiEdit").attr("value", "<?=$data_nilai->getNilai()?>");
                         $("#nilaiRemidiEdit").attr("value", "<?php echo (is_null($data_nilai->getNilai_remidi())) ? '' : $data_nilai->getNilai_remidi();?>");
-                        $("#tglEdit").attr("value", "<?=date('d', $data_nilai->getTanggal()->getTimestamp());?>");
-                        $("#bulanEdit<?=date('n', $data_nilai->getTanggal()->getTimestamp());?>").attr("selected", "true");
-                        $("#thnEdit").attr("value", "<?=date('Y', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#tahun_ajaranEdit").attr("value", "<?=$data_nilai->getTahun();?>");
+                        $("#tanggalEdit").attr("value", "<?=date('d-n-Y', $data_nilai->getTanggal()->getTimestamp());?>");
                         $("#btnDelOk").attr("href", "<?php echo base_url().'admin/nilai/hapus_nilai';?>/<?= $data_nilai->getSiswa()->getNis();?>/<?= $data_nilai->getKelas();?>/<?= $data_nilai->getSemester();?>/<?= $data_nilai->getNo_uh();?>/<?= $data_nilai->getTahun();?>");
                         $("#editNilai").modal("toggle");
                     });
@@ -343,7 +339,7 @@
 </div>
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(function() {
         $('#tabel_utama').DataTable({
             "order": [[ 1, "asc" ]]
         } );
@@ -369,7 +365,7 @@
     });
         $('.modal.in:visible:last').focus().next('.modal-backdrop.in').removeClass('hidden');
     }
-    $(document).ready(function() {
+    $(function() {
         var max_fields      = 21; //maximum input boxes allowed
         var wrapper         = $(".input_fields_wrap"); //Fields wrapper
         var point         = $(".insert_point"); //Fields wrapper
@@ -390,13 +386,14 @@
                         '<div class="form-group">'+
                         '<label class="col-sm-3 control-label">Tanggal :</label>'+
                         '<div class="col-sm-3">'+
-                        '<input class="form-control" type="date" name="tanggal[]">'+
+                        '<input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal[]">'+
                         '</div>'+
                         '<div class="col-sm-3">'+
                         '<a href="#" class="remove_field btn btn-warning">Hapus</a>'+
                         '</div>'+
                         '</div>';
                 $(point).before(inpt);
+                $('.datepicker').datepicker();
                 id++;
                 //$(wrapper).append('<div class="col-sm-12"><input class="col-sm-3 form-control" type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
             }

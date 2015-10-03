@@ -79,29 +79,9 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tgl Ulangan :</label>
-                        <div class="col-sm-2">
-                            <input id="tglAdd" type="text" class="form-control" name="tanggal" pattern="[0-9]{2}"
-                                   placeholder="Tanggal" value="" required="true">
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="bulan">
-                                <option id="bulanAdd1" value="1">Jan</option>
-                                <option id="bulanAdd2" value="2">Feb</option>
-                                <option id="bulanAdd3" value="3">Mar</option>
-                                <option id="bulanAdd4" value="4">Apr</option>
-                                <option id="bulanAdd5" value="5">Mei</option>
-                                <option id="bulanAdd6" value="6">Jun</option>
-                                <option id="bulanAdd7" value="7">Jul</option>
-                                <option id="bulanAdd8" value="8">Agu</option>
-                                <option id="bulanAdd9" value="9">Sep</option>
-                                <option id="bulanAdd10" value="10">Okt</option>
-                                <option id="bulanAdd11" value="11">Nov</option>
-                                <option id="bulanAdd12" value="12">Des</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input id="tahunAdd" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
-                                   placeholder="Tahun" value="" required="true">
+                        <div class="col-sm-8">
+                            <input id="tanggalAdd" class="form-control datepicker" type="text" 
+                                   data-date-format="dd-mm-yyyy" name="tgl">
                         </div>
                     </div>
                     <div class="form-group">
@@ -173,29 +153,9 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tgl Ulangan :</label>
-                        <div class="col-sm-2">
-                            <input id="tglEdit" type="text" class="form-control" name="tanggal" pattern="[0-9]{2}"
-                                   placeholder="Tanggal" value="" required="true">
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="bulan">
-                                <option id="bulanEdit1" value="1">Jan</option>
-                                <option id="bulanEdit2" value="2">Feb</option>
-                                <option id="bulanEdit3" value="3">Mar</option>
-                                <option id="bulanEdit4" value="4">Apr</option>
-                                <option id="bulanEdit5" value="5">Mei</option>
-                                <option id="bulanEdit6" value="6">Jun</option>
-                                <option id="bulanEdit7" value="7">Jul</option>
-                                <option id="bulanEdit8" value="8">Agu</option>
-                                <option id="bulanEdit9" value="9">Sep</option>
-                                <option id="bulanEdit10" value="10">Okt</option>
-                                <option id="bulanEdit11" value="11">Nov</option>
-                                <option id="bulanEdit12" value="12">Des</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input id="thnEdit" type="number" class="form-control" name="tahun"
-                                   placeholder="Tahun" value="" required="true">
+                        <div class="col-sm-8">
+                            <input id="tanggalEdit" class="form-control datepicker" type="text" 
+                                   data-date-format="dd-mm-yyyy" name="tgl">
                         </div>
                     </div>
                     <div class="form-group">

@@ -25,14 +25,20 @@
  */
 ?>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="<?=  base_url() ?>assets/js/bootstrap.min.js"></script>
 
 <!-- Bootstrap DataTables JavaScript -->
-<script src="<?=  base_url() ?>assets/js/jquery.dataTables.min.js"></script>
+<script src="<?=  base_url() ?>assets/js/datatables.min.js"></script>
+
+<!-- Bootstrap DatePickers JavaScript -->
+<script src="<?=  base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 
 <!-- User Js -->
 <script src="<?=  base_url() ?>assets/js/user.js"></script>
+
+<script type="text/javascript">
+    $('.datepicker').datepicker();
+</script>
+
 </body>
 
 </html>
