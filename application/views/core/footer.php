@@ -24,8 +24,15 @@
  * THE SOFTWARE.
  */
 ?>
-    
 
+<!-- Bootstrap Core JavaScript -->
+<script src="<?=  base_url() ?>assets/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap DataTables JavaScript -->
+<script src="<?=  base_url() ?>assets/js/jquery.dataTables.min.js"></script>
+
+<!-- User Js -->
+<script src="<?=  base_url() ?>assets/js/user.js"></script>
 </body>
 
 </html>

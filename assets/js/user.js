@@ -22,11 +22,6 @@
  * THE SOFTWARE.
  */
 
-$(document).ready(function() {
-    $('.datetimepicker').datetimepicker();
-    //$('#data_table').dataTable();
-} );
-
 function assignVal(formAction, namaVal, UHVal, kelasVal){
     $("#addModalForm").attr("action", formAction);
     $("#addModalInputNama").attr("value", namaVal);
