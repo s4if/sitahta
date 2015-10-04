@@ -144,9 +144,7 @@
                         $("#jkEdit<?= $siswa->getJenis_kelamin();?>").attr("checked", "true");
                         $("#tempatEdit").attr("value", "<?=$siswa->getTempat_lahir()?>");
                         $("#ortuEdit").attr("value", "<?=$siswa->getNama_ortu();?>");
-                        $("#tglEdit").attr("value", "<?=date('d', $siswa->getTgl_lahir()->getTimestamp());?>");
-                        $("#bulanEdit<?=date('n', $siswa->getTgl_lahir()->getTimestamp());?>").attr("selected", "true");
-                        $("#thnEdit").attr("value", "<?=date('Y', $siswa->getTgl_lahir()->getTimestamp());?>");
+                        $("#tanggalEdit").attr("value", "<?=date('d-n-Y', $siswa->getTgl_lahir()->getTimestamp());?>");
                         $("#editModal").modal("toggle");
                     });
                 </script>

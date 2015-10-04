@@ -77,8 +77,10 @@ class Siswa extends MY_Controller {
     public function tambah() {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
-        $data_insert['tgl_lahir'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
-        $data_insert['password'] = password_hash($data_insert['tanggal'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tahun'], PASSWORD_BCRYPT);
+        //$data_insert['tgl_lahir'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tgl_lahir'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+        $data_insert['password'] = password_hash($data_insert['tgl_lahir'], PASSWORD_BCRYPT);
         if ($this->siswa->dataExist($this->input->post('nis', true))) {
             $this->session->set_flashdata("errors", [0 => "Maaf, NIS yang dimasukkan sudah terpakai!"]);
             redirect('admin/siswa');
@@ -98,7 +100,9 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['tgl_lahir'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tgl_lahir'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tgl_lahir'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $res = $this->siswa->updateData($data_insert);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);
@@ -132,7 +136,6 @@ class Siswa extends MY_Controller {
             'nama' => $this->session->login_data->getNama(),
             'siswa' => $siswa,
             'data_sertifikat' => $data_sertifikat,
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
@@ -143,7 +146,9 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->insertData($data_insert, TRUE);
         if ($res >= 1) {
@@ -159,7 +164,9 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
         $res = $this->nilai->updateData($data_insert);
         if ($res >= 1) {
@@ -186,7 +193,9 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        $data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tgl_ujian'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $res = $this->sertifikat->insertData($data_insert);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Tambah Data Berhasil!"]);
@@ -202,7 +211,9 @@ class Siswa extends MY_Controller {
         $data_insert = $this->input->post(null, true);
         $data_insert['id'] = $id;
         $data_insert['nis'] = $nis;
-        $data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        //$data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tgl_ujian'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $res = $this->sertifikat->updateData($data_insert);
         if ($res >= 1) {
             $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);

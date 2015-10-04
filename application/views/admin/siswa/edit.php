@@ -70,29 +70,9 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal Lahir :</label>
-                        <div class="col-sm-2">
-                            <input id="tglEdit" type="text" class="form-control" name="tanggal" pattern="[0-9]{2}"
-                                   placeholder="Tanggal" value="" required="true">
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="bulan">
-                                <option id="bulanEdit1" value="1">Jan</option>
-                                <option id="bulanEdit2" value="2">Feb</option>
-                                <option id="bulanEdit3" value="3">Mar</option>
-                                <option id="bulanEdit4" value="4">Apr</option>
-                                <option id="bulanEdit5" value="5">Mei</option>
-                                <option id="bulanEdit6" value="6">Jun</option>
-                                <option id="bulanEdit7" value="7">Jul</option>
-                                <option id="bulanEdit8" value="8">Agu</option>
-                                <option id="bulanEdit9" value="9">Sep</option>
-                                <option id="bulanEdit10" value="10">Okt</option>
-                                <option id="bulanEdit11" value="11">Nov</option>
-                                <option id="bulanEdit12" value="12">Des</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input id="tahunEdit" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
-                                   placeholder="Tahun" value="" required="true">
+                        <div class="col-sm-8">
+                            <input id="tanggalEdit" class="form-control datepicker" type="text" 
+                                   data-date-format="dd-mm-yyyy" name="tgl">
                         </div>
                     </div>
                     <div class="form-group">
@@ -106,18 +86,18 @@
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-2">
                             <select class="form-control" name="kelas">
-                                <option value="X" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "X")?'selected="true"':'';?>>X</option>
-                                <option value="XI" <?ph echo ($siswa->ggetKelasSekarang($tahun_ajaran)->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
-                                <option value="XII" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
+                                <option value="X" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "X")?'selected="true"':'';?>>X</option>
+                                <option value="XI" <ph echo ($siswa->ggetKelasSekarang($tahun_ajaran)->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
+                                <option value="XII" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <select class="form-control" name="jurusan">
-                                <option value="Tahfidz" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
+                                <option value="Tahfidz" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
                                     Tahfidz</option>
-                                <option value="IPA" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
-                                <option value="IPS" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
-                                <option value="Reguler" <?ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
+                                <option value="IPA" <h echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
+                                <option value="IPS" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
+                                <option value="Reguler" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
                             </select>
                         </div>
                         <div class="col-sm-3">

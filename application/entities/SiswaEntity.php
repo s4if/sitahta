@@ -144,8 +144,8 @@ class SiswaEntity {
     
     public function getNilaiByUH($kelas, $no_uh, $semester = -4) {
         $criteria = Criteria::create()
-                ->where(Criteria::expr()->eq('kelas', $kelas))
                 ->andWhere(Criteria::expr()->eq('no_uh', $no_uh))
+                ->andWhere(Criteria::expr()->eq('kelas', $kelas))
                 ->andWhere(Criteria::expr()->eq('semester', $semester));
         return $this->nilai->matching($criteria);
     }
