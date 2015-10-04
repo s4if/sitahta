@@ -83,12 +83,13 @@ class Kurikulum extends MY_Controller {
         }
     }
     
-    public function edit($kelas, $semester, $no_uh){
+    public function edit($kelas, $semester, $no_uh, $tahun){
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['kelas'] = $kelas;
         $data_insert['semester'] = $semester;
         $data_insert['no_uh'] = $no_uh;
+        $data_insert['tahun_ajaran'] = $tahun;
         $res = $this->kurikulum->updateData($data_insert, 'kurikulum');
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
@@ -99,11 +100,12 @@ class Kurikulum extends MY_Controller {
         }
     }
     
-    public function reset($kelas, $semester, $no_uh){
+    public function reset($kelas, $semester, $no_uh, $tahun){
         $this->blockUnloggedOne();
         $data_insert['kelas'] = $kelas;
         $data_insert['semester'] = $semester;
         $data_insert['no_uh'] = $no_uh;
+        $data_insert['tahun_ajaran'] = $tahun;
         $res = $this->kurikulum->resetData($data_insert, 'kurikulum');
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);

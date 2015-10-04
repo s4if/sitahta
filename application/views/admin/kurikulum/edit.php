@@ -36,7 +36,7 @@
                 <h4 class="modal-title text-center" id="tambahModal">Edit Kurikulum</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/kurikulum/edit/<?= $kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh();?>">
+                <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/kurikulum/edit/<?= $kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh().'/'.$kurikulum->getTahun();?>">
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
                         <div class="col-sm-8">
@@ -120,7 +120,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                <a class="btn btn-danger" href="<?php echo base_url().'admin/kurikulum/reset/'.$kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh();?>">OK</a>
+                <a class="btn btn-danger" href="<?php echo base_url().'admin/kurikulum/reset/'.$kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh().'/'.$kurikulum->getTahun();?>">OK</a>
             </div>
         </div>
     </div>
