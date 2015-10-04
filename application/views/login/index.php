@@ -48,7 +48,7 @@
         }
     </style>
 </head>
-<body>
+<body class="login">
 <div class="container" style="margin-top:30px">
     <div class="col-md-4 col-md-offset-4">
         <?php if(empty($this->session->flashdata('notices')) === false): ?>

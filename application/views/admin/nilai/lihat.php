@@ -128,21 +128,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Ulangan Harian :</label>
-                        <div class="col-sm-3">
-                            <input class="form-control" type="number" name="uh[]">
+                        <label class="col-sm-3 control-label">Ulangan :</label>
+                        <div class="col-sm-6">
+                            <input class="form-control" type="text" name="uh[]">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tanggal :</label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-6">
                             <input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal[]">
                         </div>
                         <div class="col-sm-3">
                             <a class="add_field_button btn btn-primary">Tambah</a>
-                        </div>
-                        <div class="col-sm-3">
-                            &nbsp;
                         </div>
                     </div>
                     <div class="form-group insert_point">
@@ -261,9 +258,11 @@
                 <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
                 <td colspan="2">#<?=$i?></td>
                 <?php endfor;?>
+                <td colspan="2">#UTS</td>
+                <td colspan="2">#UAS</td>
             </tr>
             <tr>
-                <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
+                <?php for($i = 1; $i<=$jml_uh+2;$i++) : ?>
                 <td>N</td>
                 <td>R</td>
                 <?php endfor;?>
@@ -276,16 +275,21 @@
             <tr>
                 <td><a href="<?=base_url();?>siswa/<?=$siswa->getNis()?>"><?= $siswa->getNis();?></a></td>
             <td><?= $siswa->getNama();?></td>
-            <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
-            <?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0])) : ?>
+            <?php for($i = 1; $i<=$jml_uh+2;$i++) : 
+                $no_uh = NULL;
+            if($i<=$jml_uh) { $no_uh = $i; }
+            if($i==$jml_uh+1) { $no_uh = 'UTS'; }
+            if($i==$jml_uh+2) { $no_uh = 'UAS'; }
+            ?>
+            <?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester)[0])) : ?>
             <td>
-                <a id="tombol<?=$siswa->getNis()."_".$i?>">
+                <a id="tombol<?=$siswa->getNis()."_".$no_uh?>">
                     --
                 </a>
                 <script type="text/javascript">
-                    $("#tombol<?=$siswa->getNis()."_".$i?>").click(function (){
+                    $("#tombol<?=$siswa->getNis()."_".$no_uh?>").click(function (){
                         $("#formAdd").attr("action", "<?=base_url();?>admin/nilai/tambah_nilai/<?=$judul_kelas[0]?>/<?= $siswa->getNis();?>");
-                        $("#UhAdd").attr("value", "<?=$i?>");
+                        $("#UhAdd").attr("value", "<?=$no_uh?>");
                         $("#kelasAdd").attr("value", "<?=$judul_kelas[0]?>");
                         $("#semesterAdd").attr("value", "<?=$semester?>");
                         $("#tahun_ajaranAdd").attr("value", "<?=date('Y');?>");
@@ -296,7 +300,7 @@
             </td>
             <td> -- </td>
             <?php else : ?>
-            <?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $i, $semester)[0];
+            <?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester)[0];
             $keterangan = $data_nilai->getKeterangan();
             $css_cell;
             if($keterangan == "Lulus tanpa remidi"){
@@ -378,14 +382,14 @@
             if(x < max_fields){ //max input box allowed
                 x++; //text box increment
                 var inpt = '<div class="form-group extra_delete">'+
-                         '<label class="col-sm-3 control-label">Ulangan Harian :</label>'+
-                        '<div class="col-sm-3">'+
-                        '<input class="form-control" type="number" name="uh[]">'+
+                         '<label class="col-sm-3 control-label">Ulangan :</label>'+
+                        '<div class="col-sm-6">'+
+                        '<input class="form-control" type="text" name="uh[]">'+
                         '</div>'+
                         '</div>'+
                         '<div class="form-group">'+
                         '<label class="col-sm-3 control-label">Tanggal :</label>'+
-                        '<div class="col-sm-3">'+
+                        '<div class="col-sm-6">'+
                         '<input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal[]">'+
                         '</div>'+
                         '<div class="col-sm-3">'+

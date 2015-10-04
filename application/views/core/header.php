@@ -54,6 +54,9 @@
     <!-- Custom CSS -->
     <link href="<?=  base_url() ?>assets/css/sb-admin.min.css" rel="stylesheet">
     
+    <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/style.css" rel="stylesheet">
+    
     <!-- jQuery Version 1.11.0 -->
     <script src="<?=  base_url() ?>assets/js/jquery-2.1.4.min.js"></script>
     

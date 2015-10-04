@@ -43,7 +43,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> &nbsp; <?=$user?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-user"></span> &nbsp; Profil</a>
+                    <a href="<?=base_url();?><?=($position === 'admin')?'home':'user';?>/profil"><span class="glyphicon glyphicon-user"></span> &nbsp; Profil</a>
                 </li>
                 <li>
                     <a href="<?=base_url();?><?=($position === 'admin')?'home':'user';?>/password"><span class="glyphicon glyphicon-edit"></span> &nbsp; Kata Sandi</a>
@@ -61,7 +61,7 @@
         <ul class="nav navbar-nav side-nav">
             <?php if($position === 'admin' || $position === 'guru'):?>
             <li id="navDashboard">
-                <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-dashboard"></span> &nbsp; Dashboard</a>
+                <a href="<?=base_url()?>home"><span class="glyphicon glyphicon-home"></span> &nbsp; Dashboard</a>
             </li>
             <?php if($position === 'admin'):?>
             <li id="navGuru">
@@ -96,9 +96,11 @@
                     </li>
                 </ul>
             </li>
+            <?php if($position === 'admin'):?>
             <li id="navKurikulum">
-                <a href="<?=base_url()?>kurikulum"><span class="glyphicon glyphicon-hdd"></span> &nbsp; Pengaturan</a>
+                <a href="<?=base_url()?>kurikulum"><span class="glyphicon glyphicon-cog"></span> &nbsp; Kurikulum</a>
             </li>
+            <?php endif; ?>
 <!--            <li id="navSertifikasi">
                 <a href="<=base_url()?>sertifikasi"><span class="glyphicon glyphicon-list-alt"></span> &nbsp; Sertifikasi</a>
             </li>-->

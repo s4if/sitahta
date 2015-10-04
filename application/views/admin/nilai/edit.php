@@ -38,27 +38,27 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">UH Ke :</label>
                         <div class="col-sm-8">
-                            <input id="UhAdd" type="number" class="form-control" name="no_uh" 
+                            <input id="UhAdd" type="text" class="form-control" name="no_uh" 
                                    placeholder="Ulangan Harian" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="kelasAdd" type="text" class="form-control" name="kelas" 
                                    placeholder="Kelas" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Semester :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="semesterAdd" type="number" class="form-control" name="semester" 
                                    placeholder="Semester" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">TahunAjaran :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="tahun_ajaranAdd" type="number" class="form-control" name="tahun_ajaran" 
                                    placeholder="Tahun ajaran" value="" required="true" readonly>
                         </div>
@@ -112,27 +112,27 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">UH Ke :</label>
                         <div class="col-sm-8">
-                            <input id="UhEdit" type="number" class="form-control" name="no_uh" 
+                            <input id="UhEdit" type="text" class="form-control" name="no_uh" 
                                    placeholder="Ulangan Harian" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kelas :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="kelasEdit" type="text" class="form-control" name="kelas" 
                                    placeholder="Kelas" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Semester :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="semesterEdit" type="number" class="form-control" name="semester" 
                                    placeholder="Semester" value="" required="true" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tahun Ajaran :</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-8">
                             <input id="tahun_ajaranEdit" type="number" class="form-control" name="tahun_ajaran" 
                                    placeholder="Tahun Ajaran" value="" required="true" readonly>
                         </div>

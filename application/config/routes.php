@@ -58,6 +58,7 @@ $route['siswa'] = 'admin/siswa/lihat';
 $route['logout'] = '/login/logout';
 $route['home'] = 'admin/home';
 $route['home/password'] = 'admin/home/password';
+$route['home/profil'] = 'admin/home/profil';
 $route['guru'] = 'admin/guru/lihat';
 $route['siswa'] = 'admin/siswa/lihat';
 $route['siswa/kelas/(:any)'] = 'admin/siswa/lihat/$1';

@@ -176,6 +176,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     </tr>
                     <?php else: ?>
                     <?php foreach ($data_nilai as $nilai): ?>

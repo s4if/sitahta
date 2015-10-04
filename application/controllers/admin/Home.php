@@ -33,6 +33,7 @@ class Home extends MY_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->model('model_login','login',TRUE);
+        $this->load->model('model_guru', 'guru', true);
     }
     
     public function index(){
@@ -66,6 +67,35 @@ class Home extends MY_Controller{
             'nama' => $this->session->login_data->getNama()
         ];
         $this->loadView('admin/password', $data);
+    }
+    
+    public function profil(){
+        $this->blockUnloggedOne();
+        $guru = $this->guru->getData($this->session->login_data->getNip());
+        $data = [
+            'title' => 'Beranda',
+            'user' => ucwords($this->session->login_data->getNama()),
+            'position' => $this->session->position,
+            'nav_pos' => 'dashboard',
+            'nama' => $this->session->login_data->getNama(),
+            'guru' => $guru
+        ];
+        $this->loadView('admin/profil', $data);
+    }
+    
+    public function edit(){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nip'] = $this->session->login_data->getNip();
+        $res = $this->guru->updateData($data_insert, 'guru');
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('home/profil');
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('home/profil');
+        }
+        var_dump($data_insert);
     }
     
     public function changePassword(){

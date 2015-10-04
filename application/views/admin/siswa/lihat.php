@@ -133,6 +133,7 @@
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>siswa/<?=$siswa->getNis()?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
+                <?php if($position === 'admin'):?>
                 <a id="btnEditSiswa<?= $siswa->getNis();?>" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
@@ -148,9 +149,6 @@
                         $("#editModal").modal("toggle");
                     });
                 </script>
-<!--                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $siswa->getNis();?>">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>-->
                 <a id="btnHapusSiswa<?=$siswa->getNis();?>" class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
@@ -160,6 +158,7 @@
                         $("#deleteSiswa").modal("toggle");
                     });
                 </script>
+                <?php endif;?>
             </td>
             </tr>
             <?php endforeach;?>

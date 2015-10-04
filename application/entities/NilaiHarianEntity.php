@@ -19,7 +19,7 @@ class NilaiHarianEntity {
     private $meta;
     
     /**
-     * @Column(type="integer", nullable=false)
+     * @Column(type="string", nullable=false, length=6)
      */
     private $no_uh;
 
