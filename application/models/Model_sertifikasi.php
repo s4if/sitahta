@@ -133,7 +133,7 @@ class Model_sertifikasi extends MY_Model {
             $this->setDataPeserta($data);
             $this->em->persist($this->peserta);
             $this->em->flush();
-                return true;
+            return true;
         }else{
             return false;
         }

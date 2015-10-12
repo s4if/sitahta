@@ -11,8 +11,8 @@ use Doctrine\Common\Collections\Criteria;
 class SertifikasiEntity {
     
     /**
-     * @Id @Column(type="string")
-     * @GeneratedValue(strategy="UUID")
+     * @Id @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
      */
     private $id;
     

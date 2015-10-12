@@ -130,8 +130,48 @@ class Sertifikasi extends MY_Controller {
             'nav_pos' => "sertifikasi",
             'tahun_ajaran' => $this->session->tahun_ajaran,
             'semester' => $this->session->semester,
-            'sertifikasi' => $sertifikasi
+            'sertifikasi' => $sertifikasi,
+            'edit' => $this->load->view("admin/sertifikasi/edit_peserta", [], TRUE),
         ];
         $this->loadView('admin/sertifikasi/peserta', $data);
+    }
+    
+    public function tambah_peserta($id_sertifikasi){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['sertifikasi'] = $id_sertifikasi;
+        $res = $this->sertifikasi->addPeserta($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }
+    }
+    
+    public function edit_peserta($id, $id_sertifikasi){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['id'] = $id;
+        $res = $this->sertifikasi->updatePeserta($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }
+    }
+    
+    public function hapus_peserta($id, $id_sertifikasi){
+        $this->blockUnloggedOne();
+        if($this->sertifikasi->removePeserta(['id' => $id])){
+            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, Data tidak ditemukan"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }
     }
 }

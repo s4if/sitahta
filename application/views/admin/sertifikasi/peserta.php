@@ -41,10 +41,18 @@
 </ol>
 <div class="col-md-12">
     <div class="btn-group">
-        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
-            <span class="glyphicon glyphicon-plus"></span>
-            Tambah
-        </a>
+        <div class="btn-group">
+            <a id="tmbhSertifikasi" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                Tambah
+            </a>
+        </div>
+        <script type="text/javascript">
+            $("#tmbhSertifikasi").click(function (){
+                $("#formEdit").attr("action", "<?=base_url();?>admin/sertifikasi/tambah_peserta/<?=$sertifikasi->getId()?>");
+                $("#editModal").modal("toggle");
+            });
+        </script>
         <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
             <span class="glyphicon glyphicon-import"></span>
             Import
@@ -70,7 +78,6 @@
         </div>
     </div>
 </div>
-<!--<=$tambah?>-->
 <div class="col-md-12">
     &nbsp;
 </div>
@@ -107,35 +114,27 @@
             <td><?= $peserta->getJuz()?></td>
             <td><?= $peserta->getNilai();?></td>
             <td>
-                <a class="btn btn-sm btn-success" href="<?=base_url();?>peserta/<?=$peserta->getId()?>">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
-                <?php if($position === 'admin'):?>
-                <a id="btnEditSiswa<?= $peserta->getId();?>" class="btn btn-sm btn-warning">
+                <a id="btnEdit<?= $peserta->getId();?>" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-<!--                <script type="text/javascript">
-                    $("#btnEditSiswa<= $peserta->getNis();?>").click(function (){
-                        $("#formEdit").attr("action", "<=base_url();?>admin/peserta/edit/<= $peserta->getNis();?>");
-                        $("#nisEdit").attr("value", "<= $peserta->getNis();?>");
-                        $("#namaEdit").attr("value", "<= $peserta->getNama();?>");
-                        $("#jkEdit<= $peserta->getJenis_kelamin();?>").attr("checked", "true");
-                        $("#tempatEdit").attr("value", "<=$peserta->getTempat_lahir()?>");
-                        $("#ortuEdit").attr("value", "<=$peserta->getNama_ortu();?>");
-                        $("#tanggalEdit").attr("value", "<=date('d-n-Y', $peserta->getTgl_lahir()->getTimestamp());?>");
+                <script type="text/javascript">
+                    $("#btnEdit<?= $peserta->getId();?>").click(function (){
+                        $("#formEdit").attr("action", "<?=base_url();?>admin/sertifikasi/edit_peserta/<?=$peserta->getId().'/'.$sertifikasi->getId();?>");
+                        $("#nisEdit").attr("value", "<?= $peserta->getSiswa()->getNis();?>");
+                        $("#juzEdit").attr("value", "<?= $peserta->getJuz();?>");
+                        $("#nilaiEdit").attr("value", "<?=$peserta->getNilai()?>");
                         $("#editModal").modal("toggle");
                     });
-                </script>-->
+                </script>
                 <a id="btnHapusSiswa<?=$peserta->getId();?>" class="btn btn-sm btn-danger">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
                 <script type="text/javascript">
                     $("#btnHapusSiswa<?=$peserta->getId();?>").click(function (){
-                        $("#btnDelOk").attr("href", "<?=base_url().'admin/peserta/hapus/'.$peserta->getId();?>");
-                        $("#deleteSiswa").modal("toggle");
+                        $("#btnDelOk").attr("href", "<?=base_url().'admin/sertifikasi/hapus_peserta/'.$peserta->getId().'/'.$sertifikasi->getId();?>");
+                        $("#deleteModal").modal("toggle");
                     });
                 </script>
-                <?php endif;?>
             </td>
             </tr>
             <?php endforeach;?>
@@ -150,4 +149,4 @@
         } );
     } );
 </script>
-<!--<=$edit?>-->
+<?=$edit?>
