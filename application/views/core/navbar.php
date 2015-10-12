@@ -101,9 +101,9 @@
                 <a href="<?=base_url()?>kurikulum"><span class="glyphicon glyphicon-cog"></span> &nbsp; Kurikulum</a>
             </li>
             <?php endif; ?>
-<!--            <li id="navSertifikasi">
-                <a href="<=base_url()?>sertifikasi"><span class="glyphicon glyphicon-list-alt"></span> &nbsp; Sertifikasi</a>
-            </li>-->
+            <li id="navSertifikasi">
+                <a href="<?=base_url()?>sertifikasi"><span class="glyphicon glyphicon-list-alt"></span> &nbsp; Sertifikasi</a>
+            </li>
             <?php elseif($position === 'user') :?>
             <!-- Nanti diganti dengan yang sesuai!! -->
             <li id="navDashboardUser">

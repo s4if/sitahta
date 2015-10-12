@@ -23,9 +23,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-//Menggunakan Modal!! nanti bukan dengan link, tapi dengan modal supaya lebih mudah
-//modal disini nanti di load pake load view true kemudian dikumpulkan dalam bentuk array, 
-//lalu di echokan kedalam view dalam bentuk data
+
 ?>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -37,44 +35,38 @@
             <div class="modal-body">
                 <form id="formEdit" class="form-horizontal" role="form" method="post" action="">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Tanggal Lahir :</label>
-                        <div class="col-sm-2">
-                            <input id="tglEdit" type="text" class="form-control" name="tanggal" pattern="[0-9]{2}"
-                                   placeholder="Tanggal" value="" required="true">
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="bulan">
-                                <option id="bulanEdit1" value="1">Jan</option>
-                                <option id="bulanEdit2" value="2">Feb</option>
-                                <option id="bulanEdit3" value="3">Mar</option>
-                                <option id="bulanEdit4" value="4">Apr</option>
-                                <option id="bulanEdit5" value="5">Mei</option>
-                                <option id="bulanEdit6" value="6">Jun</option>
-                                <option id="bulanEdit7" value="7">Jul</option>
-                                <option id="bulanEdit8" value="8">Agu</option>
-                                <option id="bulanEdit9" value="9">Sep</option>
-                                <option id="bulanEdit10" value="10">Okt</option>
-                                <option id="bulanEdit11" value="11">Nov</option>
-                                <option id="bulanEdit12" value="12">Des</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input id="tahunEdit" type="text" class="form-control" name="tahun" pattern="[0-9]{4}"
-                                   placeholder="Tahun" value="" required="true">
+                        <label class="col-sm-3 control-label">Tanggal :</label>
+                        <div class="col-sm-8">
+                            <input id="tanggalEdit" class="form-control datepicker" type="text" 
+                                   data-date-format="dd-mm-yyyy" name="tanggal">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama :</label>
                         <div class="col-sm-8">
                             <input id="namaEdit" type="text" class="form-control" name="nama" 
-                                   placeholder="Masukkan Nama" value="" required="true">
+                                   placeholder="Masukkan Nama Kegiatan" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Kota :</label>
+                        <div class="col-sm-8">
+                            <input id="kotaEdit" type="text" class="form-control" name="kota" 
+                                   placeholder="Masukkan Kota" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tahun Ajaran :</label>
+                        <div class="col-sm-8">
+                            <input id="tahunAjaranEdit" type="number" class="form-control" name="tahun_ajaran" 
+                                   placeholder="Masukkan Kota" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tempat :</label>
                         <div class="col-sm-8">
                             <input id="tempatEdit" type="text" class="form-control" name="tempat" 
-                                   placeholder="Masukkan Nama" value="" required="true">
+                                   placeholder="Masukkan Lokasi" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
@@ -91,7 +83,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="deleteSertifikasi" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

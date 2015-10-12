@@ -43,15 +43,15 @@ class Model_sertifikasi extends MY_Model {
     }
     //belum ada
     public function insertData($data){
-        if(is_null($this->em->find("SertifikasiEntity", $data['id']))){
+//        try {
             $this->sertifikasi = new SertifikasiEntity();
             $this->setData($data);
             $this->em->persist($this->sertifikasi);
             $this->em->flush();
             return true;
-        }  else{
-            return false;
-        }
+//        } catch (Exception $e){
+//            return false;
+//        }
     }
     
     public function updateData($data){
@@ -87,6 +87,7 @@ class Model_sertifikasi extends MY_Model {
     public function setData($data){
         if (!empty($data['id'])) : $this->sertifikasi->setId($data['id']); endif;
         if (!empty($data['nama'])) : $this->sertifikasi->setNama($data['nama']); endif;
+        if (!empty($data['kota'])) : $this->sertifikasi->setKota($data['kota']); endif;
         if (!empty($data['tempat'])) : $this->sertifikasi->setTempat($data['tempat']); endif;
         if (!empty($data['tahun_ajaran'])) : $this->sertifikasi->setTahun_ajaran($data['tahun_ajaran']); endif;
         if (!empty($data['kkm'])) : $this->sertifikasi->setKkm($data['kkm']); endif;
@@ -98,19 +99,57 @@ class Model_sertifikasi extends MY_Model {
         }
     }
     
-    public function getPeserta($id = -1){
-        
+    public function getPeserta($id_sertifikasi, $id = -1){
+        $sertifikasi = $this->getData($id_sertifikasi);
+        return $sertifikasi->getPeserta($id);
     }
     
     public function addPeserta($data){
-        
+//        try {
+            $this->peserta = new PesertaEntity();
+            $this->setDataPeserta($data);
+            $this->em->persist($this->peserta);
+            $this->em->flush();
+            return true;
+//        } catch (Exception $e){
+//            return false;
+//        }
     }
     
-    public function removePeserta($arr_id){
-        
+    public function removePeserta($where){
+        $entity = $this->em->find("PesertaEntity", $where['id']);
+        if(!is_null($entity)){
+             $this->em->remove($entity);
+             $this->em->flush();
+             return true;
+        }  else {
+            return false;
+        }
     }
     
     public function updatePeserta($data){
-        
+        $this->peserta = $this->em->find("PesertaEntity", $data['id']);
+        if(!is_null($this->peserta)){
+            $this->setDataPeserta($data);
+            $this->em->persist($this->peserta);
+            $this->em->flush();
+                return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public function setDataPeserta($data){
+        if (!empty($data['id'])) : $this->peserta->setId($data['id']); endif;
+        if (!empty($data['juz'])) : $this->peserta->setJuz($data['juz']); endif;
+        if (!empty($data['nilai'])) : $this->peserta->setNilai($data['nilai']); endif;
+        if (!empty($data['nis'])) {
+            $siswa = $this->em->find("SiswaEntity", $data['nis']);
+            $this->peserta->setSiswa($siswa);
+        }
+        if (!empty($data['sertifikasi'])) {
+            $sertifikasi = $this->em->find("SertifikasiEntity", $data['sertifikasi']);
+            $this->peserta->setSertifikasi($sertifikasi);
+        }
     }
 }

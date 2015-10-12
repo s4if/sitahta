@@ -26,7 +26,7 @@
 ?>
 
 <h1 class="page-header">
-    Lihat Guru
+    Lihat Kegiatan Sertifikasi
 </h1>
 <ol class="breadcrumb">
     <li>
@@ -38,13 +38,20 @@
 </ol>
 <div class="col-md-12">
     <div class="btn-group">
-        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
+        <a id="tmbhSertifikasi" class="btn btn-primary btn-sm">
             <span class="glyphicon glyphicon-plus"></span>
             Tambah
         </a>
     </div>
+    <script type="text/javascript">
+        $("#tmbhSertifikasi").click(function (){
+            $("#formEdit").attr("action", "<?=base_url();?>admin/sertifikasi/tambah/");
+            $("#tanggalEdit").attr("value", "<?=date('d-n-Y');?>");
+            $("#editModal").modal("toggle");
+        });
+    </script>
 </div>
-<?=$tambah?>
+<!--<=$tambah?>-->
 <div class="col-md-12">
     &nbsp;
 </div>
@@ -53,34 +60,58 @@
     <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
             <tr>
-                <td>ID</td>
+                <td>No.</td>
                 <td>Tanggal</td>
                 <td>Nama</td>
                 <td>Tempat</td>
+                <td>Kota</td>
+                <td>Tahun Ajaran</td>
                 <td>Jumlah Peserta</td>
                 <td>Status</td>
                 <td>Aksi</td>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data_sertifikasi as $sertifikasi):?>
+            <?php 
+            $count = 1;
+            foreach ($data_sertifikasi as $sertifikasi):?>
             <tr>
-            <td><?= $sertifikasi->getId();?></td>
+            <td><?php echo $count++;?></td>
             <td><?= $sertifikasi->getTanggal()->format("l, j F Y");?></td>
             <td><?= $sertifikasi->getNama();?></td>
             <td><?= $sertifikasi->getTempat();?></td>
+            <td><?= $sertifikasi->getKota();?></td>
+            <td><?php echo $sertifikasi->getTahun_ajaran() .'/'. (string)((int)$sertifikasi->getTahun_ajaran()+1) ;?></td>
             <td><?= $sertifikasi->getJumlahPeserta();?></td>
             <td><?= $sertifikasi->getStatus();?></td>
             <td>
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>sertifikasi/<?=$sertifikasi->getId()?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
-                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">
+<!--                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>-->
+                <a id="btnEditSertifikasi<?= $sertifikasi->getId();?>" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal">
+                <a id="btnDeleteSertifikasi<?= $sertifikasi->getId();?>" class="btn btn-sm btn-danger" data-toggle="modal">
                     <span class="glyphicon glyphicon-remove"></span>
                 </a>
+                <script type="text/javascript">
+                    $("#btnEditSertifikasi<?= $sertifikasi->getId();?>").click(function (){
+                        $("#formEdit").attr("action", "<?=base_url();?>admin/sertifikasi/edit/<?= $sertifikasi->getId();?>");
+                        $("#namaEdit").attr("value", "<?= $sertifikasi->getNama();?>");
+                        $("#tempatEdit").attr("value", "<?= $sertifikasi->getTempat();?>");
+                        $("#kotaEdit").attr("value", "<?= $sertifikasi->getKota();?>");
+                        $("#tahunAjaranEdit").attr("value", "<?= $sertifikasi->getTahun_ajaran();?>");
+                        $("#tanggalEdit").attr("value", "<?= $sertifikasi->getTanggal()->format("d-n-Y");?>");
+                        $("#editModal").modal("toggle");
+                    });
+                    $("#btnDeleteSertifikasi<?= $sertifikasi->getId();?>").click(function (){
+                        $("#btnDelOk").attr("href", "<?= base_url().'admin/sertifikasi/hapus/'.$sertifikasi->getId();?>");
+                        $("#deleteModal").modal("toggle");
+                    });
+                </script>
             </td>
             </tr>
             <?php endforeach;?>

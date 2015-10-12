@@ -38,6 +38,10 @@ class MY_Model extends CI_Model {
     
     public function __construct() {
         parent::__construct();
+        $this->initEntityManager();
+    }
+    
+    protected function initEntityManager(){
         //Adding Doctrine
         // Create a simple "default" Doctrine ORM configuration for XML Mapping
         $isDevMode = true;

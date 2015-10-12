@@ -8,8 +8,8 @@ class SertifikatEntity
 {
     
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @Id @Column(type="string")
+     * @GeneratedValue(strategy="NONE")
      */
     private $id;
     
@@ -38,11 +38,6 @@ class SertifikatEntity
      * @Column(type="integer", nullable=false)
      */
     private $nilai;
-    
-    /**
-     * @Column(type="string", length=15, nullable=true)
-     */
-    private $predikat;
     
     /**
      * @Column(type="string", nullable=true)
@@ -74,15 +69,23 @@ class SertifikatEntity
     }
 
     public function getPredikat() {
-        return $this->predikat;
+        if($this->nilai >=90){
+            return 'Mumtaz';
+        }elseif($this->nilai >=80){
+            return 'Jayyid Jiddan';
+        }elseif($this->nilai >=70){
+            return 'Jayyid';
+        }  else {
+            return 'Dha\'if';
+        }
     }
 
     public function getKeterangan() {
         return $this->keterangan;
     }
-
-    public function setId($id) {
-        $this->id = $id;
+    
+    public function generateId() {
+        $this->id = $this->siswa->getNis().'-'.$this->juz;
         return $this;
     }
 
@@ -108,11 +111,6 @@ class SertifikatEntity
 
     public function setNilai($nilai) {
         $this->nilai = $nilai;
-        return $this;
-    }
-
-    public function setPredikat($predikat) {
-        $this->predikat = $predikat;
         return $this;
     }
 

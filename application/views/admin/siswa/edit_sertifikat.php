@@ -66,13 +66,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Predikat :</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="predikat" 
-                                   placeholder="Masukkan Predikat" value="<?=$sertifikat->getPredikat()?>" required="true">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-3 control-label">Keterangan :</label>
                         <div class="col-sm-8">
                             <textarea class="form-control col-sm-10" rows="3" name="keterangan" required="false"><?=$sertifikat->getKeterangan()?></textarea>

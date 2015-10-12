@@ -1,6 +1,7 @@
 <?php
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @Entity(repositoryClass="SertifikasiRepository")
@@ -11,7 +12,7 @@ class SertifikasiEntity {
     
     /**
      * @Id @Column(type="string")
-     * @GeneratedValue(strategy="NONE")
+     * @GeneratedValue(strategy="UUID")
      */
     private $id;
     
@@ -31,19 +32,19 @@ class SertifikasiEntity {
     private $tanggal;
     
     /**
-     * @Column(type="string", nullable=false, length=30)
+     * @Column(type="string", nullable=false, length=120)
      */
     private $tempat;
+    
+    /**
+     * @Column(type="string", nullable=false, length=40)
+     */
+    private $kota;
     
     /**
      * @OneToMany(targetEntity="PesertaEntity", mappedBy="sertifikasi" , cascade={"persist", "remove"})
      **/
     private $peserta;
-    
-    /**
-     * @Column(type="integer", nullable=false)
-     */
-    private $kkm;
     
     public function __construct() {
         $this->peserta = new ArrayCollection();
@@ -68,13 +69,19 @@ class SertifikasiEntity {
     public function getTempat() {
         return $this->tempat;
     }
-
-    public function getPeserta() {
-        return $this->peserta;
+    
+    public function getKota() {
+        return $this->kota;
     }
 
-    public function getKkm() {
-        return $this->kkm;
+    public function getPeserta($id_peserta = -1) {
+        if($id_peserta == -1){
+            return $this->peserta;
+        }else{
+            $criteria = Criteria::create()
+                    ->Where(Criteria::expr()->eq('id', $id_peserta));
+            return $this->peserta->matching($criteria);
+        }
     }
     
     //custom
@@ -90,6 +97,11 @@ class SertifikasiEntity {
 
     public function setId($id) {
         $this->id = $id;
+        return $this;
+    }
+    
+    public function setKota($kota) {
+        $this->kota = $kota;
         return $this;
     }
 
@@ -110,11 +122,6 @@ class SertifikasiEntity {
 
     public function setTempat($tempat) {
         $this->tempat = $tempat;
-        return $this;
-    }
-
-    public function setKkm($kkm) {
-        $this->kkm = $kkm;
         return $this;
     }
     

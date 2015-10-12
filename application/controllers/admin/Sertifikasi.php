@@ -61,8 +61,47 @@ class Sertifikasi extends MY_Controller {
         ];
         $this->loadView('admin/sertifikasi/lihat', $data);
     }
+    
+    public function tambah(){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $res = $this->sertifikasi->insertData($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Tambah Data Berhasil!"]);
+            redirect('admin/sertifikasi');
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Tambah Data Gagal!"]);
+            redirect('admin/sertifikasi');
+        }
+    }
+    
+    public function edit($id){
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['id'] = $id;
+        $res = $this->sertifikasi->updateData($data_insert);
+        if($res >= 1){
+            $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
+            redirect('admin/sertifikasi');
+        } else {
+            $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
+            redirect('admin/sertifikasi');
+        }
+    }
+    
+    public function hapus($id){
+        $this->blockUnloggedOne();
+        if($this->sertifikasi->deleteData(['id' => $id])){
+            $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
+            redirect('admin/sertifikasi', 'refresh');
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, Guru dengan nip = ".$nip." tidak ditemukan"]);
+            redirect('admin/sertifikasi', 'refresh');
+        }
+    }
+    
     //belum
-    public function sertifikasi($id) {
+    public function sertifikasi() {
         $this->blockUnloggedOne();
         $data_sertifikasi = $this->sertifikasi->getData();
         $data = [
@@ -78,5 +117,21 @@ class Sertifikasi extends MY_Controller {
             'edit' => "" //belum
         ];
         $this->loadView('admin/sertifikasi/lihat', $data);
+    }
+    
+    public function peserta($id){
+        $this->blockUnloggedOne();
+        $sertifikasi = $this->sertifikasi->getData($id);
+        $data = [
+            'title' => 'Lihat Peserta Sertifikasi',
+            'user' => ucwords($this->session->login_data->getNama()),
+            'position' => $this->session->position,
+            'nama' => $this->session->login_data->getNama(),
+            'nav_pos' => "sertifikasi",
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $this->session->semester,
+            'sertifikasi' => $sertifikasi
+        ];
+        $this->loadView('admin/sertifikasi/peserta', $data);
     }
 }

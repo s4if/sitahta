@@ -346,28 +346,27 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model->truncate([0 => 'sertifikat']);
         //add data
         $data = [
-            'id' => 1,
             'nis' => 1001,
             'nama' => 'user',
             'tgl_ujian' => '2015-12-12',
             'tempat_ujian' => 'SMA IT Ihsanul Fikri Magelang',
             'juz' => 4,
             'nilai' => 89,
-            'predikat' => 'Jayyid Jiddan',
             'keterangan' => 'terferifikasi'
             ];
         //delete first
         $this->assertTrue($model->insertData($data));
         $this->assertFalse($model->insertData($data));
         //delete data
-        $this->assertTrue($model->deleteData(['id' => 1]));
-        $this->assertFalse($model->deleteData(['id' => 1]));
+        $this->assertTrue($model->deleteData($data));
+        $this->assertFalse($model->deleteData($data));
         $model->insertData($data);
         //update data
-        $data['tgl_ujian'] = '2015-12-12';
-        $data['id'] = 2;
+        $data['tgl_ujian'] = '2015-12-13';
+//        $data['id'] = 2;
         $this->assertTrue($model->updateData($data));
-        $data['id'] = 10002;
+        $data['nis'] = '1001';
+        $data['juz'] = '1';
         $this->assertFalse($model->updateData($data));
 
     }
@@ -375,7 +374,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_sertifikat_2(){
         $model = new Model_sertifikat();
         //checkAttributes
-        $id = 2;
+        $id = '1001-4';
         $nis = 1001;
         $nilai_array = $model->getDataByNis($nis);
         $this->assertObjectHasAttribute('id', $nilai_array[0]);
@@ -384,7 +383,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('tgl_ujian', $nilai_array[0]);
         $this->assertObjectHasAttribute('juz', $nilai_array[0]);
         $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
-        $this->assertObjectHasAttribute('predikat', $nilai_array[0]);
         $this->assertObjectHasAttribute('keterangan', $nilai_array[0]);
         //==
         $nilai_array = $model->getData($id);
@@ -394,7 +392,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('tgl_ujian', $nilai_array);
         $this->assertObjectHasAttribute('juz', $nilai_array);
         $this->assertObjectHasAttribute('nilai', $nilai_array);
-        $this->assertObjectHasAttribute('predikat', $nilai_array);
         $this->assertObjectHasAttribute('keterangan', $nilai_array);
     }
     
@@ -404,21 +401,22 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model->truncate([0 => 'sertifikasi']);
         //add data
         $data = [
-            'id' => 1,
             'nama' => 'Mukhoyyam sapujagad 1',
-            'tahun_ajaran' => '2015/2016',
+            'tahun_ajaran' => '2015',
             'tanggal' => '2015-06-10',
+            'kota' => 'magelang',
             'tempat' => 'SMA IT Ihsanul Fikri',
-            'kkm' => 80
             ];
         //insert first
         $this->assertTrue($model->insertData($data));
-        $this->assertFalse($model->insertData($data));
+        //$this->assertFalse($model->insertData($data));
+        $id = $model->getData()[0]->getId();
         //delete data
-        $this->assertTrue($model->deleteData(['id' => 1]));
-        $this->assertFalse($model->deleteData(['id' => 1]));
+        $this->assertTrue($model->deleteData(['id' => $id]));
+        $this->assertFalse($model->deleteData(['id' => $id]));
         $model->insertData($data);
         //update data
+        $data['id'] = $model->getData()[0]->getId();
         $data['tempat'] = 'Masjid Nurul Ashri Yk';
         $this->assertTrue($model->updateData($data));
         $data['id'] = 10002;
@@ -428,14 +426,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_sertifikasi_2(){
         $model = new Model_sertifikasi();
         //checkAttributes
-        $id = 1;
+        $id = $model->getData()[0]->getId();
         $s = $model->getData($id);
         $this->assertObjectHasAttribute('id', $s);
         $this->assertObjectHasAttribute('nama', $s);
         $this->assertObjectHasAttribute('tempat', $s);
         $this->assertObjectHasAttribute('tanggal', $s);
         $this->assertObjectHasAttribute('tahun_ajaran', $s);
-        $this->assertObjectHasAttribute('kkm', $s);
+        $this->assertObjectHasAttribute('kota', $s);
         //==
         $s_array = $model->getData();
         $this->assertObjectHasAttribute('id', $s_array[0]);
@@ -443,7 +441,61 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('tempat', $s_array[0]);
         $this->assertObjectHasAttribute('tanggal', $s_array[0]);
         $this->assertObjectHasAttribute('tahun_ajaran', $s_array[0]);
-        $this->assertObjectHasAttribute('kkm', $s_array[0]);
+        $this->assertObjectHasAttribute('kota', $s_array[0]);
+        
+    }
+    //Untuk menguji Pengendalian Peserta
+    public function testModel_sertifikasi_3() {
+        $this->assertTrue(class_exists('Model_sertifikasi'), 'Sertifikasi is loadable');
+        $model = new Model_sertifikasi();
+        $model->truncate([0 => 'peserta_sertifikasi']);
+        $id_sertifikasi = $model->getData()[0]->getId();
+        //add data
+        $data = [
+            'sertifikasi' => $id_sertifikasi,
+            'nis' => 1001,
+            'juz' => '1',
+            'nilai' => '92',
+            ];
+        //insert first
+        $this->assertTrue($model->addPeserta($data));
+        //$this->assertFalse($model->insertData($data));
+        //delete data
+        $id_peserta = $model->getPeserta($id_sertifikasi)[0]->getId();
+        $this->assertTrue($model->removePeserta(['id' => $id_peserta]));
+        $this->assertFalse($model->removePeserta(['id' => $id_peserta]));
+        $model->addPeserta($data);
+        //Unset then set it again because doctrine nature block my way... :v
+        unset($model);
+        $model = new Model_sertifikasi();
+        //update data
+        $data['id'] = $model->getPeserta($id_sertifikasi)[0]->getId();
+        $data['nilai'] = 88;
+        $this->assertTrue($model->updatePeserta($data));
+        $data['id'] = 10002;
+        $this->assertFalse($model->updatePeserta($data));
+    }
+    
+    public function testModel_sertifikasi_4(){
+        $model = new Model_sertifikasi();
+        //checkAttributes
+        $id_sertifikasi = $model->getData()[0]->getId();
+//        $id = $model->getPeserta($id_sertifikasi)[0]->getId();
+//        $s = $model->getPeserta($id);
+//        $this->assertObjectHasAttribute('id', $s);
+//        $this->assertObjectHasAttribute('sertifikasi', $s);
+//        $this->assertObjectHasAttribute('siswa', $s);
+//        $this->assertObjectHasAttribute('juz', $s);
+//        $this->assertObjectHasAttribute('nilai', $s);
+//        $this->assertObjectHasAttribute('sertifikat', $s);
+        //==
+        $s_array = $model->getPeserta($id_sertifikasi);
+        $this->assertObjectHasAttribute('id', $s_array[0]);
+        $this->assertObjectHasAttribute('sertifikasi', $s_array[0]);
+        $this->assertObjectHasAttribute('siswa', $s_array[0]);
+        $this->assertObjectHasAttribute('juz', $s_array[0]);
+        $this->assertObjectHasAttribute('nilai', $s_array[0]);
+        $this->assertObjectHasAttribute('sertifikat', $s_array[0]);
         
     }
 }

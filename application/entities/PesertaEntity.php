@@ -1,7 +1,5 @@
 <?php
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * @Entity
  * @Table(name="peserta_sertifikasi")
@@ -19,15 +17,27 @@ class PesertaEntity {
      * @JoinColumn(referencedColumnName="id", onDelete="CASCADE", nullable=false)
      **/
     private $sertifikasi;
+    
+    /**
+     * @OneToOne(targetEntity="SertifikatEntity")
+     * @JoinColumn(name="sertifikat_id", referencedColumnName="id")
+     * @Column(nullable=true)
+     **/
+    private $sertifikat;
    
     /**
-     * @OneToOne(targetEntity="SiswaEntity")
-     * @JoinColumn(name="siswa_nis", referencedColumnName="nis")
+     * @ManyToOne(targetEntity="SiswaEntity")
+     * @JoinColumn(name="siswa_nis", referencedColumnName="nis", onDelete="CASCADE", nullable=false)
      **/
     private $siswa;
     
     /**
      * @Column(type="integer", nullable=false)
+     */
+    private $juz;
+    
+    /**
+     * @Column(type="integer", nullable=true)
      */
     private $nilai;
     
@@ -45,6 +55,17 @@ class PesertaEntity {
 
     public function getNilai() {
         return $this->nilai;
+    }
+    public function getJuz() {
+        return $this->juz;
+    }
+
+    public function setJuz($juz) {
+        $this->juz = $juz;
+        return $this;
+    }
+    public function getSertifikat() {
+        return $this->sertifikat;
     }
 
     public function setId($id) {
@@ -67,4 +88,9 @@ class PesertaEntity {
         return $this;
     }
     
+    public function setSertifikat($sertifikat) {
+        $this->sertifikat = $sertifikat;
+        return $this;
+    }
+
 }

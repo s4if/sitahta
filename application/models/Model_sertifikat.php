@@ -48,18 +48,25 @@ class Model_sertifikat extends MY_Model {
     public function insertData($data){
         $search_id = empty($data['id'])?-1:$data['id'];
         if(is_null($this->em->find("SertifikatEntity", $search_id))){
-            $this->sertifikat = new SertifikatEntity();
-            $this->setData($data);
-            $this->em->persist($this->sertifikat);
-            $this->em->flush();
+            //perhatikan disini!
+            try {
+                $this->sertifikat = new SertifikatEntity();
+                $this->setData($data);
+                $this->sertifikat->generateId();
+                $this->em->persist($this->sertifikat);
+                $this->em->flush();
             return true;
+            } catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $exc) {
+                $this->initEntityManager();
+                return false;
+            }
         }  else{
             return false;
         }
     }
     
     public function updateData($data){
-        $this->sertifikat = $this->em->find("SertifikatEntity", $data['id']);
+        $this->sertifikat = $this->em->find("SertifikatEntity", $data['nis'].'-'.$data['juz']);
         if(!is_null($this->sertifikat)){
             $this->setData($data);
             $this->em->persist($this->sertifikat);
@@ -71,7 +78,7 @@ class Model_sertifikat extends MY_Model {
     }
     
     public function deleteData($where){
-        $entity = $this->em->find("SertifikatEntity", $where['id']);
+        $entity = $this->em->find("SertifikatEntity", $where['nis'].'-'.$where['juz']);
         if(!is_null($entity)){
              $this->em->remove($entity);
              $this->em->flush();
@@ -83,7 +90,6 @@ class Model_sertifikat extends MY_Model {
     
     //jika ada error yang berkaitan dengan set data, lihat urutan pemberian data pada fungsi
     private function setData($data){
-        //if ((!empty($data['id']))&&($data['id']!=-1)) : $this->sertifikat->setId($data['id']); endif;
         if (!empty($data['nis'])){ 
             $siswa = $this->em->find('SiswaEntity', $data['nis']);
             $this->sertifikat->setSiswa($siswa); 
