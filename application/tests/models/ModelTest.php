@@ -494,4 +494,21 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('sertifikat', $s_array[0]);
         
     }
+    
+    public function testModel_sertifikasi_5(){
+        $model = new Model_sertifikasi();
+        $id_sertifikasi = $model->getData()[0]->getId();
+        unset($model);
+        $model = new Model_sertifikasi();
+        $this->assertFalse($model->generateSertifikat($id_sertifikasi));
+        $data_peserta = [
+            'sertifikasi' => $id_sertifikasi,
+            'id' => $id_sertifikasi.'-1030-2',
+            'nilai' => 100,
+        ];
+        $this->assertTrue($model->updatePeserta($data_peserta));
+        unset($model);
+        $model = new Model_sertifikasi();
+        $this->assertTrue($model->generateSertifikat($id_sertifikasi));
+    }
 }

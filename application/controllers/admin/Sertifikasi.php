@@ -131,7 +131,7 @@ class Sertifikasi extends MY_Controller {
             'tahun_ajaran' => $this->session->tahun_ajaran,
             'semester' => $this->session->semester,
             'sertifikasi' => $sertifikasi,
-            'edit' => $this->load->view("admin/sertifikasi/edit_peserta", [], TRUE),
+            'edit' => $this->load->view("admin/sertifikasi/edit_peserta", ['sertifikasi' => $sertifikasi], TRUE),
         ];
         $this->loadView('admin/sertifikasi/peserta', $data);
     }
@@ -197,5 +197,24 @@ class Sertifikasi extends MY_Controller {
         $tanggal = $data['sertifikasi']->getTanggal();
         $fileName = 'template sertifikasi ('.$tanggal->format('d-M-Y').')';
         $this->sertifikasi->generate($data, $fileName);
+    }
+    
+    public function simpan_sertifikat($id_sertifikasi){
+        $this->blockUnloggedOne();
+        if($this->sertifikasi->generateSertifikat($id_sertifikasi)){
+            $this->session->set_flashdata("notices",[0 => "Sertifikat telah berhasil dibuat, <br />Silahkan dilihat di profil siswa masing-masing"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }  else {
+            $this->session->set_flashdata("errors",[0 => "Maaf, Pembuatan sertifikat gagal, <br />Di cek dulu apakah ada nilai yang masih kosong"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+        }
+    }
+    
+    public function unduh_csv($id){
+        $data = [];
+        $data['sertifikasi'] = $this->sertifikasi->getData($id);
+        $tanggal = $data['sertifikasi']->getTanggal();
+        $fileName = 'template cetak sertifikat ('.$tanggal->format('d-M-Y').')';
+        $this->sertifikasi->generateCSV($data, $fileName);
     }
 }

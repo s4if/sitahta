@@ -86,3 +86,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="simpanSertifikat" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Konfirmasi</h4>
+            </div>
+            <div class="modal-body">
+                Perhatian, Periksa dulu data yang telah diinputkan!! <br />
+                Tindakan ini akan menambah/mengupdate sertifikat yang milik siswa! <br />
+                Klik OK jika setuju, atau klik Unduh CSV jika ingin mengunduh file CSV untuk membuat Sertifikat
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                <a class="btn btn-warning" href="<?=base_url().'/admin/sertifikasi/simpan_sertifikat/'.$sertifikasi->getId();?>">OK</a>
+                <a class="btn btn-primary" href="<?=base_url().'/admin/sertifikasi/unduh_csv/'.$sertifikasi->getId();?>">Unduh CSV </a>
+            </div>
+        </div>
+    </div>
+</div>

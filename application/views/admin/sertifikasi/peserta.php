@@ -72,6 +72,10 @@
                 </li>
             </ul>
         </div>
+        <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#simpanSertifikat">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            Simpan Sertifikat
+        </a>
         <div class="modal fade" id="ModalImportUp" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

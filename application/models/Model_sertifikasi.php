@@ -33,6 +33,7 @@ class Model_sertifikasi extends MY_Model {
     
     protected $sertifikasi;
     protected $peserta;
+    protected $sertifikat;
     
     public function __construct() {
         parent::__construct();
@@ -238,6 +239,81 @@ class Model_sertifikasi extends MY_Model {
             $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $peserta->getSiswa()->getNama());
             $objPHPExcel->getActiveSheet()->SetCellValue('C'.$sis_count, $peserta->getJuz());
             $objPHPExcel->getActiveSheet()->SetCellValue('D'.$sis_count, $peserta->getNilai());
+            $sis_count++;
+        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+        $objWriter->save('php://output');
+        exit;
+    }
+    
+    public function generateSertifikat($id){
+        $failureCount = 0;
+        $sertifikasi = $this->getData($id);
+        $data_peserta = $sertifikasi->getPeserta();
+        $this->em->getConnection()->beginTransaction();
+        foreach ($data_peserta as $peserta){
+            $res = $this->doGenSertifikat($sertifikasi, $peserta);
+            if(!$res){
+                $failureCount++;
+            }
+        }
+        if(($failureCount > 0)){
+            $this->em->getConnection()->rollback();
+            return false;
+        }else{
+            $this->em->getConnection()->commit();
+            return true;
+        }
+    }
+    
+    public function doGenSertifikat($sertifikasi, $peserta){
+        $this->sertifikat = $this->em->find("SertifikatEntity", $peserta->getSiswa()->getNis().'-'.$peserta->getJuz());
+        if(is_null($this->sertifikat)){
+            $this->sertifikat = new SertifikatEntity();
+        }
+        $res = $this->setDataSertifikat($sertifikasi, $peserta);
+        if ($res){
+            $this->sertifikat->generateId();
+            $this->em->persist($this->sertifikat);
+            $this->em->flush();
+            // Set Sertifikat ke peserta
+            $peserta->setSertifikat($this->sertifikat);
+            $this->em->persist($peserta);
+            $this->em->flush();
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+    
+    public function setDataSertifikat($sertifikasi, $peserta){
+        $valid = true;
+        if (!empty($peserta->getSiswa())): $this->sertifikat->setSiswa($peserta->getSiswa()); endif;
+        if (!empty($sertifikasi->getTempat())) : $this->sertifikat->setTempat_ujian($sertifikasi->getTempat()); endif;
+        if (!empty($sertifikasi->getTanggal())): $this->sertifikat->setTgl_ujian($sertifikasi->getTanggal()); endif;
+        if (!empty($peserta->getJuz())) : $this->sertifikat->setJuz($peserta->getJuz()); endif;
+        if (!empty($peserta->getNilai())) { 
+            $this->sertifikat->setNilai($peserta->getNilai());
+        } else {
+            $valid = FALSE;
+        }
+        return $valid;
+    }
+    //belum jadi
+    public function generateCSV($data, $file_name){
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'nama');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', 'ttl');
+        $objPHPExcel->getActiveSheet()->SetCellValue('C1', 'juz');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D1', 'nilai');
+        $objPHPExcel->getActiveSheet()->SetCellValue('E1', 'predikat');
+        $sis_count = 2;
+        foreach ($data['sertifikasi']->getPeserta() as $peserta) {
+            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $peserta->getSiswa()->getNama());
             $sis_count++;
         }
         header('Content-Type: application/vnd.ms-excel');
