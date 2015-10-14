@@ -6,3 +6,6 @@
 */cache/!.htaccess
 /vendor
 /data
+/.settings
+/.buildpath
+/.project
