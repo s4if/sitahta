@@ -53,11 +53,26 @@
                 $("#editModal").modal("toggle");
             });
         </script>
-        <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
-            <span class="glyphicon glyphicon-import"></span>
-            Import
-        </a>
-        <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownImport" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-import"></span>
+                Import
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownImport">
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" href="<?=base_url().'/admin/sertifikasi/template/'.$sertifikasi->getId();?>">
+                        Buat Template
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" data-target="#ModalImportUp">
+                        Upload Template
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="modal fade" id="ModalImportUp" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -65,7 +80,7 @@
                         <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
                     </div>
                     <div class="modal-body">
-                        <form role="form" method="post" action="<?=base_url();?>admin/peserta/import" enctype="multipart/form-data">
+                        <form role="form" method="post" action="<?=base_url();?>admin/sertifikasi/import/<?=$sertifikasi->getId()?>" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Masukkan Input</label>
                                 <input type="file" id="file" name="file">

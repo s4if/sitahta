@@ -101,23 +101,23 @@ class Sertifikasi extends MY_Controller {
     }
     
     //belum
-    public function sertifikasi() {
-        $this->blockUnloggedOne();
-        $data_sertifikasi = $this->sertifikasi->getData();
-        $data = [
-            'title' => 'Lihat Sertifikasi',
-            'user' => ucwords($this->session->login_data->getNama()),
-            'position' => $this->session->position,
-            'nama' => $this->session->login_data->getNama(),
-            'nav_pos' => "sertifikasi",
-            'data_sertifikasi' => $data_sertifikasi,
-            'tahun_ajaran' => $this->session->tahun_ajaran,
-            'semester' => $this->session->semester,
-            'tambah' => "", //belum
-            'edit' => "" //belum
-        ];
-        $this->loadView('admin/sertifikasi/lihat', $data);
-    }
+//    public function sertifikasi() {
+//        $this->blockUnloggedOne();
+//        $data_sertifikasi = $this->sertifikasi->getData();
+//        $data = [
+//            'title' => 'Lihat Sertifikasi',
+//            'user' => ucwords($this->session->login_data->getNama()),
+//            'position' => $this->session->position,
+//            'nama' => $this->session->login_data->getNama(),
+//            'nav_pos' => "sertifikasi",
+//            'data_sertifikasi' => $data_sertifikasi,
+//            'tahun_ajaran' => $this->session->tahun_ajaran,
+//            'semester' => $this->session->semester,
+//            'tambah' => "", //belum
+//            'edit' => "" //belum
+//        ];
+//        $this->loadView('admin/sertifikasi/lihat', $data);
+//    }
     
     public function peserta($id){
         $this->blockUnloggedOne();
@@ -173,5 +173,29 @@ class Sertifikasi extends MY_Controller {
             $this->session->set_flashdata("errors",[0 => "Maaf, Data tidak ditemukan"]);
             redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
         }
+    }
+    
+    public function import($id_sertifikasi){
+    	$this->blockUnloggedOne();
+    	$fileUrl = $_FILES['file']["tmp_name"];
+    	$res = $this->sertifikasi->importData($fileUrl);
+    	if($res == 0){
+            $this->session->set_flashdata("notices",[0 => "Import Data Berhasil!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+    	} elseif($res > 0) {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> cek kembali isi dokumen yang akan diimport!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+    	}  else {
+            $this->session->set_flashdata("errors",[0 => "Import Data Gagal!,<br> File yang dimasukkan bukan file excel!"]);
+            redirect('admin/sertifikasi/peserta/'.$id_sertifikasi);
+    	}
+    }
+    
+    public function template($id){
+        $data = [];
+        $data['sertifikasi'] = $this->sertifikasi->getData($id);
+        $tanggal = $data['sertifikasi']->getTanggal();
+        $fileName = 'template sertifikasi ('.$tanggal->format('d-M-Y').')';
+        $this->sertifikasi->generate($data, $fileName);
     }
 }

@@ -163,15 +163,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('siswa', $kelas);
         $mod_array = $model->getData();
         $this->assertObjectHasAttribute('nis', $mod_array[0]);
-        //ganti algoritma
-//            $mod_array1 = $model->getFilteredData(['kelas' => 'XI',
-//                'jurusan' => 'IPS',
-//                'no_kelas' => '2']);
-//            $this->assertObjectHasAttribute('nis', $mod_array1[0]);
-//            $mod_array2 = $model->getFilteredData(['kelas' => 'XI',
-//                'jurusan' => 'IPS',
-//                'no_kelas' => '100']);
-//            $this->assertEmpty($mod_array2);
         $this->assertEquals(0, $model->importData('assets/test/coba_siswa.xls'));
         $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
         $this->assertGreaterThan(0,$model->importData('assets/test/coba_siswa_error.xls'));
@@ -336,8 +327,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('nilai_remidi', $nilai4);
         $this->assertObjectHasAttribute('penguji', $nilai4);
         $this->assertEquals(0, $model->importData('assets/test/coba_nilai.xls'));
-//        $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
-//        $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
+        $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+        $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
     }
 
     public function testModel_sertifikat() {
@@ -363,7 +354,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model->insertData($data);
         //update data
         $data['tgl_ujian'] = '2015-12-13';
-//        $data['id'] = 2;
         $this->assertTrue($model->updateData($data));
         $data['nis'] = '1001';
         $data['juz'] = '1';
@@ -474,6 +464,12 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($model->updatePeserta($data));
         $data['id'] = 10002;
         $this->assertFalse($model->updatePeserta($data));
+        //Import Data Peserta
+        $this->assertEquals(0, $model->importData('assets/test/coba_sertifikasi.xls'));
+        $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
+        $this->assertGreaterThan(0,$model->importData('assets/test/coba_sertifikasi_error_1.xls'));
+        $this->assertGreaterThan(0,$model->importData('assets/test/coba_sertifikasi_error_2.xls'));
+        $this->assertGreaterThan(0,$model->importData('assets/test/coba_sertifikasi_error_3.xls'));
     }
     
     public function testModel_sertifikasi_4(){

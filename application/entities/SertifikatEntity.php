@@ -85,8 +85,12 @@ class SertifikatEntity
     }
     
     public function generateId() {
-        $this->id = $this->siswa->getNis().'-'.$this->juz;
-        return $this;
+        if(isset($this->siswa, $this->juz)){
+            $this->id = $this->siswa->getNis().'-'.$this->juz;
+          return true;
+        } else {
+            return FALSE;
+        }
     }
 
     public function setSiswa($siswa) {

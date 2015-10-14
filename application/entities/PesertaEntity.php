@@ -7,8 +7,8 @@
 class PesertaEntity {
     
     /**
-     * @Id @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
+     * @Id @Column(type="string")
+     * @GeneratedValue(strategy="NONE")
      */
     private $id;
     
@@ -67,10 +67,14 @@ class PesertaEntity {
     public function getSertifikat() {
         return $this->sertifikat;
     }
-
-    public function setId($id) {
-        $this->id = $id;
-        return $this;
+    
+    public function generateId(){
+        if(isset($this->siswa, $this->juz, $this->sertifikasi)){
+            $this->id = $this->sertifikasi->getId() . '-' . $this->siswa->getNis() . '-' . $this->juz;
+            return true;
+        } else {
+            return FALSE;
+        }
     }
 
     public function setSertifikasi($sertifikasi) {

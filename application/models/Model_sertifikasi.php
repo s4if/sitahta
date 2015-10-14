@@ -108,6 +108,7 @@ class Model_sertifikasi extends MY_Model {
 //        try {
             $this->peserta = new PesertaEntity();
             $this->setDataPeserta($data);
+            $this->peserta->generateId();
             $this->em->persist($this->peserta);
             $this->em->flush();
             return true;
@@ -140,7 +141,7 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function setDataPeserta($data){
-        if (!empty($data['id'])) : $this->peserta->setId($data['id']); endif;
+        //if (!empty($data['id'])) : $this->peserta->setId($data['id']); endif;
         if (!empty($data['juz'])) : $this->peserta->setJuz($data['juz']); endif;
         if (!empty($data['nilai'])) : $this->peserta->setNilai($data['nilai']); endif;
         if (!empty($data['nis'])) {
@@ -151,5 +152,99 @@ class Model_sertifikasi extends MY_Model {
             $sertifikasi = $this->em->find("SertifikasiEntity", $data['sertifikasi']);
             $this->peserta->setSertifikasi($sertifikasi);
         }
+    }
+    //belum jadi
+    /**
+     * 
+     * @param type $file_url
+     * @return 0 for ok, -1 for file wrong, > 0 for data wrong
+     */
+    public function importData($file_url){
+        try {
+            $objReader = new PHPExcel_Reader_Excel5();
+            $objPHPExcel = $objReader->load($file_url);
+            $objWorksheet = $objPHPExcel->getActiveSheet();
+            $lastRow = $objWorksheet->getHighestDataRow();
+            $failureCount = 0;
+            $this->em->getConnection()->beginTransaction();
+            $data = $objWorksheet->rangeToArray('A1'.':D'.$lastRow, null, TRUE);
+            for ($i = 2; $i < $lastRow;$i++){
+                $row_data = $data[$i];
+                $res = $this->transQuery($data, $row_data);
+                if(!$res){
+                    $failureCount++;
+                }
+            }
+            if(($failureCount > 0)){
+                $this->em->getConnection()->rollback();
+            }else{
+                $this->em->getConnection()->commit();
+            }
+            return $failureCount;
+        }  catch (PHPExcel_Exception $ex) {
+            return -1;
+        }
+    }
+    
+    private function cellValidation($row_data){
+        $cellValid = true;
+        if(is_null($row_data[0])){
+            $cellValid = false;
+        }
+        if(is_null($row_data[2])){
+            $cellValid = false;
+        }
+        return $cellValid;
+    }
+    
+    private function transQuery($data, $row_data){
+        $siswa_exist = !is_null($this->em->find("SiswaEntity", $row_data[0]));
+        $sertifikasi_exist = !is_null($this->em->find("SertifikasiEntity", $data[0][1]));
+        if($this->cellValidation($row_data) && $sertifikasi_exist && $siswa_exist){
+            $id = $data[0][1].'-'.$row_data[0].'-'.$row_data[2];
+            $this->peserta = (is_null($this->em->find("PesertaEntity", $id)))? 
+                    new PesertaEntity(): $this->em->find("PesertaEntity", $id);
+            $siswa = $this->em->find("SiswaEntity", $row_data[0]);
+            $this->peserta->setSiswa($siswa);
+            $sertifikasi = $this->em->find("SertifikasiEntity", $data[0][1]);
+            $this->peserta->setSertifikasi($sertifikasi);
+            $this->peserta->setJuz($row_data[2]);
+            if (!empty($row_data[3])) : $this->peserta->setNilai($row_data[3]); endif;
+            $this->peserta->generateId();
+            $this->em->persist($this->peserta);
+            $this->em->flush();
+            return TRUE;
+        } else {
+            return false;
+        }
+    }
+    //belum jadi
+    
+    //export
+    public function generate($data, $file_name){
+        $objPHPExcel = new PHPExcel();
+        $objPHPExcel->setActiveSheetIndex(0);
+        $objPHPExcel->getActiveSheet()->SetCellValue('A1', 'Id');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B1', $data['sertifikasi']->getId());
+        $objPHPExcel->getActiveSheet()->SetCellValue('C1', '*baris ini jangan diubah');
+        $objPHPExcel->getActiveSheet()->SetCellValue('A2', 'NIS');
+        $objPHPExcel->getActiveSheet()->SetCellValue('B2', 'Nama');
+        $objPHPExcel->getActiveSheet()->SetCellValue('C2', 'Juz');
+        $objPHPExcel->getActiveSheet()->SetCellValue('D2', 'Nilai');
+        
+        $sis_count = 3;
+        foreach ($data['sertifikasi']->getPeserta() as $peserta) {
+            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $peserta->getSiswa()->getNis());
+            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $peserta->getSiswa()->getNama());
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$sis_count, $peserta->getJuz());
+            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$sis_count, $peserta->getNilai());
+            $sis_count++;
+        }
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.xls"');
+        header('Cache-Control: max-age=0');
+        $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+        $objWriter->save('php://output');
+        exit;
     }
 }
