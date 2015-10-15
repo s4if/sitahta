@@ -314,13 +314,66 @@ class Model_sertifikasi extends MY_Model {
         $sis_count = 2;
         foreach ($data['sertifikasi']->getPeserta() as $peserta) {
             $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $peserta->getSiswa()->getNama());
+            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, 
+                    $this->getTTL($peserta->getSiswa()->getTgl_lahir(), $peserta->getSiswa()->getTempat_lahir()));
+            $objPHPExcel->getActiveSheet()->SetCellValue('C'.$sis_count, $peserta->getJuz());
+            $objPHPExcel->getActiveSheet()->SetCellValue('D'.$sis_count, $peserta->getNilai());
+            if(!is_null($peserta->getSertifikat())){
+                $objPHPExcel->getActiveSheet()->SetCellValue('E'.$sis_count, $peserta->getSertifikat()->getPredikat());
+            }  else {
+                return false;
+            }
             $sis_count++;
         }
         header('Content-Type: application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename="'.$file_name.'.xls"');
+        header('Content-Disposition: attachment;filename="'.$file_name.'.csv"');
         header('Cache-Control: max-age=0');
-        $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
+        $objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
         $objWriter->save('php://output');
         exit;
+    }
+    
+    private function getTTL(DateTime $tanggal, $tempat){
+        $bulan = '';
+        switch ($tanggal->format('n')){
+            case 1:
+                $bulan = 'Januari';
+                break;
+            case 2: 
+                $bulan = 'Februari';
+                break;
+            case 3: 
+                $bulan = 'Maret';
+                break;
+            case 4: 
+                $bulan = 'April';
+                break;
+            case 5:
+                $bulan = 'Mei';
+                break;
+            case 6:
+                $bulan = 'Juni';
+                break;
+            case 7:
+                $bulan = 'Juli';
+                break;
+            case 8:
+                $bulan = 'Agustus';
+                break;
+            case 9:
+                $bulan = 'September';
+                break;
+            case 10 :
+                $bulan = 'Oktober';
+                break;
+            case 11 :
+                $bulan = 'November';
+                break;
+            case 12 :
+                $bulan = 'Desember';
+                break;
+        }
+        $ttl = ucwords($tempat).', '.$tanggal->format('j').' '.$bulan.' '.$tanggal->format('Y');
+        return $ttl;
     }
 }

@@ -215,6 +215,11 @@ class Sertifikasi extends MY_Controller {
         $data['sertifikasi'] = $this->sertifikasi->getData($id);
         $tanggal = $data['sertifikasi']->getTanggal();
         $fileName = 'template cetak sertifikat ('.$tanggal->format('d-M-Y').')';
-        $this->sertifikasi->generateCSV($data, $fileName);
+        $res = $this->sertifikasi->generateCSV($data, $fileName);
+        if(!$res){
+            $this->session->set_flashdata("errors",[0 => "Maaf, masih peserta yang belum tersimpan sertifikatnya! <br> /"
+                . "Mohon di cek lagi!"]);
+            redirect('admin/sertifikasi/peserta/'.$id);
+        }
     }
 }
