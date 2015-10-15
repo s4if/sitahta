@@ -73,12 +73,11 @@
         <table style="width: 100%" class="utama">
             <thead>
                 <tr>
-                    <td class="utama isi">UH</td>
+                    <td class="utama isi">Ulangan</td>
                     <td class="utama isi">Juz</td>
                     <td class="utama isi">Materi</td>
-                    <td class="utama isi">Nilai</td>
                     <td class="utama isi">Tanggal</td>
-                    <td class="utama isi">Penguji</td>
+                    <td class="utama isi">Nilai</td>
                     <td class="utama isi">Keterangan</td>
                 </tr>
             </thead>
@@ -86,12 +85,23 @@
             <?php 
             $arr_kelas = explode('-', $id_kelas);
             $count = ($arr_kelas[0] == 'X')?20:10;
-            for($i = 1; $i <= $count; $i++):
-                if(is_null($siswa->getNilaiByUH($arr_kelas[0], $i, $semester)[0])):
+            $n_count = 0;
+            $n_sum = 0;
+            $n_uts = 0;
+            $n_uas = 0;
+            for($i = 1; $i <= $count+2; $i++):
+                $no_uh;
+                if($i == $count+1){
+                    $no_uh = 'UTS';
+                } elseif ($i == $count+2) {
+                    $no_uh = 'UAS';
+                }  else {
+                    $no_uh = $i;
+                }
+                if(is_null($siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0])):
             ?>
             <tr>
-                <td class="utama isi">&nbsp;</td>
-                <td class="utama isi"></td>
+                <td class="utama isi"><?=$no_uh;?></td>
                 <td class="utama isi"></td>
                 <td class="utama isi"></td>
                 <td class="utama isi"></td>
@@ -99,21 +109,31 @@
                 <td class="utama isi"></td>
             </tr>
             <?php else: 
-                $nilai = $siswa->getNilaiByUH($arr_kelas[0], $i, $semester)[0];
+                $nilai = $siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0];
                 ?>
                 <tr>
-                <td class="utama isi"><?=$nilai->getNo_uh()?></td>
+                <td class="utama isi"><?=$no_uh;?></td>
                 <td class="utama isi"><?=$nilai->getMeta()->getJuz()?></td>
                 <td class="utama isi">
                     <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
                 </td>
-                <td class="utama isi"><?=$nilai->getNilai_akhir()?></td>
                 <td class="utama isi"><?=date('d F Y', $nilai->getTanggal()->getTimestamp());?></td>
-                <td class="utama isi"><?=$nilai->getPenguji()->getNama();?></td>
+                <td class="utama isi"><?=$nilai->getNilai_akhir()?></td>
+                <?php if ($i <= $count) :
+                    $n_sum = $n_sum + $nilai->getNilai_akhir(); $n_count++;
+                    elseif($i == $count+1) : $n_uts = $nilai->getNilai_akhir();
+                    elseif($i == $count+2) : $n_uas = $nilai->getNilai_akhir();
+                    endif;?>
                 <td class="utama isi"><?=$nilai->getKeterangan()?></td>
                 </tr>
             <?php endif;?>
             <?php endfor;?>
+            <tr>
+                <td class="utama isi" colspan="4"><strong>Nilai Akhir</strong></td>
+                <?php $n_akhir = ((40*($n_sum/$n_count))+(30*$n_uts)+(30*$n_uas))/100;?>
+                <td class="utama isi"><strong><?php echo number_format($n_akhir, 0);?></strong></td>
+                <td class="utama isi"></td>
+            </tr>
             </tbody>
         </table>
         <table style="width: 100%; border-style: none">
