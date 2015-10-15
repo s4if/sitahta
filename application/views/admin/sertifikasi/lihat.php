@@ -37,6 +37,7 @@
     </li>
 </ol>
 <div class="col-md-12">
+    <?php if($position === 'admin'):?>
     <div class="btn-group">
         <a id="tmbhSertifikasi" class="btn btn-primary btn-sm">
             <span class="glyphicon glyphicon-plus"></span>
@@ -50,6 +51,7 @@
             $("#editModal").modal("toggle");
         });
     </script>
+    <?php endif;?>
 </div>
 <!--<=$tambah?>-->
 <div class="col-md-12">
@@ -88,9 +90,7 @@
                 <a class="btn btn-sm btn-success" href="<?=base_url();?>sertifikasi/<?=$sertifikasi->getId()?>">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
-<!--                <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>-->
+                <?php if($position === 'admin'):?>
                 <a id="btnEditSertifikasi<?= $sertifikasi->getId();?>" class="btn btn-sm btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
@@ -112,6 +112,7 @@
                         $("#deleteModal").modal("toggle");
                     });
                 </script>
+                <?php endif;?>
             </td>
             </tr>
             <?php endforeach;?>

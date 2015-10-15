@@ -226,7 +226,8 @@ class Siswa extends MY_Controller {
 
     public function hapus_sertifikat($nis, $id) {
         $this->blockUnloggedOne();
-        if ($this->sertifikat->deleteData(['nis' => $nis, 'id' => $id])) {
+        $juz = explode('-', $id)[1];
+        if ($this->sertifikat->deleteData(['nis' => $nis, 'id' => $id, 'juz' => $juz])) {
             $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
             redirect('siswa/' . $nis, 'refresh');
         } else {

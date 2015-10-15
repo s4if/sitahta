@@ -148,6 +148,7 @@
                                    placeholder="Masukkan Nomor Telepon" value="<?=$guru->getNo_telp()?>" required="true">
                         </div>
                     </div>
+                    <?php if($position === 'admin'):?>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Kewenangan :</label>
                         <div class="col-sm-5">
@@ -171,6 +172,7 @@
                             </select>
                         </div>
                     </div>
+                    <?php endif;?>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-sm btn-primary">OK</button>

@@ -20,7 +20,7 @@ class PesertaEntity {
     
     /**
      * @OneToOne(targetEntity="SertifikatEntity")
-     * @JoinColumn(name="sertifikat_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
+     * @JoinColumn(name="sertifikat_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      **/
     private $sertifikat;
    

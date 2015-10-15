@@ -73,10 +73,10 @@ class Home extends MY_Controller{
         $this->blockUnloggedOne();
         $guru = $this->guru->getData($this->session->login_data->getNip());
         $data = [
-            'title' => 'Beranda',
+            'title' => 'Profil',
             'user' => ucwords($this->session->login_data->getNama()),
             'position' => $this->session->position,
-            'nav_pos' => 'dashboard',
+            'nav_pos' => 'Profil',
             'nama' => $this->session->login_data->getNama(),
             'guru' => $guru
         ];

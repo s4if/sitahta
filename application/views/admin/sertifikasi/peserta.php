@@ -154,6 +154,11 @@
                         $("#deleteModal").modal("toggle");
                     });
                 </script>
+                <?php if(!is_null($peserta->getSertifikat())) :?>
+                <a class="btn btn-sm btn-success">
+                    <span class="glyphicon glyphicon-saved"></span>
+                </a>
+                <?php endif;?>
             </td>
             </tr>
             <?php endforeach;?>
