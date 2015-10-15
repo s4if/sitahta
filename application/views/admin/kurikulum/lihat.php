@@ -46,24 +46,39 @@
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownKelas">
             <li role="presentation">
-                <a role="menuitem" href="<?=  base_url()?>kurikulum/X">
-                    Kelas X
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/X/1">
+                    Kelas X Semester 1
                 </a>
             </li>
             <li role="presentation">
-                <a role="menuitem" href="<?=  base_url()?>kurikulum/XI">
-                    Kelas XI
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/X/2">
+                    Kelas X Semester 2
                 </a>
             </li>
             <li role="presentation">
-                <a role="menuitem" href="<?=  base_url()?>kurikulum/XII">
-                    Kelas XII
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/XI/1">
+                    Kelas XI Semester 1
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/XI/2">
+                    Kelas XI Semester 2
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/XII/1">
+                    Kelas XII Semester 1
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" href="<?=  base_url()?>kurikulum/XII/2">
+                    Kelas XII Semester 2
                 </a>
             </li>
             </ul>
         </div>
     </div>
-    <h3>Kelas <?=$kelas?></h3>
+    <h3>Kelas <?=$kelas?> Semester <?=$semester?></h3>
 </div>
 <div class="col-md-12">
     &nbsp;

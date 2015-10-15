@@ -80,4 +80,25 @@ class KurikulumRepository extends EntityRepository {
         return $query->getResult();
     }
     
+    public function getDataByKelasAndUh($kelas, $tahun = null, $no_uh = 1, $semester = 1){
+        if($tahun == null){
+            $tahun = date('Y');
+        }
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('k')
+                ->from('KurikulumEntity', 'k')
+                ->andwhere('k.kelas = :kelas')
+                ->andwhere('k.tahun = :tahun')
+                ->andwhere('k.no_uh = :no_uh')
+                ->andwhere('k.semester = :semester')
+                ->addOrderBy('k.kelas', 'ASC')
+                ->addOrderBy('k.semester', 'ASC')
+                ->addOrderBy('k.no_uh', 'ASC')
+                ->setParameter('kelas', $kelas)
+                ->setParameter('tahun', $tahun)
+                ->setParameter('no_uh', $no_uh)
+                ->setParameter('semester', $semester);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

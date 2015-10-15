@@ -41,7 +41,11 @@ class Model_kurikulum extends MY_Model {
     }
     
     public function getDataByKelas($kelas = 'X', $tahun = -1){
-        return $this->em->getRepository('KurikulumEntity')->getDataByKelas($kelas);
+        return $this->em->getRepository('KurikulumEntity')->getDataByKelas($kelas, $tahun);
+    }
+    
+    public function getDataByParams($kelas = 'X', $tahun = -1, $no_uh = 1, $semester = 1){
+        return $this->em->getRepository('KurikulumEntity')->getDataByKelasAndUh($kelas, $tahun, $no_uh, $semester);
     }
     
     // for testing only!!!

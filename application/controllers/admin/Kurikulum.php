@@ -46,10 +46,10 @@ class Kurikulum extends MY_Controller {
         }
     }
     
-    public function lihat($kelas ='X'){
+    public function lihat($kelas ='X', $semester = 1){
         $this->blockUnloggedOne();
         $tahun = $this->session->tahun_ajaran;
-        $data_kurikulum = $this->kurikulum->getDataByKelas($kelas, $tahun);
+        $data_kurikulum = $this->dataTrans($kelas, $tahun, $semester);
         $data = [
             'title' => 'Lihat Kurikulum',
             'user' => ucwords($this->session->login_data->getNama()),
@@ -57,13 +57,24 @@ class Kurikulum extends MY_Controller {
             'nama' => $this->session->login_data->getNama(),
             'nav_pos' => 'kurikulum',
             'kelas' => $kelas,
+            'semester' => $semester,
             'edit' => $this->load->view("admin/kurikulum/edit",['data_kurikulum' => $data_kurikulum],TRUE),
             'data_kurikulum' => $data_kurikulum
         ];
-//        var_dump($data_kurikulum);
         $this->loadView('admin/kurikulum/lihat', $data);
     }
     
+    private function dataTrans($kelas, $tahun, $semester){
+        $arr_data = [];
+        $count = ($kelas == 'X')? 20 : 10;
+        for($i = 1; $i <= $count; $i++){
+            $arr_data[$i] = $this->kurikulum->getDataByParams($kelas, $tahun, $i, $semester)[0];
+        }
+        $arr_data['UTS'] = $this->kurikulum->getDataByParams($kelas, $tahun, 'UTS', $semester)[0];
+        $arr_data['UAS'] = $this->kurikulum->getDataByParams($kelas, $tahun, 'UAS', $semester)[0];
+        return $arr_data;
+    }
+
     public function tambah(){
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);

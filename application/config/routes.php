@@ -71,3 +71,4 @@ $route['sertifikasi'] = 'admin/sertifikasi/lihat';
 $route['sertifikasi/(:any)'] = 'admin/sertifikasi/peserta/$1';
 $route['kurikulum'] = 'admin/kurikulum/lihat';
 $route['kurikulum/(:any)'] = 'admin/kurikulum/lihat/$1';
+$route['kurikulum/(:any)/(:num)'] = 'admin/kurikulum/lihat/$1/$2';
