@@ -50,30 +50,45 @@
                     <tr>
                         <td>UH</td>
                         <td>Juz</td>
-                        <td>Halaman</td>
+                        <td>Materi</td>
                         <td>Nilai Awal</td>
                         <td>Nilai Remidi</td>
                         <td>Nilai Akhir</td>
-                        <td>Tanggal</td>
-                        <td>Penguji</td>
                         <td>Keterangan</td>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php if (empty($data_nilai[0])): ?>
+                    <tr>
+                    <td>#</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
+                    <?php else: ?>
                     <?php foreach ($data_nilai as $nilai): ?>
                     <tr>
                     <td>#<?=$nilai->getNo_uh();?></td>
-                    <td><?=$nilai->getJuz();?></td>
-                    <td><?=$nilai->getHalaman();?></td>
+                    <td><?=$nilai->getMeta()->getJuz();?></td>
+                    <td>
+                        <?php if(!is_null($nilai->getMeta()->getSurat_awal())) :?>
+                        <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
+                        <?php else :?>
+                        -
+                        <?php endif;?>
+                    </td>
                     <td><?=$nilai->getNilai()?></td>
                     <td><?php echo (is_null($nilai->getNilai_remidi())) ? '-' : $nilai->getNilai_remidi();?></td>
                     <td><?=$nilai->getNilai_akhir();?></td>
-                    <td><?=date('d F Y', $nilai->getTanggal()->getTimestamp());?></td>
-                    <td><?=$nilai->getPenguji()->getNama();?></td>
                     <td><?=$nilai->getKeterangan()?></td>
                     </tr>
                     <?php endforeach;?>
-            
+            <?php endif;?>
             </tbody>
         </table>
     </div>

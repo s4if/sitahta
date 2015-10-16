@@ -182,7 +182,7 @@ class NilaiHarianEntity {
         } elseif ($this->nilai_remidi >= self::KKM) {
                 return "Lulus dengan remidi";
         } else {
-                return "Belum lulus/remidi";
+                return "Belum lulus";
         }
     }
 

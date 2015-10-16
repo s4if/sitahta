@@ -33,7 +33,6 @@ class User extends My_Controller {
             'siswa' => $siswa,
             'nav_pos' => 'dashboardUser',
             'data_sertifikat' => $data_sertifikat,
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
@@ -52,7 +51,6 @@ class User extends My_Controller {
             'siswa' => $siswa,
             'nav_pos' => 'profilUser',
             'data_sertifikat' => $data_sertifikat,
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
@@ -70,7 +68,6 @@ class User extends My_Controller {
             'siswa' => $siswa,
             'nav_pos' => 'nilaiUser',
             'data_sertifikat' => $data_sertifikat,
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
@@ -89,7 +86,6 @@ class User extends My_Controller {
             'siswa' => $siswa,
             'nav_pos' => 'hafalanUser',
             'data_sertifikat' => $data_sertifikat,
-            'edit_nilai' => $this->load->view("admin/siswa/edit_nilai", [], TRUE),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];

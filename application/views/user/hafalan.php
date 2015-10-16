@@ -48,7 +48,6 @@
                     <td>Juz</td>
                     <td>Nilai</td>
                     <td>Predikat</td>
-                    <td>Keterangan</td>
                 </tr>
             </thead>
             <tbody>
@@ -71,7 +70,6 @@
                 <td><?=$sertifikat->getJuz();?></td>
                 <td><?=$sertifikat->getNilai();?></td>
                 <td><?=$sertifikat->getPredikat();?></td>
-                <td><?=$sertifikat->getKeterangan();?></td>
                 </tr>
                 <?php endforeach;?>
                 <?php endif;?>

@@ -76,7 +76,7 @@
             <div class="panel-body">
                 <form action="<?= base_url()."login/verify"?>" method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="NIP" name="nip" value="<?php echo isset($data['nip'])? $data['nip']:'';?>" required="true">
+                        <input type="text" class="form-control" placeholder="NIS/Id Musyrif" name="nip" value="<?php echo isset($data['nip'])? $data['nip']:'';?>" required="true">
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" placeholder="Password" name="password" required="true">
