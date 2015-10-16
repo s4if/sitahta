@@ -76,7 +76,6 @@
                     <td class="utama isi">Ulangan</td>
                     <td class="utama isi">Juz</td>
                     <td class="utama isi">Materi</td>
-                    <td class="utama isi">Tanggal</td>
                     <td class="utama isi">Nilai</td>
                     <td class="utama isi">Keterangan</td>
                 </tr>
@@ -106,7 +105,6 @@
                 <td class="utama isi"></td>
                 <td class="utama isi"></td>
                 <td class="utama isi"></td>
-                <td class="utama isi"></td>
             </tr>
             <?php else: 
                 $nilai = $siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0];
@@ -117,7 +115,6 @@
                 <td class="utama isi">
                     <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
                 </td>
-                <td class="utama isi"><?=date('d F Y', $nilai->getTanggal()->getTimestamp());?></td>
                 <td class="utama isi"><?=$nilai->getNilai_akhir()?></td>
                 <?php if ($i <= $count) :
                     $n_sum = $n_sum + $nilai->getNilai_akhir(); $n_count++;
@@ -129,7 +126,7 @@
             <?php endif;?>
             <?php endfor;?>
             <tr>
-                <td class="utama isi" colspan="4"><strong>Nilai Akhir</strong></td>
+                <td class="utama isi" colspan="3"><strong>Nilai Akhir</strong></td>
                 <?php $n_akhir = ((40*($n_sum/$n_count))+(30*$n_uts)+(30*$n_uas))/100;?>
                 <td class="utama isi"><strong><?php echo number_format($n_akhir, 0);?></strong></td>
                 <td class="utama isi"></td>
