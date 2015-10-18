@@ -112,6 +112,31 @@ class Siswa extends MY_Controller {
             redirect('siswa');
         }
     }
+    
+    public function edit_kelas($nis) {
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nis'] = $nis;
+        $res = $this->real_edit_kelas($data_insert);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Edit Kelas Berhasil!"]);
+            redirect('siswa');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Edit Kelas Gagal!"]);
+            redirect('siswa');
+        }
+    }
+    
+    public function real_edit_kelas($data_insert){
+        $err_count = 0;
+        // Kelas X
+        if(isset($data_insert['kelas_X'])){
+            
+        }
+        $data_insert['kelas'] = $data_insert['kelas_X'];
+        $this->siswa->updateData($data_insert);
+        return ($err_count == 0);
+    }
 
     public function hapus($nis) {
         $this->blockUnloggedOne();

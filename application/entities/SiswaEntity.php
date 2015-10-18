@@ -115,8 +115,13 @@ class SiswaEntity {
     //belum terji
     public function getKelasTahun($tahun_ajaran) {
         $criteria = Criteria::create();
-        $criteria->where(Criteria::expr()->eq('tahun_ajaran', $tahun_ajaran))
-                 ->getFirstResult();
+        $criteria->where(Criteria::expr()->eq('tahun_ajaran', $tahun_ajaran));
+        return $this->kelas->matching($criteria);
+    }
+    
+    public function getKelasTingkat($kelas) {
+        $criteria = Criteria::create();
+        $criteria->where(Criteria::expr()->eq('kelas', $kelas));
         return $this->kelas->matching($criteria);
     }
 
@@ -229,39 +234,33 @@ class SiswaEntity {
             return 0;
         }  else {
             $this->kelas->removeElement($kelas_ref);
-            //throw new Exception("Error, kelas berbeda tapi tahun sama!!!");
             $this->kelas->add($kelas_cek);
             return 1;
         }
     }
-
+    
     public function addKelas(KelasEntity $kelas, $tingkat, $tahun) {
-        $kelas_cek_tingkat = $this->cekTingkat($tingkat);
-        //jika tingkat tidak sama
-        if($kelas_cek_tingkat->isEmpty()){
-            //jika tingkat dan tahun berbeda langsung tambah (return 1)
-            if($this->cekTahun($tahun)->isEmpty()){
-                //throw new Exception("Error, kelas berbeda tapi tahun sama!!!");
-                $this->realAddKelas($kelas);
-                return 1;
-            }  
-            //jika tingkat berbeda dan tahun sama maka return error (return minus)
-            else {
-                throw new Exception("Error, kelas berbeda tapi tahun sama!!!");
-                //return -1;
-            }
+        $kelas_cek_tahun = $this->cekTahun($tahun);
+        
+        // Cek Tahun Dari Kelas
+        // Jika tahun Sama
+        if(!$kelas_cek_tahun->isEmpty()){
+            
+            // Hapus kemudian Tambah!
+            $this->kelas->removeElement($kelas_cek_tahun->first());
+            $this->realAddKelas($kelas);
         }
-        //jika tingkat sama
-        else{
-            $kelas_cek_tahun = $this->cekTahun($tahun);
-            //jika tingkat sama tahun berbeda
-            if($kelas_cek_tahun->isEmpty()){
-                $this->kelas->removeElement($kelas_cek_tingkat->first()->current());
-                $this->kelas->add($kelas);
-                return 1;
-            }  else {
-                $this->cekInstance($this->cekKelas($tingkat, $tahun)->first()->current(), $kelas);
-            }
+        
+        // Jika tahun Berbeda
+        else {
+            
+            // Langsung tambah!!!
+            $this->realAddKelas($kelas);
         }
+    }
+    
+    public function removeKelas($kelas){
+        $res = $this->getKelas()->removeElement($kelas);
+        return $res;
     }
 }

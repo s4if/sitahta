@@ -121,7 +121,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'kelas' => 'XI',
             'jurusan' => 'IPS',
             'no_kelas' => '1',
-            'tahun_ajaran' => '2015',
+            'tahun_ajaran' => '2014',
             'password' => password_hash('qwerty', PASSWORD_BCRYPT),
             'nama_ortu' => 'ortu'
             ];
@@ -133,16 +133,47 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($model->insertData($data));
         $this->assertFalse($model->insertData($data));
         //update data
-        $data['kelas'] = 'X';
-        $this->assertFalse($model->updateData($data));
-        $data['tahun_ajaran'] = '2014';
+        $data['alamat'] = 'Pabelan City';
         $this->assertTrue($model->updateData($data));
         $data['nis'] = 4321;
         $this->assertFalse($model->updateData($data));
 
     }
+    
+    public function testModel_siswa_2() {
+        $model = new Model_siswa();
+        // Tahun Sama Tingkat Sama -> Edit
+        $data = [
+            'nis' => 1001,
+            'kelas' => 'XI',
+            'jurusan' => 'IPA',
+            'no_kelas' => '1',
+            'tahun_ajaran' => '2015',
+            ];
+        $this->assertTrue($model->updateData($data));
+        
+        // Tahun Sama, Tingkat Berbeda -> Edit
+        $data['kelas'] = 'X';
+        $data['tahun_ajaran'] = '2014';
+        $this->assertTrue($model->updateData($data));
+        
+        // Tahun berbeda, Tingkat Sama -> Add
+        $data['kelas'] = 'X';
+        $data['tahun_ajaran'] = '2013';
+        $this->assertTrue($model->updateData($data));
+        
+        //Tahun Berbeda Tingkat Berbeda -> Add
+        $data['kelas'] = 'XII';
+        $data['tahun_ajaran'] = '2016';
+        $this->assertTrue($model->updateData($data));
+        
+        // Hapus Kelas
+        $data['kelas'] = 'X';
+        $data['tahun_ajaran'] = '2013';
+        $this->assertTrue($model->deleteKelas($data));
+    }
 
-    public function testModel_siswa_2(){
+    public function testModel_siswa_3(){
         $model = new Model_siswa();
         //checkAttributes
         $siswa = $model->getData(1001);

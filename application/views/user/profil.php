@@ -72,11 +72,6 @@
             <td> &nbsp;:&nbsp; </td>
             <td> <?=$siswa->getNama_ortu()?> </td>
         </tr>
-        <tr>
-            <td> Hafalan sebelum <br> masuk sma </td>
-            <td> &nbsp;:&nbsp; </td>
-            <td> - </td>
-        </tr>
     </table>
     &nbsp;
 </div>

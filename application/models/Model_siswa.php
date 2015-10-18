@@ -76,7 +76,7 @@ class Model_siswa extends MY_Model {
                 $this->setData($data);
                 $this->em->persist($this->siswa);
                 $this->em->flush();
-                    return true;
+                return true;
             }else{
                 return false;
             }
@@ -93,6 +93,22 @@ class Model_siswa extends MY_Model {
              $this->em->remove($entity);
              $this->em->flush();
              return true;
+        }  else {
+            return false;
+        }
+    }
+    
+    public function deleteKelas($where){
+        $siswa = $this->em->find("SiswaEntity", $where['nis']);
+        //$siswa = new SiswaEntity();
+        $str_jur = ($where['kelas'] == 'X')?'':$where['jurusan'].'-';
+        $id = $where['kelas']."-".$str_jur.$where['no_kelas'].'-'.$where['tahun_ajaran'];
+        $kelas = $this->em->find("KelasEntity", $id);
+        if((!is_null($siswa)) && (!is_null($kelas))){
+            $res = $siswa->removeKelas($kelas);
+            $this->em->persist($siswa);
+            $this->em->flush();
+            return $res;
         }  else {
             return false;
         }

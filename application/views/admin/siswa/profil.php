@@ -63,11 +63,11 @@
             <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=date('d F Y', $siswa->getTgl_lahir()->getTimestamp())?> </td>
         </tr>
         <tr>
-            <td rowspan="3"> Kelas </td>
-            <td rowspan="3"> &nbsp;:&nbsp; </td>
+            <td rowspan="5"> Kelas </td>
+            <td rowspan="5"> &nbsp;:&nbsp; </td>
         </tr>
             <?php $kelas = $siswa->getKelas()->toArray()?>
-            <?php for ($i = 0; $i < 3; $i++): ?>
+            <?php for ($i = 0; $i < 4; $i++): ?>
             <tr><td> <?php echo (empty($kelas[$i])) ? '' : $kelas[$i]->getId();?> </td></tr>
             <?php endfor;?>
         <tr>
