@@ -70,7 +70,7 @@ class Model_siswa extends MY_Model {
     }
     
     public function updateData($data){
-        try {
+//        try {
             $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
             if(!is_null($this->siswa)){
                 $this->setData($data);
@@ -80,10 +80,10 @@ class Model_siswa extends MY_Model {
             }else{
                 return false;
             }
-        } catch (Exception $ex) {
-            $ex->getMessage();
-            return false;
-        }
+//        } catch (Exception $ex) {
+//            $ex->getMessage();
+//            return false;
+//        }
         
     }
     

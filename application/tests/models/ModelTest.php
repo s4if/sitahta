@@ -144,7 +144,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model = new Model_siswa();
         // Tahun Sama Tingkat Sama -> Edit
         $data = [
-            'nis' => 1001,
+            'nis' => '1001',
             'kelas' => 'XI',
             'jurusan' => 'IPA',
             'no_kelas' => '1',

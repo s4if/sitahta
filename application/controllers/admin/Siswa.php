@@ -115,27 +115,52 @@ class Siswa extends MY_Controller {
     
     public function edit_kelas($nis) {
         $this->blockUnloggedOne();
+//        var_dump($this->input->post(null, true));
         $data_insert = $this->input->post(null, true);
-        $data_insert['nis'] = $nis;
-        $res = $this->real_edit_kelas($data_insert);
-        if ($res >= 1) {
+        $res = $this->real_edit_kelas($nis, $data_insert);
+        if ($res >= 0) {
             $this->session->set_flashdata("notices", [0 => "Edit Kelas Berhasil!"]);
-            redirect('siswa');
+            redirect('siswa/'.$nis);
         } else {
             $this->session->set_flashdata("errors", [0 => "Edit Kelas Gagal!"]);
-            redirect('siswa');
+            redirect('siswa/'.$nis);
         }
     }
     
-    public function real_edit_kelas($data_insert){
-        $err_count = 0;
-        // Kelas X
-        if(isset($data_insert['kelas_X'])){
-            
+    public function hapus_kelas($nis, $kelas, $jurusan, $no_kelas, $tahun_ajaran){
+        $this->blockUnloggedOne();
+        $where = [
+            'nis' => $nis,
+            'kelas' => $kelas,
+            'jurusan' => $jurusan,
+            'no_kelas' => $no_kelas,
+            'tahun_ajaran' => $tahun_ajaran
+        ];
+        $res = $this->siswa->deleteKelas($where);
+        if ($res) {
+            $this->session->set_flashdata("notices", [0 => "Hapus Kelas Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Hapus Kelas Gagal!"]);
+            redirect('siswa/'.$nis);
         }
-        $data_insert['kelas'] = $data_insert['kelas_X'];
-        $this->siswa->updateData($data_insert);
-        return ($err_count == 0);
+    }
+    
+    public function real_edit_kelas($nis, $data_insert){
+        $failure_count = 0;
+        $dmp = [];
+        foreach ($data_insert['tahun'] as $tahun){
+            $insert['nis'] = $nis;
+            $insert['kelas'] = $data_insert['kelas_'.$tahun];
+            $insert['jurusan'] = $data_insert['jurusan_'.$tahun];
+            $insert['no_kelas'] = $data_insert['no_kelas_'.$tahun];
+            $insert['tahun_ajaran'] = $tahun;
+            $res = $this->siswa->updateData($insert);
+            if(!$res){$failure_count++;}
+//            $dmp[] = $insert;
+        }
+        return $failure_count;
+//        var_dump($dmp);
     }
 
     public function hapus($nis) {
@@ -161,6 +186,7 @@ class Siswa extends MY_Controller {
             'nama' => $this->session->login_data->getNama(),
             'siswa' => $siswa,
             'data_sertifikat' => $data_sertifikat,
+            'nav_pos' => "siswa".$nis,
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
