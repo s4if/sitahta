@@ -87,8 +87,6 @@ class Login extends MY_Controller {
         $semester = (((int)date('m'))<7)?2:1;
         $tahun_ajaran = ($semester == 1)? ((int)$tahun): ((int)$tahun) -1;
         $this->session->set_userdata('tahun_ajaran', $tahun_ajaran);
-        $this->session->set_userdata('semester', $semester); 
-//        $this->session->set_userdata('tahun_ajaran', 2014);
-//        $this->session->set_userdata('semester', 2);  
+        $this->session->set_userdata('semester', $semester);
     }
 }

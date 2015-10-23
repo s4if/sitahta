@@ -23,9 +23,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-//Menggunakan Modal!! nanti bukan dengan link, tapi dengan modal supaya lebih mudah
-//modal disini nanti di load pake load view true kemudian dikumpulkan dalam bentuk array, 
-//lalu di echokan kedalam view dalam bentuk data
 ?>
 <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="tambahModal" aria-hidden="true">
     <div class="modal-dialog">

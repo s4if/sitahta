@@ -115,7 +115,6 @@ class Siswa extends MY_Controller {
     
     public function edit_kelas($nis) {
         $this->blockUnloggedOne();
-//        var_dump($this->input->post(null, true));
         $data_insert = $this->input->post(null, true);
         $res = $this->real_edit_kelas($nis, $data_insert);
         if ($res >= 0) {
@@ -157,10 +156,8 @@ class Siswa extends MY_Controller {
             $insert['tahun_ajaran'] = $tahun;
             $res = $this->siswa->updateData($insert);
             if(!$res){$failure_count++;}
-//            $dmp[] = $insert;
         }
         return $failure_count;
-//        var_dump($dmp);
     }
 
     public function hapus($nis) {
@@ -174,7 +171,6 @@ class Siswa extends MY_Controller {
         }
     }
 
-    //belum
     public function profil($nis) {
         $this->blockUnloggedOne();
         $siswa = $this->siswa->getData($nis);
@@ -218,7 +214,6 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
@@ -236,7 +231,6 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
@@ -265,7 +259,6 @@ class Siswa extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, true);
         $data_insert['nis'] = $nis;
-        //$data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tgl_ujian'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $res = $this->sertifikat->insertData($data_insert);
@@ -283,7 +276,6 @@ class Siswa extends MY_Controller {
         $data_insert = $this->input->post(null, true);
         $data_insert['id'] = $id;
         $data_insert['nis'] = $nis;
-        //$data_insert['tgl_ujian'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tgl_ujian'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $res = $this->sertifikat->updateData($data_insert);

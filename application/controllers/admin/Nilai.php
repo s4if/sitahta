@@ -79,7 +79,6 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, FALSEs);
         $data_insert['nis'] = $nis;
-        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
@@ -97,7 +96,6 @@ class Nilai extends MY_Controller {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, false);
         $data_insert['nis'] = $nis;
-        //$data_insert['tanggal'] = $data_insert['tahun'] . "-" . $data_insert['bulan'] . "-" . $data_insert['tanggal'];
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
         $data_insert['penguji'] = $this->session->login_data->getNip();
@@ -154,7 +152,6 @@ class Nilai extends MY_Controller {
             'kelas' => $data_kelas,
             'data_siswa' => $data_siswa
         ];
-//        $this->load->view('admin/nilai/raport', $data, false);
         $html = $this->load->view('admin/nilai/raport', $data, TRUE);
         $pdf->loadHtml($html);
         $pdf->render();
@@ -163,7 +160,6 @@ class Nilai extends MY_Controller {
     
     public function template($kelas, $semester){
         $data = $this->input->post(null,true);
-        //$data['tanggal'] = $data['hari'].'-'.$data['bulan'].'-'.$data['tahun'];
         $data['data_kelas'] = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
         $data['pengampu'] = $this->session->login_data->getNip();
         $fileName = 'template nilai ('.$kelas.' Semester '.$semester.')';

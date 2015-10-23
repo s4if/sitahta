@@ -399,7 +399,6 @@
                 $(point).before(inpt);
                 $('.datepicker').datepicker();
                 id++;
-                //$(wrapper).append('<div class="col-sm-12"><input class="col-sm-3 form-control" type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
             }
         });
 

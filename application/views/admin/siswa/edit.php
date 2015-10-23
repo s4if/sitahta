@@ -23,9 +23,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-//Menggunakan Modal!! nanti bukan dengan link, tapi dengan modal supaya lebih mudah
-//modal disini nanti di load pake load view true kemudian dikumpulkan dalam bentuk array, 
-//lalu di echokan kedalam view dalam bentuk data
 ?>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -82,29 +79,6 @@
                                    placeholder="Masukkan Kota/Kabupaten" value="" required="true">
                         </div>
                     </div>
-<!--                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Kelas :</label>
-                        <div class="col-sm-2">
-                            <select class="form-control" name="kelas">
-                                <option value="X" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "X")?'selected="true"':'';?>>X</option>
-                                <option value="XI" <ph echo ($siswa->ggetKelasSekarang($tahun_ajaran)->getKelas() === "XI")?'selected="true"':'';?>>XI</option>
-                                <option value="XII" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getKelas() === "XII")?'selected="true"':'';?>>XII</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control" name="jurusan">
-                                <option value="Tahfidz" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Tahfidz")?'selected="true"':'';?>>
-                                    Tahfidz</option>
-                                <option value="IPA" <h echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPA")?'selected="true"':'';?>>IPA</option>
-                                <option value="IPS" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "IPS")?'selected="true"':'';?>>IPS</option>
-                                <option value="Reguler" <ph echo ($siswa->getKelasSekarang($tahun_ajaran)->getJurusan() === "Reguler")?'selected="true"':'';?>>Reguler</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" name="no_kelas" 
-                                   placeholder="Paralel" value="<?$siswa->getNo_kelas()?>" required="true" pattern="[1-9]{1}">
-                        </div>
-                    </div>-->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
                         <div class="col-sm-8">

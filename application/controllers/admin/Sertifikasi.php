@@ -100,25 +100,6 @@ class Sertifikasi extends MY_Controller {
         }
     }
     
-    //belum
-//    public function sertifikasi() {
-//        $this->blockUnloggedOne();
-//        $data_sertifikasi = $this->sertifikasi->getData();
-//        $data = [
-//            'title' => 'Lihat Sertifikasi',
-//            'user' => ucwords($this->session->login_data->getNama()),
-//            'position' => $this->session->position,
-//            'nama' => $this->session->login_data->getNama(),
-//            'nav_pos' => "sertifikasi",
-//            'data_sertifikasi' => $data_sertifikasi,
-//            'tahun_ajaran' => $this->session->tahun_ajaran,
-//            'semester' => $this->session->semester,
-//            'tambah' => "", //belum
-//            'edit' => "" //belum
-//        ];
-//        $this->loadView('admin/sertifikasi/lihat', $data);
-//    }
-    
     public function peserta($id){
         $this->blockUnloggedOne();
         $sertifikasi = $this->sertifikasi->getData($id);
