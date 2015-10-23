@@ -40,7 +40,20 @@
     </li>
 </ol>
 <h3><em>Data Diri</em></h3>
+<style>
+    .foto-profil {
+        resize: both;
+        height: 200px;
+        width: 150px;
+        max-height: 200px;
+        max-width: 150px;
+    }
+</style>
 <div class="col-md-12 container-fluid">
+    <div class="col-md-2">
+        <img class="foto-profil img-rounded" src="<?=$foto_profil?>" alt="foto-profil">
+    </div>
+    <div class="col-md-8">
     <table>
         <tr>
             <td> Nama </td>
@@ -81,9 +94,17 @@
                     <span class="glyphicon glyphicon-plus"></span>
                     Edit Kelas
                 </a>
+                <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
+                    <span class="glyphicon glyphicon-import"></span>
+                    Upload Foto
+                </a>
             </td>
         </tr>
     </table>
+    </div>
+    &nbsp;
+</div>
+<div class="col-md-12 container-fluid">
     &nbsp;
 </div>
 <h3><em>Sertifikasi Hafalan</em></h3>
@@ -312,6 +333,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                 <a id="btnDelOk" class="btn btn-danger" href="">OK</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="post" action="<?=base_url();?>admin/siswa/upload_foto/<?=$siswa->getNis()?>" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Masukkan Input</label>
+                        <input type="file" id="file" name="file">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
             </div>
         </div>
     </div>

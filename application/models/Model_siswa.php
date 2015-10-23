@@ -153,6 +153,15 @@ class Model_siswa extends MY_Model {
         return $this->em->getRepository('SiswaEntity')->getFilteredData($params,$eager);
     }
     
+    public function uploadFoto($file_url, $file_type, $nis){
+        $imagine = new Imagine\Gd\Imagine();
+        $image = $imagine->open($file_url);
+        $box = new Imagine\Image\Box(150, 200);
+        $image->resize($box);
+        $image->save(FCPATH.'data/foto/'.$nis.'.png');
+        return true;
+    }
+    
     /**
      * 
      * @param type $file_url

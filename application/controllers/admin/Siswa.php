@@ -187,10 +187,31 @@ class Siswa extends MY_Controller {
             'siswa' => $siswa,
             'data_sertifikat' => $data_sertifikat,
             'nav_pos' => "siswa".$nis,
+            'foto_profil' => $this->getImgLink($nis),
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
         $this->loadView('admin/siswa/profil', $data);
+    }
+    
+    private function getImgLink($nis){
+        $this->load->helper('file');
+        $img_link = base_url().'admin/siswa/getFoto/';
+        $file = read_file('./data/foto/'.$nis.'.png');
+        $datetime = new DateTime('now');
+        if($file == false){
+            $img_link = $img_link.'default/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+        }  else {
+            $img_link = $img_link.$nis.'/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+        }
+        return $img_link;
+    }
+    
+    public function getFoto($nis, $hash){
+        $this->blockUnloggedOne();
+        $imagine = new Imagine\Gd\Imagine();
+        $image = $imagine->open('./data/foto/'.$nis.'.png');
+        $image->show('png');
     }
 
     public function tambah_nilai($nis) {
@@ -300,6 +321,21 @@ class Siswa extends MY_Controller {
         } else {
             $this->session->set_flashdata("errors", [0 => "Import Data Gagal!,<br> File yang dimasukkan bukan file excel!"]);
             redirect('siswa');
+        }
+    }
+    
+    public function upload_foto($nis) {
+        $this->blockUnloggedOne();
+        $fileUrl = $_FILES['file']["tmp_name"];
+        $fileType = explode('/', $_FILES['file']['type'])[1];
+//        print_r($_FILES);
+        $res = $this->siswa->uploadFoto($fileUrl, $fileType, $nis);
+        if ($res) {
+            $this->session->set_flashdata("notices", [0 => "Upload Foto Berhasil!"]);
+            redirect('siswa/'.$nis);
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Upload Foto Gagal!"]);
+            redirect('siswa/'.$nis);
         }
     }
 }
