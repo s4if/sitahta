@@ -43,10 +43,8 @@
 <style>
     .foto-profil {
         resize: both;
-        height: 200px;
-        width: 150px;
-        max-height: 200px;
-        max-width: 150px;
+        height: 100%;
+        width: 100%;
     }
 </style>
 <div class="col-md-12 container-fluid">
@@ -91,11 +89,11 @@
         <tr>
             <td>
                 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editKelas">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <span class="glyphicon glyphicon-edit"></span>
                     Edit Kelas
                 </a>
                 <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
-                    <span class="glyphicon glyphicon-import"></span>
+                    <span class="glyphicon glyphicon-upload"></span>
                     Upload Foto
                 </a>
             </td>

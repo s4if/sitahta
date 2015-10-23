@@ -37,7 +37,18 @@
     </li>
 </ol>
 <h3><em>Data Diri</em></h3>
+<style>
+    .foto-profil {
+        resize: both;
+        height: 100%;
+        width: 100%;
+    }
+</style>
 <div class="col-md-12 container-fluid">
+    <div class="col-md-2">
+        <img class="foto-profil img-rounded" src="<?=$foto_profil?>" alt="foto-profil">
+    </div>
+    <div class="col-md-8">
     <table>
         <tr>
             <td> Nama </td>
@@ -72,6 +83,127 @@
             <td> &nbsp;:&nbsp; </td>
             <td> <?=$siswa->getNama_ortu()?> </td>
         </tr>
+        <tr>
+            <td>
+                <a class="btn btn-primary btn-sm" id="btnEditSiswa">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit Profil
+                </a>
+                <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    Upload Foto
+                </a>
+            </td>
+        </tr>
     </table>
+    </div>
     &nbsp;
 </div>
+
+<div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="ModalImportLabel>">Pilih File</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" method="post" action="<?=base_url();?>user/upload_foto/<?=$siswa->getNis()?>" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Masukkan Input</label>
+                        <input type="file" id="file" name="file">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editProfil" tabindex="-1" role="dialog" aria-labelledby="editProfil" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center" id="tambahModal">Edit Siswa</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formEdit" class="form-horizontal" role="form" method="post" action="">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">NIS :</label>
+                        <div class="col-sm-8 error">
+                            <input id="nisEdit" type="number" class="form-control" name="nis" disabled="true"
+                                   placeholder="Masukkan NIS" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nama :</label>
+                        <div class="col-sm-8">
+                            <input id="namaEdit" type="text" class="form-control" name="nama" 
+                                   placeholder="Masukkan Nama" value="" required="true">
+                        </div>
+                    </div>
+                    <!-- -->
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Jenis Kelamin :</label>
+                        <div class="col-sm-5">
+                            <div class="radio">
+                                <label>
+                                    <input id="jkEditL" type="radio" name="jenis_kelamin" value="L">
+                                    Laki - Laki
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input id="jkEditP" type="radio" name="jenis_kelamin" value="P">
+                                    Perempuan
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tanggal Lahir :</label>
+                        <div class="col-sm-8">
+                            <input id="tanggalEdit" class="form-control datepicker" type="text" 
+                                   data-date-format="dd-mm-yyyy" name="tgl">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tempat Lahir :</label>
+                        <div class="col-sm-8">
+                            <input id="tempatEdit" type="text" class="form-control" name="tempat_lahir" 
+                                   placeholder="Masukkan Kota/Kabupaten" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Nama Ortu/Wali :</label>
+                        <div class="col-sm-8">
+                            <input id="ortuEdit" type="text" class="form-control" name="nama_ortu" 
+                                   placeholder="Masukkan Nama" value="" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" class="btn btn-sm btn-primary">OK</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                        </div>
+                    </div>
+                </form>  
+            </div>
+            <div class="modal-footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#btnEditSiswa").click(function (){
+        $("#formEdit").attr("action", "<?=base_url();?>user/edit/");
+        $("#nisEdit").attr("value", "<?= $siswa->getNis();?>");
+        $("#namaEdit").attr("value", "<?= $siswa->getNama();?>");
+        $("#jkEdit<?= $siswa->getJenis_kelamin();?>").attr("checked", "true");
+        $("#tempatEdit").attr("value", "<?=$siswa->getTempat_lahir()?>");
+        $("#ortuEdit").attr("value", "<?=$siswa->getNama_ortu();?>");
+        $("#tanggalEdit").attr("value", "<?=date('d-n-Y', $siswa->getTgl_lahir()->getTimestamp());?>");
+        $("#editProfil").modal("toggle");
+    });
+</script>

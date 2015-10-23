@@ -42,7 +42,6 @@ class User extends My_Controller {
     public function profil() {
         $this->blockUnloggedOne(TRUE);
         $siswa = $this->siswa->getData($this->session->login_data->getNis());
-        $data_sertifikat = $siswa->getSertifikat();
         $data = [
             'title' => 'Profil Siswa',
             'user' => ucwords($this->session->login_data->getNama()),
@@ -50,12 +49,62 @@ class User extends My_Controller {
             'nama' => $this->session->login_data->getNama(),
             'siswa' => $siswa,
             'nav_pos' => 'profilUser',
-            'data_sertifikat' => $data_sertifikat,
-            'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
-            'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
+            'foto_profil' => $this->getImgLink($this->session->login_data->getNis())
         ];
         $this->loadView('user/profil', $data);
     }
+    
+    public function edit() {
+        $this->blockUnloggedOne(TRUE);
+        $data_insert = $this->input->post(null, true);
+        $data_insert['nis'] = $this->session->login_data->getNis();
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tgl_lahir'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+        $res = $this->siswa->updateData($data_insert);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);
+            redirect('user/profil');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Edit Data Gagal!"]);
+            redirect('user/profil');
+        }
+    }
+    
+    private function getImgLink($nis){
+        $this->load->helper('file');
+        $img_link = base_url().'user/getFoto/';
+        $file = read_file('./data/foto/'.$nis.'.png');
+        $datetime = new DateTime('now');
+        if($file == false){
+            $img_link = $img_link.'default/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+        }  else {
+            $img_link = $img_link.$nis.'/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+        }
+        return $img_link;
+    }
+    
+    public function getFoto($nis, $hash){
+        $this->blockUnloggedOne(TRUE);
+        $imagine = new Imagine\Gd\Imagine();
+        $image = $imagine->open('./data/foto/'.$nis.'.png');
+        $image->show('png');
+    }
+    
+    public function upload_foto() {
+        $this->blockUnloggedOne(true);
+        $fileUrl = $_FILES['file']["tmp_name"];
+        $fileType = explode('/', $_FILES['file']['type'])[1];
+        $nis = $this->session->login_data->getNis();
+        $res = $this->siswa->uploadFoto($fileUrl, $fileType, $nis);
+        if ($res) {
+            $this->session->set_flashdata("notices", [0 => "Upload Foto Berhasil!"]);
+            redirect('user/profil');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Upload Foto Gagal!"]);
+            redirect('user/profil');
+        }
+    }
+    
     public function nilai() {
         $this->blockUnloggedOne(TRUE);
         $siswa = $this->siswa->getData($this->session->login_data->getNis());
@@ -67,9 +116,7 @@ class User extends My_Controller {
             'nama' => $this->session->login_data->getNama(),
             'siswa' => $siswa,
             'nav_pos' => 'nilaiUser',
-            'data_sertifikat' => $data_sertifikat,
-            'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
-            'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
+            'data_sertifikat' => $data_sertifikat
         ];
         $this->loadView('user/nilai', $data);
     }

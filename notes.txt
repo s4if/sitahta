@@ -21,27 +21,3 @@ Doctrine\DBAL\Exception\UniqueConstraintViolationException
 
 CheatSheet
 vendor/doctrine/orm/bin/doctrine orm:schema-tool:create
-
-
-Code Snipplets :
-<?php
-
-use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
-use Imagine\Image\Point;
-
-$imgPath = 'php_logo.png';
-
-$imagine = new Imagine();
-$imageBase = $imagine->open($imgPath);
-$image = $imagine->open($imgPath);
-
-$original = base64_encode($imageBase->get('png'));
-
-$image->resize(new Box(80, 80));
-$imageBase->paste($image, new Point(0, 0));
-
-$edited = base64_encode($imageBase->get('png'));
-
-echo 'original:<br><img src="data:image/png;base64,' . $original . '">' . PHP_EOL;
-echo 'edited:<br><img src="data:image/png;base64,' . $edited . '">' . PHP_EOL;
