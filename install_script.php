@@ -24,6 +24,8 @@
  * THE SOFTWARE.
  */
 
+(PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) && die('cli only');
+
 require_once "bootstrap.php";
 
 // Add Default User
