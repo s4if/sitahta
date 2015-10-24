@@ -49,18 +49,22 @@ class Model_kurikulum extends MY_Model {
     }
     
     // for testing only!!!
-    public function reset($tahun = 2015){
-        $this->truncate(['kurikulum'], TRUE);
+    public function reset($tahun = 2015, $kelas_x = 20, $kelas_xi = 10, $kelas_xii = 10){
+        //$this->truncate(['kurikulum'], TRUE);
         // Setting Jumlah Ulangan
-        $jumlah_ulangan ['X']= 20;
-        $jumlah_ulangan ['XI'] = 10;
-        $jumlah_ulangan ['XII'] = $jumlah_ulangan ['XI'];
+        $jumlah_ulangan ['X']= $kelas_x;
+        $jumlah_ulangan ['XI'] = $kelas_xi;
+        $jumlah_ulangan ['XII'] = $kelas_xii;
         $arr_kelas =['X','XI','XII'];
         // Set Up Kurikulum
         foreach ($arr_kelas as $kelas){
             for($j = 1; $j <= 2 ; $j++){
                 for($i = 1; $i <= $jumlah_ulangan[$kelas];$i++){
-                    $kurikulum = new KurikulumEntity();
+                    $id = $kelas.'-'.$j.'-'.$i.'-'.$tahun;
+                    $kurikulum = $this->em->find("KurikulumEntity", $id);
+                    if (is_null($kurikulum)){
+                        $kurikulum = new KurikulumEntity();
+                    }
                     $kurikulum->setKelas($kelas);
                     $kurikulum->setSemester($j);
                     $kurikulum->setNo_uh($i);
@@ -69,7 +73,11 @@ class Model_kurikulum extends MY_Model {
                     $this->em->persist($kurikulum);
                     $this->em->flush();
                 }
-                $kurikulum = new KurikulumEntity();
+                $id = $kelas.'-'.$j.'-'.'UTS'.'-'.$tahun;
+                $kurikulum = $this->em->find("KurikulumEntity", $id);
+                if (is_null($kurikulum)){
+                    $kurikulum = new KurikulumEntity();
+                }
                 $kurikulum->setKelas($kelas);
                 $kurikulum->setSemester($j);
                 $kurikulum->setNo_uh('UTS');
@@ -78,7 +86,11 @@ class Model_kurikulum extends MY_Model {
                 $this->em->persist($kurikulum);
                 $this->em->flush();
                 unset($kurikulum);
-                $kurikulum = new KurikulumEntity();
+                $id = $kelas.'-'.$j.'-'.'UAS'.'-'.$tahun;
+                $kurikulum = $this->em->find("KurikulumEntity", $id);
+                if (is_null($kurikulum)){
+                    $kurikulum = new KurikulumEntity();
+                }
                 $kurikulum->setKelas($kelas);
                 $kurikulum->setSemester($j);
                 $kurikulum->setNo_uh('UAS');

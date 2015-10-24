@@ -68,11 +68,25 @@ class Kurikulum extends MY_Controller {
         $arr_data = [];
         $count = ($kelas == 'X')? 20 : 10;
         for($i = 1; $i <= $count; $i++){
-            $arr_data[$i] = $this->kurikulum->getDataByParams($kelas, $tahun, $i, $semester)[0];
+            $data = $this->kurikulum->getDataByParams($kelas, $tahun, $i, $semester);
+            $arr_data[$i] = (isset($data[0]))?$data[0]:NULL;
         }
-        $arr_data['UTS'] = $this->kurikulum->getDataByParams($kelas, $tahun, 'UTS', $semester)[0];
-        $arr_data['UAS'] = $this->kurikulum->getDataByParams($kelas, $tahun, 'UAS', $semester)[0];
+        $uts = $this->kurikulum->getDataByParams($kelas, $tahun, 'UTS', $semester);
+        $uas = $this->kurikulum->getDataByParams($kelas, $tahun, 'UAS', $semester);
+        $arr_data['UTS'] = (isset($uts[0]))?$uts[0]:NULL;
+        $arr_data['UAS'] = (isset($uas[0]))?$uas[0]:NULL;
+        foreach ($arr_data as $data){
+            if(is_null($data)){
+                $this->generateKurikulum($tahun);
+                $arr_data = $this->dataTrans($kelas, $tahun, $semester);
+                break;
+            }
+        }
         return $arr_data;
+    }
+    
+    private function generateKurikulum($tahun){
+        $this->kurikulum->reset($tahun);
     }
 
     public function tambah(){

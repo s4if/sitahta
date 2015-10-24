@@ -230,7 +230,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     public function testModel_kurikulum() {
         $this->assertTrue(class_exists('Model_guru'), 'guru is loadable');
         $model = new Model_kurikulum();
-        //$model->truncate([0 => 'kurikulum']);
+        $model->truncate([0 => 'kurikulum']);
         $model->reset('2015');
         $data = [
             'no_uh' => 11,
