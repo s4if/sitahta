@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 ?>
-
+<!-- Di server, jangan lupa untuk diganti menjadi CDN -->
 
 <!-- Bootstrap DataTables JavaScript -->
 <script src="<?=  base_url() ?>assets/js/datatables.min.js"></script>

@@ -53,7 +53,8 @@ class MY_Controller extends CI_Controller {
     //nilai true jika hanya bisa diakses setelah login
     protected function blockLoggedOne(){
         if($this->session->has_userdata('login_data')){
-            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, Harap logout Dulu!"]);
+            $this->session->set_flashdata("errors",[0 => "Akses dihentikan, <br \>"
+                . "Tidak boleh mengakses halaman login jika sesi belum berakhir"]);
             redirect('admin/home', 'refresh');
         }
     }

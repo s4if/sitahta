@@ -48,9 +48,7 @@ class Model_kurikulum extends MY_Model {
         return $this->em->getRepository('KurikulumEntity')->getDataByKelasAndUh($kelas, $tahun, $no_uh, $semester);
     }
     
-    // for testing only!!!
     public function reset($tahun = 2015, $kelas_x = 20, $kelas_xi = 10, $kelas_xii = 10){
-        //$this->truncate(['kurikulum'], TRUE);
         // Setting Jumlah Ulangan
         $jumlah_ulangan ['X']= $kelas_x;
         $jumlah_ulangan ['XI'] = $kelas_xi;

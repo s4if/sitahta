@@ -55,7 +55,7 @@ class Home extends MY_Controller{
             'nav_pos' => 'dashboard',
             'nama' => $this->session->login_data->getNama(),
         ];
-        $this->loadView('admin/index', $data);
+        $this->loadView('index', $data);
     }
     
     public function password(){

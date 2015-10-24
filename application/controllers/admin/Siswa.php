@@ -204,7 +204,7 @@ class Siswa extends MY_Controller {
     }
     
     public function getFoto($nis, $hash){
-        $this->blockUnloggedOne();
+        $this->blockUnloggedOne(true, TRUE);
         $imagine = new Imagine\Gd\Imagine();
         $image = $imagine->open('./data/foto/'.$nis.'.png');
         $image->show('png');

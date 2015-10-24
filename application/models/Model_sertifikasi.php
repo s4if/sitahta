@@ -42,17 +42,13 @@ class Model_sertifikasi extends MY_Model {
     public function getData($id = -1){
         return $this->em->getRepository('SertifikasiEntity')->getData($id);
     }
-    //belum ada
+    
     public function insertData($data){
-//        try {
             $this->sertifikasi = new SertifikasiEntity();
             $this->setData($data);
             $this->em->persist($this->sertifikasi);
             $this->em->flush();
             return true;
-//        } catch (Exception $e){
-//            return false;
-//        }
     }
     
     public function updateData($data){
@@ -106,16 +102,12 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function addPeserta($data){
-//        try {
             $this->peserta = new PesertaEntity();
             $this->setDataPeserta($data);
             $this->peserta->generateId();
             $this->em->persist($this->peserta);
             $this->em->flush();
             return true;
-//        } catch (Exception $e){
-//            return false;
-//        }
     }
     
     public function removePeserta($where){
@@ -142,7 +134,6 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function setDataPeserta($data){
-        //if (!empty($data['id'])) : $this->peserta->setId($data['id']); endif;
         if (!empty($data['juz'])) : $this->peserta->setJuz($data['juz']); endif;
         if (!empty($data['nilai'])) : $this->peserta->setNilai($data['nilai']); endif;
         if (!empty($data['nis'])) {
@@ -154,7 +145,7 @@ class Model_sertifikasi extends MY_Model {
             $this->peserta->setSertifikasi($sertifikasi);
         }
     }
-    //belum jadi
+    
     /**
      * 
      * @param type $file_url
@@ -219,7 +210,6 @@ class Model_sertifikasi extends MY_Model {
             return false;
         }
     }
-    //belum jadi
     
     //export
     public function generate($data, $file_name){
@@ -302,7 +292,8 @@ class Model_sertifikasi extends MY_Model {
         }
         return $valid;
     }
-    //belum jadi
+    
+    //generate csv untuk print menggunakan file corel
     public function generateCSV($data, $file_name){
         $objPHPExcel = new PHPExcel();
         $objPHPExcel->setActiveSheetIndex(0);

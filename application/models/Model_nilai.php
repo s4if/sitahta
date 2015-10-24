@@ -66,7 +66,6 @@ class Model_nilai extends MY_Model {
         $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
         if (is_null($this->em->find("NilaiHarianEntity", $id))) {
             $this->nilai = new NilaiHarianEntity();
-//            try{
             $data_ok = $this->setData($data);
             if($data_ok){
                 $this->nilai->generateId();
@@ -74,9 +73,6 @@ class Model_nilai extends MY_Model {
                 $this->em->flush();
                 $this->nilai = null;
             }
-//            } catch (Doctrine\DBAL\Exception\UniqueConstraintViolationException $ex) {
-            //                return false;
-            //            }
             return $data_ok;
         } else {
             return false;
@@ -87,11 +83,7 @@ class Model_nilai extends MY_Model {
         $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
         if (!is_null($this->em->find("NilaiHarianEntity", $id))) {
             $this->nilai = $this->em->find("NilaiHarianEntity", $id);
-//            try {
             $data_ok = $this->setData($data);
-//            } catch (Exception $ex) {
-            //                return false;
-            //            }
             if($data_ok){
             $this->em->persist($this->nilai);
             $this->em->flush();
@@ -202,7 +194,6 @@ class Model_nilai extends MY_Model {
         for ($i = 7; $i < $lastRow;$i++){
             $row_data = $data[$i];
             if($this->rowValidation($data, $row_data)){
-//            if(true){
                 $this->transQuery($this->dataTranslator($data, $row_data));
             }  else {
                 $failureCount++;
@@ -294,11 +285,6 @@ class Model_nilai extends MY_Model {
         $objPHPExcel->getActiveSheet()->SetCellValue('A7', 'NIS');
         $objPHPExcel->getActiveSheet()->SetCellValue('B7', 'Nama');
         $sis_count = 8;
-//        foreach ($data['siswa'] as $siswa){
-//            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
-//            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
-//            $sis_count++;
-//        }
         foreach ($data['data_kelas'] as $kelas) {
             if (!$kelas->getSiswa()->isEmpty()) {
                 $siswaRepo = $this->em->getRepository('SiswaEntity');

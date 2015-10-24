@@ -36,7 +36,7 @@ class User extends My_Controller {
             'tambah_sertifikat' => $this->load->view("admin/siswa/tambah_sertifikat", ['kelas' => $siswa->getKelas(), 'nis' => $siswa->getNis()], TRUE),
             'edit_sertifikat' => $this->load->view("admin/siswa/edit_sertifikat", ['data_sertifikat' => $data_sertifikat], TRUE),
         ];
-        $this->loadView('user/home', $data);
+        $this->loadView('index', $data);
     }
     
     public function profil() {
@@ -72,7 +72,7 @@ class User extends My_Controller {
     
     private function getImgLink($nis){
         $this->load->helper('file');
-        $img_link = base_url().'user/getFoto/';
+        $img_link = base_url().'admin/siswa/getFoto/';
         $file = read_file('./data/foto/'.$nis.'.png');
         $datetime = new DateTime('now');
         if($file == false){
@@ -81,13 +81,6 @@ class User extends My_Controller {
             $img_link = $img_link.$nis.'/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
         }
         return $img_link;
-    }
-    
-    public function getFoto($nis, $hash){
-        $this->blockUnloggedOne(TRUE);
-        $imagine = new Imagine\Gd\Imagine();
-        $image = $imagine->open('./data/foto/'.$nis.'.png');
-        $image->show('png');
     }
     
     public function upload_foto() {

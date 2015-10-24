@@ -70,21 +70,15 @@ class Model_siswa extends MY_Model {
     }
     
     public function updateData($data){
-//        try {
-            $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
-            if(!is_null($this->siswa)){
-                $this->setData($data);
-                $this->em->persist($this->siswa);
-                $this->em->flush();
-                return true;
-            }else{
-                return false;
-            }
-//        } catch (Exception $ex) {
-//            $ex->getMessage();
-//            return false;
-//        }
-        
+        $this->siswa = $this->em->find("SiswaEntity", $data['nis']);
+        if(!is_null($this->siswa)){
+            $this->setData($data);
+            $this->em->persist($this->siswa);
+            $this->em->flush();
+            return true;
+        }else{
+            return false;
+        }
     }
     
     public function deleteData($where){
@@ -182,7 +176,6 @@ class Model_siswa extends MY_Model {
                     $this->transQuery($row_data);
                 }  else {
                     $failureCount=+2;
-                    //$this->em->getConnection()->rollback();
                     break;
                 }
             }

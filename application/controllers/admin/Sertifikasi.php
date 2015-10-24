@@ -95,7 +95,7 @@ class Sertifikasi extends MY_Controller {
             $this->session->set_flashdata("notices",[0 => "Data telah berhasil dihapus"]);
             redirect('admin/sertifikasi', 'refresh');
         }  else {
-            $this->session->set_flashdata("errors",[0 => "Maaf, Guru dengan nip = ".$nip." tidak ditemukan"]);
+            $this->session->set_flashdata("errors",[0 => "Maaf, Data tidak ditemukan"]);
             redirect('admin/sertifikasi', 'refresh');
         }
     }

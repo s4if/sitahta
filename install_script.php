@@ -46,24 +46,30 @@ $jumlah_ulangan ['XII'] = $jumlah_ulangan ['XI'];
 $arr_kelas =['X','XI','XII'];
 
 //fungsi untuk insert kurikulum
-function insert_kurikulum($kelas, $semester, $no_uh, $em){
+function insert_kurikulum($kelas, $semester, $no_uh, $tahun, $em){
     $kurikulum = new KurikulumEntity();
     $kurikulum->setKelas($kelas);
     $kurikulum->setSemester($semester);
     $kurikulum->setNo_uh($no_uh);
+    $kurikulum->setTahun($tahun);
     $kurikulum->generateId();
     $em->persist($kurikulum);
     $em->flush();
 }
 
+// Set Up Tahun
+$tahun = date('Y');
+$semester = (((int)date('m'))<7)?2:1;
+$tahun_ajaran = ($semester == 1)? ((int)$tahun): ((int)$tahun) -1;
+
 // Set Up Kurikulum
 foreach ($arr_kelas as $kelas){
     for($j = 1; $j <= 2 ; $j++){
         for($i = 1; $i <= $jumlah_ulangan[$kelas];$i++){
-            insert_kurikulum($kelas, $j, $i, $entityManager);
+            insert_kurikulum($kelas, $j, $i, $tahun_ajaran, $entityManager);
         }
-        insert_kurikulum($kelas, $j, 'UTS', $entityManager);
-        insert_kurikulum($kelas, $j, 'UAS', $entityManager);
+        insert_kurikulum($kelas, $j, 'UTS', $tahun_ajaran, $entityManager);
+        insert_kurikulum($kelas, $j, 'UAS', $tahun_ajaran, $entityManager);
     }
 }
 

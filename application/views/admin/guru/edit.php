@@ -122,7 +122,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-6">
                             <button type="submit" class="btn btn-sm btn-primary">OK</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
                         </div>
                     </div>
                 </form>  

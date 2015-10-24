@@ -36,6 +36,8 @@
 
     <title><?=$title?></title>
 
+    <!-- Di server, jangan lupa untuk diganti menjadi CDN -->
+    
     <!-- Bootstrap Core CSS -->
     <link href="<?=  base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
 

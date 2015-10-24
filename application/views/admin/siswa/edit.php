@@ -47,7 +47,6 @@
                                    placeholder="Masukkan Nama" value="" required="true">
                         </div>
                     </div>
-                    <!-- -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Jenis Kelamin :</label>
                         <div class="col-sm-5">

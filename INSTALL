@@ -1,0 +1,11 @@
+Cara Install :
+1. Buat Database untuk aplikasi SITAHTA
+2. Buka file config.php lalu sesuaikan variabel $config['base_url'] sesuai alamat situs
+3. Buka file database.php lalu sesuaikan setting akses database
+4. Buka terminal, masuk ke lokasi instalasi lalu jalankan perintah
+    vendor/bin/doctrine orm:schema-tool:create
+5. Jalankan perintah 
+    php install_script.php
+6. Instalasi selesai, anda bisa masuk denga akun
+    id : 1
+    password : qwerty
