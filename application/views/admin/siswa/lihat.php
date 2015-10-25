@@ -38,14 +38,29 @@
 </ol>
 <div class="col-md-12">
     <div class="btn-group">
+        <?php if($position === 'admin'):?>
         <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahModal">
             <span class="glyphicon glyphicon-plus"></span>
             Tambah
         </a>
-        <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
+        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownImport" data-toggle="dropdown" aria-expanded="true">
             <span class="glyphicon glyphicon-import"></span>
             Import
-        </a>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownImport">
+            <li role="presentation">
+                <a role="menuitem" href="<?=  base_url().'assets/templates/template_siswa.xls'?>">
+                    Unduh Template
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" data-toggle="modal" data-target="#ModalImport">
+                    Upload Template
+                </a>
+            </li>
+        </ul>
+        <?php endif;?>
         <div class="btn-group"role="group">
             <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                 <span class="glyphicon glyphicon-import"></span>

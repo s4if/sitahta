@@ -71,8 +71,8 @@
             <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=date('d F Y', $siswa->getTgl_lahir()->getTimestamp())?> </td>
         </tr>
         <tr>
-            <td rowspan="3"> Kelas </td>
-            <td rowspan="3"> &nbsp;:&nbsp; </td>
+            <td rowspan="4"> Kelas </td>
+            <td rowspan="4"> &nbsp;:&nbsp; </td>
         </tr>
             <?php $kelas = $siswa->getKelas()->toArray()?>
             <?php for ($i = 0; $i < 3; $i++): ?>

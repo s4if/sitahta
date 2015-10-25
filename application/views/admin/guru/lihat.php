@@ -42,10 +42,23 @@
             <span class="glyphicon glyphicon-plus"></span>
             Tambah
         </a>
-        <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#ModalImport">
+        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownImport" data-toggle="dropdown" aria-expanded="true">
             <span class="glyphicon glyphicon-import"></span>
             Import
-        </a>
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownImport">
+            <li role="presentation">
+                <a role="menuitem" href="<?=  base_url().'assets/templates/template_guru.xls'?>">
+                    Unduh Template
+                </a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem" data-toggle="modal" data-target="#ModalImport">
+                    Upload Template
+                </a>
+            </li>
+        </ul>
         <div class="modal fade" id="ModalImport" tabindex="-1" role="dialog" aria-labelledby="ModalImport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

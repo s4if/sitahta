@@ -86,6 +86,7 @@
             <td> &nbsp;:&nbsp; </td>
             <td> <?=$siswa->getNama_ortu()?> </td>
         </tr>
+        <?php if($position === 'admin'):?>
         <tr>
             <td>
                 <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editKelas">
@@ -98,6 +99,7 @@
                 </a>
             </td>
         </tr>
+        <?php endif?>
     </table>
     </div>
     &nbsp;
