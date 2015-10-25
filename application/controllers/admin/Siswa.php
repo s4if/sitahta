@@ -192,13 +192,13 @@ class Siswa extends MY_Controller {
     
     private function getImgLink($nis){
         $this->load->helper('file');
-        $img_link = base_url().'admin/siswa/getFoto/';
+        $img_link = '';
         $file = read_file('./data/foto/'.$nis.'.png');
         $datetime = new DateTime('now');
         if($file == false){
-            $img_link = $img_link.'default/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+            $img_link = base_url().'assets/img/default.png';
         }  else {
-            $img_link = $img_link.$nis.'/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
+            $img_link = base_url().'admin/siswa/getFoto/'.$nis.'/'.hash('md2', $datetime->format('Y-m-d H:i:s'));
         }
         return $img_link;
     }
