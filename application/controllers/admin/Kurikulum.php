@@ -58,7 +58,11 @@ class Kurikulum extends MY_Controller {
             'nav_pos' => 'kurikulum',
             'kelas' => $kelas,
             'semester' => $semester,
-            'edit' => $this->load->view("admin/kurikulum/edit",['data_kurikulum' => $data_kurikulum],TRUE),
+            'edit' => $this->load->view("admin/kurikulum/edit",[
+                'data_kurikulum' => $data_kurikulum,
+                'list_surat_awal' => $this->load->view("admin/kurikulum/surat",['pos' => 'awal'],TRUE),
+                'list_surat_akhir' => $this->load->view("admin/kurikulum/surat",['pos' => 'akhir'],TRUE)
+                    ],TRUE),
             'data_kurikulum' => $data_kurikulum
         ];
         $this->loadView('admin/kurikulum/lihat', $data);

@@ -111,12 +111,32 @@
             <td><?= $kurikulum->getSurat_akhir();?></td>
             <td><?= $kurikulum->getAyat_akhir();?></td>
             <td>
-            <a class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editModal<?= $kurikulum->getId();?>">
+            <a class="btn btn-sm btn-warning" id="btnEdit<?= $kurikulum->getId();?>">
                 <span class="glyphicon glyphicon-pencil"></span>&nbsp;Edit
             </a>
-            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal<?= $kurikulum->getId();?>">
+            <a class="btn btn-sm btn-danger" id="btnDel<?= $kurikulum->getId();?>">
                 <span class="glyphicon glyphicon-alert"></span>&nbsp;Reset
             </a>
+            <script type="text/javascript">
+                $("#btnEdit<?= $kurikulum->getId();?>").click(function (){
+                    $("#formEdit").attr("action", "<?=base_url();?>admin/kurikulum/edit/<?= $kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh().'/'.$kurikulum->getTahun();?>");
+                    $("#editKelas").attr("value", "<?= $kurikulum->getKelas();?>");
+                    $("#editSemester").attr("value", "<?= $kurikulum->getSemester();?>");
+                    $("#editUlangan").attr("value", "<?= $kurikulum->getNo_uh();?>");
+                    $("#editJuz").attr("value", "<?= $kurikulum->getJuz();?>");
+                    $('select[name="surat_awal"]').find('option[value="<?= $kurikulum->getSurat_awal();?>"]').attr("selected",true);
+                    $('select[name="surat_akhir"]').find('option[value="<?= $kurikulum->getSurat_akhir();?>"]').attr("selected",true);
+                    $("#editSuratAwal").attr("value", "<?= $kurikulum->getSurat_awal();?>");
+                    $("#editAyatAwal").attr("value", "<?= $kurikulum->getAyat_awal();?>");
+                    $("#editSuratAkhir").attr("value", "<?= $kurikulum->getSurat_akhir();?>");
+                    $("#editAyatAkhir").attr("value", "<?= $kurikulum->getAyat_akhir();?>");
+                    $("#editModal").modal("toggle");
+                });
+                $("#btnDel<?= $kurikulum->getId();?>").click(function (){
+                    $("#btnDelOk").attr("href", "<?php echo base_url().'admin/kurikulum/reset/'.$kurikulum->getKelas().'/'.$kurikulum->getSemester().'/'.$kurikulum->getNo_uh().'/'.$kurikulum->getTahun();?>");
+                    $("#modalReset").modal("toggle");
+                });
+            </script>
             </td>
             </tr>
             <?php endforeach;?>
