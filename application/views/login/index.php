@@ -37,7 +37,7 @@
     <script src="<?=  base_url() ?>assets/js/user.js"></script>
     <style>
         body {
-            background: url("<?=  base_url() ?>assets/img/bg.jpeg");
+            background: url("<?=  base_url() ?>assets/img/bg.png");
             background-repeat: no-repeat;
             background-position: center center;
             background-attachment: fixed;
@@ -46,10 +46,26 @@
             -o-background-size: cover;
             background-size: cover;
         }
+        .navbar.transparent.navbar-inverse .navbar-inner {
+            border-width: 0px;
+            -webkit-box-shadow: 0px 0px;
+            box-shadow: 0px 0px;
+            background-color: rgba(0,0,0,0.0);
+            background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(0,0,0,0.00)),color-stop( 100% , rgba(0,0,0,0.00)));
+            background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
+            background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
+        }
+        .logo-sma {
+            resize: both;
+            height: 50px;
+            width: 50px;
+            max-height: 50px;
+            max-width: 50px;
+        }
     </style>
 </head>
 <body class="login">
-<div class="container" style="margin-top:30px">
+<div class="container" style="margin-top:100px">
     <div class="col-md-4 col-md-offset-4">
         <?php if(empty($this->session->flashdata('notices')) === false): ?>
         <div class="alert alert-success alert-dismissible">
@@ -71,7 +87,7 @@
             ?>
         </div>
         <?php endif; ?>
-        <div class="panel panel-primary">
+        <div class="panel panel-default">
             <div class="panel-heading"><h3 class="panel-title"><strong>Silahkan Login</strong></h3></div>
             <div class="panel-body">
                 <form action="<?= base_url()."login/verify"?>" method="post">
