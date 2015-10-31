@@ -35,38 +35,22 @@
     <meta name="author" content="">
 
     <title><?=$title?></title>
-
-    <!-- Di server, jangan lupa untuk diganti menjadi CDN -->
     
+    <?php if($cdn):?>
     <!-- Bootstrap Core CSS -->
-    <!-- CDN-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-    <!-- Local-->
-    <!--<link href="<? =  base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">-->
-
+    
     <!-- Custom Fonts -->
-    <!-- CDN-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Local-->
-    <!--<link href="<? =  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">-->
     
     <!-- Bootstrap DataTables CSS -->
-    <!-- CDN -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/bs/jszip-2.5.0,dt-1.10.9,b-1.0.3,b-colvis-1.0.3,b-print-1.0.3,cr-1.2.0,fc-3.1.0,fh-3.0.0,kt-2.0.0,r-1.0.7,rr-1.0.0,sc-1.3.0,se-1.0.1/datatables.min.css"/>
-    <!-- Local -->
-    <!--<link href="<? =  base_url() ?>assets/css/datatables.min.css" rel="stylesheet">-->
     
     <!-- Datepicker CSS -->
-    <!-- CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css">
-    <!-- Local-->
-    <!--<link href="<? =  base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">-->
     
     <!-- Datepicker3 CSS -->
-    <!-- CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
-    <!-- Local-->
-    <!--<link href="<? =  base_url() ?>assets/css/bootstrap-datepicker3.min.css" rel="stylesheet">-->
     
     <!-- Custom CSS -->
     <link href="<?=  base_url() ?>assets/css/sb-admin.min.css" rel="stylesheet">
@@ -75,10 +59,34 @@
     <link href="<?=  base_url() ?>assets/css/style.css" rel="stylesheet">
     
     <!-- JQuery JS -->
-    <!-- CDN -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <!-- Local -->
-    <!--<script src="<? =  base_url() ?>assets/js/jquery-2.1.4.min.js"></script>-->
+    
+    <?php else :?>
+    <!-- Bootstrap Core CSS -->
+    <link href="<?=  base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="<?=  base_url() ?>assets/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap DataTables CSS -->
+    <link href="<?=  base_url() ?>assets/css/datatables.min.css" rel="stylesheet">
+    
+    <!-- Datepicker CSS -->
+    <link href="<?=  base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    
+    <!-- Datepicker3 CSS -->
+    <link href="<?=  base_url() ?>assets/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/sb-admin.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="<?=  base_url() ?>assets/css/style.css" rel="stylesheet">
+    
+    <!-- JQuery JS -->
+    <script src="<?=  base_url() ?>assets/js/jquery-2.1.4.min.js"></script>
+    
+    <?php endif;?>
     
 </head>
 

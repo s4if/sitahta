@@ -31,6 +31,11 @@
  */
 class MY_Controller extends CI_Controller {
     
+    /* 
+     * CDN itu untuk memilih menggunakan CDN ato tidak...
+     */
+    const CDN = true;
+
     function __construct(){
         parent::__construct();
         if (is_cli())
@@ -42,6 +47,9 @@ class MY_Controller extends CI_Controller {
     }
     
     protected function loadView($view_name, $data = []){
+        // set pakai cdn atau tidak
+        $data['cdn'] = self::CDN;
+        
         $fragment['header'] = $this->load->view("core/header", $data, TRUE);
         $fragment['navbar'] = $this->load->view("core/navbar", $data, true);
         $fragment['alert'] = $this->load->view("core/alert",'',true);
