@@ -370,7 +370,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $data = [
             'nis' => 1001,
             'nama' => 'user',
-            'tgl_ujian' => '2015-12-12',
+            'tgl_ujian' => '2015-10-12',
             'tempat_ujian' => 'SMA IT Ihsanul Fikri Magelang',
             'juz' => 4,
             'nilai' => 89,
@@ -397,23 +397,32 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //checkAttributes
         $id = '1001-4';
         $nis = 1001;
-        $nilai_array = $model->getDataByNis($nis);
-        $this->assertObjectHasAttribute('id', $nilai_array[0]);
-        $this->assertObjectHasAttribute('siswa', $nilai_array[0]);
-        $this->assertObjectHasAttribute('tempat_ujian', $nilai_array[0]);
-        $this->assertObjectHasAttribute('tgl_ujian', $nilai_array[0]);
-        $this->assertObjectHasAttribute('juz', $nilai_array[0]);
-        $this->assertObjectHasAttribute('nilai', $nilai_array[0]);
-        $this->assertObjectHasAttribute('keterangan', $nilai_array[0]);
+        $sertifikat_array = $model->getDataByNis($nis);
+        $this->assertObjectHasAttribute('id', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('siswa', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('tempat_ujian', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('tgl_ujian', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('juz', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('nilai', $sertifikat_array[0]);
+        $this->assertObjectHasAttribute('keterangan', $sertifikat_array[0]);
         //==
-        $nilai_array = $model->getData($id);
-        $this->assertObjectHasAttribute('id', $nilai_array);
-        $this->assertObjectHasAttribute('siswa', $nilai_array);
-        $this->assertObjectHasAttribute('tempat_ujian', $nilai_array);
-        $this->assertObjectHasAttribute('tgl_ujian', $nilai_array);
-        $this->assertObjectHasAttribute('juz', $nilai_array);
-        $this->assertObjectHasAttribute('nilai', $nilai_array);
-        $this->assertObjectHasAttribute('keterangan', $nilai_array);
+        $sertifikat_id = $model->getData($id);
+        $this->assertObjectHasAttribute('id', $sertifikat_id);
+        $this->assertObjectHasAttribute('siswa', $sertifikat_id);
+        $this->assertObjectHasAttribute('tempat_ujian', $sertifikat_id);
+        $this->assertObjectHasAttribute('tgl_ujian', $sertifikat_id);
+        $this->assertObjectHasAttribute('juz', $sertifikat_id);
+        $this->assertObjectHasAttribute('nilai', $sertifikat_id);
+        $this->assertObjectHasAttribute('keterangan', $sertifikat_id);
+        //==
+        $sertifikat_semester = $model->getDataBySemester($nis, 1, 2015)[0];
+        $this->assertObjectHasAttribute('id', $sertifikat_semester);
+        $this->assertObjectHasAttribute('siswa', $sertifikat_semester);
+        $this->assertObjectHasAttribute('tempat_ujian', $sertifikat_semester);
+        $this->assertObjectHasAttribute('tgl_ujian', $sertifikat_semester);
+        $this->assertObjectHasAttribute('juz', $sertifikat_semester);
+        $this->assertObjectHasAttribute('nilai', $sertifikat_semester);
+        $this->assertObjectHasAttribute('keterangan', $sertifikat_semester);
     }
     
     public function testModel_sertifikasi() {
@@ -424,7 +433,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $data = [
             'nama' => 'Mukhoyyam sapujagad 1',
             'tahun_ajaran' => '2015',
-            'tanggal' => '2015-06-10',
+            'tanggal' => '2015-09-10',
             'kota' => 'magelang',
             'tempat' => 'SMA IT Ihsanul Fikri',
             ];
@@ -507,15 +516,15 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $model = new Model_sertifikasi();
         //checkAttributes
         $id_sertifikasi = $model->getData()[0]->getId();
-//        $id = $model->getPeserta($id_sertifikasi)[0]->getId();
-//        $s = $model->getPeserta($id);
-//        $this->assertObjectHasAttribute('id', $s);
-//        $this->assertObjectHasAttribute('sertifikasi', $s);
-//        $this->assertObjectHasAttribute('siswa', $s);
-//        $this->assertObjectHasAttribute('juz', $s);
-//        $this->assertObjectHasAttribute('nilai', $s);
-//        $this->assertObjectHasAttribute('sertifikat', $s);
-        //==
+        $id = $model->getPeserta($id_sertifikasi)[0]->getId();
+        $s = $model->getPeserta($id)->first();
+        $this->assertObjectHasAttribute('id', $s);
+        $this->assertObjectHasAttribute('sertifikasi', $s);
+        $this->assertObjectHasAttribute('siswa', $s);
+        $this->assertObjectHasAttribute('juz', $s);
+        $this->assertObjectHasAttribute('nilai', $s);
+        $this->assertObjectHasAttribute('sertifikat', $s);
+        //== 
         $s_array = $model->getPeserta($id_sertifikasi);
         $this->assertObjectHasAttribute('id', $s_array[0]);
         $this->assertObjectHasAttribute('sertifikasi', $s_array[0]);
@@ -523,7 +532,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('juz', $s_array[0]);
         $this->assertObjectHasAttribute('nilai', $s_array[0]);
         $this->assertObjectHasAttribute('sertifikat', $s_array[0]);
-        
     }
     
     public function testModel_sertifikasi_5(){

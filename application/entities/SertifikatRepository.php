@@ -34,4 +34,21 @@ class SertifikatRepository extends EntityRepository {
         $query = $qb->getQuery();
         return $query->getResult();
     }
+    
+    public function getDataBySiswaSemester($nis, $date_start, $date_end){
+        $siswa = $this->getEntityManager()->getPartialReference('SiswaEntity', $nis);
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('r')
+                ->from('SertifikatEntity', 'r')
+                ->andWhere($qb->expr()->between('r.tgl_ujian', ':tgl_awal', ':tgl_akhir'))
+                ->andWhere($qb->expr()->eq('r.siswa', ':siswa'))
+                ->setParameters([
+                    'tgl_awal' => $date_start,
+                    'tgl_akhir' => $date_end,
+                    'siswa' => $siswa
+                ])
+                ->orderBy('r.tgl_ujian', 'ASC');
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

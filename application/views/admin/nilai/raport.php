@@ -133,6 +133,39 @@
             </tr>
             </tbody>
         </table>
+        <h4>Sertifikasi Yang Dilakukan Semester Ini:</h4>
+        <table style="width: 100%" class="utama">
+            <thead>
+                <tr>
+                    <td class="utama isi">Tanggal Ujian</td>
+                    <td class="utama isi">Tempat Ujian</td>
+                    <td class="utama isi">Juz</td>
+                    <td class="utama isi">Nilai</td>
+                    <td class="utama isi">Predikat</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($data_sertifikat[$siswa->getNis()])): ?>
+                <tr>
+                <td class="utama isi"></td>
+                <td class="utama isi"></td>
+                <td class="utama isi"></td>
+                <td class="utama isi"></td>
+                <td class="utama isi"></td>
+                </tr>
+                <?php else: ?>
+                <?php foreach ($data_sertifikat[$siswa->getNis()] as $sertifikat): ?>
+                <tr>
+                <td class="utama isi"><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                <td class="utama isi"><?=$sertifikat->getTempat_ujian();?></td>
+                <td class="utama isi"><?=$sertifikat->getJuz();?></td>
+                <td class="utama isi"><?=$sertifikat->getNilai();?></td>
+                <td class="utama isi"><?=$sertifikat->getPredikat();?></td>
+                </tr>
+                <?php endforeach;?>
+                <?php endif;?>
+            </tbody>
+        </table>
         <table style="width: 100%; border-style: none">
             <tr>
                 <td>&nbsp;</td>

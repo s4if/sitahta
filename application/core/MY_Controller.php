@@ -34,7 +34,7 @@ class MY_Controller extends CI_Controller {
     /* 
      * CDN itu untuk memilih menggunakan CDN ato tidak...
      */
-    const CDN = true;
+    const CDN = false;
 
     function __construct(){
         parent::__construct();

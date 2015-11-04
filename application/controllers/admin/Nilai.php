@@ -35,6 +35,7 @@ class Nilai extends MY_Controller {
         parent::__construct();
         $this->load->model('model_siswa','siswa',TRUE);
         $this->load->model('model_nilai','nilai',TRUE);
+        $this->load->model('model_sertifikat','sertifikat',TRUE);
     }
     
     public function index(){
@@ -142,6 +143,10 @@ class Nilai extends MY_Controller {
         $semester = $this->input->post('semester');
         $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran)[0];
         $data_siswa = $this->siswa->getDataByKelas($data_kelas);
+        $data_sertifikat = [];
+        foreach ($data_siswa as $siswa){
+            $data_sertifikat[$siswa->getNis()] = $this->sertifikat->getDataBySemester($siswa->getNis(), $semester, $this->session->tahun_ajaran);
+        }
         $pdf = new \Dompdf\Dompdf();
         $pdf->setPaper('A4', 'portrait');
         $data = [
@@ -150,7 +155,8 @@ class Nilai extends MY_Controller {
             'semester' => $semester,
             'id_kelas' => $kelas,
             'kelas' => $data_kelas,
-            'data_siswa' => $data_siswa
+            'data_siswa' => $data_siswa,
+            'data_sertifikat' => $data_sertifikat
         ];
         $html = $this->load->view('admin/nilai/raport', $data, TRUE);
         $pdf->loadHtml($html);

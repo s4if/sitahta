@@ -45,6 +45,18 @@ class Model_sertifikat extends MY_Model {
         return $this->em->getRepository('SertifikatEntity')->getDataBySiswa($nis);
     }
     
+    public function getDataBySemester($nis, $semester, $tahun_ajaran){
+        //NOTE : It may be revised
+        $bulan_awal = ($semester == 1)?'07':'01';
+        $bulan_akhir = ($semester == 1)?'12':'06';
+        $tahun_input = ($semester == 1)? (int)$tahun_ajaran: (int)$tahun_ajaran +1;
+        $str_awal = '1-'.$bulan_awal.'-'.$tahun_input;
+        $str_akhir = '31-'.$bulan_akhir.'-'.$tahun_input;
+        $tgl_awal = new DateTime($str_awal);
+        $tgl_akhir = new DateTime($str_akhir);
+        return $this->em->getRepository('SertifikatEntity')->getDataBySiswaSemester($nis,$tgl_awal,$tgl_akhir);
+    }
+    
     public function insertData($data){
         $search_id = empty($data['id'])?-1:$data['id'];
         if(is_null($this->em->find("SertifikatEntity", $search_id))){
@@ -105,5 +117,5 @@ class Model_sertifikat extends MY_Model {
         if (!empty($data['nilai'])) : $this->sertifikat->setNilai($data['nilai']); endif;
         if (!empty($data['predikat'])) : $this->sertifikat->setPredikat($data['predikat']); endif;
         if (!empty($data['keterangan'])) : $this->sertifikat->setKeterangan($data['keterangan']); endif;
-    }    
+    }
 }
