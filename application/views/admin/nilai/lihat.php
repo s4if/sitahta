@@ -243,7 +243,6 @@
         .fixed-panel {
               min-width: 10;
               max-width: 10;
-              //overflow-y: scroll;
               overflow-x: scroll;
         }
   </style>

@@ -15,7 +15,7 @@ class SiswaEntity {
     private $nis;
 
     /**
-     * @Column(type="string", length=40, nullable=false)
+     * @Column(type="string", nullable=false)
      */
     private $nama;
 

@@ -147,8 +147,6 @@ class Nilai extends MY_Controller {
         foreach ($data_siswa as $siswa){
             $data_sertifikat[$siswa->getNis()] = $this->sertifikat->getDataBySemester($siswa->getNis(), $semester, $this->session->tahun_ajaran);
         }
-        $pdf = new \Dompdf\Dompdf();
-        $pdf->setPaper('A4', 'portrait');
         $data = [
             'title' => 'Raport Tahta',
             'tahun_ajaran' => $this->session->tahun_ajaran,
@@ -158,12 +156,33 @@ class Nilai extends MY_Controller {
             'data_siswa' => $data_siswa,
             'data_sertifikat' => $data_sertifikat
         ];
+        $pdf = new mikehaertl\wkhtmlto\Pdf();
+        $pdf->setOptions($this->pdfOption());
         $html = $this->load->view('admin/nilai/raport', $data, TRUE);
-        $pdf->loadHtml($html);
-        $pdf->render();
-        $pdf->stream($kelas);
+        $pdf->addPage($html);
+        if (!$pdf->send('Rapor '.$kelas.'.pdf')) {
+            echo $pdf->getError();
+        }
     }
     
+    private  function pdfOption(){
+        $options = [
+            'page-width' => '210mm',
+            'page-height' => '297mm',
+            'dpi' => 96,
+            'image-quality' => 100,
+            'margin-top' => '20mm',
+            'margin-right' => '20mm',
+            'margin-bottom' => '20mm',
+            'margin-left' => '20mm',
+            'header-spacing' => 15,
+            'footer-spacing' => 5,
+            'disable-smart-shrinking',
+            'no-outline'
+        ];
+        return $options;
+    }
+
     public function template($kelas, $semester){
         $data = $this->input->post(null,true);
         $data['data_kelas'] = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
