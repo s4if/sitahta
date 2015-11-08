@@ -50,11 +50,14 @@ class Nilai extends MY_Controller {
     
     public function lihat($kelas = 'X', $in_semester = 9) {
         $this->blockUnloggedOne();
-        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $data_kelas = [
+            0 => $this->siswa->getKelas($kelas, $this->session->tahun_ajaran)[0]
+            ];
         $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
         $kelas_2 = array();
         if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
-            $kelas_2 = [0 => $kelas, 1 => $this->session->tahun_ajaran];
+            $kelas = $data_kelas[0]->getNamaKelas();
+            $kelas_2 = explode('-', $kelas);
         }  else {
             $kelas_2 = explode('-', $kelas);
         }

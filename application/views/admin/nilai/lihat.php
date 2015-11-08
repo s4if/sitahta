@@ -64,11 +64,6 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownKelas">
-                <li role="presentation">
-                    <a role="menuitem" href="<?=  base_url()?>nilai/<?=$judul_kelas[0]?>/<?=$semester?>">
-                        Semua
-                    </a>
-                </li>
                 <?php foreach ($list_kelas as $item_kelas) :?>
                 <li role="presentation">
                     <a role="menuitem" href="<?=  base_url()?>nilai/<?=$item_kelas->getId()?>/<?=$semester?>">
