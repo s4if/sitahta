@@ -139,32 +139,30 @@ class Nilai extends MY_Controller {
     
     public function raport(){
         $this->blockUnloggedOne();
-        $kelas = $this->input->post('kelas');
+        $id_kelas = $this->input->post('kelas');
         $semester = $this->input->post('semester');
-        $data_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran)[0];
+        $data_kelas = $this->siswa->getKelas($id_kelas, $this->session->tahun_ajaran)[0];
         $data_siswa = $this->siswa->getDataByKelas($data_kelas);
-        $data_sertifikat = [];
-        foreach ($data_siswa as $siswa){
-            $data_sertifikat[$siswa->getNis()] = $this->sertifikat->getDataBySemester($siswa->getNis(), $semester, $this->session->tahun_ajaran);
-        }
         $data = [
             'title' => 'Raport Tahta',
             'tahun_ajaran' => $this->session->tahun_ajaran,
             'semester' => $semester,
-            'id_kelas' => $kelas,
+            'id_kelas' => $id_kelas,
             'kelas' => $data_kelas,
-            'data_siswa' => $data_siswa,
-            'data_sertifikat' => $data_sertifikat
+            'tanggal_print' => $this->input->post('tanggal')
         ];
-        //just output for test
-//        $this->load->view('admin/nilai/raport', $data, false);
         
-        //real output
         $pdf = new mikehaertl\wkhtmlto\Pdf();
         $pdf->setOptions($this->pdfOption());
-        $html = $this->load->view('admin/nilai/raport', $data, TRUE);
-        $pdf->addPage($html);
-        if (!$pdf->send('Rapor '.$kelas.'.pdf')) {
+        foreach ($data_siswa as $siswa){
+            $data['siswa'] = $siswa;
+            $data['data_sertifikat'] = $this->sertifikat->getDataBySemester($siswa->getNis(), $semester, $this->session->tahun_ajaran);
+            $html = $this->load->view('admin/nilai/raport', $data, TRUE);
+            $pdf->addPage($html);
+        }
+        
+        //real output
+        if (!$pdf->send('Rapor '.$id_kelas.'.pdf')) {
             echo $pdf->getError();
         }
     }

@@ -209,6 +209,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="col-sm-3 control-label">Tanggal :</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-6">
                                     <button type="submit" class="btn btn-sm btn-primary">OK</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>

@@ -40,7 +40,7 @@ if ($arr_kelas[0] == 'X'){
     <style>
         body {
             font-family: "Times New Roman", Times, serif;
-            font-size: 0.85em;
+            font-size: 0.8em;
             font-size-adjust: 0.5;
         }
         h1.header-print {
@@ -56,7 +56,7 @@ if ($arr_kelas[0] == 'X'){
         td.catatan {
             font-family: inherit;
             font-style: italic;
-            font-size: 0.75em;
+            font-size: 0.8em;
             font-size-adjust: 0.5;
         }
         table.utama {
@@ -106,7 +106,6 @@ if ($arr_kelas[0] == 'X'){
     </style>
 </head>
 <body>
-    <?php foreach ($data_siswa as $siswa) :?>
     <div class="page-content">
         <h1 class="header-print">LAPORAN PERKEMBANGAN TAHSIN-TAHFIDZ</h1>
         <table style="width: 100%; border-style: none">
@@ -178,7 +177,7 @@ if ($arr_kelas[0] == 'X'){
                 <td class="tengah"><?=$no++?></td>
                 <td class="tengah"><?=$aspek_penilaian;?></td>
                 <td class="surat">
-                    <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
+                    <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> s/d <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
                 </td>
                 <td><?=$nilai->getNilai()?></td>
                 <td><?=$nilai->getNilai_remidi()?></td>
@@ -233,7 +232,7 @@ if ($arr_kelas[0] == 'X'){
                 <?php else: ?>
                 <?php 
                 $sertifikat_count = 1;
-                foreach ($data_sertifikat[$siswa->getNis()] as $sertifikat): 
+                foreach ($data_sertifikat as $sertifikat): 
                     ?>
                 <tr>
                     <td class="tengah"><?=$sertifikat_count;?></td>
@@ -254,25 +253,26 @@ if ($arr_kelas[0] == 'X'){
             <tr>
                 <td style="width: 40%">&nbsp;</td>
                 <td style="width: 20%">&nbsp;</td>
-                <td style="width: 40%; text-align: center">Mengetahui,</td>
+                <?php
+                $date = new DateTime($tanggal_print);
+                ?>
+                <td style="width: 40%; text-align: center">Mungkid, <?php echo $date->format('j F Y');?></td>
             </tr>
             <tr>
-                <td style="width: 40%; text-align: center">Wali Kelas</td>
+                <td style="width: 40%; text-align: center">Orang Tua Siswa/Wali</td>
                 <td style="width: 20%">&nbsp;</td>
-                <td style="width: 40%; text-align: center">Wali Siswa</td>
+                <td style="width: 40%; text-align: center">Wali Kelas</td>
             </tr>
             <tr >
                 <td style="height: 60px">&nbsp;</td>
             </tr>
             <tr>
-                <td style="width: 40%; text-align: center">...................</td>
+                <td style="width: 40%; text-align: center">.....................</td>
                 <td style="width: 20%">&nbsp;</td>
-                <td style="width: 30%; text-align: center">...................</td>
+                <td style="width: 30%; text-align: center">.....................</td>
             </tr>
         </table>
     </div>
-    <div class="end-break">&nbsp;</div>
-    <?php endforeach;?>
 </body>
 
 </html>
