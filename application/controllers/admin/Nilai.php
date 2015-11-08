@@ -156,6 +156,10 @@ class Nilai extends MY_Controller {
             'data_siswa' => $data_siswa,
             'data_sertifikat' => $data_sertifikat
         ];
+        //just output for test
+//        $this->load->view('admin/nilai/raport', $data, false);
+        
+        //real output
         $pdf = new mikehaertl\wkhtmlto\Pdf();
         $pdf->setOptions($this->pdfOption());
         $html = $this->load->view('admin/nilai/raport', $data, TRUE);
@@ -167,8 +171,7 @@ class Nilai extends MY_Controller {
     
     private  function pdfOption(){
         $options = [
-            'page-width' => '210mm',
-            'page-height' => '297mm',
+            'page-size' => 'A4',
             'dpi' => 96,
             'image-quality' => 100,
             'margin-top' => '20mm',

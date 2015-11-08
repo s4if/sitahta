@@ -23,20 +23,79 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+$arr_kelas = explode('-', $id_kelas);
+$txt_kelas = '';
+if ($arr_kelas[0] == 'X'){
+    $txt_kelas = $arr_kelas[0].'-'.$arr_kelas[1];
+} else {
+    $txt_kelas = $arr_kelas[0].'-'.$arr_kelas[1].'-'.$arr_kelas[2];
+}
 ?>
+<!DOCTYPE html>
 <html>
     
 <head>
     <title>Laporan Hasil Belajar Kelas <?=$id_kelas?></title>
     <style>
-        .utama {
-            border: thin solid black;
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 0.85em;
+            font-size-adjust: 0.5;
+        }
+        h1.header-print {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1em;
+            font-size-adjust: 0.5;
+            text-align: center;
+        }
+        p.xprint{
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+        td.catatan {
+            font-family: inherit;
+            font-style: italic;
+            font-size: 0.75em;
+            font-size-adjust: 0.5;
+        }
+        table.utama {
+            font-family: inherit;
+            font-size: 0.75em;
+            color:#333333;
+            border-width: 1px;
+            border-color: #000000;
             border-collapse: collapse;
         }
-        .isi {
+        table.utama thead {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #000000;
+            background-color: #dedede;
             text-align: center;
-            border-spacing: 1px;
-            font-size: small;
+            font-weight: bolder;
+        }
+        table.utama th {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #000000;
+            background-color: #dedede;
+        }
+        table.utama td {
+            border-width: 1px;
+            border-style: solid;
+            border-color: #000000;
+            background-color: #ffffff;
+        }
+        td.surat{
+            font:inherit;
+            font-style: italic;
+            text-align: center;
+        }
+        td.tengah{
+            font:inherit;
+            text-align: center;
+            font-weight: bold;
         }
         div.end-break {
             page-break-after: always;
@@ -49,120 +108,142 @@
 <body>
     <?php foreach ($data_siswa as $siswa) :?>
     <div class="page-content">
+        <h1 class="header-print">LAPORAN PERKEMBANGAN TAHSIN-TAHFIDZ</h1>
         <table style="width: 100%; border-style: none">
-            <tr>
-                <td style="width: 10%; text-align: left">NIS</td>
-                <td style="width: 2%; text-align: left">:</td>
-                <td style="width: 38%; text-align: left"><?=$siswa->getNis()?></td>
-                <td style="width: 10%; text-align: left">Kelas</td>
-                <td style="width: 2%; text-align: left">:</td>
-                <td style="width: 38%; text-align: left"><?=$id_kelas?></td>
-            </tr>
             <tr>
                 <td style="width: 10%; text-align: left">Nama</td>
                 <td style="width: 2%; text-align: left">:</td>
-                <td style="width: 38%; text-align: left"><?=$siswa->getNama()?></td>
-                <td style="width: 10%; text-align: left">Semester</td>
+                <td style="width: 48%; text-align: left"><?=$siswa->getNama()?></td>
+                <td style="width: 20%; text-align: left">Semester</td>
                 <td style="width: 2%; text-align: left">:</td>
-                <td style="width: 38%; text-align: left"><?=$semester?></td>
+                <td style="width: 18%; text-align: left"><?=($semester == 1)?'Ganjil':'Genap'?></td>
             </tr>
             <tr>
-                <td>&nbsp;</td>
+                <td style="width: 10%; text-align: left">Kelas</td>
+                <td style="width: 2%; text-align: left">:</td>
+                <td style="width: 48%; text-align: left"><?=$txt_kelas?></td>
+                <td style="width: 20%; text-align: left">Tahun Ajaran</td>
+                <td style="width: 2%; text-align: left">:</td>
+                <td style="width: 18%; text-align: left"><?php echo $tahun_ajaran.'-'.((int)$tahun_ajaran+1);?></td>
             </tr>
         </table>
         <table style="width: 100%" class="utama">
             <thead>
                 <tr>
-                    <td class="utama isi">Ulangan</td>
-                    <td class="utama isi">Juz</td>
-                    <td class="utama isi">Materi</td>
-                    <td class="utama isi">Nilai</td>
-                    <td class="utama isi">Keterangan</td>
+                    <td >No.</td>
+                    <td >Aspek Penilaian</td>
+                    <td >Materi</td>
+                    <td >Nilai</td>
+                    <td >Remidi</td>
+                    <td >Akhir</td>
                 </tr>
             </thead>
             <tbody>
             <?php 
-            $arr_kelas = explode('-', $id_kelas);
             $count = ($arr_kelas[0] == 'X')?20:10;
             $n_count = 0;
             $n_sum = 0;
             $n_uts = 0;
             $n_uas = 0;
+            $no = 1;
             for($i = 1; $i <= $count+2; $i++):
                 $no_uh;
+                $aspek_penilaian;
                 if($i == $count+1){
                     $no_uh = 'UTS';
+                    $aspek_penilaian = 'UTS';
                 } elseif ($i == $count+2) {
                     $no_uh = 'UAS';
+                    $aspek_penilaian = 'UAS';
                 }  else {
                     $no_uh = $i;
+                    $aspek_penilaian = 'Ulangah Harian '.$i;
                 }
                 if(is_null($siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0])):
             ?>
+            <?php if($no_uh <=10) :?>
             <tr>
-                <td class="utama isi"><?=$no_uh;?></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
+                <td class="tengah"><?=$no++?></td>
+                <td class="tengah"><?=$aspek_penilaian;?></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
             </tr>
+            <?php endif;?>
             <?php else: 
                 $nilai = $siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0];
                 ?>
                 <tr>
-                <td class="utama isi"><?=$no_uh;?></td>
-                <td class="utama isi"><?=$nilai->getMeta()->getJuz()?></td>
-                <td class="utama isi">
+                <td class="tengah"><?=$no++?></td>
+                <td class="tengah"><?=$aspek_penilaian;?></td>
+                <td class="surat">
                     <?=$nilai->getMeta()->getSurat_awal()?> ayat <?=$nilai->getMeta()->getAyat_awal()?> S/D <?=$nilai->getMeta()->getSurat_akhir()?> ayat <?=$nilai->getMeta()->getAyat_akhir()?>
                 </td>
-                <td class="utama isi"><?=$nilai->getNilai_akhir()?></td>
+                <td><?=$nilai->getNilai()?></td>
+                <td><?=$nilai->getNilai_remidi()?></td>
+                <td><?=$nilai->getNilai_akhir()?></td>
                 <?php if ($i <= $count) :
                     $n_sum = $n_sum + $nilai->getNilai_akhir(); $n_count++;
                     elseif($i == $count+1) : $n_uts = $nilai->getNilai_akhir();
                     elseif($i == $count+2) : $n_uas = $nilai->getNilai_akhir();
                     endif;?>
-                <td class="utama isi"><?=$nilai->getKeterangan()?></td>
                 </tr>
             <?php endif;?>
             <?php endfor;?>
             <tr>
-                <td class="utama isi" colspan="3"><strong>Nilai Akhir</strong></td>
+                <td  colspan="5"><strong>Nilai Akhir</strong></td>
                 <?php $n_akhir = ((40*($n_sum/$n_count))+(30*$n_uts)+(30*$n_uas))/100;?>
-                <td class="utama isi"><strong><?php echo number_format($n_akhir, 0);?></strong></td>
-                <td class="utama isi"></td>
+                <td ><strong><?php echo number_format($n_akhir, 0);?></strong></td>
             </tr>
             </tbody>
         </table>
-        <h4>Sertifikasi Yang Dilakukan Semester Ini:</h4>
+        
+        <p class="xprint">Catatan:</p>
+        <table style="width: 100%" class="utama">
+            <tr>
+                <td class="catatan">
+                    Tingkatkan semangat dalam menghafal Al-Qur'an!
+                    Bersabar dan memaksimalkan ikhtiar adalah kuncinya.
+                    Semoga Allah Limpahkan berkah dan kecintaan bersama Al Qur'an.
+                </td>
+            </tr>
+        </table>
+        
+        <p class="xprint">Sertifikasi Hafalan Al Qur'an Yang Dilakukan Semester Ini:</p>
         <table style="width: 100%" class="utama">
             <thead>
                 <tr>
-                    <td class="utama isi">Tanggal Ujian</td>
-                    <td class="utama isi">Tempat Ujian</td>
-                    <td class="utama isi">Juz</td>
-                    <td class="utama isi">Nilai</td>
-                    <td class="utama isi">Predikat</td>
+                    <td >No</td>
+                    <td >Tanggal Ujian</td>
+                    <td >Juz</td>
+                    <td >Nilai</td>
+                    <td >Predikat</td>
                 </tr>
             </thead>
             <tbody>
                 <?php if (empty($data_sertifikat[$siswa->getNis()])): ?>
                 <tr>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
-                <td class="utama isi"></td>
+                <td >&nbsp;</td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
                 </tr>
                 <?php else: ?>
-                <?php foreach ($data_sertifikat[$siswa->getNis()] as $sertifikat): ?>
+                <?php 
+                $sertifikat_count = 1;
+                foreach ($data_sertifikat[$siswa->getNis()] as $sertifikat): 
+                    ?>
                 <tr>
-                <td class="utama isi"><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
-                <td class="utama isi"><?=$sertifikat->getTempat_ujian();?></td>
-                <td class="utama isi"><?=$sertifikat->getJuz();?></td>
-                <td class="utama isi"><?=$sertifikat->getNilai();?></td>
-                <td class="utama isi"><?=$sertifikat->getPredikat();?></td>
+                    <td class="tengah"><?=$sertifikat_count;?></td>
+                <td ><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                <td ><?=$sertifikat->getJuz();?></td>
+                <td ><?=$sertifikat->getNilai();?></td>
+                <td ><?=$sertifikat->getPredikat();?></td>
                 </tr>
-                <?php endforeach;?>
+                <?php $sertifikat_count++;
+                endforeach;?>
                 <?php endif;?>
             </tbody>
         </table>
