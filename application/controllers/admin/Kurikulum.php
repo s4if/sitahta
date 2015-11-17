@@ -70,7 +70,7 @@ class Kurikulum extends MY_Controller {
     
     private function dataTrans($kelas, $tahun, $semester){
         $arr_data = [];
-        $count = ($kelas == 'X')? 20 : 10;
+        $count = ($kelas == 'X')? 20 : 15;
         for($i = 1; $i <= $count; $i++){
             $data = $this->kurikulum->getDataByParams($kelas, $tahun, $i, $semester);
             $arr_data[$i] = (isset($data[0]))?$data[0]:NULL;
@@ -89,8 +89,8 @@ class Kurikulum extends MY_Controller {
         return $arr_data;
     }
     
-    private function generateKurikulum($tahun){
-        $this->kurikulum->reset($tahun);
+    public function generateKurikulum($tahun = 2015, $kelas_x = 20, $kelas_xi = 10, $kelas_xii = 10){
+        $this->kurikulum->reset($tahun, $kelas_x, $kelas_xi, $kelas_xii);
     }
 
     public function tambah(){

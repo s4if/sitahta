@@ -254,7 +254,7 @@
             <tr>
                 <td rowspan="2">NIS</td>
                 <td rowspan="2">Nama</td>
-                <?php $jml_uh = ($judul_kelas [0] == 'X')?20:10; ?>
+                <?php $jml_uh = ($judul_kelas [0] == 'X')?20:15; ?>
                 <?php for($i = 1; $i<=$jml_uh;$i++) : ?>
                 <td colspan="2">#<?=$i?></td>
                 <?php endfor;?>

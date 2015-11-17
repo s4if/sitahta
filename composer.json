@@ -16,7 +16,7 @@
 	"require-dev": {
 		"mikey179/vfsStream": "1.1.*"
 	},
-        "autoload": {
+    "autoload": {
             "psr-0": {"": "application/entities"}
     }
 }

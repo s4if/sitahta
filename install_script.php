@@ -41,7 +41,7 @@ $entityManager->flush();
 
 // Setting Jumlah Ulangan
 $jumlah_ulangan ['X']= 20;
-$jumlah_ulangan ['XI'] = 10;
+$jumlah_ulangan ['XI'] = 15;
 $jumlah_ulangan ['XII'] = $jumlah_ulangan ['XI'];
 $arr_kelas =['X','XI','XII'];
 

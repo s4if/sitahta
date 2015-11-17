@@ -139,7 +139,7 @@ if ($arr_kelas[0] == 'X'){
             </thead>
             <tbody>
             <?php 
-            $count = ($arr_kelas[0] == 'X')?20:10;
+            $count = ($arr_kelas[0] == 'X')?20:20;
             $n_count = 0;
             $n_sum = 0;
             $n_uts = 0;
