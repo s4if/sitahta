@@ -69,7 +69,7 @@ class SiswaEntity {
     private $nama_ortu;
 
     /**
-     * @OneToMany(targetEntity="NilaiHarianEntity", mappedBy="siswa", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="NilaiHarianEntity", mappedBy="siswa", cascade={"persist", "remove"}, fetch="EAGER")
      **/
     private $nilai;
 
@@ -137,22 +137,41 @@ class SiswaEntity {
         return $this->nilai;
     }
 
-    public function getNilaiByKelas($kelas, $semester = -4) {
-        $criteria = Criteria::create()
-                ->where(Criteria::expr()->eq('kelas', $kelas));
-        if ($semester == 1 || $semester == 2) {
-            $criteria->andWhere(Criteria::expr()->eq('semester', $semester));
+//    public function getNilaiByKelas($kelas, $semester = -4) {
+//        $criteria = Criteria::create()
+//                ->where(Criteria::expr()->eq('kelas', $kelas));
+//        if ($semester == 1 || $semester == 2) {
+//            $criteria->andWhere(Criteria::expr()->eq('semester', $semester));
+//        }
+//        $criteria->orderBy(array("no_uh" => Criteria::ASC));
+//        return $this->nilai->matching($criteria);
+//    }
+//    
+//    public function getNilaiByUH($kelas, $no_uh, $semester = -4) {
+//        $criteria = Criteria::create()
+//                ->andWhere(Criteria::expr()->eq('no_uh', $no_uh))
+//                ->andWhere(Criteria::expr()->eq('kelas', $kelas))
+//                ->andWhere(Criteria::expr()->eq('semester', $semester));
+//        return $this->nilai->matching($criteria);
+//    }
+    
+    public function getArrayNilai(){
+        $arr_nilai = array();
+        foreach ($this->getNilai() as $nilai){
+            $arr_nilai[$nilai->getKelas()][$nilai->getSemester()][$nilai->getNo_uh()] = $nilai;
         }
-        $criteria->orderBy(array("no_uh" => Criteria::ASC));
-        return $this->nilai->matching($criteria);
+        return $arr_nilai;
     }
     
-    public function getNilaiByUH($kelas, $no_uh, $semester = -4) {
-        $criteria = Criteria::create()
-                ->andWhere(Criteria::expr()->eq('no_uh', $no_uh))
-                ->andWhere(Criteria::expr()->eq('kelas', $kelas))
-                ->andWhere(Criteria::expr()->eq('semester', $semester));
-        return $this->nilai->matching($criteria);
+    public function getNilaiByKelas($kelas, $semester = -4) {
+        $arr_kelas = explode('-', $kelas);
+        $arr_nilai = $this->getArrayNilai();
+        return (isset($arr_nilai[$arr_kelas[0]][$semester]))?$arr_nilai[$arr_kelas[0]][$semester]:[];
+    }
+    
+    public function getNilaiByUH($kelas, $no_uh, $semester) {
+        $arr_nilai = $this->getArrayNilai();
+        return (isset($arr_nilai[$kelas][$semester][$no_uh]))?$arr_nilai[$kelas][$semester][$no_uh]:null;
     }
 
     public function getSertifikat() {

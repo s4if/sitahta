@@ -1,4 +1,4 @@
-<?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester)[0])) : ?>
+<?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester))) : ?>
 <a id="tombol<?=$siswa->getNis()."_".$no_uh?>">
     --
 </a>
@@ -14,7 +14,7 @@
     });
 </script>
 <?php else : ?>
-<?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester)[0];
+<?php $data_nilai = $siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester);
 $keterangan = $data_nilai->getKeterangan();
 ?>
 <a data-toggle="modal" id="editNilai<?=$data_nilai->getId();?>">

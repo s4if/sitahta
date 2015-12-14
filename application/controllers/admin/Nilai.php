@@ -110,16 +110,21 @@ class Nilai extends MY_Controller {
                     'no_uh' => $no_uh,
                     'judul_kelas' => $kelas_2
                 ], true);
-                if(is_null($siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester)[0])){
+                if(is_null($siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester))){
                     $row[] = '--';
                 } else {
-                    $data_nilai = $siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester)[0];
+                    $data_nilai = $siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester);
                     $row[] = (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();
                 }
             }
             $ajax_data[] = $row;
         }
         echo json_encode(['data' => $ajax_data]);
+    }
+    
+    public function cek_siswa($nis = 947){
+        $siswa = $this->siswa->getData($nis);
+        var_dump($siswa->getNilaiByKelas('X', 1));
     }
     
     public function tambah_nilai($kelas, $nis) {

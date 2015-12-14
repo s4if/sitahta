@@ -168,7 +168,7 @@
     </div>
 </div>
 <h3><em>Ulangan Harian</em></h3>
-<?php $list_kelas = array('X', 'XI', 'XII');?>
+<?php $list_kelas = ['X', 'XI', 'XII'];?>
 <?php foreach ($list_kelas as $kelas_tabel): ?>
     <?php for ($i = 1; $i <= 2; $i++):
 	$data_nilai = $siswa->getNilaiByKelas($kelas_tabel, $i);?>
@@ -190,7 +190,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($data_nilai[0])): ?>
+                    <?php if (empty($data_nilai[1])): ?>
                     <tr>
                     <td>#</td>
                     <td></td>

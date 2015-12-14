@@ -37,11 +37,11 @@
     </li>
 </ol>
 <h3><em>Ulangan Harian</em></h3>
-<?php $list_kelas = array('X', 'XI', 'XII');?>
+<?php $list_kelas = ['X', 'XI', 'XII'];?>
 <?php foreach ($list_kelas as $kelas_tabel): ?>
     <?php for ($i = 1; $i <= 2; $i++):
 	$data_nilai = $siswa->getNilaiByKelas($kelas_tabel, $i);
-        if (!empty($data_nilai[0])): ?>
+        if (!empty($data_nilai[1])): ?>
     <h4>Kelas <?=$kelas_tabel?> Semester <?=$i?></h4>
     <div class="col-md-12 container-fluid">
         <div class="table-responsive">
@@ -58,7 +58,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (empty($data_nilai[0])): ?>
+                    <?php if (empty($data_nilai[1])): ?>
                     <tr>
                     <td>#</td>
                     <td></td>

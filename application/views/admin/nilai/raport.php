@@ -158,7 +158,7 @@ if ($arr_kelas[0] == 'X'){
                     $no_uh = $i;
                     $aspek_penilaian = 'Ulangah Harian '.$i;
                 }
-                if(is_null($siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0])):
+                if(is_null($siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester))):
             ?>
             <?php if($no_uh <=10) :?>
             <tr>
@@ -171,7 +171,7 @@ if ($arr_kelas[0] == 'X'){
             </tr>
             <?php endif;?>
             <?php else: 
-                $nilai = $siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester)[0];
+                $nilai = $siswa->getNilaiByUH($arr_kelas[0], $no_uh, $semester);
                 ?>
                 <tr>
                 <td class="tengah"><?=$no++?></td>
