@@ -157,36 +157,25 @@ class Model_nilai extends MY_Model {
         return $this->em->getRepository('SiswaEntity')->getListKelas($kelas);
     }
     
-    // NOT YET EDITED!!!! //
-    /**
-     * 
-     * @param type $file_url
-     * @return 0 for ok, -1 for file wrong, > 0 for data wrong
-     */
+    // Php Excel jadi array dan test NIS ada yang kosong tidak...
     public function importData($file_url){
         try {
             $objReader = new PHPExcel_Reader_Excel5();
             $objPHPExcel = $objReader->load($file_url);
             $objWorksheet = $objPHPExcel->getActiveSheet();
             $lastRow = $objWorksheet->getHighestDataRow();
-            $failureCount = 0;
             $lastCol = $objWorksheet->getHighestDataColumn();
             $data = $objWorksheet->rangeToArray('A1'.':'.$lastCol.$lastRow, null, TRUE);
-            for($i = 0; $i <= 3; $i++){
-                if(is_null($data[$i][1])){
-                    $failureCount++;
-                }
-            }
-            if($failureCount > 0){
-                return $failureCount;
-            }else{
-                return $this->doImport($data, $lastRow);
-            }
+//            var_dump($data);
+//            exit();
+            return $this->doImport($data, $lastRow);
+
         }  catch (PHPExcel_Exception $ex) {
             return -1;
         }
     }
     
+    // Row Validation, & transaction
     private function doImport($data, $lastRow){
         $this->em->getConnection()->beginTransaction();
         $failureCount = 0;
@@ -194,7 +183,7 @@ class Model_nilai extends MY_Model {
         for ($i = 7; $i < $lastRow;$i++){
             $row_data = $data[$i];
             if($this->rowValidation($data, $row_data)){
-                $this->transQuery($this->dataTranslator($data, $row_data));
+                $this->transactionBuilder($data, $row_data);
             }  else {
                 $failureCount++;
             }
@@ -207,68 +196,67 @@ class Model_nilai extends MY_Model {
         return $failureCount;
     }
     
+    // validasi row
     private function rowValidation($data, $row_data){
-        $rowValid = true;
-        if(is_null($row_data[0])){
-            $rowValid = false;
-        }
-        $i = 2;
-        while ($i < count($row_data)){
-            if(is_null($row_data[$i])){
-                $rowValid = false;
-                break;
-            }
-            if(is_null($data[4][$i+1])){
-                $rowValid = false;
-                break;
-            }
-            if(is_null($data[5][$i+1])){
-                $rowValid = false;
-                break;
-            }
-            $i= $i + 2;
-        }
-        return $rowValid;
-    }
-
-    private function dataTranslator($data, $row_data){
-        //trans_row adalah row data yang sudah diubah, sedangkan trans_data adalah kumpulan dari trans_row
-        $trans_data = [];
-        $i = 2;
-        while ($i < count($row_data)){
-            $trans_row = [];
-            $trans_row ['no_uh'] = $data[4][$i+1];
-            $trans_row ['kelas'] = $data[0][1];
-            $trans_row ['semester'] = $data[1][1];
-            $t_a = explode('/', $data[2][1]);
-            $trans_row ['tahun_ajaran'] = $t_a[0];
-            $trans_row ['nis'] = $row_data[0];
-            $tgl_arr = explode("-", $data[5][$i+1]);
-            $tgl = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
-            $trans_row ['tanggal'] = $tgl;
-            $trans_row ['nilai'] = $row_data[$i];
-            $trans_row ['nilai_remidi'] = $row_data[$i+1];
-            $trans_row ['penguji'] = $data[3][1];
-            $trans_data[] = $trans_row;
-            $i = $i+2;
-        }
-        return $trans_data;
+//        $rowValid = true;
+//        if(is_null($row_data[0])){
+//            $rowValid = false;
+//        }
+////        $i = 2;
+////        while ($i < count($row_data)){
+////            if(is_null($data[4][$i+1])){
+////                $rowValid = false;
+////                break;
+////            }
+////            if(is_null($data[5][$i+1])){
+////                $rowValid = false;
+////                break;
+////            }
+////            $i= $i + 2;
+////        }
+//        return $rowValid;
+        return true;
     }
     
-    private function transQuery($arr_data){
-        foreach ($arr_data as $data){
-            $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' .$data['tahun_ajaran'];
-            $entity = $this->em->find("NilaiHarianEntity", $id);
-            if (is_null($entity)) {
-                $this->nilai = new NilaiHarianEntity();
+    private function transactionBuilder($data, $row_data){
+        $skipped_count = 0;
+        $i = 2;
+        while ($i < count($row_data)){
+            if(is_null($row_data[$i]) || is_null($row_data[0]) || is_null($data[4][$i+1]) || is_null($data[5][$i+1]) || is_null($data[0][1]) || is_null($data[1][1])|| is_null($data[2][1])){
+                $skipped_count++;
             } else {
-                $this->nilai = $entity;
+                $trans_row = [];
+                $trans_row ['no_uh'] = $data[4][$i+1];
+                $trans_row ['kelas'] = $data[0][1];
+                $trans_row ['semester'] = $data[1][1];
+                $t_a = explode('/', $data[2][1]);
+                $trans_row ['tahun_ajaran'] = $t_a[0];
+                $trans_row ['nis'] = $row_data[0];
+                $tgl_arr = explode("-", $data[5][$i+1]);
+                $tgl = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+                $trans_row ['tanggal'] = $tgl;
+                $trans_row ['nilai'] = $row_data[$i];
+                $trans_row ['nilai_remidi'] = $row_data[$i+1];
+                $trans_row ['penguji'] = $data[3][1];
+                $this->transQuery($trans_row);
             }
-            $this->setData($data);
-            $this->nilai->generateId();
-            $this->em->persist($this->nilai);
-            $this->em->flush();
+            $i = $i+2;
         }
+        return $skipped_count;
+    }
+
+    private function transQuery($data){
+        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' .$data['tahun_ajaran'];
+        $entity = $this->em->find("NilaiHarianEntity", $id);
+        if (is_null($entity)) {
+            $this->nilai = new NilaiHarianEntity();
+        } else {
+            $this->nilai = $entity;
+        }
+        $this->setData($data);
+        $this->nilai->generateId();
+        $this->em->persist($this->nilai);
+        $this->em->flush();
     }
     
     public function generate($data, $file_name){

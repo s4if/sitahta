@@ -93,7 +93,7 @@ class SiswaRepository extends EntityRepository{
     
     public function getDataByKelas ($kelas) {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('s')
+        $qb->select(['s', 'k'])
             ->from('SiswaEntity', 's')
             ->innerJoin('s.kelas', 'k', Doctrine\ORM\Query\Expr\Join::WITH, 'k.id = :kelas')
             ->orderBy('s.nama', 'ASC')

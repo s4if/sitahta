@@ -50,13 +50,14 @@ class Nilai extends MY_Controller {
     
     public function lihat($kelas = 'X', $in_semester = 9) {
         $this->blockUnloggedOne();
+        $arr_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
         $data_kelas = [
-            0 => $this->siswa->getKelas($kelas, $this->session->tahun_ajaran)[0]
+            0 => empty($arr_kelas)? new KelasEntity(): $arr_kelas[0]
             ];
         $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
         $kelas_2 = array();
         if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
-            $kelas = $data_kelas[0]->getNamaKelas();
+            $kelas = empty($arr_kelas)? null :$data_kelas[0]->getNamaKelas();
             $kelas_2 = explode('-', $kelas);
         }  else {
             $kelas_2 = explode('-', $kelas);
@@ -79,9 +80,51 @@ class Nilai extends MY_Controller {
         $this->loadView('admin/nilai/lihat', $data);
     }
     
+    public function ajax_lihat($kelas = 'X', $in_semester = 9){
+        $this->blockUnloggedOne();
+        $arr_kelas = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $obj_kelas = empty($arr_kelas)? new KelasEntity(): $arr_kelas[0];
+        $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
+        $kelas_2 = array();
+        if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
+            $kelas = empty($arr_kelas)? null :$data_kelas[0]->getNamaKelas();
+            $kelas_2 = explode('-', $kelas);
+        }  else {
+            $kelas_2 = explode('-', $kelas);
+        }
+        $jml_uh = ($kelas_2 [0] == 'X')?20:15;
+        $arr_siswa = empty($obj_kelas->getSiswa())?[]:$obj_kelas->getSiswa();
+        $ajax_data = [];
+        foreach ($arr_siswa as $siswa){
+            $row = [];
+            $row[] = $siswa->getNis();
+            $row[] = $siswa->getNama();
+            for($i = 1; $i<=$jml_uh+2;$i++) {
+                $no_uh = NULL;
+                if($i<=$jml_uh) { $no_uh = $i; }
+                if($i==$jml_uh+1) { $no_uh = 'UTS'; }
+                if($i==$jml_uh+2) { $no_uh = 'UAS'; }
+                $row[] = $this->load->view('admin/nilai/fragment/nilai', [
+                    'siswa' => $siswa,
+                    'semester' => $semester,
+                    'no_uh' => $no_uh,
+                    'judul_kelas' => $kelas_2
+                ], true);
+                if(is_null($siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester)[0])){
+                    $row[] = '--';
+                } else {
+                    $data_nilai = $siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester)[0];
+                    $row[] = (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();
+                }
+            }
+            $ajax_data[] = $row;
+        }
+        echo json_encode(['data' => $ajax_data]);
+    }
+    
     public function tambah_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
-        $data_insert = $this->input->post(null, FALSEs);
+        $data_insert = $this->input->post(null, FALSE);
         $data_insert['nis'] = $nis;
         $tgl_arr = explode('-', $data_insert['tgl']);
         $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
@@ -97,6 +140,40 @@ class Nilai extends MY_Controller {
     }
 
     public function edit_nilai($kelas, $nis) {
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, false);
+        $data_insert['nis'] = $nis;
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+        $data_insert['penguji'] = $this->session->login_data->getNip();
+        $res = $this->nilai->updateData($data_insert);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Edit Data Berhasil!"]);
+            redirect('nilai/' . $kelas);
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Edit Data Gagal!"]);
+            redirect('nilai/' . $kelas);
+        }
+    }
+    
+    public function ajax_tambah_nilai($kelas, $nis) {
+        $this->blockUnloggedOne();
+        $data_insert = $this->input->post(null, FALSE);
+        $data_insert['nis'] = $nis;
+        $tgl_arr = explode('-', $data_insert['tgl']);
+        $data_insert['tanggal'] = $tgl_arr[2].'-'.$tgl_arr[1].'-'.$tgl_arr[0];
+        $data_insert['penguji'] = $this->session->login_data->getNip();
+        $res = $this->nilai->insertData($data_insert, TRUE);
+        if ($res >= 1) {
+            $this->session->set_flashdata("notices", [0 => "Tambah Data Berhasil!"]);
+            redirect('nilai/' . $kelas .'/'. $data_insert['semester']);
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Tambah Data Gagal!"]);
+            redirect('nilai/' . $kelas .'/'.$data_insert['semester']);
+        }
+    }
+
+    public function ajax_edit_nilai($kelas, $nis) {
         $this->blockUnloggedOne();
         $data_insert = $this->input->post(null, false);
         $data_insert['nis'] = $nis;

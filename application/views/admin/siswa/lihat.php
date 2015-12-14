@@ -186,7 +186,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('#tabel_utama').DataTable({
-            "order": [[ 1, "asc" ]]
+            "order": [[ 1, "asc" ]],
+            "pageLength" : 50
         } );
     } );
 </script>

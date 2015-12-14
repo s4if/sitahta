@@ -53,7 +53,10 @@
 <script src="<?=  base_url() ?>assets/js/user.js"></script>
 
 <script type="text/javascript">
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({
+        startView : 'year',
+        language : 'id-ID'
+    });
 </script>
 
 </body>

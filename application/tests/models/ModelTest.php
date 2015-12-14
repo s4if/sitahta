@@ -358,8 +358,9 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('nilai_remidi', $nilai4);
         $this->assertObjectHasAttribute('penguji', $nilai4);
         $this->assertEquals(0, $model->importData('assets/test/coba_nilai.xls'));
+        $this->assertEquals(0, $model->importData('assets/test/coba_nilai_incomplete.xls'));
         $this->assertEquals(-1, $model->importData('assets/test/coba_file_error.txt'));
-        $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
+//        $this->assertGreaterThan(0,$model->importData('assets/test/coba_nilai_error.xls'));
     }
 
     public function testModel_sertifikat() {
