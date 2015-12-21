@@ -71,7 +71,7 @@
         <tr>
             <td> TTL </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=date('d F Y', $siswa->getTgl_lahir()->getTimestamp())?> </td>
+            <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=  tgl_indo(date('Y m d', $siswa->getTgl_lahir()->getTimestamp()))?> </td>
         </tr>
         <tr>
             <td rowspan="5"> Kelas </td>
@@ -143,7 +143,7 @@
                 <?php foreach ($data_sertifikat as $sertifikat): ?>
                 <tr>
                 <td><?=$siswa->getNama();?></td>
-                <td><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                <td><?=  tgl_indo(date('Y m d', $sertifikat->getTgl_ujian()->getTimestamp()));?></td>
                 <td><?=$sertifikat->getTempat_ujian();?></td>
                 <td><?=$sertifikat->getJuz();?></td>
                 <td><?=$sertifikat->getNilai();?></td>
@@ -184,8 +184,6 @@
                         <td>Nilai Awal</td>
                         <td>Nilai Remidi</td>
                         <td>Nilai Akhir</td>
-                        <td>Tanggal</td>
-                        <td>Penguji</td>
                         <td>Keterangan</td>
                     </tr>
                 </thead>
@@ -213,8 +211,6 @@
                     <td><?=$nilai->getNilai()?></td>
                     <td><?php echo (is_null($nilai->getNilai_remidi())) ? '-' : $nilai->getNilai_remidi();?></td>
                     <td><?=$nilai->getNilai_akhir();?></td>
-                    <td><?=date('d F Y', $nilai->getTanggal()->getTimestamp());?></td>
-                    <td><?=$nilai->getPenguji()->getNama();?></td>
                     <td><?=$nilai->getKeterangan()?></td>
                     </tr>
                     <?php endforeach;?>

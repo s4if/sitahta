@@ -61,7 +61,7 @@
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownImport">
                 <li role="presentation">
-                    <a role="menuitem" data-toggle="modal" href="<?=base_url().'/admin/sertifikasi/template/'.$sertifikasi->getId();?>">
+                    <a role="menuitem" data-toggle="modal" href="<?=base_url().'admin/sertifikasi/template/'.$sertifikasi->getId();?>">
                         Buat Template
                     </a>
                 </li>
@@ -125,8 +125,7 @@
             <td><?= $peserta->getSiswa()->getJenis_kelamin();?></td>
             <?php
             $tmpt = ucwords($peserta->getSiswa()->getTempat_lahir());
-            $tgl = $peserta->getSiswa()->getTgl_lahir();
-            $tanggal = date("d F Y", $tgl->getTimestamp());
+            $tanggal = tgl_indo($peserta->getSiswa()->getTgl_lahir()->format("Y m d"));
             $ttl = $tmpt.", ".$tanggal;
             ?>
             <td><?= $ttl;?></td>

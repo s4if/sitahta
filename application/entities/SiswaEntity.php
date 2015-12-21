@@ -177,7 +177,7 @@ class SiswaEntity {
     public function getSertifikat() {
         return $this->sertifikat;
     }
-
+    
     public function setNis($nis) {
         $this->nis = $nis;
         return $this;

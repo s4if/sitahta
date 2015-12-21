@@ -79,7 +79,7 @@
             foreach ($data_sertifikasi as $sertifikasi):?>
             <tr>
             <td><?php echo $count++;?></td>
-            <td><?= $sertifikasi->getTanggal()->format("l, j F Y");?></td>
+            <td><?= hari_indo($sertifikasi->getTanggal()->format("N")).', '. tgl_indo($sertifikasi->getTanggal()->format("Y m d"));?></td>
             <td><?= $sertifikasi->getNama();?></td>
             <td><?= $sertifikasi->getTempat();?></td>
             <td><?= $sertifikasi->getKota();?></td>

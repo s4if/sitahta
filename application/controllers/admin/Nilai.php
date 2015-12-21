@@ -36,6 +36,7 @@ class Nilai extends MY_Controller {
         $this->load->model('model_siswa','siswa',TRUE);
         $this->load->model('model_nilai','nilai',TRUE);
         $this->load->model('model_sertifikat','sertifikat',TRUE);
+        $this->load->model('model_sertifikasi','sertifikasi',TRUE);
     }
     
     public function index(){
@@ -55,29 +56,36 @@ class Nilai extends MY_Controller {
             0 => empty($arr_kelas)? new KelasEntity(): $arr_kelas[0]
             ];
         $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
+        $list_kelas = [];
         $kelas_2 = array();
-        if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
+        $is_general = ($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII');
+        if($is_general){
             $kelas = empty($arr_kelas)? null :$data_kelas[0]->getNamaKelas();
             $kelas_2 = explode('-', $kelas);
+            $list_kelas = $arr_kelas;
         }  else {
             $kelas_2 = explode('-', $kelas);
+            $list_kelas = $this->siswa->getKelas($kelas_2[0], $this->session->tahun_ajaran);
         }
-        $list_kelas = $this->siswa->getKelas($kelas_2[0], $this->session->tahun_ajaran);
-        $data = [
-            'title' => 'Lihat Nilai',
-            'user' => ucwords($this->session->login_data->getNama()),
-            'position' => $this->session->position,
-            'nama' => $this->session->login_data->getNama(),
-            'nav_pos' => "nilai".$kelas_2[0],
-            'judul_kelas' => $kelas_2,
-            'tahun_ajaran' => $this->session->tahun_ajaran,
-            'edit' => $this->load->view("admin/nilai/edit", [], TRUE),
-            'semester' => $semester,
-            'id_kelas' => $kelas,
-            'list_kelas' => $list_kelas,
-            'data_kelas' => $data_kelas
-        ];
-        $this->loadView('admin/nilai/lihat', $data);
+        if(empty($arr_kelas) || !$is_general){
+            $data = [
+                'title' => 'Lihat Nilai',
+                'user' => ucwords($this->session->login_data->getNama()),
+                'position' => $this->session->position,
+                'nama' => $this->session->login_data->getNama(),
+                'nav_pos' => "nilai".$kelas_2[0],
+                'judul_kelas' => $kelas_2,
+                'tahun_ajaran' => $this->session->tahun_ajaran,
+                'edit' => $this->load->view("admin/nilai/edit", [], TRUE),
+                'semester' => $semester,
+                'id_kelas' => $kelas,
+                'list_kelas' => $list_kelas,
+                'data_kelas' => $data_kelas
+            ];
+            $this->loadView('admin/nilai/lihat', $data);
+        }  else {
+            redirect('nilai/'.$data_kelas[0]->getId().'/'.$semester);
+        }
     }
     
     public function ajax_lihat($kelas = 'X', $in_semester = 9){
@@ -87,44 +95,41 @@ class Nilai extends MY_Controller {
         $semester = ($in_semester == 1 || $in_semester == 2)? $in_semester : $this->session->semester;
         $kelas_2 = array();
         if($kelas == 'X' || $kelas == 'XI' || $kelas == 'XII'){
-            $kelas = empty($arr_kelas)? null :$data_kelas[0]->getNamaKelas();
+            $kelas = empty($arr_kelas)? null :$arr_kelas[0]->getNamaKelas();
             $kelas_2 = explode('-', $kelas);
         }  else {
             $kelas_2 = explode('-', $kelas);
         }
-        $jml_uh = ($kelas_2 [0] == 'X')?20:15;
         $arr_siswa = empty($obj_kelas->getSiswa())?[]:$obj_kelas->getSiswa();
+        $jml_uh = ($kelas_2 [0] == 'X')?20:15;
         $ajax_data = [];
         foreach ($arr_siswa as $siswa){
-            $row = [];
-            $row[] = $siswa->getNis();
-            $row[] = $siswa->getNama();
-            for($i = 1; $i<=$jml_uh+2;$i++) {
-                $no_uh = NULL;
-                if($i<=$jml_uh) { $no_uh = $i; }
-                if($i==$jml_uh+1) { $no_uh = 'UTS'; }
-                if($i==$jml_uh+2) { $no_uh = 'UAS'; }
-                $row[] = $this->load->view('admin/nilai/fragment/nilai', [
-                    'siswa' => $siswa,
-                    'semester' => $semester,
-                    'no_uh' => $no_uh,
-                    'judul_kelas' => $kelas_2
-                ], true);
-                if(is_null($siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester))){
-                    $row[] = '--';
-                } else {
-                    $data_nilai = $siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester);
-                    $row[] = (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();
-                }
-            }
-            $ajax_data[] = $row;
+            $ajax_data[] = $this->ajax_data($siswa, $semester, $kelas_2, $jml_uh);
         }
         echo json_encode(['data' => $ajax_data]);
     }
     
-    public function cek_siswa($nis = 947){
-        $siswa = $this->siswa->getData($nis);
-        var_dump($siswa->getNilaiByKelas('X', 1));
+    private function ajax_data($siswa, $semester, $kelas_2, $jml_uh){
+        $row[] = $siswa->getNis();
+        $row[] = $siswa->getNama();
+        for($i = 1; $i<=$jml_uh+2;$i++) {
+            $no_uh = NULL;
+            if($i<=$jml_uh) { $no_uh = $i; }
+            if($i==$jml_uh+1) { $no_uh = 'UTS'; }
+            if($i==$jml_uh+2) { $no_uh = 'UAS'; }
+            $row[] = $this->load->view('admin/nilai/fragment/nilai', [
+                'siswa' => $siswa,
+                'semester' => $semester,
+                'no_uh' => $no_uh,
+                'judul_kelas' => $kelas_2
+            ], true);
+            if(is_null($siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester))){
+                $row[] = '--';
+            } else {
+                $data_nilai = $siswa->getNilaiByUH($kelas_2[0], $no_uh, $semester);
+                $row[] = (is_null($data_nilai->getNilai_remidi()))?'--':$data_nilai->getNilai_remidi();
+            }
+        } return $row;
     }
     
     public function tambah_nilai($kelas, $nis) {
@@ -194,6 +199,17 @@ class Nilai extends MY_Controller {
             redirect('nilai/' . $kelas);
         }
     }
+    
+    public function ajax_hapus_nilai($nis, $kelas, $semester, $no_uh, $tahun) {
+        $this->blockUnloggedOne();
+        if ($this->nilai->deleteData(['nis' => $nis, 'no_uh' => $no_uh, 'kelas' => $kelas, 'semester' => $semester, 'tahun_ajaran' => $tahun])) {
+            $this->session->set_flashdata("notices", [0 => "Data telah berhasil dihapus"]);
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
+        } else {
+            $this->session->set_flashdata("errors", [0 => "Maaf, data tidak berhasil dihapus"]);
+            redirect('nilai/' . $kelas . '/' .$semester, 'refresh');
+        }
+    }
 
     public function hapus_nilai($nis, $kelas, $semester, $no_uh, $tahun) {
         $this->blockUnloggedOne();
@@ -239,9 +255,10 @@ class Nilai extends MY_Controller {
         
         $pdf = new mikehaertl\wkhtmlto\Pdf();
         $pdf->setOptions($this->pdfOption());
+        $data_sertifikat = $this->sertifikasi->getSertifikat($semester, $this->session->tahun_ajaran);
         foreach ($data_siswa as $siswa){
             $data['siswa'] = $siswa;
-            $data['data_sertifikat'] = $this->sertifikat->getDataBySemester($siswa->getNis(), $semester, $this->session->tahun_ajaran);
+            $data['data_sertifikat'] = (array_key_exists($siswa->getNis(), $data_sertifikat))?$data_sertifikat[$siswa->getNis()]:[];
             $html = $this->load->view('admin/nilai/raport', $data, TRUE);
             $pdf->addPage($html);
         }
@@ -257,9 +274,9 @@ class Nilai extends MY_Controller {
             'page-size' => 'A4',
             'dpi' => 96,
             'image-quality' => 100,
-            'margin-top' => '20mm',
+            'margin-top' => '25mm',
             'margin-right' => '20mm',
-            'margin-bottom' => '20mm',
+            'margin-bottom' => '25mm',
             'margin-left' => '20mm',
             'header-spacing' => 15,
             'footer-spacing' => 5,
@@ -271,7 +288,7 @@ class Nilai extends MY_Controller {
 
     public function template($kelas, $semester){
         $data = $this->input->post(null,true);
-        $data['data_kelas'] = $this->siswa->getKelas($kelas, $this->session->tahun_ajaran);
+        $data['id_kelas'] = $kelas;
         $data['pengampu'] = $this->session->login_data->getNip();
         $fileName = 'template nilai ('.$kelas.' Semester '.$semester.')';
         $this->nilai->generate($data, $fileName);

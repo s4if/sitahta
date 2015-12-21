@@ -137,8 +137,7 @@
             <td><?= $siswa->getJenis_kelamin();?></td>
             <?php
             $tmpt = ucwords($siswa->getTempat_lahir());
-            $tgl = $siswa->getTgl_lahir();
-            $tanggal = date("d F Y", $tgl->getTimestamp());
+            $tanggal = tgl_indo($siswa->getTgl_lahir()->format('Y m d'));
             $ttl = $tmpt.", ".$tanggal;
             ?>
             <td><?= $ttl;?></td>

@@ -65,7 +65,7 @@
                 <?php foreach ($data_sertifikat as $sertifikat): ?>
                 <tr>
                 <td><?=$siswa->getNama();?></td>
-                <td><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                <td><?=  tgl_indo(date('Y m d', $sertifikat->getTgl_ujian()->getTimestamp()));?></td>
                 <td><?=$sertifikat->getTempat_ujian();?></td>
                 <td><?=$sertifikat->getJuz();?></td>
                 <td><?=$sertifikat->getNilai();?></td>

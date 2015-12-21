@@ -21,4 +21,18 @@ class SertifikasiRepository extends EntityRepository {
             return $query->getSingleResult();
         }
     }
+    
+    public function getSertifikasiByDate($tgl_awal, $tgl_akhir){
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('i')
+                ->from('SertifikasiEntity', 'i')
+                ->andWhere($qb->expr()->between('i.tanggal', ':tgl_awal', ':tgl_akhir'))
+                ->setParameters([
+                    'tgl_awal' => DateTime::createFromFormat('d-m-Y', $tgl_awal),
+                    'tgl_akhir' => DateTime::createFromFormat('d-m-Y', $tgl_akhir)
+                ])
+                ->orderBy('i.tanggal', 'ASC');
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 }

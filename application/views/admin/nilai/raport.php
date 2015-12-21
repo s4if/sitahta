@@ -221,7 +221,7 @@ if ($arr_kelas[0] == 'X'){
                 </tr>
             </thead>
             <tbody>
-                <?php if (empty($data_sertifikat[$siswa->getNis()])): ?>
+                <?php if (empty($data_sertifikat)): ?>
                 <tr>
                 <td >&nbsp;</td>
                 <td ></td>
@@ -236,7 +236,7 @@ if ($arr_kelas[0] == 'X'){
                     ?>
                 <tr>
                     <td class="tengah"><?=$sertifikat_count;?></td>
-                <td ><?=date('d F Y', $sertifikat->getTgl_ujian()->getTimestamp());?></td>
+                    <td ><?=  tgl_indo($sertifikat->getTgl_ujian()->format('Y m d'));?></td>
                 <td ><?=$sertifikat->getJuz();?></td>
                 <td ><?=$sertifikat->getNilai();?></td>
                 <td ><?=$sertifikat->getPredikat();?></td>
@@ -256,7 +256,7 @@ if ($arr_kelas[0] == 'X'){
                 <?php
                 $date = new DateTime($tanggal_print);
                 ?>
-                <td style="width: 40%; text-align: center">Mungkid, <?php echo $date->format('j F Y');?></td>
+                <td style="width: 40%; text-align: center">Mungkid, <?php echo tgl_indo($date->format('Y m d'));?></td>
             </tr>
             <tr>
                 <td style="width: 40%; text-align: center">Orang Tua Siswa/Wali</td>

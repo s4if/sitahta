@@ -43,6 +43,23 @@ class Model_sertifikasi extends MY_Model {
         return $this->em->getRepository('SertifikasiEntity')->getData($id);
     }
     
+    public function getSertifikat($semester, $tahun_ajaran){
+        $bulan_awal = ($semester == 1)?'07':'01';
+        $bulan_akhir = ($semester == 1)?'12':'06';
+        $tahun_input = ($semester == 1)? (int)$tahun_ajaran: (int)$tahun_ajaran +1;
+        $tgl_awal = '1-'.$bulan_awal.'-'.$tahun_input;
+        $tgl_akhir = '31-'.$bulan_akhir.'-'.$tahun_input;
+        $data_sertifikasi = $this->em->getRepository('SertifikasiEntity')->getSertifikasiByDate($tgl_awal, $tgl_akhir);
+        $sertifikat = [];
+        foreach ($data_sertifikasi as $sertifikasi){
+            $data_peserta = $sertifikasi->getPeserta();
+            foreach ($data_peserta as $peserta){
+                $sertifikat[$peserta->getSiswa()->getNis()][] = $peserta->getSertifikat();
+            }
+        }
+        return $sertifikat;
+    }
+    
     public function insertData($data){
             $this->sertifikasi = new SertifikasiEntity();
             $this->setData($data);

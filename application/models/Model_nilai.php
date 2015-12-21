@@ -61,6 +61,10 @@ class Model_nilai extends MY_Model {
     public function getDataByKelas($kelas) {
         return $this->em->getRepository('NilaiHarianEntity')->getDataByKelas($kelas);
     }
+    
+    public function getKelas($id_kelas){
+        return $this->em->find('KelasEntity', $id_kelas);
+    }
 
     public function insertData($data) {
         $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
@@ -188,6 +192,7 @@ class Model_nilai extends MY_Model {
                 $failureCount++;
             }
         }
+        $this->em->flush();
         if(($failureCount > 0)){
             $this->em->getConnection()->rollback();
         }else{
@@ -256,7 +261,7 @@ class Model_nilai extends MY_Model {
         $this->setData($data);
         $this->nilai->generateId();
         $this->em->persist($this->nilai);
-        $this->em->flush();
+        //$this->em->flush();
     }
     
     public function generate($data, $file_name){
@@ -273,16 +278,12 @@ class Model_nilai extends MY_Model {
         $objPHPExcel->getActiveSheet()->SetCellValue('A7', 'NIS');
         $objPHPExcel->getActiveSheet()->SetCellValue('B7', 'Nama');
         $sis_count = 8;
-        foreach ($data['data_kelas'] as $kelas) {
-            if (!$kelas->getSiswa()->isEmpty()) {
-                $siswaRepo = $this->em->getRepository('SiswaEntity');
-                $siswa_di_kelas = $siswaRepo->getDataByKelas($kelas->getId());
-                foreach ($siswa_di_kelas as $siswa) {
-                    $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
-                    $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
-                    $sis_count++;
-                }
-            }
+        $kelas = $this->getKelas($data['id_kelas']);
+        $siswa_di_kelas = $kelas->getSiswa();
+        foreach ($siswa_di_kelas as $siswa) {
+            $objPHPExcel->getActiveSheet()->SetCellValue('A'.$sis_count, $siswa->getNis());
+            $objPHPExcel->getActiveSheet()->SetCellValue('B'.$sis_count, $siswa->getNama());
+            $sis_count++;
         }
         $kolom_uh = 2;
         $id_uh = 0;

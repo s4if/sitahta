@@ -68,7 +68,7 @@
         <tr>
             <td> TTL </td>
             <td> &nbsp;:&nbsp; </td>
-            <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=date('d F Y', $siswa->getTgl_lahir()->getTimestamp())?> </td>
+            <td> <?=ucwords($siswa->getTempat_lahir())?>, <?=  tgl_indo(date('Y m d', $siswa->getTgl_lahir()->getTimestamp()))?> </td>
         </tr>
         <tr>
             <td rowspan="4"> Kelas </td>
