@@ -85,7 +85,6 @@
     &nbsp;
 </div>
 <div class="col-md-12">
-<div class="table-responsive">
     <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
             <tr>
@@ -122,10 +121,11 @@
         </tbody>
     </table>
 </div>
-</div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tabel_utama').DataTable();
+        $('#tabel_utama').DataTable({
+            "scrollX": true,            
+        });
     } );
 </script>
 <?=$edit?>

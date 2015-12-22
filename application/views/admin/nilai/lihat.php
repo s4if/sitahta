@@ -247,7 +247,6 @@
               overflow-x: scroll;
         }
   </style>
-<div class="fixed-panel">
 <div class="table">
     <table class="table table-striped table-bordered table-condensed" id="tabel_utama">
         <thead>
@@ -274,12 +273,13 @@
     </table>
 </div>
 </div>
-</div>
 <script type="text/javascript">
+    var table;
     $(function() {
-        $('#tabel_utama').DataTable({
+        table = $('#tabel_utama').DataTable({
             "order": [[ 1, "asc" ]],
-            "pageLength" : 50,
+            "pageLength" : 25,
+            "scrollX": true,
             "ajax": {
                 "url": "<?php echo base_url().'admin/nilai/ajax_lihat/'.$id_kelas.'/'.$semester?>",
                 "type": "POST"
@@ -346,5 +346,111 @@
             $(this).parent('div').parent('div').remove(); x--;
         });
     });
+    function save()
+    {
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.btn-save').text('Menyimpan...'); //change button text
+        $('.btn-save').attr('disabled',true); //set button disable 
+        var url;
+
+        url = $('#form-edit').prop('action');
+
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form-edit').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                if(data.status) //if success close modal and reload ajax table
+                {
+                    $('#alert-div').empty();
+                    $('#alert-div').prepend('<div class="alert alert-success alert-dismissible">'+
+                        '<button type="button" class="close" data-dismiss="alert"><p>'+
+                        '<span aria-hidden="true">&times;</span><span class="sr-only">'+
+                        'Close</span></button>'+
+                        '<p>Data Berhasil Disimpan</p>'+
+                        '</div>'
+                    );
+                    table.ajax.reload(null,false);
+                }
+                else
+                {
+                    $('#alert-div').empty();
+                    $('#alert-div').append('<div class="alert alert-warning alert-dismissible">'+
+                        '<button type="button" class="close" data-dismiss="alert"><p>'+
+                        '<span aria-hidden="true">&times;</span><span class="sr-only">'+
+                        'Close</span></button>'+
+                        '<p>Maaf Penyimpanan Data Gagal</p>'+
+                        '</div>'
+                    );
+                }
+                $('#form-modal').modal('hide');
+                $('.btn-save').text('OK'); //change button text
+                $('.btn-save').attr('disabled',false); //set button enable 
+
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+                $('.btn-save').text('OK'); //change button text
+                $('.btn-save').attr('disabled',false); //set button enable 
+
+            }
+        });
+    }
+    
+    function hapus()
+    {
+        $('.form-group').removeClass('has-error'); // clear error class
+        $('.btn-save').text('Menyimpan...'); //change button text
+        $('.btn-save').attr('disabled',true); //set button disable 
+        var url;
+
+        url = $('#btn-del-ok').prop('href');
+
+        // ajax adding delete data
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form-edit').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                if(data.status) //if success close modal and reload ajax table
+                {
+                    $('#alert-div').prepend('<div class="alert alert-success alert-dismissible">'+
+                        '<button type="button" class="close" data-dismiss="alert"><p>'+
+                        '<span aria-hidden="true">&times;</span><span class="sr-only">'+
+                        'Close</span></button>'+
+                        '<p>Data Berhasil Dihaous</p>'+
+                        '</div>'
+                    );
+                    table.ajax.reload(null,false);
+                }
+                else
+                {
+                    $('#alert-div').append('<div class="alert alert-warning alert-dismissible">'+
+                        '<button type="button" class="close" data-dismiss="alert"><p>'+
+                        '<span aria-hidden="true">&times;</span><span class="sr-only">'+
+                        'Close</span></button>'+
+                        '<p>Maaf Penyimpanan Data Gagal</p>'+
+                        '</div>'
+                    );
+                }
+                $('#form-modal').modal('hide');
+                $('#delete-modal').modal('hide');
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error delete data');
+            }
+        });
+    }
 </script>
 <?= $edit;?>
