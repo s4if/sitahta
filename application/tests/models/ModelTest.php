@@ -269,7 +269,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('surat_akhir', $model->getData($id));
         $this->assertObjectHasAttribute('ayat_akhir', $model->getData($id));
         $mod_array = $model->getData();
-        $this->assertObjectHasAttribute('id', $mod_array[0]);
+        //$this->assertObjectHasAttribute('id', $mod_array[0]);
     }
 
     public function testModel_nilai() {

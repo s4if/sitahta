@@ -270,6 +270,39 @@ class Nilai extends MY_Controller {
         }
     }
     
+    public function raport_uts(){
+        $this->blockUnloggedOne();
+        $id_kelas = $this->input->post('kelas');
+        $semester = $this->input->post('semester');
+        $uh_terakhir = $this->input->post('uh_terakhir');
+        $data_kelas = $this->siswa->getKelas($id_kelas, $this->session->tahun_ajaran)[0];
+        $data_siswa = $this->siswa->getDataByKelas($data_kelas);
+        $data = [
+            'title' => 'Raport Tahta',
+            'tahun_ajaran' => $this->session->tahun_ajaran,
+            'semester' => $semester,
+            'id_kelas' => $id_kelas,
+            'kelas' => $data_kelas,
+            'uh_terakhir' => $uh_terakhir,
+            'tanggal_print' => $this->input->post('tanggal')
+        ];
+        
+        $pdf = new mikehaertl\wkhtmlto\Pdf();
+        $pdf->setOptions($this->pdfOption());
+        $data_sertifikat = $this->sertifikasi->getSertifikat($semester, $this->session->tahun_ajaran);
+        foreach ($data_siswa as $siswa){
+            $data['siswa'] = $siswa;
+            $data['data_sertifikat'] = (array_key_exists($siswa->getNis(), $data_sertifikat))?$data_sertifikat[$siswa->getNis()]:[];
+            $html = $this->load->view('admin/nilai/raport_uts', $data, TRUE);
+            $pdf->addPage($html);
+        }
+        
+        //real output
+        if (!$pdf->send('Rapor UTS '.$id_kelas.'.pdf')) {
+            echo $pdf->getError();
+        }
+    }
+    
     private  function pdfOption(){
         $options = [
             'page-size' => 'A4',

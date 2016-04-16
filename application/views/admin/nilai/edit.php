@@ -66,14 +66,14 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai :</label>
                         <div class="col-sm-8">
-                            <input id="input_nilai" type="number" class="form-control" name="nilai" 
+                            <input id="input_nilai" type="number" class="form-control input_nilai" name="nilai" 
                                    placeholder="Masukkan Nilai" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Nilai Remidi :</label>
                         <div class="col-sm-8">
-                            <input id="nilai_remidi" type="number" class="form-control" name="nilai_remidi"
+                            <input id="nilai_remidi" type="number" class="form-control nilai_remidi" name="nilai_remidi"
                                    placeholder="Kosongkan jika tidak perlu" value="">
                         </div>
                     </div>

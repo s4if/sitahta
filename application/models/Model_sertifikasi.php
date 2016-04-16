@@ -119,12 +119,20 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function addPeserta($data){
+        try {
             $this->peserta = new PesertaEntity();
-            $this->setDataPeserta($data);
-            $this->peserta->generateId();
-            $this->em->persist($this->peserta);
-            $this->em->flush();
-            return true;
+            if($data['juz'] <=30 && $data['juz'] > 0){
+                $this->setDataPeserta($data);
+                $this->peserta->generateId();
+                $this->em->persist($this->peserta);
+                $this->em->flush();
+                return true;
+            } else {
+                return FALSE;
+            }
+        } catch (Doctrine\ORM\ORMException $exc) {
+            return false;
+        }
     }
     
     public function removePeserta($where){
@@ -139,13 +147,17 @@ class Model_sertifikasi extends MY_Model {
     }
     
     public function updatePeserta($data){
-        $this->peserta = $this->em->find("PesertaEntity", $data['id']);
-        if(!is_null($this->peserta)){
-            $this->setDataPeserta($data);
-            $this->em->persist($this->peserta);
-            $this->em->flush();
-            return true;
-        }else{
+        try {
+            $this->peserta = $this->em->find("PesertaEntity", $data['id']);
+            if(!is_null($this->peserta) && $data['juz'] <=30 && $data['juz'] > 0){
+                $this->setDataPeserta($data);
+                $this->em->persist($this->peserta);
+                $this->em->flush();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Doctrine\ORM\ORMException $exc) {
             return false;
         }
     }

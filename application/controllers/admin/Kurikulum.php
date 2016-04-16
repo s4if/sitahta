@@ -132,10 +132,10 @@ class Kurikulum extends MY_Controller {
         $res = $this->kurikulum->updateData($data_insert, 'kurikulum');
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
-            redirect('kurikulum/'.$kelas);
+            redirect('kurikulum/'.$kelas.'/'.$semester);
         } else {
             $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
-            redirect('kurikulum/'.$kelas);
+            redirect('kurikulum/'.$kelas.'/'.$semester);
         }
     }
     
@@ -148,10 +148,10 @@ class Kurikulum extends MY_Controller {
         $res = $this->kurikulum->resetData($data_insert, 'kurikulum');
         if($res >= 1){
             $this->session->set_flashdata("notices",[0 => "Edit Data Berhasil!"]);
-            redirect('kurikulum/'.$kelas);
+            redirect('kurikulum/'.$kelas.'/'.$semester);
         } else {
             $this->session->set_flashdata("errors",[0 => "Edit Data Gagal!"]);
-            redirect('kurikulum/'.$kelas);
+            redirect('kurikulum/'.$kelas.'/'.$semester);
         }
     }
     

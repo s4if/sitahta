@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<skipper version="3.2.5.1283" mvc="Without MVC" orm="Doctrine2" name="Sitahta" uuid="5262ff22-b73a-4a07-b1ba-010385c47779">
+  <module name="\application/entities" local-name="application/entities" namespace="\" export-format="Doctrine2Php" export-path="application/entities" uuid="630a6e2e-5cf8-4f53-b56e-790cc931e1f6">
+    <entity name="\GuruEntity" local-name="GuruEntity" namespace="\" uuid="a7d35efe-0564-4f1d-a136-331b06ff627f">
+      <field name="nip" type="integer" required="true" primary="true" uuid="6b5ea01c-cf99-4d71-a946-088eecf03ff9">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="nama" type="string" size="40" uuid="dcaf70fe-17b7-4e0d-bfec-afcceb675692"/>
+      <field name="jenis_kelamin" type="string" size="2" required="true" uuid="8d9cc101-0cd6-4dc6-8251-dda989ca9bf4">
+        <orm-attributes>
+          <attribute name="column">jenis_kelamin</attribute>
+        </orm-attributes>
+      </field>
+      <field name="alamat" type="string" uuid="6cbaea6b-134c-4fd8-a68f-d575d6849834"/>
+      <field name="email" type="string" size="40" uuid="f40b6bfd-5b19-4188-949e-4394e28af6fa"/>
+      <field name="no_telp" type="string" size="14" uuid="922f2098-48df-4932-9029-ad02954cd1e4">
+        <orm-attributes>
+          <attribute name="column">no_telp</attribute>
+        </orm-attributes>
+      </field>
+      <field name="password" type="string" required="true" uuid="8e33069a-ff0d-4a0d-b97c-a1939106127d"/>
+      <field name="kewenangan" type="string" size="8" required="true" uuid="2bf6557c-e695-41dd-bf94-358be70b3bc6"/>
+      <orm-attributes>
+        <attribute name="repository-class">GuruRepository</attribute>
+        <attribute name="table">guru</attribute>
+        <attribute name="export-file-name">GuruEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\KelasEntity" local-name="KelasEntity" namespace="\" uuid="d973d677-f925-40d5-83ea-7e59f0f93356">
+      <field name="id" type="string" required="true" primary="true" uuid="d5850fce-ab68-45af-b6dd-799b72d58e17">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="kelas" type="string" size="4" required="true" uuid="de2af65f-c9f1-4596-9a84-f538a454f64e"/>
+      <field name="jurusan" type="string" size="10" required="true" uuid="99ea5d08-5c15-4d69-8519-40f064997a3f"/>
+      <field name="no_kelas" type="integer" required="true" uuid="9562d875-efa2-484f-8b36-32a280d02f66"/>
+      <field name="tahun_ajaran" type="string" size="10" required="true" uuid="a03dc8cb-0063-4bad-9b77-ac82d8c3b229"/>
+      <orm-attributes>
+        <attribute name="repository-class">KelasRepository</attribute>
+        <attribute name="table">kelas</attribute>
+        <attribute name="export-file-name">KelasEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\KurikulumEntity" local-name="KurikulumEntity" namespace="\" uuid="cfea1f24-cdea-4ba8-b169-ec792069a44a">
+      <field name="id" type="string" required="true" primary="true" uuid="86c5563b-3c84-4cd5-a2ff-5c97c20142b7">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="no_uh" type="string" required="true" uuid="f4fb79f2-1ed7-41ae-b829-7d5664236bfa"/>
+      <field name="kelas" type="string" size="4" required="true" uuid="e45b6947-8c2b-4dc8-853b-aa524a360177"/>
+      <field name="semester" type="integer" required="true" uuid="92515409-bc40-4871-85a2-79c55157c0e4"/>
+      <field name="tahun" type="string" size="9" required="true" uuid="f50ac867-fb78-4aac-aa19-78000a34e4eb"/>
+      <field name="juz" type="integer" uuid="0b611d60-698f-4d5e-a4a4-cdf4956af8d6"/>
+      <field name="surat_awal" type="string" size="100" uuid="8d30ed63-e817-4143-be93-716be05706a7"/>
+      <field name="ayat_awal" type="integer" uuid="3772b570-8331-4ad6-a43e-de1e3a55cc97"/>
+      <field name="surat_akhir" type="string" size="100" uuid="c3a0c183-5b2c-45c7-b7df-ac86f828d4d7"/>
+      <field name="ayat_akhir" type="integer" uuid="796a7300-9c9e-418a-98eb-d580886a7490"/>
+      <orm-attributes>
+        <attribute name="repository-class">KurikulumRepository</attribute>
+        <attribute name="table">kurikulum</attribute>
+        <attribute name="export-file-name">KurikulumEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\NilaiHarianEntity" local-name="NilaiHarianEntity" namespace="\" uuid="62fbf62e-150c-4196-924b-cedaa7cd70b3">
+      <field name="id" type="string" required="true" primary="true" uuid="6fecc079-7619-41cc-81e5-294ccf5a0d5b">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="no_uh" type="string" size="6" required="true" uuid="b1b15065-4de1-4720-a22a-4bc3da751da3"/>
+      <field name="kelas" type="string" size="4" required="true" uuid="5fdbd3af-2c00-47ae-8a70-2706039cdb1b"/>
+      <field name="semester" type="integer" required="true" uuid="283dd9ac-f467-4bf9-a621-d017a4b6ca89"/>
+      <field name="tahun" type="string" size="4" required="true" uuid="9cb78426-4f16-447b-8df5-befd7111069e"/>
+      <field name="tanggal" type="date" required="true" uuid="ba0c5d76-31cf-436c-80d9-c3602f93dc1e"/>
+      <field name="nilai" type="integer" uuid="de2ff220-cc31-454d-91b0-1dd63f80e9d4"/>
+      <field name="nilai_remidi" type="integer" uuid="c21af997-7b17-4f63-94c8-9663eb5ca170"/>
+      <field name="kurikulum_id" required="true" uuid="ecbcf673-1e3f-44c6-9f85-6bf113f8b5ed"/>
+      <field name="siswa" required="true" uuid="beb2f31b-2d92-4a5b-8a36-03a3eead5421"/>
+      <field name="penguji" uuid="9c833fa5-612a-42c2-8d77-a1f3a67b3728"/>
+      <orm-attributes>
+        <attribute name="repository-class">NilaiHarianRepository</attribute>
+        <attribute name="table">nilai_harian</attribute>
+        <attribute name="export-file-name">NilaiHarianEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\NilaiHarianEntity" to="\KurikulumEntity" owner-alias="" inverse-alias="meta" many-owner="true" many-inverse="false" parent-required="true" uuid="db1c7185-dfdc-46cc-b348-d25081addbc0">
+      <association-field from="kurikulum_id" to="id"/>
+      <orm-attributes>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\NilaiHarianEntity" to="\SiswaEntity" owner-alias="nilai" inverse-alias="siswa" many-owner="true" many-inverse="false" parent-required="true" uuid="b9eb7718-cad1-40c2-9817-cd64b3d7f520">
+      <association-field from="siswa" to="nis"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse">
+          <attribute name="cascade">
+            <attribute name="cascade-persist">true</attribute>
+            <attribute name="cascade-remove">true</attribute>
+          </attribute>
+          <attribute name="fetch">EAGER</attribute>
+        </attribute>
+      </orm-attributes>
+    </association>
+    <association from="\NilaiHarianEntity" to="\GuruEntity" owner-alias="" inverse-alias="penguji" many-owner="true" many-inverse="false" uuid="95a9fddb-763e-473c-b77b-67b6109642fa">
+      <association-field from="penguji" to="nip"/>
+      <orm-attributes>
+        <attribute name="on-delete">SET NULL</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\PesertaEntity" local-name="PesertaEntity" namespace="\" uuid="8c0949b8-3ccc-4a74-adbc-a0347e84ea43">
+      <field name="id" type="string" required="true" primary="true" uuid="a803acfb-0741-48ba-ba29-2d186a78e331">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="juz" type="integer" required="true" uuid="83a9a3de-675f-4f49-8405-43e4d52c7b73"/>
+      <field name="nilai" type="integer" uuid="7a75a7d4-6488-4914-92cb-94c3f1466079"/>
+      <field name="sertifikat_id" unique="true" uuid="f1b74240-dae9-4872-ae0a-717797a75bf8"/>
+      <field name="sertifikasi_id" required="true" uuid="ebaf40d7-2579-4597-9567-c7457ab79f92"/>
+      <field name="siswa_nis" required="true" uuid="e53815cf-a9c5-4d83-9659-ce68ff87ab76"/>
+      <orm-attributes>
+        <attribute name="table">peserta_sertifikasi</attribute>
+        <attribute name="export-file-name">PesertaEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\PesertaEntity" to="\SertifikatEntity" owner-alias="" inverse-alias="sertifikat" many-owner="false" many-inverse="false" uuid="1ecf75dc-3240-4b7d-86c1-2b17589c3a52">
+      <association-field from="sertifikat_id" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">SET NULL</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <association from="\PesertaEntity" to="\SertifikasiEntity" owner-alias="peserta" inverse-alias="sertifikasi" many-owner="true" many-inverse="false" parent-required="true" uuid="bfff223f-36f5-419c-af9d-ed4cfe6e3dbc">
+      <association-field from="sertifikasi_id" to="id"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse">
+          <attribute name="cascade">
+            <attribute name="cascade-persist">true</attribute>
+            <attribute name="cascade-remove">true</attribute>
+          </attribute>
+        </attribute>
+      </orm-attributes>
+    </association>
+    <association from="\PesertaEntity" to="\SiswaEntity" owner-alias="" inverse-alias="siswa" many-owner="true" many-inverse="false" parent-required="true" uuid="40ae0425-4267-4062-89b1-e3324ebc67dc">
+      <association-field from="siswa_nis" to="nis"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse"/>
+      </orm-attributes>
+    </association>
+    <entity name="\SertifikasiEntity" local-name="SertifikasiEntity" namespace="\" uuid="268c5627-7950-4cab-81ff-67d628b3a686">
+      <field name="id" type="integer" required="true" primary="true" uuid="c666ca5e-be62-4031-b22b-047a8f145679">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">AUTO</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="nama" type="string" size="30" required="true" uuid="53490a7c-c202-457d-aa70-ad509c398225"/>
+      <field name="tahun_ajaran" type="string" size="10" required="true" uuid="d3d3afe3-4b78-4e44-a07b-68124b522269"/>
+      <field name="tanggal" type="date" required="true" uuid="3198228c-5fd4-4c17-a55b-927635dc46c5"/>
+      <field name="tempat" type="string" size="120" required="true" uuid="79cfbac5-e77c-41c1-9990-9acdc1361fe2"/>
+      <field name="kota" type="string" size="40" required="true" uuid="12d208ac-2906-4149-ab50-25afac56c999"/>
+      <orm-attributes>
+        <attribute name="repository-class">SertifikasiRepository</attribute>
+        <attribute name="table">sertifikasi</attribute>
+        <attribute name="export-file-name">SertifikasiEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\SertifikatEntity" local-name="SertifikatEntity" namespace="\" uuid="c93c4667-7c4a-4493-b452-b7362b945c43">
+      <field name="id" type="string" required="true" primary="true" uuid="8f7b0d58-3a99-4d62-bf34-544523c648f8">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="tempat_ujian" type="string" uuid="591aafde-1ec5-4bbc-8766-6e0d704341bc"/>
+      <field name="tgl_ujian" type="date" required="true" uuid="d76e4343-e296-4867-9f39-eead26ddc502"/>
+      <field name="juz" type="integer" required="true" uuid="5abf4ed8-c9e6-430f-b45d-1ce3aee1a649"/>
+      <field name="nilai" type="integer" required="true" uuid="5be71e4b-a217-42ff-9a58-59e501f95b9e"/>
+      <field name="keterangan" type="string" uuid="881843aa-711f-4085-ab26-a7abc7ba32fe"/>
+      <field name="siswa" required="true" uuid="c9aa55b4-6659-4cd9-9666-098e6c895901"/>
+      <orm-attributes>
+        <attribute name="repository-class">SertifikatRepository</attribute>
+        <attribute name="table">sertifikat</attribute>
+        <attribute name="export-file-name">SertifikatEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <association from="\SertifikatEntity" to="\SiswaEntity" owner-alias="sertifikat" inverse-alias="siswa" many-owner="true" many-inverse="false" parent-required="true" uuid="1702831d-5454-4fc3-9c37-488179543ed4">
+      <association-field from="siswa" to="nis"/>
+      <orm-attributes>
+        <attribute name="on-delete">CASCADE</attribute>
+        <attribute name="side-owning"/>
+        <attribute name="side-inverse">
+          <attribute name="cascade">
+            <attribute name="cascade-persist">true</attribute>
+            <attribute name="cascade-remove">true</attribute>
+          </attribute>
+        </attribute>
+      </orm-attributes>
+    </association>
+    <entity name="\SiswaEntity" local-name="SiswaEntity" namespace="\" uuid="50670a44-969b-464a-bfe5-483f5f2c14c8">
+      <field name="nis" type="integer" required="true" primary="true" uuid="7d1c07f5-a09a-4076-8c50-30e55ae9b5cd">
+        <orm-attributes>
+          <attribute name="generator">
+            <attribute name="strategy">NONE</attribute>
+          </attribute>
+        </orm-attributes>
+      </field>
+      <field name="nama" type="string" required="true" uuid="6d1ad4c1-676a-43e5-9f00-35615e87c6cb"/>
+      <field name="jenis_kelamin" type="string" size="2" required="true" uuid="cad18e8b-e741-4d1c-bca7-4206d8ecbb63">
+        <orm-attributes>
+          <attribute name="column">jenis_kelamin</attribute>
+        </orm-attributes>
+      </field>
+      <field name="tempat_lahir" type="string" required="true" uuid="36285046-6793-4c5e-9b86-eb4ee74a83d4"/>
+      <field name="tgl_lahir" type="date" required="true" uuid="f5902672-7896-4528-92a3-5398b74b88e9"/>
+      <field name="X_absen" type="integer" uuid="4cf3c74a-8132-4608-b8c9-dd1dd1ab40d8"/>
+      <field name="XI_absen" type="integer" uuid="c625bf91-46b8-4710-a80b-48a9efb00840"/>
+      <field name="XII_absen" type="integer" uuid="a03b94de-0b7e-4c4c-b004-26e153eaddf6"/>
+      <field name="password" type="string" required="true" uuid="a5a21b77-c054-452c-a129-de470b7f098e"/>
+      <field name="nama_ortu" type="string" uuid="4534ec82-02f2-4ed4-b427-ea2d55aecb67"/>
+      <orm-attributes>
+        <attribute name="repository-class">SiswaRepository</attribute>
+        <attribute name="table">siswa</attribute>
+        <attribute name="export-file-name">SiswaEntity.php</attribute>
+      </orm-attributes>
+    </entity>
+    <entity name="\list_kelas" local-name="list_kelas" namespace="\" uuid="409c9583-d24d-44b3-8a7b-e34554a0fc75">
+      <field name="id" type="integer" required="true" unique="true" primary="true" uuid="4ad07742-8fef-49d7-b165-0590b227181d"/>
+      <field name="siswa_nis" uuid="346868a2-5cf9-4b55-aad8-4de737073ba9"/>
+      <field name="kelas_id" uuid="7cd8c578-7c7d-4991-8547-1d658e38561b"/>
+    </entity>
+    <many-to-many mn-entity="\list_kelas" uuid="ad6b367a-3593-40a1-85a1-d2f084d267b2">
+      <many-to-many-entity name="\SiswaEntity" owning-side="true" alias="siswa" uuid="af4cd271-9644-49a1-bd5c-6440686a0049">
+        <many-to-many-field from="siswa_nis" to="nis"/>
+      </many-to-many-entity>
+      <many-to-many-entity name="\KelasEntity" owning-side="false" alias="kelas" uuid="ef3361f1-ea7e-4d46-a401-e1e15c062a84">
+        <many-to-many-field from="kelas_id" to="id"/>
+      </many-to-many-entity>
+    </many-to-many>
+  </module>
+  <visual-data>
+    <association uuid="1702831d-5454-4fc3-9c37-488179543ed4" color="#CDC32B"/>
+    <association uuid="1ecf75dc-3240-4b7d-86c1-2b17589c3a52" color="#A8A8A8"/>
+    <association uuid="40ae0425-4267-4062-89b1-e3324ebc67dc" color="#61D351"/>
+    <association uuid="95a9fddb-763e-473c-b77b-67b6109642fa" color="#00B4D0"/>
+    <association uuid="b9eb7718-cad1-40c2-9817-cd64b3d7f520" color="#2E63AF"/>
+    <association uuid="bfff223f-36f5-419c-af9d-ed4cfe6e3dbc" color="#0A783D"/>
+    <association uuid="db1c7185-dfdc-46cc-b348-d25081addbc0" color="#8A54A2"/>
+    <entity uuid="268c5627-7950-4cab-81ff-67d628b3a686" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="346" position-y="251" size-x="0" size-x2="123" size-y="0" size-y2="101"/>
+    <entity uuid="409c9583-d24d-44b3-8a7b-e34554a0fc75" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="374" position-y="462" size-x="0" size-x2="67" size-y="0" size-y2="59"/>
+    <entity uuid="50670a44-969b-464a-bfe5-483f5f2c14c8" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="184" position-y="462" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
+    <entity uuid="62fbf62e-150c-4196-924b-cedaa7cd70b3" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="29" position-y="251" size-x="0" size-x2="105" size-y="0" size-y2="171"/>
+    <entity uuid="8c0949b8-3ccc-4a74-adbc-a0347e84ea43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="206" position-y="251" size-x="0" size-x2="76" size-y="0" size-y2="101"/>
+    <entity uuid="a7d35efe-0564-4f1d-a136-331b06ff627f" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="21" position-y="40" size-x="0" size-x2="120" size-y="0" size-y2="129"/>
+    <entity uuid="c93c4667-7c4a-4493-b452-b7362b945c43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="28" position-y="462" size-x="0" size-x2="106" size-y="0" size-y2="115"/>
+    <entity uuid="cfea1f24-cdea-4ba8-b169-ec792069a44a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="347" position-y="40" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
+    <entity uuid="d973d677-f925-40d5-83ea-7e59f0f93356" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="183" position-y="40" size-x="0" size-x2="123" size-y="0" size-y2="87"/>
+    <many-to-many-association uuid="ad6b367a-3593-40a1-85a1-d2f084d267b2" color="#F4931F"/>
+    <module uuid="630a6e2e-5cf8-4f53-b56e-790cc931e1f6" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="489" size-y="0" size-y2="653"/>
+    <project uuid="5262ff22-b73a-4a07-b1ba-010385c47779" size-x="0" size-x2="589" size-y="0" size-y2="753"/>
+  </visual-data>
+</skipper>

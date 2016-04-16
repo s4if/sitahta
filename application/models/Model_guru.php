@@ -129,6 +129,11 @@ class Model_guru extends MY_Model{
                 break;
             }
         }
+        if(($row_data[2] == 'L'||$row_data[2] == 'P'||$row_data[2] == 'l'||$row_data[2] == 'p')){
+            $cellValid = true;
+        } else {
+            $cellValid = false;
+        }
         return $cellValid;
     }
     

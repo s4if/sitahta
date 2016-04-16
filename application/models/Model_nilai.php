@@ -68,7 +68,7 @@ class Model_nilai extends MY_Model {
 
     public function insertData($data) {
         $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
-        if (is_null($this->em->find("NilaiHarianEntity", $id))) {
+        if (is_null($this->em->find("NilaiHarianEntity", $id)) || $data['nilai'] < 100 || $data['nilai_remidi'] < 100) {
             $this->nilai = new NilaiHarianEntity();
             $data_ok = $this->setData($data);
             if($data_ok){

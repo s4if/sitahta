@@ -171,10 +171,29 @@
                 </div>
             </div>
         </div>
-        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#cetakRaport">
+        <div class="btn-group"role="group">
+            <button class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <span class="glyphicon glyphicon-time"></span>
+                Cetak PDF
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" data-target="#cetakRaportUts">
+                        UTS
+                    </a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" data-toggle="modal" data-target="#cetakRaport">
+                        UAS
+                    </a>
+                </li>
+            </ul>
+        </div>
+<!--        <a class="btn btn-default btn-sm" data-toggle="modal" data-target="#cetakRaport">
             <span class="glyphicon glyphicon-download-alt"></span>
             Cetak PDF
-        </a>
+        </a>-->
         <div class="modal fade" id="cetakRaport" tabindex="-1" role="dialog" aria-labelledby="cetakRaport" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -207,6 +226,60 @@
                                 <label class="col-sm-3 control-label">Tanggal :</label>
                                 <div class="col-sm-6">
                                     <input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button type="submit" class="btn btn-sm btn-primary">OK</button>
+                                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
+                                </div>
+                            </div>
+                        </form>  
+                    </div>
+                    <div class="modal-footer">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="cetakRaportUts" tabindex="-1" role="dialog" aria-labelledby="cetakRaportUts" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title text-center">Cetak Raport</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" method="post" action="<?=base_url();?>admin/nilai/raport_uts">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Kelas :</label>
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="kelas">
+                                        <?php foreach ($list_kelas as $item_kelas) :?>
+                                        <option value='<?=$item_kelas->getId()?>' ><?=$item_kelas->getNamaKelas()?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Semester :</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="semester">
+                                        <option value='1' >1</option>
+                                        <option value='2' >2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Tanggal :</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control datepicker" type="text" data-date-format="dd-mm-yyyy" name="tanggal">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">UH Terakhir :</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="number" name="uh_terakhir">
                                 </div>
                             </div>
                             <div class="form-group">
