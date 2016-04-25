@@ -69,7 +69,7 @@ class Model_nilai extends MY_Model {
     public function insertData($data) {
         try {
             $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
-            if (is_null($this->em->find("NilaiHarianEntity", $id)) || $data['nilai'] < 100 || $data['nilai_remidi'] < 100) {
+            if (is_null($this->em->find("NilaiHarianEntity", $id)) && $data['nilai'] < 100 && $data['nilai_remidi'] < 100) {
                 $this->nilai = new NilaiHarianEntity();
                 $data_ok = $this->setData($data);
                 if($data_ok){
@@ -85,13 +85,11 @@ class Model_nilai extends MY_Model {
         } catch (Doctrine\DBAL\DBALException $exc) {
             return false;
         }
-
-        
     }
 
     public function updateData($data) {
         $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
-        if (!is_null($this->em->find("NilaiHarianEntity", $id))) {
+        if (!is_null($this->em->find("NilaiHarianEntity", $id))&& $data['nilai'] < 100 && $data['nilai_remidi'] < 100) {
             $this->nilai = $this->em->find("NilaiHarianEntity", $id);
             $data_ok = $this->setData($data);
             if($data_ok){

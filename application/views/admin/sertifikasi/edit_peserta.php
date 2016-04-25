@@ -101,7 +101,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                 <a class="btn btn-warning" href="<?=base_url().'admin/sertifikasi/simpan_sertifikat/'.$sertifikasi->getId();?>">OK</a>
-                <a class="btn btn-primary" href="<?=base_url().'admin/sertifikasi/unduh_csv/'.$sertifikasi->getId();?>">Unduh CSV </a>
+                <a class="btn btn-primary" href="<?=base_url().'admin/sertifikasi/unduh_csv/'.$sertifikasi->getId();?>">Unduh Data untuk cetak </a>
             </div>
         </div>
     </div>

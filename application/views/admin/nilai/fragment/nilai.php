@@ -1,6 +1,9 @@
 <?php if(is_null($siswa->getNilaiByUH($judul_kelas[0], $no_uh, $semester))) : ?>
-<a id="tombol<?=$siswa->getNis()."_".$no_uh?>">
+<!--<a id="tombol<?=$siswa->getNis()."_".$no_uh?>">
     --
+</a>-->
+<a class="btn btn-xs btn-success" id="tombol<?=$siswa->getNis()."_".$no_uh?>">
+    <span class="glyphicon glyphicon-plus"></span>
 </a>
 <script type="text/javascript">
     $("#tombol<?=$siswa->getNis()."_".$no_uh?>").click(function (){
