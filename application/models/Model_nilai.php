@@ -67,20 +67,26 @@ class Model_nilai extends MY_Model {
     }
 
     public function insertData($data) {
-        $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
-        if (is_null($this->em->find("NilaiHarianEntity", $id)) || $data['nilai'] < 100 || $data['nilai_remidi'] < 100) {
-            $this->nilai = new NilaiHarianEntity();
-            $data_ok = $this->setData($data);
-            if($data_ok){
-                $this->nilai->generateId();
-                $this->em->persist($this->nilai);
-                $this->em->flush();
-                $this->nilai = null;
+        try {
+            $id = $data['nis'] . '-' . $data['kelas'] . '-' . $data['semester'] . '-' . $data['no_uh'] . '-' . $data['tahun_ajaran'];
+            if (is_null($this->em->find("NilaiHarianEntity", $id)) || $data['nilai'] < 100 || $data['nilai_remidi'] < 100) {
+                $this->nilai = new NilaiHarianEntity();
+                $data_ok = $this->setData($data);
+                if($data_ok){
+                    $this->nilai->generateId();
+                    $this->em->persist($this->nilai);
+                    $this->em->flush();
+                    $this->nilai = null;
+                }
+                return $data_ok;
+            } else {
+                return false;
             }
-            return $data_ok;
-        } else {
+        } catch (Doctrine\DBAL\DBALException $exc) {
             return false;
         }
+
+        
     }
 
     public function updateData($data) {

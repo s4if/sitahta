@@ -59,7 +59,7 @@
                         <label class="col-sm-3 control-label">Tahun Ajaran :</label>
                         <div class="col-sm-8">
                             <input id="tahunAjaranEdit" type="number" class="form-control" name="tahun_ajaran" 
-                                   placeholder="Masukkan Kota" value="" required="true">
+                                   placeholder="Ex : 2015" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">

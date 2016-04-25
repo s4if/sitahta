@@ -42,25 +42,33 @@ class Model_guru extends MY_Model{
     }
     
     public function insertData($data){
-        if(is_null($this->em->find("GuruEntity", $data['nip']))){
-            $this->guru = new GuruEntity();
-            $this->setData($data);
-            $this->em->persist($this->guru);
-            $this->em->flush();
-            return true;
-        }  else{
+        try {
+            if(is_null($this->em->find("GuruEntity", $data['nip'])) && $data['nip'] > 0){
+                $this->guru = new GuruEntity();
+                $this->setData($data);
+                $this->em->persist($this->guru);
+                $this->em->flush();
+                return true;
+            }  else{
+                return false;
+            }
+        } catch (Exception $ex) {
             return false;
         }
     }
     
     public function updateData($data){
-        $this->guru = $this->em->find("GuruEntity", $data['nip']);
-        if(!is_null($this->guru)){
-            $this->setData($data);
-            $this->em->persist($this->guru);
-            $this->em->flush();
-            return true;
-        }else{
+        try {
+            $this->guru = $this->em->find("GuruEntity", $data['nip']);
+            if(!is_null($this->guru)){
+                $this->setData($data);
+                $this->em->persist($this->guru);
+                $this->em->flush();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception $exc) {
             return false;
         }
     }
@@ -102,13 +110,17 @@ class Model_guru extends MY_Model{
             $failureCount = 0;
             $this->em->getConnection()->beginTransaction();
             $data = $objWorksheet->rangeToArray('A1'.':F'.$lastRow, null, TRUE);
-            for ($i = 1; $i < $lastRow;$i++){
-                $row_data = $data[$i];
-                if($this->cellValidation($row_data)){
-                    $this->transQuery($row_data);
-                }  else {
-                    $failureCount++;
+            try {
+                for ($i = 1; $i < $lastRow;$i++){
+                    $row_data = $data[$i];
+                    if($this->cellValidation($row_data)){
+                        $this->transQuery($row_data);
+                    }  else {
+                        $failureCount++;
+                    }
                 }
+            } catch (Doctrine\DBAL\DBALException $exc) {
+                $failureCount = 100;
             }
             if(($failureCount > 0)){
                 $this->em->getConnection()->rollback();

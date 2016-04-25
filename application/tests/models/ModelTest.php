@@ -294,6 +294,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         //data exist
         $this->assertTrue($model->dataExist(1,1001, 'XI', 1, 2015));
         //update data
+        $model = new Model_nilai();
         $data['nilai'] = 78;
         $this->assertTrue($model->updateData($data));
         $data['no_uh'] = 10;
@@ -545,6 +546,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
             'sertifikasi' => $id_sertifikasi,
             'id' => $id_sertifikasi.'-1030-2',
             'nilai' => 100,
+            'juz' => 3
         ];
         $this->assertTrue($model->updatePeserta($data_peserta));
         unset($model);

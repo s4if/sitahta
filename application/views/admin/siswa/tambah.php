@@ -111,8 +111,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Tahun Ajaran :</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="tahun_ajaran" 
-                                   placeholder="Masukkan Nama" value="" required="true">
+                            <input type="number" class="form-control" name="tahun_ajaran" 
+                                   placeholder="Ex: 2015" value="" required="true">
                         </div>
                     </div>
                     <div class="form-group">

@@ -58,7 +58,7 @@ class Model_siswa extends MY_Model {
     }
 
     public function insertData($data){
-        if(is_null($this->em->find("SiswaEntity", $data['nis']))){
+        if(is_null($this->em->find("SiswaEntity", $data['nis'])) && $data['nis']>0){
             $this->siswa = new SiswaEntity();
             $this->setData($data);
             $this->em->persist($this->siswa);

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<skipper version="3.2.5.1283" mvc="Without MVC" orm="Doctrine2" name="Sitahta" uuid="5262ff22-b73a-4a07-b1ba-010385c47779">
+<skipper version="3.2.6.1309" mvc="Without MVC" orm="Doctrine2" name="Sitahta" uuid="5262ff22-b73a-4a07-b1ba-010385c47779">
   <module name="\application/entities" local-name="application/entities" namespace="\" export-format="Doctrine2Php" export-path="application/entities" uuid="630a6e2e-5cf8-4f53-b56e-790cc931e1f6">
     <entity name="\GuruEntity" local-name="GuruEntity" namespace="\" uuid="a7d35efe-0564-4f1d-a136-331b06ff627f">
       <field name="nip" type="integer" required="true" primary="true" uuid="6b5ea01c-cf99-4d71-a946-088eecf03ff9">
@@ -272,17 +272,18 @@
     <association uuid="b9eb7718-cad1-40c2-9817-cd64b3d7f520" color="#2E63AF"/>
     <association uuid="bfff223f-36f5-419c-af9d-ed4cfe6e3dbc" color="#0A783D"/>
     <association uuid="db1c7185-dfdc-46cc-b348-d25081addbc0" color="#8A54A2"/>
-    <entity uuid="268c5627-7950-4cab-81ff-67d628b3a686" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="346" position-y="251" size-x="0" size-x2="123" size-y="0" size-y2="101"/>
-    <entity uuid="409c9583-d24d-44b3-8a7b-e34554a0fc75" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="374" position-y="462" size-x="0" size-x2="67" size-y="0" size-y2="59"/>
-    <entity uuid="50670a44-969b-464a-bfe5-483f5f2c14c8" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="184" position-y="462" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
-    <entity uuid="62fbf62e-150c-4196-924b-cedaa7cd70b3" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="29" position-y="251" size-x="0" size-x2="105" size-y="0" size-y2="171"/>
-    <entity uuid="8c0949b8-3ccc-4a74-adbc-a0347e84ea43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="206" position-y="251" size-x="0" size-x2="76" size-y="0" size-y2="101"/>
-    <entity uuid="a7d35efe-0564-4f1d-a136-331b06ff627f" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="21" position-y="40" size-x="0" size-x2="120" size-y="0" size-y2="129"/>
-    <entity uuid="c93c4667-7c4a-4493-b452-b7362b945c43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="28" position-y="462" size-x="0" size-x2="106" size-y="0" size-y2="115"/>
-    <entity uuid="cfea1f24-cdea-4ba8-b169-ec792069a44a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="347" position-y="40" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
-    <entity uuid="d973d677-f925-40d5-83ea-7e59f0f93356" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="183" position-y="40" size-x="0" size-x2="123" size-y="0" size-y2="87"/>
+    <entity uuid="268c5627-7950-4cab-81ff-67d628b3a686" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="406" position-y="508" size-x="0" size-x2="123" size-y="0" size-y2="101"/>
+    <entity uuid="409c9583-d24d-44b3-8a7b-e34554a0fc75" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="395" position-y="202" size-x="0" size-x2="138" size-y="0" size-y2="74"/>
+    <entity uuid="50670a44-969b-464a-bfe5-483f5f2c14c8" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="249" position-y="283" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
+    <entity uuid="62fbf62e-150c-4196-924b-cedaa7cd70b3" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="42" position-y="221" size-x="0" size-x2="105" size-y="0" size-y2="171"/>
+    <entity uuid="8c0949b8-3ccc-4a74-adbc-a0347e84ea43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="271" position-y="508" size-x="0" size-x2="76" size-y="0" size-y2="101"/>
+    <entity uuid="a7d35efe-0564-4f1d-a136-331b06ff627f" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="34" position-y="38" size-x="0" size-x2="120" size-y="0" size-y2="129"/>
+    <entity uuid="c93c4667-7c4a-4493-b452-b7362b945c43" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="103" position-y="501" size-x="0" size-x2="106" size-y="0" size-y2="115"/>
+    <entity uuid="cfea1f24-cdea-4ba8-b169-ec792069a44a" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="221" position-y="71" size-x="0" size-x2="120" size-y="0" size-y2="157"/>
+    <entity uuid="d973d677-f925-40d5-83ea-7e59f0f93356" bg-color="#FFFFFF" hdr-color="#D2D2D2" position-x="403" position-y="17" size-x="0" size-x2="123" size-y="0" size-y2="87"/>
     <many-to-many-association uuid="ad6b367a-3593-40a1-85a1-d2f084d267b2" color="#F4931F"/>
-    <module uuid="630a6e2e-5cf8-4f53-b56e-790cc931e1f6" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="489" size-y="0" size-y2="653"/>
-    <project uuid="5262ff22-b73a-4a07-b1ba-010385c47779" size-x="0" size-x2="589" size-y="0" size-y2="753"/>
+    <many-to-many-association-entity uuid="ef3361f1-ea7e-4d46-a401-e1e15c062a84" center-position-x="0" center-position-y="-20"/>
+    <module uuid="630a6e2e-5cf8-4f53-b56e-790cc931e1f6" bg-color="#FEFCE8" position-x="50" position-y="50" size-x="0" size-x2="565" size-y="0" size-y2="653"/>
+    <project uuid="5262ff22-b73a-4a07-b1ba-010385c47779" size-x="0" size-x2="665" size-y="0" size-y2="753"/>
   </visual-data>
 </skipper>
